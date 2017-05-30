@@ -3,7 +3,7 @@
  module.exports = {
      get: function info_get(req, res) {
          res.json({
-             status: 'ok'
+             status: 'okie dokie'
          });
      }
  };
