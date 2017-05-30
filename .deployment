@@ -1,2 +1,2 @@
 [config]
-project = jibe
+command = bash deploy.sh
