@@ -6,7 +6,7 @@
         "description": "A Contact list API based on Swagger and built using Node.js"
     },
     "paths": {
-        "/misc": {
+        "/info": {
             "get": {
                 "tags": [
                     "info"
