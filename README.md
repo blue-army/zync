@@ -1,1 +1,3 @@
-# zync
+# jibe
+
+Swagger api [location](./config/swagger.json)
