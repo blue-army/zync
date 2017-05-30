@@ -8,7 +8,8 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceRoot}/server"
+            "program": "${workspaceRoot}/jibe/server",
+            "cwd": "${workspaceRoot}/jibe"
         }
     ]
 }

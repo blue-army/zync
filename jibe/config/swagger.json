@@ -6,10 +6,32 @@
         "description": "A Contact list API based on Swagger and built using Node.js"
     },
     "paths": {
+        "/misc": {
+            "get": {
+                "tags": [
+                    "misc"
+                ],
+                "operationId": "misc_get",
+                "consumes": [],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
         "/contacts": {
             "get": {
                 "tags": [
-                    "Contacts"
+                    "contacts"
                 ],
                 "operationId": "contacts_get",
                 "consumes": [],
@@ -34,7 +56,7 @@
         "/contacts/{id}": {
             "get": {
                 "tags": [
-                    "Contacts"
+                    "contacts"
                 ],
                 "operationId": "contacts_getById",
                 "consumes": [],
