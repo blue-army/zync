@@ -9,9 +9,9 @@
         "/misc": {
             "get": {
                 "tags": [
-                    "misc"
+                    "info"
                 ],
-                "operationId": "misc_get",
+                "operationId": "info_get",
                 "consumes": [],
                 "produces": [
                     "application/json",
