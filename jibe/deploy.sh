@@ -117,5 +117,13 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd - > /dev/null
 fi
 
+# 4. Transpiling Typescript 
+if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
+  cd "$DEPLOYMENT_TARGET"
+  eval tsc
+  exitWithMessageOnError "tsc failed"
+  cd - > /dev/null
+fi
+
 ##################################################################################################################################
 echo "Finished successfully."
