@@ -45,10 +45,10 @@
         "regenerate": "yo swaggerize:test --framework express --apiPath './config/swagger.json'",
         "start": "node ./dist/server.js",
         "build": "./scripts/build.sh",
-        "postinstall": "scripts\\build.sh"
+        "postinstall": "./scripts/build.sh"
     },
     "generator-swaggerize": {
         "version": "3.1.0"
     },
-    "main": "./server"
+    "main": "./dist/server"
 }
