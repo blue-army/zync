@@ -117,9 +117,10 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd - > /dev/null
 fi
 
+
 # 4. Compile TypeScript
 cd "$DEPLOYMENT_TARGET"
-node_modules\typescript\bin\tsc -p
+node_modules/typescript/bin/tsc -p
 cd - > cd - > /dev/null
 
 
