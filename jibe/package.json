@@ -43,7 +43,6 @@
         "cover": "istanbul cover tape -- 'tests/**/*.js'",
         "lint": "eslint .",
         "regenerate": "yo swaggerize:test --framework express --apiPath './config/swagger.json'",
-        "postinstall": "./scripts/build.sh",
         "start": "node ./src/server.js"
     },
     "generator-swaggerize": {
