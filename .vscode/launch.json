@@ -7,9 +7,8 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceRoot}/jibe/server",
-            "cwd": "${workspaceRoot}/jibe"
+            "name": "jibe server",
+            "program": "${workspaceRoot}/jibe/dist/server.js"
         }
     ]
 }

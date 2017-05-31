@@ -4,7 +4,7 @@
     "version": "0.1.0",
     "command": "tsc",
     "isShellCommand": true,
-    "args": ["-w"],
+    "args": ["-w", "-p", "jibe"],
     "showOutput": "silent",
     "isBackground": true,
     "problemMatcher": "$tsc-watch"
