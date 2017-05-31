@@ -50,5 +50,5 @@
     "generator-swaggerize": {
         "version": "3.1.0"
     },
-    "main": "./dist/server"
+    "main": "./dist/server.js"
 }
