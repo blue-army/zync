@@ -47,6 +47,5 @@
     },
     "generator-swaggerize": {
         "version": "3.1.0"
-    },
-    "main": "./src/server"
+    }
 }
