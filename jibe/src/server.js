@@ -9,6 +9,9 @@ var Path = require('path');
 
 var port = process.env.PORT || 8000;
 
+// set process folder to current directory
+process.chdir(__dirname);
+
 var App = Express();
 
 var Server = Http.createServer(App);

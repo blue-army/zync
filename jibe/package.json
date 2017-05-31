@@ -18,11 +18,14 @@
     },
     "dependencies": {
         "body-parser": "^1.15.0",
-        "express": "^4.0.0",
+        "express": "^4.15.2",
         "jsonpath": "^0.2.11",
         "swaggerize-express": "^4.0.0",
         "swaggerize-ui": "^1.0.1",
-        "swagmock": "~0.0.2"
+        "swagmock": "~0.0.2",
+        "@types/errorhandler": "^0.0.30",
+        "@types/express": "^4.0.35",
+        "@types/node": "^7.0.15"
     },
     "devDependencies": {
         "eslint": "^2",
@@ -31,13 +34,17 @@
         "js-yaml": "^3.2.6",
         "supertest": "^1.2.0",
         "swagger-parser": "^3.4.1",
-        "tape": "^4"
+        "tape": "^4",
+        "tslint": "^5.1.0",
+        "typescript": "^2.3.2"
     },
     "scripts": {
         "test": "tape 'tests/**/*.js'",
         "cover": "istanbul cover tape -- 'tests/**/*.js'",
         "lint": "eslint .",
-        "regenerate": "yo swaggerize:test --framework express --apiPath './config/swagger.json'"
+        "regenerate": "yo swaggerize:test --framework express --apiPath './config/swagger.json'",
+        "start": "node ./dist/server.js",
+        "build": "./scripts/build.sh"
     },
     "generator-swaggerize": {
         "version": "3.1.0"
