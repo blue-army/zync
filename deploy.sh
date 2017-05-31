@@ -121,7 +121,7 @@ fi
 echo Transpiling typescript.
 if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd "$DEPLOYMENT_TARGET"
-  eval tsc
+  ./node_modules/typescript/bin/tsc
   exitWithMessageOnError "tsc failed"
   cd - > /dev/null
 fi
