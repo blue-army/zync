@@ -48,6 +48,5 @@
     },
     "generator-swaggerize": {
         "version": "3.1.0"
-    },
-    "main": "./dist/server.js"
+    }
 }
