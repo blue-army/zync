@@ -19,7 +19,6 @@ module.exports = {
 
         var uri = UriFactory.createDocumentUri('jibe', 'projects', '7aff6973-64a0-9cce-d767-a4c01622d7ed');
         docDbClient.readDocument(uri, function (err, doc) {
-            doc['db_key'] = db_key;
             res.json(doc);
         });
     }
