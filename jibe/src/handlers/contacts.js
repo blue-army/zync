@@ -4,8 +4,6 @@ var docdb = require('documentdb');
 var DocDBClient = docdb.DocumentClient;
 var UriFactory = docdb.UriFactory;
 
-var repository = require('../lib/contactRepository');
-
 module.exports = {
     get: function contacts_get(req, res) {
 

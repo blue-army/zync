@@ -11,5 +11,8 @@
     },
     "include": [
         "src/**/*.js"
+    ],
+    "files": [
+        "./src/handlers/projects.ts"
     ]
 }

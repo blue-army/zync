@@ -86,6 +86,31 @@
                 },
                 "deprecated": false
             }
+        },
+        "/projects": {
+            "get": {
+                "tags": [
+                    "projects"
+                ],
+                "operationId": "projects_get",
+                "consumes": [],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Project"
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
         }
     },
     "definitions": {
@@ -103,6 +128,14 @@
                     "type": "string"
                 }
             }
+        },
+        "Project": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          }
         }
     }
 }
