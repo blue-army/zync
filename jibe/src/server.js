@@ -1,5 +1,8 @@
 'use strict';
 
+var fs = require('fs');
+console.log(fs.existsSync)
+
 var Http = require('http');
 var Express = require('express');
 var BodyParser = require('body-parser');
