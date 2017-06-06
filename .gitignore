@@ -62,4 +62,4 @@ typings/
 !jibe/dist/
 
 jibe/dist/*
-# !jibe/dist/server.js
+!jibe/dist/server.js
