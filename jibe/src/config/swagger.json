@@ -130,12 +130,26 @@
             }
         },
         "Project": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "channels": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ChannelInfo"
+                    }
+                }
             }
-          }
+        },
+        "ChannelInfo": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
         }
     }
 }

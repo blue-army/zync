@@ -16,7 +16,6 @@ Swagger api [location](./config/swagger.json)
 * common team for drill-plan (dpln) / drill-ops (dops)
 * what are the cross-app notifications
 
-
 ## misc
 
 ```bash
