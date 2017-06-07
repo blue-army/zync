@@ -1,23 +1,20 @@
 'use strict';
 
-import * as models from "../models/project";
+import * as models from "../models/models";
+import * as uuid from "uuid";
+import * as lodash from 'lodash';
+import * as cosmos from 'documentdb';
 var docdb = require('documentdb');
-var DocDBClient = docdb.DocumentClient;
 var UriFactory = docdb.UriFactory;
 
 function get_projects(_req: any, res: any) {
     var db_key = process.env.db_key;
 
-    var dbClient = new DocDBClient(
-        'https://zync.documents.azure.com:443/', {
-            masterKey: db_key
-        }
-    );
-
+    let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
     var collLink = UriFactory.createDocumentCollectionUri('jibe', 'projects');
 
     var projects: any = [];
-    dbClient.readDocuments(collLink).toArray(function (err: any, docs: any) {
+    client.readDocuments(collLink).toArray(function (err: any, docs: any) {
 
         if (err) {
             return handleError(err, res);
@@ -35,6 +32,30 @@ function get_projects(_req: any, res: any) {
     });
 }
 
+function post_projects(req: any, res: any) {
+
+    var db_key = process.env.db_key;
+
+    let payload = req.body;
+
+    // id
+    payload['id'] = lodash.get<Object, string>(payload, 'id', uuid.v4());
+    let project_info = models.ProjectInfo.fromObj(payload);
+
+    // insert document
+    let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
+    var doc_uri = UriFactory.createDocumentCollectionUri('jibe', 'projects');
+    client.createDocument(doc_uri, project_info, { disableAutomaticIdGeneration: true }, function (err:any, obj:any, headers:any) {
+        
+        if (err) {
+            return handleError(err, res);
+        }
+
+        // convert to message
+        project_info = models.ProjectInfo.fromObj(obj);
+        res.json(project_info);
+    });
+}
 
 function handleError(error: any, res: any) {
     console.log('\nAn error with code \'' + error.code + '\' has occurred:');
@@ -46,4 +67,5 @@ function handleError(error: any, res: any) {
 
 export {
     get_projects as get,
+    post_projects as post,
 }

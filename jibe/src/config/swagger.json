@@ -110,6 +110,37 @@
                     }
                 },
                 "deprecated": false
+            },
+            "post": {
+                "tags": [
+                    "projects"
+                ],
+                "operationId": "projects_create",
+                "consumes": [],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Project"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "deprecated": false
             }
         }
     },
@@ -135,6 +166,12 @@
                 "id": {
                     "type": "string"
                 },
+                "name": {
+                    "type": "string"
+                },
+                "source": {
+                    "type": "string"
+                },
                 "channels": {
                     "type": "array",
                     "items": {
@@ -147,6 +184,9 @@
             "type": "object",
             "properties": {
                 "name": {
+                    "type": "string"
+                },
+                "webhook": {
                     "type": "string"
                 }
             }
