@@ -2,10 +2,11 @@
 class ProjectInfo {
     id: string;
     name: string;
+    source: string;
     channels: ChannelInfo[];
 
     public toObj(): any {
-        let props = ['id', 'name', 'channels'];
+        let props = ['id', 'name', 'source', 'channels'];
         var me = <any>(this);
 
         let obj = [];
@@ -31,12 +32,13 @@ class ProjectInfo {
         }
 
         if (!j['id']) {
-            throw new Error('missing task id');
+            throw new Error('missing id');
         }
 
         let o = new ProjectInfo();
         o.id = j['id'];
         o.name = j['name'];
+        o.source = j['source'];
 
         // channels
         o.channels = [];
