@@ -112,6 +112,35 @@
                     }
                 },
                 "deprecated": false
+            },
+            "delete": {
+                "description": "Deletes specified project",
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Deletes the specified project",
+                "operationId": "projects-delete",
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "deprecated": false
             }
         }
     },
