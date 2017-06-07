@@ -25,6 +25,11 @@ class ProjectInfo {
 
     public static fromObj(j: any): ProjectInfo {
 
+        // normalize
+        if (!j['channels']) {
+            j['channels'] = [];
+        }
+
         if (!j['id']) {
             throw new Error('missing task id');
         }
@@ -32,6 +37,12 @@ class ProjectInfo {
         let o = new ProjectInfo();
         o.id = j['id'];
         o.name = j['name'];
+
+        // channels
+        o.channels = [];
+        for (let c of j['channels']) { 
+            o.channels.push(ChannelInfo.fromObj(c));
+        }
 
         return o;
     }
@@ -41,7 +52,7 @@ class ChannelInfo {
     name: string;
     
 
-    public static fromJSON(j: any): ChannelInfo {
+    public static fromObj(j: any): ChannelInfo {
         let o = new ChannelInfo();
         o.name = j['name'];
         return o;
