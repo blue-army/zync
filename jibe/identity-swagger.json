@@ -1,0 +1,1789 @@
+{
+    "produces": [
+        "application/json"
+    ],
+    "schemes": [
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "Identity and Access Management Service",
+        "title": "Identity Service API",
+        "version": "1.0.0"
+    },
+    "host": "identity-dot-blue-army.appspot.com",
+    "basePath": "/api",
+    "paths": {
+        "/identity/v1/groups": {
+            "get": {
+                "description": "List groups",
+                "tags": [
+                    "groups"
+                ],
+                "summary": "List groups",
+                "operationId": "groups-list",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "x-go-name": "Offset",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "x-go-name": "Limit",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/GroupsListRes"
+                    }
+                }
+            }
+        },
+        "/identity/v1/groups/{group_id}": {
+            "get": {
+                "description": "Gets a group",
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Gets a group",
+                "operationId": "groups-get",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "x-go-name": "GroupID",
+                        "description": "GroupId",
+                        "name": "group_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/FetchGroupResMessage"
+                    }
+                }
+            },
+            "put": {
+                "description": "Inserts / updates the specified group",
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Inserts / updates the specified group",
+                "operationId": "groups-add",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "x-go-name": "ID",
+                        "description": "ID",
+                        "name": "group_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateGroupReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/CreateGroupRes"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Removes a group",
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Removes a group",
+                "operationId": "groups-remove",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "x-go-name": "GroupID",
+                        "description": "GroupId",
+                        "name": "group_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            }
+        },
+        "/identity/v1/identities": {
+            "get": {
+                "description": "List identities",
+                "tags": [
+                    "identities"
+                ],
+                "summary": "List identities",
+                "operationId": "identities-list",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "x-go-name": "Offset",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "x-go-name": "Limit",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/IdentityListRes"
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a new identity for the specified user",
+                "tags": [
+                    "users",
+                    "identities"
+                ],
+                "summary": "Creates a new identity for the specified user",
+                "operationId": "users-identities-add",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/LinkIdentityToUserReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Removes the specified identity from the given user",
+                "tags": [
+                    "users",
+                    "identities"
+                ],
+                "summary": "Removes the specified identity from the given user",
+                "operationId": "identities-remove",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "x-go-name": "IdentityKey",
+                        "description": "Identity",
+                        "name": "identity_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            }
+        },
+        "/identity/v1/roles/{role_id}": {
+            "get": {
+                "description": "Gets a role",
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Gets a role",
+                "operationId": "roles-get",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "x-go-name": "RoleID",
+                        "description": "RoleID",
+                        "name": "role_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/FetchRoleResMessage"
+                    }
+                }
+            },
+            "put": {
+                "description": "Add a role",
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Add a role",
+                "operationId": "roles-add",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "x-go-name": "ID",
+                        "description": "ID",
+                        "name": "role_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AddRoleReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/AddRoleRes"
+                    }
+                }
+            }
+        },
+        "/identity/v1/search": {
+            "post": {
+                "description": "Search users and groups",
+                "tags": [
+                    "users"
+                ],
+                "summary": "Search users and groups",
+                "operationId": "identity-search",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SearchReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/UserListRes"
+                    }
+                }
+            }
+        },
+        "/identity/v1/users": {
+            "get": {
+                "description": "List users",
+                "tags": [
+                    "users"
+                ],
+                "summary": "List users",
+                "operationId": "users-list",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "x-go-name": "Offset",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "x-go-name": "Limit",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/UserListRes"
+                    }
+                }
+            },
+            "post": {
+                "description": "Adds a user",
+                "tags": [
+                    "users"
+                ],
+                "summary": "Adds a user",
+                "operationId": "users-add",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateUserReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/CreateUserRes"
+                    }
+                }
+            }
+        },
+        "/identity/v1/users/fetchUserByIdentity": {
+            "post": {
+                "description": "Fetches a user with the specified identity",
+                "tags": [
+                    "users",
+                    "identities"
+                ],
+                "summary": "Fetches a user with the specified identity",
+                "operationId": "users-fetchUserByIdentity",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/FetchUserByIdentityReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/FetchUserByIdentityResMessage"
+                    }
+                }
+            }
+        },
+        "/identity/v1/users/{user_id}": {
+            "get": {
+                "description": "Get specified user",
+                "tags": [
+                    "users"
+                ],
+                "summary": "Gets the specified user",
+                "operationId": "users-get",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "x-go-name": "Key",
+                        "description": "UserID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/UserRes"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes specified user",
+                "tags": [
+                    "users"
+                ],
+                "summary": "Deletes the specified user",
+                "operationId": "users-delete",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "x-go-name": "Key",
+                        "description": "UserID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates specified user",
+                "tags": [
+                    "users"
+                ],
+                "summary": "Updates the specified user",
+                "operationId": "users-update",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "x-go-name": "Key",
+                        "description": "ID\n\nThe User",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "x-go-name": "Body",
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/UpdateUserReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            }
+        },
+        "/info/v1/env": {
+            "get": {
+                "description": "Get environment information",
+                "tags": [
+                    "status"
+                ],
+                "summary": "Get environment information",
+                "operationId": "info-env",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    },
+                    {
+                        "api_key": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/EnvResMessage"
+                    }
+                }
+            }
+        },
+        "/info/v1/status": {
+            "get": {
+                "description": "Get service status",
+                "tags": [
+                    "status"
+                ],
+                "summary": "Get service status",
+                "operationId": "info-status",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/StatusResMessage"
+                    }
+                }
+            }
+        },
+        "/security/v1/authenticate": {
+            "post": {
+                "description": "Authenticate a token",
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Authenticate a token",
+                "operationId": "security-authenticate",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AuthenticateReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/AuthenticateRes"
+                    },
+                    "401": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            }
+        },
+        "/security/v1/authorize": {
+            "post": {
+                "description": "Verify token against required roles. Will match on ANY role, not on ALL roles.",
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Verify token against required roles",
+                "operationId": "security-authorize",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AuthorizeReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/AuthorizeRes"
+                    },
+                    "401": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            }
+        },
+        "/security/v1/authorizeBasic": {
+            "post": {
+                "description": "Verify token against required roles. Will match on ANY role, not on ALL roles.",
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Verify email against desired roles",
+                "operationId": "security-authorizeBasic",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AuthorizeBasicReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/Empty"
+                    },
+                    "401": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            }
+        },
+        "/security/v1/exchange": {
+            "post": {
+                "description": "Exchange provider-specific token for json web token",
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Exchange provider-specific token for json web token",
+                "operationId": "security-exchange",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ExchangeTokenReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/ExchangeTokenRes"
+                    },
+                    "401": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            }
+        },
+        "/security/v1/login": {
+            "post": {
+                "description": "Basic authentication to obtain a jwt",
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Basic authentication to obtain a jwt",
+                "operationId": "security-login",
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/LoginReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/LoginRes"
+                    },
+                    "401": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            }
+        },
+        "/security/v1/publicKey": {
+            "get": {
+                "description": "Obtain the public key",
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Obtain the public key",
+                "operationId": "security-publicKey",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/GetPublicKeyRes"
+                    }
+                }
+            }
+        },
+        "/security/v1/queryAccess": {
+            "post": {
+                "description": "Determine which groups the given token has the specified roles when scoped at the provided scope",
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Determine which groups the given token has the specified roles when scoped at the provided scope",
+                "operationId": "security-queryAccess",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/QueryAccessReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/QueryAccessRes"
+                    },
+                    "401": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            }
+        },
+        "/security/v1/totp": {
+            "get": {
+                "description": "Generates a Time-Based One-Time Password from the given information",
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Generates a Time-Based One-Time Password from the given information",
+                "operationId": "security-generateTOTP",
+                "security": [
+                    {
+                        "datalake_auth": [
+                            "email"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "x-go-name": "Secret",
+                        "description": "Secret",
+                        "name": "secret",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "x-go-name": "Period",
+                        "description": "Period",
+                        "name": "period",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "x-go-name": "Digits",
+                        "description": "Digits",
+                        "name": "digits",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "x-go-name": "Time",
+                        "description": "Time",
+                        "name": "time",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/TOTPRes"
+                    },
+                    "401": {
+                        "$ref": "#/responses/Empty"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AddGroupToGroupReqBody": {
+            "description": "AddGroupToGroupReqBody is the body of the add a group to group request",
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "string",
+                    "x-go-name": "GroupID"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "AddRoleReqBody": {
+            "description": "AddRoleReqBody is a request",
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "x-go-name": "Description"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "AddRoleToGroupReqBody": {
+            "description": "AddRoleToGroupReqBody is the body of the add role to group request",
+            "type": "object",
+            "properties": {
+                "role_id": {
+                    "type": "string",
+                    "x-go-name": "RoleID"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "AddRoleToUserReqBody": {
+            "description": "AddRoleToUserReqBody is the body of the add role to user request",
+            "type": "object",
+            "properties": {
+                "role_id": {
+                    "type": "string",
+                    "x-go-name": "RoleID"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "AddUserToGroupReqBody": {
+            "description": "AddUserToGroupReqBody is the body of the add user to group request",
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string",
+                    "x-go-name": "UserID"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "AuthenticateReqBody": {
+            "description": "AuthenticateReqBody is the body of the request",
+            "type": "object",
+            "properties": {
+                "provider": {
+                    "type": "string",
+                    "x-go-name": "Provider"
+                },
+                "token": {
+                    "type": "string",
+                    "x-go-name": "Token"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "AuthenticateResBody": {
+            "description": "AuthenticateResBody is the body of the AuthenticateRes response",
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "x-go-name": "Email"
+                },
+                "family_name": {
+                    "type": "string",
+                    "x-go-name": "FamilyName"
+                },
+                "given_name": {
+                    "type": "string",
+                    "x-go-name": "GivenName"
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Groups"
+                },
+                "picture": {
+                    "type": "string",
+                    "x-go-name": "Picture"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Roles"
+                },
+                "user_id": {
+                    "type": "string",
+                    "x-go-name": "ID"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "AuthorizeBasicReqBody": {
+            "description": "AuthorizeBasicReqBody is the request body",
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "x-go-name": "Email"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Roles"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "AuthorizeReqBody": {
+            "description": "AuthorizeReqBody is the payload",
+            "type": "object",
+            "required": [
+                "token",
+                "roles"
+            ],
+            "properties": {
+                "roles": {
+                    "description": "The roles to verify",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Roles"
+                },
+                "scope": {
+                    "description": "The scope to apply",
+                    "type": "string",
+                    "x-go-name": "Scope"
+                },
+                "token": {
+                    "description": "The user token",
+                    "type": "string",
+                    "x-go-name": "Token"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "AuthorizeResBody": {
+            "description": "AuthorizeResBody is the body of the AuthorizeRes response",
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "x-go-name": "Email"
+                },
+                "family_name": {
+                    "type": "string",
+                    "x-go-name": "FamilyName"
+                },
+                "given_name": {
+                    "type": "string",
+                    "x-go-name": "GivenName"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Roles"
+                },
+                "scope": {
+                    "type": "string",
+                    "x-go-name": "Scope"
+                },
+                "user_id": {
+                    "type": "string",
+                    "x-go-name": "ID"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "Boom": {
+            "description": "Boom is a custom application error",
+            "type": "object",
+            "properties": {
+                "info": {
+                    "type": "object",
+                    "x-go-name": "Info"
+                },
+                "message": {
+                    "type": "string",
+                    "x-go-name": "Msg"
+                },
+                "name": {
+                    "type": "string",
+                    "x-go-name": "Name"
+                }
+            },
+            "x-go-package": "identity/boom"
+        },
+        "CreateGroupReqBody": {
+            "description": "CreateGroupReqBody is a request body",
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "x-go-name": "Description"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Roles"
+                },
+                "super_groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "SuperGroups"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "CreateGroupResBody": {
+            "description": "CreateGroupResBody is the response containing the group information",
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "x-go-name": "Description"
+                },
+                "id": {
+                    "type": "string",
+                    "x-go-name": "ID"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Roles"
+                },
+                "sub_groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "SubGroups"
+                },
+                "super_groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "SuperGroups"
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Users"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "CreateUserReqBody": {
+            "description": "CreateUserReqBody is the body of the create user request",
+            "type": "object",
+            "properties": {
+                "family_name": {
+                    "type": "string",
+                    "x-go-name": "FamilyName"
+                },
+                "given_name": {
+                    "type": "string",
+                    "x-go-name": "GivenName"
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Groups"
+                },
+                "picture": {
+                    "type": "string",
+                    "x-go-name": "Picture"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Roles"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "EnvResBody": {
+            "description": "EnvResBody is the response body",
+            "type": "object",
+            "properties": {
+                "variables": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Variables"
+                }
+            },
+            "x-go-package": "identity/iinfo"
+        },
+        "ExchangeTokenReqBody": {
+            "description": "ExchangeTokenReqBody is a request body",
+            "type": "object",
+            "properties": {
+                "provider": {
+                    "type": "string",
+                    "x-go-name": "Provider"
+                },
+                "token": {
+                    "type": "string",
+                    "x-go-name": "Token"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "ExchangeTokenResBody": {
+            "description": "ExchangeTokenResBody is the response body",
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "x-go-name": "TokenString"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "FetchUserByIdentityReqBody": {
+            "description": "FetchUserByIdentityReqBody is a request body",
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "x-go-name": "Email"
+                },
+                "provider": {
+                    "type": "string",
+                    "x-go-name": "Provider"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "GetPublicKeyResBody": {
+            "description": "GetPublicKeyResBody is the body of the response",
+            "type": "object",
+            "required": [
+                "key"
+            ],
+            "properties": {
+                "key": {
+                    "description": "The public key",
+                    "type": "string",
+                    "x-go-name": "Key"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "GroupList": {
+            "description": "GroupList contains a list of Groups",
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GroupRes"
+                    },
+                    "x-go-name": "Groups"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "GroupRes": {
+            "description": "GroupRes is the message format for a Group",
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "x-go-name": "Description"
+                },
+                "id": {
+                    "type": "string",
+                    "x-go-name": "ID"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Roles"
+                },
+                "sub_groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "SubGroups"
+                },
+                "super_groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "SuperGroups"
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Users"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "IdentityList": {
+            "description": "IdentityList contains a list of Identities",
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/IdentityResBody"
+                    },
+                    "x-go-name": "Items"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "IdentityResBody": {
+            "description": "IdentityResBody is the body of the IdentityRes response",
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "x-go-name": "Email"
+                },
+                "id": {
+                    "type": "string",
+                    "x-go-name": "ID"
+                },
+                "provider": {
+                    "type": "string",
+                    "x-go-name": "Provider"
+                },
+                "user_id": {
+                    "type": "string",
+                    "x-go-name": "User"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "KeyRes": {
+            "description": "KeyRes is the structure containing a key",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "x-go-name": "Key"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "LinkIdentityToUserReqBody": {
+            "description": "LinkIdentityToUserReqBody is the body of the link identity request",
+            "type": "object",
+            "required": [
+                "user_id"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "x-go-name": "Email"
+                },
+                "password": {
+                    "type": "string",
+                    "x-go-name": "Password"
+                },
+                "provider": {
+                    "type": "string",
+                    "x-go-name": "Provider"
+                },
+                "user_id": {
+                    "description": "User",
+                    "type": "string",
+                    "x-go-name": "UserKey"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "LoginReqBody": {
+            "description": "LoginReqBody is the body of the response",
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "x-go-name": "Email"
+                },
+                "password": {
+                    "type": "string",
+                    "x-go-name": "Password"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "LoginResBody": {
+            "description": "LoginResBody is the body of the response",
+            "type": "object",
+            "required": [
+                "token"
+            ],
+            "properties": {
+                "token": {
+                    "description": "The json web token representing the user",
+                    "type": "string",
+                    "x-go-name": "TokenString"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "QueryAccessReqBody": {
+            "description": "QueryAccessReqBody is the payload",
+            "type": "object",
+            "required": [
+                "token"
+            ],
+            "properties": {
+                "roles": {
+                    "description": "The roles to verify",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Roles"
+                },
+                "scope": {
+                    "description": "The scope to apply",
+                    "type": "string",
+                    "x-go-name": "Scope"
+                },
+                "token": {
+                    "description": "The user token",
+                    "type": "string",
+                    "x-go-name": "Token"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "QueryAccessResBody": {
+            "description": "QueryAccessResBody is the body of the QueryAccess response",
+            "type": "object",
+            "properties": {
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Groups"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "RemoveGroupFromGroupReqBody": {
+            "description": "RemoveGroupFromGroupReqBody is the body of the add a group to group request",
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "string",
+                    "x-go-name": "GroupID"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "Role": {
+            "description": "Role is the persistence format for a role",
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "x-go-name": "Description"
+                },
+                "id": {
+                    "type": "string",
+                    "x-go-name": "ID"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "SearchReqBody": {
+            "description": "SearchReqBody is the body of the request",
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "x-go-name": "Query"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "StatusResBody": {
+            "description": "StatusResBody is the response body",
+            "type": "object",
+            "properties": {
+                "service": {
+                    "type": "string",
+                    "x-go-name": "Service"
+                },
+                "status": {
+                    "type": "string",
+                    "x-go-name": "Status"
+                }
+            },
+            "x-go-package": "identity/iinfo"
+        },
+        "TOTPResBody": {
+            "description": "TOTPResBody is the response body",
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "x-go-name": "Code"
+                }
+            },
+            "x-go-package": "identity/iauth"
+        },
+        "UpdateUserReqBody": {
+            "description": "UpdateUserReqBody is the body of the UpdateUserReq request",
+            "type": "object",
+            "properties": {
+                "family_name": {
+                    "type": "string",
+                    "x-go-name": "FamilyName"
+                },
+                "given_name": {
+                    "type": "string",
+                    "x-go-name": "GivenName"
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Groups"
+                },
+                "picture": {
+                    "type": "string",
+                    "x-go-name": "Picture"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Roles"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "UserList": {
+            "description": "UserList contains a list of Users",
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/UserResBody"
+                    },
+                    "x-go-name": "Items"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        },
+        "UserResBody": {
+            "description": "UserResBody is the body of the UserRes response",
+            "type": "object",
+            "properties": {
+                "family_name": {
+                    "type": "string",
+                    "x-go-name": "FamilyName"
+                },
+                "given_name": {
+                    "type": "string",
+                    "x-go-name": "GivenName"
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Groups"
+                },
+                "id": {
+                    "type": "string",
+                    "x-go-name": "ID"
+                },
+                "identities": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Identities"
+                },
+                "picture": {
+                    "type": "string",
+                    "x-go-name": "Picture"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-go-name": "Roles"
+                }
+            },
+            "x-go-package": "identity/iuser"
+        }
+    },
+    "responses": {
+        "AddRoleRes": {
+            "description": "AddRoleRes is the response containing the key of the added role",
+            "schema": {
+                "$ref": "#/definitions/KeyRes"
+            }
+        },
+        "AuthenticateRes": {
+            "description": "AuthenticateRes is the response containing the User information for the authenticate request",
+            "schema": {
+                "$ref": "#/definitions/AuthenticateResBody"
+            }
+        },
+        "AuthorizeRes": {
+            "description": "AuthorizeRes is the response containing the User information for the authroize request",
+            "schema": {
+                "$ref": "#/definitions/AuthorizeResBody"
+            }
+        },
+        "CreateGroupRes": {
+            "description": "CreateGroupRes is the response containing the group information",
+            "schema": {
+                "$ref": "#/definitions/CreateGroupResBody"
+            }
+        },
+        "CreateUserRes": {
+            "description": "CreateUserRes is the response containing the id of the newly created user",
+            "schema": {
+                "$ref": "#/definitions/KeyRes"
+            }
+        },
+        "DefaultError": {
+            "description": "A DefaultError is a response containing a generic application error",
+            "schema": {
+                "$ref": "#/definitions/Boom"
+            }
+        },
+        "Empty": {
+            "description": "Empty is an empty message used in a response"
+        },
+        "EnvResMessage": {
+            "description": "EnvResMessage is the env request",
+            "schema": {
+                "$ref": "#/definitions/EnvResBody"
+            }
+        },
+        "ExchangeTokenRes": {
+            "description": "ExchangeTokenRes is the response containing the jwt that identifies the user",
+            "schema": {
+                "$ref": "#/definitions/ExchangeTokenResBody"
+            }
+        },
+        "FetchGroupResMessage": {
+            "description": "FetchGroupResMessage is the response containing the group information",
+            "schema": {
+                "$ref": "#/definitions/GroupRes"
+            }
+        },
+        "FetchRoleResMessage": {
+            "description": "FetchRoleResMessage is the response containing the role information",
+            "schema": {
+                "$ref": "#/definitions/Role"
+            }
+        },
+        "FetchUserByIdentityResMessage": {
+            "description": "FetchUserByIdentityResMessage is the response containing the fetched user",
+            "schema": {
+                "$ref": "#/definitions/UserResBody"
+            }
+        },
+        "GetPublicKeyRes": {
+            "description": "GetPublicKeyRes is the response containing the public key",
+            "schema": {
+                "$ref": "#/definitions/GetPublicKeyResBody"
+            }
+        },
+        "GroupsListRes": {
+            "description": "GroupsListRes is the response containing the list of groups",
+            "schema": {
+                "$ref": "#/definitions/GroupList"
+            }
+        },
+        "IdentityListRes": {
+            "description": "IdentityListRes is the response containing the list of identities",
+            "schema": {
+                "$ref": "#/definitions/IdentityList"
+            }
+        },
+        "LoginRes": {
+            "description": "LoginRes is the response containing the jwt that identifies the user",
+            "schema": {
+                "$ref": "#/definitions/LoginResBody"
+            }
+        },
+        "QueryAccessRes": {
+            "description": "QueryAccessRes is the response for the Query Access request",
+            "schema": {
+                "$ref": "#/definitions/QueryAccessResBody"
+            }
+        },
+        "StatusResMessage": {
+            "description": "StatusResMessage is the status request",
+            "schema": {
+                "$ref": "#/definitions/StatusResBody"
+            }
+        },
+        "TOTPRes": {
+            "description": "TOTPRes is the response containing the",
+            "schema": {
+                "$ref": "#/definitions/TOTPResBody"
+            }
+        },
+        "UserListRes": {
+            "description": "UserListRes is the response containing the list of users",
+            "schema": {
+                "$ref": "#/definitions/UserList"
+            }
+        },
+        "UserRes": {
+            "description": "UserRes is the response containing user information",
+            "schema": {
+                "$ref": "#/definitions/UserResBody"
+            }
+        }
+    },
+    "securityDefinitions": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "api_key",
+            "in": "header"
+        },
+        "datalake_auth": {
+            "type": "oauth2",
+            "flow": "implicit",
+            "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+            "scopes": {
+                "email": "default scope"
+            }
+        }
+    }
+}

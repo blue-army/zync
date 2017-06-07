@@ -7,7 +7,7 @@ import * as cosmos from 'documentdb';
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;
 
-function get_projects(_req: any, res: any) {
+function list_projects(_req: any, res: any) {
     var db_key = process.env.db_key;
 
     let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
@@ -21,7 +21,6 @@ function get_projects(_req: any, res: any) {
         }
 
         console.log(docs.length + ' Documents found');
-
         for (let doc of docs) {
             let p = models.ProjectInfo.fromObj(doc);
             projects.push(p);
@@ -32,7 +31,7 @@ function get_projects(_req: any, res: any) {
     });
 }
 
-function post_projects(req: any, res: any) {
+function upsert_project(req: any, res: any) {
 
     var db_key = process.env.db_key;
 
@@ -45,7 +44,7 @@ function post_projects(req: any, res: any) {
     // insert document
     let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
     var doc_uri = UriFactory.createDocumentCollectionUri('jibe', 'projects');
-    client.createDocument(doc_uri, project_info, { disableAutomaticIdGeneration: true }, function (err:any, obj:any, headers:any) {
+    client.createDocument(doc_uri, project_info, { disableAutomaticIdGeneration: true }, function (err:any, obj:any, _headers:any) {
         
         if (err) {
             return handleError(err, res);
@@ -66,6 +65,6 @@ function handleError(error: any, res: any) {
 }
 
 export {
-    get_projects as get,
-    post_projects as post,
+    list_projects as get,
+    upsert_project as post,
 }

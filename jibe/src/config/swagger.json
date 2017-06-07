@@ -28,65 +28,6 @@
                 "deprecated": false
             }
         },
-        "/contacts": {
-            "get": {
-                "tags": [
-                    "contacts"
-                ],
-                "operationId": "contacts_get",
-                "consumes": [],
-                "produces": [
-                    "application/json",
-                    "text/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Contact"
-                            }
-                        }
-                    }
-                },
-                "deprecated": false
-            }
-        },
-        "/contacts/{id}": {
-            "get": {
-                "tags": [
-                    "contacts"
-                ],
-                "operationId": "contacts_getById",
-                "consumes": [],
-                "produces": [
-                    "application/json",
-                    "text/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int32"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Contact"
-                            }
-                        }
-                    }
-                },
-                "deprecated": false
-            }
-        },
         "/projects": {
             "get": {
                 "tags": [
@@ -136,7 +77,37 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object"
+                            "$ref": "#/definitions/Project"
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/projects/{id}": {
+            "get": {
+                "tags": [
+                    "projects"
+                ],
+                "operationId": "projects_getById",
+                "consumes": [],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Project"
                         }
                     }
                 },
@@ -145,21 +116,6 @@
         }
     },
     "definitions": {
-        "Contact": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "format": "int32",
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                }
-            }
-        },
         "Project": {
             "type": "object",
             "properties": {

@@ -10,9 +10,7 @@
         "allowJs": true
     },
     "include": [
-        "src/**/*.js"
-    ],
-    "files": [
-        "./src/handlers/projects.ts"
+        "src/**/*.js",
+        "./src/handlers/**/*.ts"
     ]
 }
