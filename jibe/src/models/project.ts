@@ -50,11 +50,14 @@ class ProjectInfo {
 
 class ChannelInfo {
     name: string;
-    
+    webhook: string;
 
     public static fromObj(j: any): ChannelInfo {
         let o = new ChannelInfo();
+        
         o.name = j['name'];
+        o.webhook = j['webhook'];
+
         return o;
     }
 }
