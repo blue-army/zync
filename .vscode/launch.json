@@ -10,7 +10,7 @@
             "name": "jibe server",
             "program": "${workspaceRoot}/jibe/dist/server.js",
             "env": {
-                "db_key": "iR5wKpk619PBuIUqu2b5Dec79sXGsHK1P9jdzvmO1m1YBYeS8spFcP9FscoySw7SvOzka1thg14WNMtgCuRitQ=="
+                "db_key": ""
             }
         }
     ]

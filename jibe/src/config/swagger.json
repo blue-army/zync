@@ -146,7 +146,8 @@
         "/projects/{id}/events": {
             "post": {
                 "tags": [
-                    "projects"
+                    "projects",
+                    "events"
                 ],
                 "operationId": "project_event_create",
                 "consumes": [],
