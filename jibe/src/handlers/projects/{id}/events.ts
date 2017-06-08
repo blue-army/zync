@@ -59,6 +59,10 @@ async function create_event(req: any, res: any) {
         .then((info) => {
             console.log(info);
             res.json({});
+        })
+        .catch((err) => {
+            res.status(500);
+            res.json(err);
         });
 }
 
