@@ -1,3 +1,4 @@
+import { Event } from '_debugger';
 
 class ProjectInfo {
     id: string;
@@ -64,7 +65,22 @@ class ChannelInfo {
     }
 }
 
+class EventInfo {
+    type: string;
+    content: string;
+
+    public static fromObj(j: any): EventInfo {
+        let o = new EventInfo();
+        
+        o.type = j['type'];
+        o.content = j['content'];
+
+        return o;
+    }
+}
+
 export {
     ProjectInfo,
     ChannelInfo,
+    EventInfo,
 }
