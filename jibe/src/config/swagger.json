@@ -223,7 +223,7 @@
                     "type": "string"
                 },
                 "content": {
-                    "type": "string"
+                    "type": "object"
                 }
             }
         }

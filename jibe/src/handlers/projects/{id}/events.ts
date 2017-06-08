@@ -34,6 +34,12 @@ async function create_event(req: any, res: any) {
         then(doc => {
             let p = models.ProjectInfo.fromObj(doc);
 
+            // setup payload
+            let body = {};
+            if (event_info.type === 'raw') {
+                body = event_info.content;
+            }
+
             // fetch general channel
             for (let c of p.channels) {
 
@@ -42,9 +48,7 @@ async function create_event(req: any, res: any) {
                     var options = {
                         method: 'POST',
                         uri: c.webhook,
-                        body: {
-                            'text': event_info.content
-                        },
+                        body: body,
                         json: true
                     };
 
