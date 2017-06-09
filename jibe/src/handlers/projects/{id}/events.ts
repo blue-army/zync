@@ -40,15 +40,21 @@ async function create_event(req: any, res: any) {
                 body = event_info.content;
             }
 
+            let card = new models.PropertyChangedEventInfo();
+            card.sections.push(models.SectionInfo.CreateActivityCard(false, "Mud Design Changed", "Density", "http://icons.iconarchive.com/icons/rokey/fantastic-dream/128/driver-mud-icon.png", ))
+            card.sections.push(models.SectionInfo.CreateFactCard(true, new Map([["From", "0.1"], ["To", "0.5"]])));
+            card.actions.push(new models.ActionInfo("Launch Application", "http://www.bing.com"));
+
+            let o = card.ToObj();
+
             // fetch general channel
             for (let c of p.channels) {
 
                 if (c.name === 'general') {
-
                     var options = {
                         method: 'POST',
                         uri: c.webhook,
-                        body: body,
+                        body: o,
                         json: true
                     };
 

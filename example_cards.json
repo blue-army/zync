@@ -1,0 +1,107 @@
+{
+  "@type": "ActionCard",
+  "name": "Comment",
+  "inputs": [
+    {
+      "@type": "TextInput",
+      "id": "comment",
+      "isMultiline": true,
+      "title": "Input's title property"
+    }
+  ],
+  "actions": [
+    {
+      "@type": "HttpPOST",
+      "name": "Action's name prop.",
+      "target": "https://yammer.com/comment?postId=123",
+      "body": "comment={{comment.value}}"
+    }
+  ]
+}
+
+{
+    "type": "raw",
+    "content": {
+        "themeColor": "0078D7",
+        "summary": "-",
+        "title": "Boing",
+        "sections": [
+            {
+                "activityTitle": "David Claux",
+                "activitySubtitle": "9/13/2016, 3:34pm",
+                "activityImage": "https://connectorsdemo.azurewebsites.net/images/MSC12_Oscar_002.jpg",
+                "facts": [
+                    {
+                        "name": "Board:",
+                        "value": "Name of board"
+                    },
+                    {
+                        "name": "List:",
+                        "value": "Name of list"
+                    }
+                ],
+                "text": "Lorem ipsum dolor sit amet"
+            }
+        ],
+        "potentialAction": [
+            {
+                "@type": "OpenUri",
+                "name": "View in Trello",
+                "targets": [
+                    {
+                        "os": "default",
+                        "uri": "https://www.google.com"
+                    }
+                ]
+            }
+        ]
+    }
+}
+
+ {
+    "text": "poop",
+    "title": "Rig of the Future",
+    "sections": [
+        {
+            "activityTitle": "Jean-Marc commented",
+            "activitySubtitle": "On Rig of the Future",
+            "activityText": "Here are the designs!",
+            "activityImage": "http://directory.slb.com/misc/pictures/01176858.jpg"
+        },
+        {
+            "title": "Details",
+            "facts": [
+                {
+                    "name": "Labels",
+                    "value": "Designs, redlines"
+                },
+                {
+                    "name": "Due date",
+                    "value": "Dec 7, 2016"
+                },
+                {
+                    "name": "Attachments",
+                    "value": "[final.jpg](https://connectorsdemo.azurewebsites.net/images/WIN14_Jan_04.jpg)"
+                }
+            ]
+        },
+        {
+            "title": "Images",
+            "images": [
+                {
+                    "image": "https://connectorsdemo.azurewebsites.net/images/WIN12_Scene_01.jpg"
+                }
+            ]
+        }
+    ],
+    "potentialAction": [
+        {
+            "@context": "http://schema.org",
+            "@type": "ViewAction",
+            "name": "View in Planck",
+            "target": [
+                "http://163.185.149.206/#/wpm/programs"
+            ]
+        }
+    ]
+}
