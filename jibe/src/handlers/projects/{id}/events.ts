@@ -1,8 +1,6 @@
 'use strict';
 
 import * as models from "../../../models/models";
-import * as uuid from "uuid";
-import * as lodash from 'lodash';
 import * as cosmos from 'documentdb';
 import * as rp from 'request-promise';
 var docdb = require('documentdb');
@@ -35,14 +33,12 @@ async function create_event(req: any, res: any) {
             let p = models.ProjectInfo.fromObj(doc);
 
             // setup payload
-            let body = {};
-            if (event_info.type === 'raw') {
-                body = event_info.content;
-            }
+            // if (event_info.type === 'raw') {
+            let body = models.EntityChangedEventInfo.fromObj(event_info.content);
 
             let card = new models.PropertyChangedEventInfo();
-            card.sections.push(models.SectionInfo.CreateActivityCard(false, "Mud Design Changed", "Density", "http://icons.iconarchive.com/icons/rokey/fantastic-dream/128/driver-mud-icon.png", ))
-            card.sections.push(models.SectionInfo.CreateFactCard(true, new Map([["From", "0.1"], ["To", "0.5"]])));
+            card.sections.push(models.SectionInfo.CreateActivityCard(false, body.entity, body.property, "http://icons.iconarchive.com/icons/rokey/fantastic-dream/128/driver-mud-icon.png"));
+            card.sections.push(models.SectionInfo.CreateFactCard(true, new Map([["From", body.from], ["To", body.to]])));
             card.actions.push(new models.ActionInfo("Launch Application", "http://www.bing.com"));
 
             let o = card.ToObj();

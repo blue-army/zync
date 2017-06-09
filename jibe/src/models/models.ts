@@ -79,6 +79,24 @@ class EventInfo {
     }
 }
 
+class EntityChangedEventInfo {
+    entity: string;
+    property: string;
+    from: any;
+    to: any;
+
+    public static fromObj(j: any): EntityChangedEventInfo {
+        let o = new EntityChangedEventInfo();
+
+        o.entity = j['entity'];
+        o.property = j['property'];
+        o.from = j['from'];
+        o.to = j['to'];
+
+        return o;
+    }
+}
+
 class PropertyChangedEventInfo {
     title: string;                      // " "
     summary: string;                    // " "
@@ -243,4 +261,5 @@ export {
     PropertyChangedEventInfo,
     SectionInfo,
     ActionInfo,
+    EntityChangedEventInfo,
 }

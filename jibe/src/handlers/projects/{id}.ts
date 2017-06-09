@@ -12,7 +12,7 @@ function read_project(req: any, res: any) {
 
     let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
     var uri = UriFactory.createDocumentUri('jibe', 'projects', req.params['id']);
-    client.readDocument(uri, function (err, doc) {
+    client.readDocument(uri, function (_err, doc) {
         res.json(doc);
     });
 };
@@ -22,7 +22,7 @@ function delete_project(req: any, res: any) {
 
     let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
     var uri = UriFactory.createDocumentUri('jibe', 'projects', req.params['id']);
-    client.deleteDocument(uri, function (err, doc) {
+    client.deleteDocument(uri, function (_err, _doc) {
         res.json({});
     });
 };
