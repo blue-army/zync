@@ -4,10 +4,11 @@ class ProjectInfo {
     id: string;
     name: string;
     source: string;
+    geohash: string;
     channels: ChannelInfo[];
 
     public toObj(): any {
-        let props = ['id', 'name', 'source', 'channels'];
+        let props = ['id', 'name', 'source', 'geohash', 'channels'];
         var me = <any>(this);
 
         let obj = [];
@@ -40,6 +41,7 @@ class ProjectInfo {
         o.id = j['id'];
         o.name = j['name'];
         o.source = j['source'];
+        o.geohash = j['geohash'];
 
         // channels
         o.channels = [];

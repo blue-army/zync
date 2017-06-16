@@ -197,6 +197,9 @@
                 "source": {
                     "type": "string"
                 },
+                "geohash": {
+                    "type": "string"
+                },
                 "channels": {
                     "type": "array",
                     "items": {
