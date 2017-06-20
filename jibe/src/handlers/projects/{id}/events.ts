@@ -70,32 +70,35 @@ function parse(info: models.EventInfo): models.PropertyChangedEventInfo {
 
     switch (info.type) {
         case 'slb.drill-plan.activity':
-            let dp_content = models.ActivityInfo.fromObj(info.content);
+            let activityInfo = models.ActivityInfo.fromObj(info.content);
+            let details = activityInfo.activity;
 
-            let ancestorPath = dp_content.activity.getAncestorPath();
+            let ancestorPath = details.getAncestorPath();
             card.sections.push(
                 models.SectionInfo.CreateActivityCard(
-                    dp_img_for_entity(dp_content.activity.activity_entity_type),
-                    dp_content.activity.entity_name,
+                    details.getEntityImageUrl(),
+                    details.entity_name,
                     models.ActivityDetails.getActivitySubtitle1(ancestorPath),
                     models.ActivityDetails.getActivitySubtitle2(ancestorPath),
                     false));
-            
+
             card.sections.push(
                 models.SectionInfo.CreateActivityCard(
-                    "",
-                    dp_content.activity.getExpectedAction(),
-                    dp_content.owner.full_name,
-                    dp_content.activity.comments,
+                    activityInfo.owner.image_url,
+                    details.getExpectedAction(),
+                    activityInfo.owner.full_name,
+                    details.comments,
                     true));
+
+            card.actions.push(new models.ActionInfo("Launch Application", details.getEntityImageUrl()));
 
             break;
         case 'wazzap':
             let w_content = models.EntityChangedEventInfo.fromObj(info.content);
             card.sections.push(
                 models.SectionInfo.CreateActivityCard(
-                    w_content.entity, 
-                    w_content.property, 
+                    w_content.entity,
+                    w_content.property,
                     "",
                     "http://icons.iconarchive.com/icons/rokey/fantastic-dream/128/driver-mud-icon.png",
                     false));
@@ -107,16 +110,6 @@ function parse(info: models.EventInfo): models.PropertyChangedEventInfo {
     }
 
     return card;
-}
-
-function dp_img_for_entity(entity_type: string): string {
-
-    switch (entity_type.toLowerCase()) {
-        case 'define cement job':
-            return 'https://cdn0.iconfinder.com/data/icons/construction-linear-black/2048/392_-_Cement_Bag-512.png';
-    }
-
-    return '';
 }
 
 

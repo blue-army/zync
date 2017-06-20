@@ -251,7 +251,7 @@ class ActivityDetails {
 
     public getExpectedAction(): string {
 
-        var activityTypeToAction:any = {
+        var activityTypeToAction: any = {
             'Share': 'Shared',
             'Create': 'Added',
             'Update': 'Changed',
@@ -266,6 +266,60 @@ class ActivityDetails {
             activityAction = 'Created';
         }
         return activityAction + ' by';
+    }
+
+    public getEntityImageUrl(): string {
+
+        var iconMap: any = {
+            'riskset': 'risk',
+            'itpreport': 'report',
+            'project': 'project',
+            'bha&drillstring': 'bha_drilling_string',
+            'trajectory': 'trajectory',
+            'formation tops': 'formation_tops',
+            'wellbore geometry': 'wellbore_geometry',
+            'drilling fluid': 'drilling_fluid',
+            'drilling parameter': 'drilling_parameters',
+            'select bit': 'bit_selection',
+            'bit selection': 'bit_selection',
+            'bit': 'bit_selection',
+            'rig': 'rig',
+            'surface location': 'surface_location',
+            'target': 'target',
+            'design bha&drillstring': 'bha_drillstring_design',
+            'design trajectory': 'traj_design',
+            'risks': 'risks',
+            'jar placement': 'risks',
+            'place jar': 'place_jar_task',
+            'well': 'well_information',
+            'section': 'well_information',
+            'define fracture pressure': 'fracture_pressure_task',
+            'define pore pressure': 'pore_pressure_task',
+            'define formation temperature': 'temperature_task',
+            'define target': 'target_task',
+            'define surface location': 'surface_location_task',
+            'design wellbore geometry': 'wellbore_geometry_task',
+            'define rig': 'rig_task',
+            'define drilling fluid': 'drilling_fluid_task',
+            'design mud': 'drilling_fluid_task',
+            'casing design': 'casing_design',
+            'design casing': 'casing_design_task',
+            'fracture pressure': 'fracture_pressure',
+            'pore pressure': 'pore_pressure',
+            'temperature': 'temperature',
+            'iar request': 'iar',
+            'activity plan': 'composer',
+            'evaluation': 'evaluation',
+            'prepare afe': 'afe',
+            'define cement job': 'cementing',
+            'define wellhead and bop': 'wellhead_bop'
+        };
+
+        var iconImageName = iconMap[this.activity_entity_type.toLowerCase()];
+        if (!iconImageName) {
+             iconImageName = 'unknow';
+        }
+        return 'https://wazzap.azurewebsites.net/assets/images/' + iconImageName
     }
 
 }
