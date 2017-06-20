@@ -27,14 +27,15 @@ async function create_event(req: any, res: any) {
     let payload = req.body;
     let event_info = models.EventInfo.fromObj(payload);
 
+    // fetch project information
     var uri = UriFactory.createDocumentUri('jibe', 'projects', req.params['id']);
     fetch_document(uri).
-        then(doc => {
+        then(doc => {            
             let p = models.ProjectInfo.fromObj(doc);
 
             // setup payload
-            // if (event_info.type === 'raw') {
             let body = models.EntityChangedEventInfo.fromObj(event_info.content);
+            // let dp_activity = models.DrillPlanActivityCardInfo.fromObj(event_info.content);
 
             let card = new models.PropertyChangedEventInfo();
             card.sections.push(models.SectionInfo.CreateActivityCard(false, body.entity, body.property, "http://icons.iconarchive.com/icons/rokey/fantastic-dream/128/driver-mud-icon.png"));
@@ -43,10 +44,10 @@ async function create_event(req: any, res: any) {
 
             let o = card.ToObj();
 
-            // fetch general channel
+            // fetch appropriate channel
             for (let c of p.channels) {
 
-                if (c.name === 'general') {
+                if (c.name === 'jibe') {
                     var options = {
                         method: 'POST',
                         uri: c.webhook,
