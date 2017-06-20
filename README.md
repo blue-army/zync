@@ -22,3 +22,15 @@ Swagger api [location](./config/swagger.json)
 # launch swagger editor
 docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
 ```
+
+## issues
+
+* cmdlet to create team
+* how to run a cmdlet on azure?
+* contact person for issues - billbl@microsoft.com
+* authentication for the graph explorer
+* possible to @mention in a message card - may not be possible in an actionable card
+* what drives the activity feed in Team
+* cannot create tabs for a channel via api
+* yeoman generator (https://www.npmjs.com/package/generator-teams)
+* building a bot walkthrough with Bill

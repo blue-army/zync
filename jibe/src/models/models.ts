@@ -1,4 +1,4 @@
-
+import * as _ from 'lodash';
 
 class ProjectInfo {
     id: string;
@@ -69,7 +69,7 @@ class ChannelInfo {
 
 class EventInfo {
     type: string;
-    content: string;
+    content: object;
 
     public static fromObj(j: any): EventInfo {
         let o = new EventInfo();
@@ -98,6 +98,229 @@ class EntityChangedEventInfo {
         return o;
     }
 }
+
+
+
+/*    
+{
+    "@type": "MessageCard",
+    "@context": "http://schema.org/extensions",    
+    "title": " ",
+    "summary": " ",
+    "themeColor": "0078D7",
+    "sections": [
+        {
+            "startGroup": true,
+            "activityTitle": "Mud Design Changed",
+            "activitySubtitle": "Density",
+            "activityImage": "http://icons.iconarchive.com/icons/rokey/fantastic-dream/128/driver-mud-icon.png"
+        },
+        {
+            "startGroup": true,
+            "facts": [
+                {
+                    "name": "From",
+                    "value": "1.3"
+                },
+                {
+                    "name": "To",
+                    "value": "0.9"
+                },
+                {
+                    "name": "User",
+                    "value": "adele"
+                }
+            ]
+        }
+    ],
+    "potentialAction": [
+        {
+            "@context": "http://schema.org",
+            "@type": "ViewAction",
+            "name": "Launch Application",
+            "target": [
+                "http://163.185.149.206/#/wpm/programs"
+            ]
+        }
+    ]
+}
+*/
+
+class ActivityInfo {
+    id: string;
+    owner: PersonInfo;
+    activity: ActivityDetails;
+
+    public static fromObj(obj: object) {
+
+        let o = new ActivityInfo();
+        o.id = _.get<Object, string>(obj, 'id', '');
+        o.owner = PersonInfo.fromObj(_.get<Object, Object>(obj, 'owner', {}));
+        o.activity = ActivityDetails.fromObj(_.get<Object, Object>(obj, 'activity', {}));
+
+        return o;
+    }
+}
+
+class PersonInfo {
+    full_name: string;
+    image_url: string;
+
+    public static fromObj(obj: object): PersonInfo {
+        let o = new PersonInfo();
+        o.full_name = _.get<Object, string>(obj, 'full_name', '');
+        o.image_url = _.get<Object, string>(obj, 'image_url', '');
+        return o;
+    }
+}
+
+class ActivityDetails {
+    type: string;
+    entity_id: string;
+    entity_name: string;
+    activity_time: string;
+    comments: string;
+    project_id: string;
+    activity_entity_type: string;
+    is_customer_data: boolean;
+    changed_property_names: Array<object>;
+    extension_propertys_dic: Map<string, string>;
+    parent: ParentInfo;
+
+    public static fromObj(obj: object): ActivityDetails {
+        if (obj === null) {
+            return null;
+        }
+
+        let o = new ActivityDetails();
+        o.type = _.get<Object, string>(obj, 'type', '');
+        o.entity_id = _.get<Object, string>(obj, 'entity_id', '');
+        o.entity_name = _.get<Object, string>(obj, 'entity_name', '');
+        o.activity_time = _.get<Object, string>(obj, 'activity_time', '');
+        o.comments = _.get<Object, string>(obj, 'comments', '');
+        o.project_id = _.get<Object, string>(obj, 'project_id', '');
+        o.activity_entity_type = _.get<Object, string>(obj, 'activity_entity_type', '');
+        o.is_customer_data = _.get<Object, boolean>(obj, 'id', false);
+        o.parent = ParentInfo.fromObj(_.get<Object, Object>(obj, 'parent', null));
+        return o;
+    }
+
+    public getAncestorPath(): string {
+
+        let path = "";
+
+        // traverse parent hierarchy
+        let parent = this.parent;
+        while (parent !== null) {
+
+            let base = parent.name;
+            if (path.length !== 0) {
+                base += "/";
+            }
+            path = base + path;
+
+            // navigate
+            parent = parent.parent;
+        }
+
+
+        return path;
+    }
+
+    public static getActivitySubtitle1(ancestorPath: string): string {
+        var title = ancestorPath;
+        if (ancestorPath) {
+            var indexOf = ancestorPath.indexOf('/');
+            if (indexOf > 0) {
+                title = ancestorPath.substring(0, indexOf);
+            }
+        }
+        return title;
+    }
+
+    public static getActivitySubtitle2(ancestorPath: string): string {
+        var title = '';
+        if (ancestorPath) {
+            var indexOf = ancestorPath.indexOf('/');
+            if (indexOf > 0) {
+                title = ancestorPath.substring(indexOf + 1, ancestorPath.length);
+            }
+        }
+        return title;
+    }
+
+    public getExpectedAction(): string {
+
+        var activityTypeToAction:any = {
+            'Share': 'Shared',
+            'Create': 'Added',
+            'Update': 'Changed',
+            'JoinProject': 'Joined',
+            'LeaveProject': 'Unjoined',
+            'PickTask': 'Owned',
+            'GenerateReport': 'Generated'
+        };
+
+        var activityAction = activityTypeToAction[this.type] || this.type;
+        if (this.activity_entity_type === 'project' && this.type === 'Create') {
+            activityAction = 'Created';
+        }
+        return activityAction + ' by';
+    }
+
+}
+
+class ParentInfo {
+    id: string;
+    entity_type: string;
+    name: string;
+    parent: ParentInfo;
+
+    public static fromObj(obj: object): ParentInfo {
+        if (obj === null) {
+            return null;
+        }
+
+        let o = new ParentInfo();
+        o.id = _.get<Object, string>(obj, 'id', '');
+        o.entity_type = _.get<Object, string>(obj, 'entity_type', '');
+        o.name = _.get<Object, string>(obj, 'name', '');
+        o.parent = ParentInfo.fromObj(_.get<Object, Object>(obj, 'parent', {}));
+        return o;
+    }
+}
+
+
+class DrillPlanActivityCardInfo {
+    id: string;
+    title: string;
+    subtitle1: string;
+    subtitle2: string;
+    image_url: string;
+    activity_type: string;
+    user: string;
+    user_picture: string;
+    launch: string;
+    comments: string;
+
+    public static fromObj(raw: any): DrillPlanActivityCardInfo {
+
+        let info: ActivityInfo = raw as ActivityInfo;
+
+        let o: DrillPlanActivityCardInfo = new DrillPlanActivityCardInfo();
+        o.id = info.id;
+        o.title = info.activity.entity_name;
+        o.subtitle1 = info.activity.entity_name;
+        o.subtitle2 = info.activity.entity_name;
+        o.user = info.owner.full_name;
+        o.activity_type = info.activity.type;
+        o.comments = info.activity.comments;
+
+        return o;
+    }
+}
+
+//////////////////// Begin - Team Card ////////////////////
 
 class PropertyChangedEventInfo {
     title: string;                      // " "
@@ -145,6 +368,7 @@ class SectionInfo {
     startGroup: boolean;
     activityTitle: string;      // "Mud Design Changed",
     activitySubtitle: string;   // "Density",
+    activityText: string;
     activityImage: string;      // "http://icons.iconarchive.com/icons/rokey/fantastic-dream/128/driver-mud-icon.png"
     facts: Map<string, string>;
 
@@ -157,7 +381,7 @@ class SectionInfo {
         }
 
         let me = <any>(this);
-        for (let prop of ['startGroup', 'activityTitle', 'activitySubtitle', 'activityImage']) {
+        for (let prop of ['startGroup', 'activityTitle', 'activitySubtitle', 'activityImage', 'activityText']) {
             o[prop] = me[prop];
         }
 
@@ -173,12 +397,13 @@ class SectionInfo {
         return o;
     }
 
-    public static CreateActivityCard(start: boolean, title: string, subtitle: string, image: string) {
+    public static CreateActivityCard(image: string, title: string, subtitle: string, text: string, start: boolean) {
         let s = new SectionInfo();
         s.startGroup = start;
         s.activityTitle = title;
         s.activitySubtitle = subtitle;
         s.activityImage = image;
+        s.activityText = text;
         return s;
     }
 
@@ -211,50 +436,7 @@ class ActionInfo {
     }
 }
 
-/*    
-{
-    "@type": "MessageCard",
-    "@context": "http://schema.org/extensions",    
-    "title": " ",
-    "summary": " ",
-    "themeColor": "0078D7",
-    "sections": [
-        {
-            "startGroup": true,
-            "activityTitle": "Mud Design Changed",
-            "activitySubtitle": "Density",
-            "activityImage": "http://icons.iconarchive.com/icons/rokey/fantastic-dream/128/driver-mud-icon.png"
-        },
-        {
-            "startGroup": true,
-            "facts": [
-                {
-                    "name": "From",
-                    "value": "1.3"
-                },
-                {
-                    "name": "To",
-                    "value": "0.9"
-                },
-                {
-                    "name": "User",
-                    "value": "adele"
-                }
-            ]
-        }
-    ],
-    "potentialAction": [
-        {
-            "@context": "http://schema.org",
-            "@type": "ViewAction",
-            "name": "Launch Application",
-            "target": [
-                "http://163.185.149.206/#/wpm/programs"
-            ]
-        }
-    ]
-}
-*/
+//////////////////// End - Team Card ////////////////////
 
 export {
     ProjectInfo,
@@ -264,4 +446,7 @@ export {
     SectionInfo,
     ActionInfo,
     EntityChangedEventInfo,
+    DrillPlanActivityCardInfo,
+    ActivityInfo,
+    ActivityDetails
 }
