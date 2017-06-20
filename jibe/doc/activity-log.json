@@ -1,0 +1,4351 @@
+[
+    {
+        "id": "1-d6eedfcac4ee422a9eb6668ce3f322c5",
+        "owner": {
+            "full_name": "Vladimir Zhernakov  374244",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Quito Traning Event  5-16-2017-schlumberger",
+            "activity_time": "2017-06-13T22:08:43.3577888Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-3bdaecceab964da987a25b0bbe0939f0",
+        "owner": {
+            "full_name": "Vladimir Zhernakov  374244",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-06-13T22:01:52.1696127Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-6d7f2681b1d4468fbeb232f459e13a27",
+        "owner": {
+            "full_name": "Lucas Natraj  393349",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "f85b9dec6de340598689babbbf1a48f0",
+            "entity_name": "White City 8 Federal #4H–Cimerex",
+            "activity_time": "2017-06-13T17:30:14.6757117Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-18464c4025524f60a7ca0286768daf93",
+        "owner": {
+            "full_name": "Lucas Natraj  393349",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "20712ccdef2b46c5863f1201a6754be5",
+            "entity_name": "Sample Well–SLB-IDS",
+            "activity_time": "2017-06-13T17:29:22.0902243Z",
+            "comments": "",
+            "project_id": "1-20712ccdef2b46c5863f1201a6754be5",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "SLB-IDS"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-43276dc35110482a92ce276026c5663c",
+        "owner": {
+            "full_name": "Mengxiao Li  880729",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-06-08T02:35:17.5419063Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-ada6a07423394514a7d0949f0b903eeb",
+        "owner": {
+            "full_name": "Diego Jose Medina Guirigay",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "5a97c2a55f0a4df0879a0730e2a0e8a2",
+            "entity_name": "Cementing",
+            "activity_time": "2017-05-31T12:37:28.7988185Z",
+            "comments": "Created as cementing data",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "define cement job",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": {
+                "id": "1-e2c923230ba9434cb6f5a07da554eb74",
+                "entity_type": "section",
+                "name": "8.5 in",
+                "parent": {
+                    "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                    "entity_type": "project",
+                    "name": "Quito Traning Event  5-16-2017-schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-c6ff9b20b5fb4d78b67a63a765764f2f",
+        "owner": {
+            "full_name": "Yezid Arevalo",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "b303a4dfcf304ea38b8d9c251e338d25",
+            "entity_name": "Untitled Trajectory",
+            "activity_time": "2017-05-30T18:23:43.9339563Z",
+            "comments": ".",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-b4850b10fd944af580ef68870a4e30db",
+        "owner": {
+            "full_name": "Nikita Sharaev",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-05-28T14:36:37.0491953Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-658a1efc668846b0b16ff3b7d04a62cb",
+        "owner": {
+            "full_name": "Hai Feng Li",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-05-27T01:27:39.8733017Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-2ee064f91d70469dba8a1f1bb553cb53",
+        "owner": {
+            "full_name": "Diego Jose Medina Guirigay",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "0f55e23ce7664070bdf562e39cb0df33",
+            "entity_name": "Untitled Evaluation",
+            "activity_time": "2017-05-26T13:12:14.8312426Z",
+            "comments": "Created as evaluation data",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "evaluation",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": {
+                "id": "1-e2c923230ba9434cb6f5a07da554eb74",
+                "entity_type": "section",
+                "name": "8.5 in",
+                "parent": {
+                    "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                    "entity_type": "project",
+                    "name": "Quito Traning Event  5-16-2017-schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-84ad85572b60475c9594a4c340d01f05",
+        "owner": {
+            "full_name": "Diego Jose Medina Guirigay",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "ba3d1582292c414c826b25f7c83443dd",
+            "entity_name": "Cementing",
+            "activity_time": "2017-05-26T12:31:56.3025859Z",
+            "comments": "Created as cementing data",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "define cement job",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": {
+                "id": "1-62edfc4dff30499599fac8868ff76d10",
+                "entity_type": "section",
+                "name": "26 in",
+                "parent": {
+                    "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                    "entity_type": "project",
+                    "name": "Quito Traning Event  5-16-2017-schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-cc06dfa34c12470eb3e6b19df0cd1298",
+        "owner": {
+            "full_name": "Ning Hao",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "19fc2c9b13eb4e42b48f08bdf9159c3e",
+            "entity_name": "8.5 BHA",
+            "activity_time": "2017-05-25T14:59:43.2916029Z",
+            "comments": "dd",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": {
+                "id": "1-70389a3e983a4a9297958129b252455f",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-e2a85974c3a5422cb39595dd83e027c1",
+                    "entity_type": "section",
+                    "name": "8.5 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-5297fe3927ad4e68b0cc2a104648fc63",
+        "owner": {
+            "full_name": "Edison Adrian Barrera Aguilar  591672",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Quito Traning Event  5-16-2017-schlumberger",
+            "activity_time": "2017-05-19T16:32:37.6807065Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-9f1ae50b28784e4588869068ec660983",
+        "owner": {
+            "full_name": "Sergio Moncayo  854840",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Quito Traning Event  5-16-2017-schlumberger",
+            "activity_time": "2017-05-19T16:31:16.2005167Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-b2bee8924f3b4c71aed45fde19c4d820",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "GenerateReport",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Integrated Technical Proposal",
+            "activity_time": "2017-05-18T15:42:45.9438339Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "ItpReport",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Traning Event  5-16-2017-schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-d55f0d2f30584ccda227eb88affb1bfd",
+        "owner": {
+            "full_name": "Diego Jose Medina Guirigay",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "GenerateReport",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Integrated Technical Proposal",
+            "activity_time": "2017-05-18T15:42:43.6633123Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "ItpReport",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Traning Event  5-16-2017-schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-74591dae71ae4598988304a7e22c7027",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Quito Traning Event  5-16-2017-schlumberger",
+            "activity_time": "2017-05-17T15:15:37.3042191Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Project Name"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-260ce6489471483d9a13b59f49191767",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "dcc766fe1a984a0c887ab36fb90c81af",
+            "entity_name": "Quito Traning Event  5-16-2017",
+            "activity_time": "2017-05-17T15:15:24.9283554Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Well Information"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-39e17e5ced284d59b404a23599fb11e3",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "cd38d84fea4c48b991f69c04cd6a1a5a",
+            "entity_name": "16.000 M816-B, BOM 66865A0001",
+            "activity_time": "2017-05-16T19:09:18.2888012Z",
+            "comments": "ok",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "bit",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f62e1584abe14d7e850430777b1da660",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-17c2b04670cd4802a3e618a7d3353a43",
+                    "entity_type": "section",
+                    "name": "16 in",
+                    "parent": {
+                        "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                        "entity_type": "project",
+                        "name": "Quito Day 1 5-16-2017–schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-558351b56b984cb89e0ce1031c5c50af",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "007f897180d943a788bc8f5f6a53ba7d",
+            "entity_name": "Untitled Bit Selection",
+            "activity_time": "2017-05-16T19:09:15.0230723Z",
+            "comments": "ok",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "Bit Selection",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f62e1584abe14d7e850430777b1da660",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-17c2b04670cd4802a3e618a7d3353a43",
+                    "entity_type": "section",
+                    "name": "16 in",
+                    "parent": {
+                        "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                        "entity_type": "project",
+                        "name": "Quito Day 1 5-16-2017–schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-75e212498aca403fa5106446ff32883b",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "10187a8198e4496fbfd1ec03a8712f06",
+            "entity_name": "16.000 SDI619MHBPX, BOM 66857B0001",
+            "activity_time": "2017-05-16T19:09:14.9605722Z",
+            "comments": "ok",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "bit",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f62e1584abe14d7e850430777b1da660",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-17c2b04670cd4802a3e618a7d3353a43",
+                    "entity_type": "section",
+                    "name": "16 in",
+                    "parent": {
+                        "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                        "entity_type": "project",
+                        "name": "Quito Day 1 5-16-2017–schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-64ab8e95da674ff697414a6779e49f1b",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "b960cbf12e844919bf4413a8ba40761e",
+            "entity_name": "16.000 SDI619MHBPX, BOM 66857A0101",
+            "activity_time": "2017-05-16T19:09:14.7574664Z",
+            "comments": "ok",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "bit",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f62e1584abe14d7e850430777b1da660",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-17c2b04670cd4802a3e618a7d3353a43",
+                    "entity_type": "section",
+                    "name": "16 in",
+                    "parent": {
+                        "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                        "entity_type": "project",
+                        "name": "Quito Day 1 5-16-2017–schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-860e9139d67c4e86be0c3775a0760aff",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "a98d86523cb84dcba52e05e1d9ff2af1",
+            "entity_name": "Untitled BHA/Drillstring",
+            "activity_time": "2017-05-16T19:00:29.511679Z",
+            "comments": "help",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f62e1584abe14d7e850430777b1da660",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-17c2b04670cd4802a3e618a7d3353a43",
+                    "entity_type": "section",
+                    "name": "16 in",
+                    "parent": {
+                        "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                        "entity_type": "project",
+                        "name": "Quito Day 1 5-16-2017–schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-1cd1c40fa51149deb807508dc2c0a9c8",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "a98d86523cb84dcba52e05e1d9ff2af1",
+            "entity_name": "Untitled BHA/Drillstring",
+            "activity_time": "2017-05-16T18:46:35.9490887Z",
+            "comments": "changed the max flow rate",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f62e1584abe14d7e850430777b1da660",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-17c2b04670cd4802a3e618a7d3353a43",
+                    "entity_type": "section",
+                    "name": "16 in",
+                    "parent": {
+                        "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                        "entity_type": "project",
+                        "name": "Quito Day 1 5-16-2017–schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-f86999e7b0504de690cff9ecfab6055c",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "f62e1584abe14d7e850430777b1da660_OperationParameterSetVo",
+            "entity_name": "Run - Drilling Parameter",
+            "activity_time": "2017-05-16T18:40:44.4239858Z",
+            "comments": "ok",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "Drilling Parameter",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f62e1584abe14d7e850430777b1da660",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-17c2b04670cd4802a3e618a7d3353a43",
+                    "entity_type": "section",
+                    "name": "16 in",
+                    "parent": {
+                        "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                        "entity_type": "project",
+                        "name": "Quito Day 1 5-16-2017–schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-d914e9e3ce3349cd98eef64aa59a1ba2",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Service.Data.Share",
+            "entity_id": "a03dfdfed3904c58af52c3249d7dc369",
+            "entity_name": "Untitled Mud Design",
+            "activity_time": "2017-05-16T18:38:01.5414907Z",
+            "comments": "basic data\n",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "drilling fluid",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-17c2b04670cd4802a3e618a7d3353a43",
+                "entity_type": "section",
+                "name": "16 in",
+                "parent": {
+                    "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                    "entity_type": "project",
+                    "name": "Quito Day 1 5-16-2017–schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-1195e1fa14bb44c79642a609d82c221c",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "836dbb6e09a6405ab70b092b27c6682a",
+            "entity_name": "Untitled Rig",
+            "activity_time": "2017-05-16T18:35:30.8142856Z",
+            "comments": "good story",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "rig",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-594b265c3d484e6fbcee67e86295deb8",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Quito Day 1 5-16-2017–schlumberger",
+            "activity_time": "2017-05-16T18:35:30.4705274Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Rig Name"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-e53d3013800645fea48d45690958b71e",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "836dbb6e09a6405ab70b092b27c6682a",
+            "entity_name": "Untitled Rig",
+            "activity_time": "2017-05-16T18:30:04.7498802Z",
+            "comments": "Created as customer data",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "rig",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-b2d4d004072a4897b8460010253adf2f",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Quito Day 1 5-16-2017–schlumberger",
+            "activity_time": "2017-05-16T18:30:04.2811186Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Rig Name"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-67576a4943b64844b763c9cdf8919351",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Quito Day 1 5-16-2017–schlumberger",
+            "activity_time": "2017-05-16T18:30:02.9217193Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Rig Name"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-a7b267b46842442e9753e64749bc6b47",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "a98d86523cb84dcba52e05e1d9ff2af1",
+            "entity_name": "Untitled BHA/Drillstring",
+            "activity_time": "2017-05-16T18:29:16.3423806Z",
+            "comments": "from import",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f62e1584abe14d7e850430777b1da660",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-17c2b04670cd4802a3e618a7d3353a43",
+                    "entity_type": "section",
+                    "name": "16 in",
+                    "parent": {
+                        "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                        "entity_type": "project",
+                        "name": "Quito Day 1 5-16-2017–schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-bb5b6732ece242b39b7f51e4c1464329",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "355fe667cad3409389a8d36236f51a74",
+            "entity_name": "Untitled Trajectory",
+            "activity_time": "2017-05-16T17:13:23.3358974Z",
+            "comments": "ok",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-d61253ec46f24f69903fcae9f72d8c7b",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "355fe667cad3409389a8d36236f51a74",
+            "entity_name": "Untitled Trajectory",
+            "activity_time": "2017-05-16T17:12:57.3660261Z",
+            "comments": "bad but we had to do this",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-4f332dbd257644e3b54412c53db7d25d",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "355fe667cad3409389a8d36236f51a74",
+            "entity_name": "Untitled Trajectory",
+            "activity_time": "2017-05-16T17:11:29.6422826Z",
+            "comments": "Created as customer data",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-7d105d057b7f48b284f98896d4aa1593",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "f97f43fccd8948e2bcee0609ca69df59",
+            "entity_name": "Untitled Target",
+            "activity_time": "2017-05-16T17:08:13.8640431Z",
+            "comments": "just foro fun",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "target",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-784e32161a1b4872af245a85aa6fd2f6",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "0f39a2fa1f3e4ec69ef1250747465743",
+            "entity_name": "DOX Trajectorys",
+            "activity_time": "2017-05-16T17:04:32.697548Z",
+            "comments": "bad",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-cec762d9f80c4a8cb3b3c9442d127414",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "9296cec47eb24b5c93626ba5a69f7065",
+            "entity_name": "Untitled Wellbore Geometry",
+            "activity_time": "2017-05-16T16:57:19.3404552Z",
+            "comments": "ok",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "wellbore geometry",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-2cdd94c9ff9340aaa207bf44de263382",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "0aa69e972b8243e68cd7ecdfe25a46bb",
+            "entity_name": "Risks",
+            "activity_time": "2017-05-16T16:40:50.2587724Z",
+            "comments": "first pass",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "risks",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-78fde875408e4ce2b5e31570f4e00ad2",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "0aa69e972b8243e68cd7ecdfe25a46bb",
+            "entity_name": "Risks",
+            "activity_time": "2017-05-16T16:23:17.7233568Z",
+            "comments": "Created as risk set data",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "risks",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-cbf9ca524a604b9e9101cd15eb47656a",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "c4f3a20a6698485987af0b2799502a29",
+            "entity_name": "Surface Location",
+            "activity_time": "2017-05-16T16:22:19.4096223Z",
+            "comments": "just the CRS and N&E",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "Surface Location",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-b83cbea29fc24849aa64431ae33a0dae",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Quito Day 1 5-16-2017–schlumberger",
+            "activity_time": "2017-05-16T16:18:52.3699126Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Coordinate Reference System"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-53b287420c02432ba12cd66f17269780",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Quito Day 1 5-16-2017–schlumberger",
+            "activity_time": "2017-05-16T15:49:42.2355271Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Project Template Id"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-b5b0f5ff1b4d40d6a10a9b63db8d162b",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "e2c923230ba9434cb6f5a07da554eb74",
+            "entity_name": "8.5 in",
+            "activity_time": "2017-05-16T15:20:36.9444618Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-9971cbd0b1c3450d893f5cabbcffbfdb",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "7dd82b6a5b784434a81db0aa5665af62",
+            "entity_name": "12.25 in",
+            "activity_time": "2017-05-16T15:19:16.0962546Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-9db8b4c1ebbd40c8aab6390563697168",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "17c2b04670cd4802a3e618a7d3353a43",
+            "entity_name": "16 in",
+            "activity_time": "2017-05-16T15:18:59.4556272Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-1fd6c4ad6a35487a9ca3833d4a2df555",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "62edfc4dff30499599fac8868ff76d10",
+            "entity_name": "26 in",
+            "activity_time": "2017-05-16T15:18:19.5340621Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-f1a15850573b4aa9b286f171e06f3e85",
+                "entity_type": "project",
+                "name": "Quito Day 1 5-16-2017–schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-4f0e3025bd55444190313c202b1ea648",
+        "owner": {
+            "full_name": "Daniel Brahosky",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "f1a15850573b4aa9b286f171e06f3e85",
+            "entity_name": "Quito Day 1 5-16-2017–schlumberger",
+            "activity_time": "2017-05-16T15:13:51.5217592Z",
+            "comments": "",
+            "project_id": "1-f1a15850573b4aa9b286f171e06f3e85",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-ae039dd091d548d285e0bedccc080d54",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "65277bf64cc4402f936544c04889b1bf",
+            "entity_name": "Surface Location",
+            "activity_time": "2017-05-15T08:25:31.5378806Z",
+            "comments": "OK",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "Surface Location",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-dd679a7259b344fb8a133f01c2d23bbd",
+        "owner": {
+            "full_name": "Yezid Arevalo",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "f85b9dec6de340598689babbbf1a48f0",
+            "entity_name": "White City 8 Federal #4H–Cimerex",
+            "activity_time": "2017-05-10T19:06:38.2567492Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-479df6557cfc42169c4ff5738608a6cf",
+        "owner": {
+            "full_name": "Mikhail Gurevich",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-05-09T19:07:52.8124352Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-e7ba3a4660fa4188b5ddcfe7c9186730",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "GenerateReport",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Integrated Technical Proposal",
+            "activity_time": "2017-05-04T10:28:06.1890093Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "ItpReport",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-10e80233f66b416199b9737b85fd10ce",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "207c058fc5b24736859d7e3e40950634",
+            "entity_name": "8 in BHA",
+            "activity_time": "2017-05-04T10:25:31.125041Z",
+            "comments": "Updated bit",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-37c87a1c1e6a4365beac82c82a881f59",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-e2a85974c3a5422cb39595dd83e027c1",
+                    "entity_type": "section",
+                    "name": "8.5 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-a51bcfafe9d84fbca43f1c006e11fb49",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "37c87a1c1e6a4365beac82c82a881f59_OperationParameterSetVo",
+            "entity_name": "Run - Drilling Parameter",
+            "activity_time": "2017-05-04T10:24:42.5233766Z",
+            "comments": "Ok",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "Drilling Parameter",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-37c87a1c1e6a4365beac82c82a881f59",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-e2a85974c3a5422cb39595dd83e027c1",
+                    "entity_type": "section",
+                    "name": "8.5 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-8867e06a39cc4be5a30f1782393d1d43",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "GenerateReport",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Integrated Technical Proposal",
+            "activity_time": "2017-05-04T10:22:37.1463314Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "ItpReport",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-e5e951fdade942dbad6c246b16f210f3",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "e2165ed823ab4f83bf0ea4b3469ee64d",
+            "entity_name": "Untitled Bit Selection",
+            "activity_time": "2017-05-03T21:14:09.8100801Z",
+            "comments": "queue up the ideas machine",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "Bit Selection",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-61fb6a60485d43b1994c510fb2198f1e",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-45328fe7f98c439ba1b217d5b551f0f4",
+                    "entity_type": "section",
+                    "name": "8.75 in",
+                    "parent": {
+                        "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                        "entity_type": "project",
+                        "name": "White City 8 Federal #4H–Cimerex",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-4309019253574d04b3631b593c2d94bb",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "5ae0280b86a6400b85a48a4d92b70b39",
+            "entity_name": "8.750 MDSI616BPX, BOM 66729A0208",
+            "activity_time": "2017-05-03T21:14:09.1850515Z",
+            "comments": "queue up the ideas machine",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "bit",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-61fb6a60485d43b1994c510fb2198f1e",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-45328fe7f98c439ba1b217d5b551f0f4",
+                    "entity_type": "section",
+                    "name": "8.75 in",
+                    "parent": {
+                        "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                        "entity_type": "project",
+                        "name": "White City 8 Federal #4H–Cimerex",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-89304edace1e4d70a3491ee4db18e2bf",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "e38bb316cedb42e9bc07b5bce97f5c71",
+            "entity_name": "Surface Location",
+            "activity_time": "2017-05-03T20:20:12.2506993Z",
+            "comments": "boom",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "Surface Location",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-887a952782404b169ef27302730faf29",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "f85b9dec6de340598689babbbf1a48f0",
+            "entity_name": "White City 8 Federal #4H–Cimerex",
+            "activity_time": "2017-05-03T20:19:16.9208042Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Coordinate Reference System"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-4e5aeab5a84f4df1ae6e410d96c4a1c6",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "b303a4dfcf304ea38b8d9c251e338d25",
+            "entity_name": "Untitled Trajectory",
+            "activity_time": "2017-05-03T19:44:18.1437113Z",
+            "comments": "from Matt, likely will change soon",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-18981709f7a141a19bc86ef5115dd248",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "b303a4dfcf304ea38b8d9c251e338d25",
+            "entity_name": "Untitled Trajectory",
+            "activity_time": "2017-05-03T19:42:32.8230228Z",
+            "comments": "Created as customer data",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-b39c1e23c9c74bc9b360462fed6f76f2",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "61fb6a60485d43b1994c510fb2198f1e_OperationParameterSetVo",
+            "entity_name": "Run - Drilling Parameter",
+            "activity_time": "2017-05-03T19:41:55.008684Z",
+            "comments": "from rig",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "Drilling Parameter",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-61fb6a60485d43b1994c510fb2198f1e",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-45328fe7f98c439ba1b217d5b551f0f4",
+                    "entity_type": "section",
+                    "name": "8.75 in",
+                    "parent": {
+                        "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                        "entity_type": "project",
+                        "name": "White City 8 Federal #4H–Cimerex",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-0326966913b44922872315282e7cb1ee",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Service.Data.Share",
+            "entity_id": "773043f0c88c42b3bdb1e27d83f261b2",
+            "entity_name": "Untitled Mud Design",
+            "activity_time": "2017-05-03T19:39:24.6352047Z",
+            "comments": "SWACO mud school rocks",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "drilling fluid",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-45328fe7f98c439ba1b217d5b551f0f4",
+                "entity_type": "section",
+                "name": "8.75 in",
+                "parent": {
+                    "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                    "entity_type": "project",
+                    "name": "White City 8 Federal #4H–Cimerex",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-dd5bc9dab23e4059b5b363af55eb907c",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "0985e6a5809c42599a6d6e7b8e85f548",
+            "entity_name": "Untitled BHA/Drillstring",
+            "activity_time": "2017-05-03T19:36:40.7948026Z",
+            "comments": "snap",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-61fb6a60485d43b1994c510fb2198f1e",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-45328fe7f98c439ba1b217d5b551f0f4",
+                    "entity_type": "section",
+                    "name": "8.75 in",
+                    "parent": {
+                        "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                        "entity_type": "project",
+                        "name": "White City 8 Federal #4H–Cimerex",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-d38fd7d94c2d45d3949dde345683aa3f",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "dea711bf944f4c19b2a670aaea5c5664",
+            "entity_name": "Untitled Rig",
+            "activity_time": "2017-05-03T17:41:27.1608694Z",
+            "comments": "whammy",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "rig",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-5b34a83c9d144ae3a11ce880d54242cf",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "f85b9dec6de340598689babbbf1a48f0",
+            "entity_name": "White City 8 Federal #4H–Cimerex",
+            "activity_time": "2017-05-03T17:41:26.5202217Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Rig Name"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-4f0295d727144b5db674ef47d8fe3cb7",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "f85b9dec6de340598689babbbf1a48f0",
+            "entity_name": "White City 8 Federal #4H–Cimerex",
+            "activity_time": "2017-05-03T17:37:25.5051116Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Rig Name"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-f74fb5bb5fb9413cbaf29c8e0f8048d6",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "e4371f6ec3424f00b0f10378a7f39ca9",
+            "entity_name": "Risks",
+            "activity_time": "2017-05-03T17:34:39.4559838Z",
+            "comments": "snap diggity",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "risks",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-a3e9ea4defbb40f992cf4a9abc507428",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "9f6b3c4a62aa42c7949638a01800463f",
+            "entity_name": "Untitled Wellbore Geometry",
+            "activity_time": "2017-05-03T17:21:41.6575008Z",
+            "comments": "BOOYAH",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "wellbore geometry",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-641c4d5f92254f2a9cde01d3e5b4a940",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "e38bb316cedb42e9bc07b5bce97f5c71",
+            "entity_name": "Surface Location",
+            "activity_time": "2017-05-03T17:09:20.04849Z",
+            "comments": "hey-OOOO",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "Surface Location",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-9fe87872a58c497eadce684bca89e3d0",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "f85b9dec6de340598689babbbf1a48f0",
+            "entity_name": "White City 8 Federal #4H–Cimerex",
+            "activity_time": "2017-05-03T17:05:34.1021881Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Coordinate Reference System"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-e2f3299a4bb94c2395418fed40c56c56",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "f85b9dec6de340598689babbbf1a48f0",
+            "entity_name": "White City 8 Federal #4H–Cimerex",
+            "activity_time": "2017-05-03T17:02:03.754211Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Coordinate Reference System"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-2dc508d6bcbd4255a9e8f58f24426d31",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "e4371f6ec3424f00b0f10378a7f39ca9",
+            "entity_name": "Risks",
+            "activity_time": "2017-05-03T16:59:55.0888139Z",
+            "comments": "Created as risk set data",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "risks",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-f457f8429dba4239a8b0d9233a4149a8",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Delete",
+            "entity_id": "ae90069500bf4dcbaa50e287ce43c576",
+            "entity_name": "17.5 in",
+            "activity_time": "2017-05-03T16:16:47.5192002Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-363f0abb9ed6429f9e0131a34f3446e0",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Delete",
+            "entity_id": "b8782a90c74349dba480bafed69a755a",
+            "entity_name": "8.5 in",
+            "activity_time": "2017-05-03T16:16:39.3610928Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-9121f94949dc46e4b351fa178bae4bc5",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "b8782a90c74349dba480bafed69a755a",
+            "entity_name": "8.5 in",
+            "activity_time": "2017-05-03T15:58:28.9526708Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-676f1409eaa74b489a72a43437efdf08",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "45328fe7f98c439ba1b217d5b551f0f4",
+            "entity_name": "8.75 in",
+            "activity_time": "2017-05-03T15:58:21.5922619Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-1f1bf3a6d5f44e898a4b6c71ae665cc1",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "cf47e15702aa495fb7446c9679beb007",
+            "entity_name": "12.25 in",
+            "activity_time": "2017-05-03T15:58:05.4009792Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-d060a474e71d4abeafadb17be2aa8cc6",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "ae90069500bf4dcbaa50e287ce43c576",
+            "entity_name": "17.5 in",
+            "activity_time": "2017-05-03T15:57:50.4922975Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                "entity_type": "project",
+                "name": "White City 8 Federal #4H–Cimerex",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-e2004ff35dc14d97b6d2bfeb87195683",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "f85b9dec6de340598689babbbf1a48f0",
+            "entity_name": "White City 8 Federal #4H–Cimerex",
+            "activity_time": "2017-05-03T15:51:02.6186925Z",
+            "comments": "",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-9647862cba0a45aeb472c1db7f7601f9",
+        "owner": {
+            "full_name": "Adrian Newton",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-05-03T07:54:10.1967477Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-31e012add3074abe8c5eec3f9b7d0fa6",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Service.Data.Share",
+            "entity_id": "70cc41e8dd7d4f35bc202fc25907bc26",
+            "entity_name": "8.5 Fluid",
+            "activity_time": "2017-05-02T09:20:18.8329945Z",
+            "comments": "ok",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "drilling fluid",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-e2a85974c3a5422cb39595dd83e027c1",
+                "entity_type": "section",
+                "name": "8.5 in",
+                "parent": {
+                    "id": "1-3da20c99195a48849d37bda3691ad500",
+                    "entity_type": "project",
+                    "name": "Demo–Schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-47d670e38c2249bfbed75ea026b1cad6",
+        "owner": {
+            "full_name": "Kristin Nergaard",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "5a3d0dc0ff0842a4b6c8cc816c3fdc4e",
+            "entity_name": "Untitled Trajectory",
+            "activity_time": "2017-05-02T08:37:36.9175097Z",
+            "comments": "Original",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-010e56f072f04f8092a5ce0c825093fe",
+        "owner": {
+            "full_name": "Kristin Nergaard",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "3ee53752ddd44b209f4300825a8edbe7",
+            "entity_name": "Trajectory (ATD).",
+            "activity_time": "2017-04-28T06:35:04.0522686Z",
+            "comments": "Back to original",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-deb61a29b15348829c87dea5f9922ac4",
+        "owner": {
+            "full_name": "Kristin Nergaard",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "5a3d0dc0ff0842a4b6c8cc816c3fdc4e",
+            "entity_name": "Untitled Trajectory",
+            "activity_time": "2017-04-28T06:25:49.9285473Z",
+            "comments": "Removed elevation",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-bdb23d860d114c0185835afe78185faa",
+        "owner": {
+            "full_name": "Kristin Nergaard",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "d0c7714239da429ca48178af1ffee5fb",
+            "entity_name": "Targets 2",
+            "activity_time": "2017-04-28T06:16:00.6643249Z",
+            "comments": "Back to original",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "target",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-c5e2f8a46d2f490bb24dc8e7775fe2e6",
+        "owner": {
+            "full_name": "Kristin Nergaard",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "5a3d0dc0ff0842a4b6c8cc816c3fdc4e",
+            "entity_name": "Untitled Trajectory",
+            "activity_time": "2017-04-26T13:26:30.9247072Z",
+            "comments": "Created as customer data",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-5894852c0fea470ea54a99779255a795",
+        "owner": {
+            "full_name": "Kristin Nergaard",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-26T08:21:31.741355Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Unit System"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-4b73984e8f784960afabcb91ccd5fff9",
+        "owner": {
+            "full_name": "Kristin Nergaard",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-26T08:06:02.5846602Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Unit System"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-8a6d888803c34db7b82218479396d7f6",
+        "owner": {
+            "full_name": "Kristin Nergaard",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-26T08:04:07.5593933Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-025d854d6ec646089b302a38524fbb61",
+        "owner": {
+            "full_name": "Swetha Rakesh Banad",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "9fda19808de04fbc94f5ca911db9ad1d",
+            "entity_name": "Risks",
+            "activity_time": "2017-04-20T08:46:20.7024274Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "jar placement",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-c37d428992614193a446ef74d1d1b9d7",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-3ca242f40d494243948924978dc6efb6",
+                    "entity_type": "section",
+                    "name": "12.25 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-e7745dc0ff82459c9e653c3f3f7dc577",
+        "owner": {
+            "full_name": "Swetha Rakesh Banad",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Service.Data.Share",
+            "entity_id": "70cc41e8dd7d4f35bc202fc25907bc26",
+            "entity_name": "8.5 Fluid",
+            "activity_time": "2017-04-20T08:41:32.5396211Z",
+            "comments": "ok",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "drilling fluid",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-e2a85974c3a5422cb39595dd83e027c1",
+                "entity_type": "section",
+                "name": "8.5 in",
+                "parent": {
+                    "id": "1-3da20c99195a48849d37bda3691ad500",
+                    "entity_type": "project",
+                    "name": "Demo–Schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-9540786c0b2540b386ed2c7db1286022",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "06dda8a2998c4ff0823385de9c59bfa2",
+            "entity_name": "WBG",
+            "activity_time": "2017-04-19T09:58:42.1410568Z",
+            "comments": "Updated template id",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "wellbore geometry",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-b144b4f54ed749388576db8a4e1d9be0",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-19T09:56:33.8549994Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Project Template Id"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-05f9714af4dc4c7d8970ccad13171e89",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "06dda8a2998c4ff0823385de9c59bfa2",
+            "entity_name": "WBG",
+            "activity_time": "2017-04-19T09:50:11.7065762Z",
+            "comments": "Update 7\" casing",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "wellbore geometry",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-911408130d3146bca5e5d950d6daad7b",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "3ee53752ddd44b209f4300825a8edbe7",
+            "entity_name": "Trajectory (ATD)",
+            "activity_time": "2017-04-19T09:48:25.6967417Z",
+            "comments": "ok",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-63c58613c832410dac487b8108583990",
+        "owner": {
+            "full_name": "Jovani Contreras",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "ef3f18c70bc645388d9d97abb066bec3",
+            "entity_name": "Risks",
+            "activity_time": "2017-04-18T21:21:20.5050093Z",
+            "comments": "Created as risk set data",
+            "project_id": "1-20712ccdef2b46c5863f1201a6754be5",
+            "activity_entity_type": "risks",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "SLB-IDS"
+            },
+            "parent": {
+                "id": "1-20712ccdef2b46c5863f1201a6754be5",
+                "entity_type": "project",
+                "name": "Sample Well–SLB-IDS",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-76d226391dc140718b5a4d9d7a42e663",
+        "owner": {
+            "full_name": "Jovani Contreras",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "32bfd95f94304237a6148eaaecbac3d4",
+            "entity_name": "Untitled Evaluation",
+            "activity_time": "2017-04-18T21:20:27.2537453Z",
+            "comments": "None",
+            "project_id": "1-20712ccdef2b46c5863f1201a6754be5",
+            "activity_entity_type": "evaluation",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "SLB-IDS"
+            },
+            "parent": {
+                "id": "1-fe2bed8276e64c49b3c306fdfa28dec8",
+                "entity_type": "section",
+                "name": "12.25 in",
+                "parent": {
+                    "id": "1-20712ccdef2b46c5863f1201a6754be5",
+                    "entity_type": "project",
+                    "name": "Sample Well–SLB-IDS",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-d0bbf43448c2477ead990c8d7efa6908",
+        "owner": {
+            "full_name": "Jovani Contreras",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "32bfd95f94304237a6148eaaecbac3d4",
+            "entity_name": "Untitled Evaluation",
+            "activity_time": "2017-04-18T21:17:32.5259084Z",
+            "comments": "Created as evaluation data",
+            "project_id": "1-20712ccdef2b46c5863f1201a6754be5",
+            "activity_entity_type": "evaluation",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "SLB-IDS"
+            },
+            "parent": {
+                "id": "1-fe2bed8276e64c49b3c306fdfa28dec8",
+                "entity_type": "section",
+                "name": "12.25 in",
+                "parent": {
+                    "id": "1-20712ccdef2b46c5863f1201a6754be5",
+                    "entity_type": "project",
+                    "name": "Sample Well–SLB-IDS",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-36bf7fc742734e5d8aab4617582d4826",
+        "owner": {
+            "full_name": "Jovani Contreras",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "fe2bed8276e64c49b3c306fdfa28dec8",
+            "entity_name": "12.25 in",
+            "activity_time": "2017-04-18T21:12:35.5476474Z",
+            "comments": "",
+            "project_id": "1-20712ccdef2b46c5863f1201a6754be5",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "SLB-IDS"
+            },
+            "parent": {
+                "id": "1-20712ccdef2b46c5863f1201a6754be5",
+                "entity_type": "project",
+                "name": "Sample Well–SLB-IDS",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-db12ba5eac494e7cbcb342a632f98859",
+        "owner": {
+            "full_name": "Jovani Contreras",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "720ed119db864c4ba38c39c5cbc99caf",
+            "entity_name": "8.75 in",
+            "activity_time": "2017-04-18T21:07:22.9575991Z",
+            "comments": "",
+            "project_id": "1-20712ccdef2b46c5863f1201a6754be5",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "SLB-IDS"
+            },
+            "parent": {
+                "id": "1-20712ccdef2b46c5863f1201a6754be5",
+                "entity_type": "project",
+                "name": "Sample Well–SLB-IDS",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-62d30a28abf7451db39de5dd1771bdca",
+        "owner": {
+            "full_name": "Jovani Contreras",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "720ed119db864c4ba38c39c5cbc99caf",
+            "entity_name": "8.75 in",
+            "activity_time": "2017-04-18T21:07:17.0045365Z",
+            "comments": "",
+            "project_id": "1-20712ccdef2b46c5863f1201a6754be5",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "SLB-IDS"
+            },
+            "parent": {
+                "id": "1-20712ccdef2b46c5863f1201a6754be5",
+                "entity_type": "project",
+                "name": "Sample Well–SLB-IDS",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-67637510aeec4032bab39e7d4edd15a1",
+        "owner": {
+            "full_name": "Jovani Contreras",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "720ed119db864c4ba38c39c5cbc99caf",
+            "entity_name": "0 in",
+            "activity_time": "2017-04-18T20:56:11.2901421Z",
+            "comments": "",
+            "project_id": "1-20712ccdef2b46c5863f1201a6754be5",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "SLB-IDS"
+            },
+            "parent": {
+                "id": "1-20712ccdef2b46c5863f1201a6754be5",
+                "entity_type": "project",
+                "name": "Sample Well–SLB-IDS",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-ea62eb94b18e4f82a023d15cc7017e25",
+        "owner": {
+            "full_name": "Jovani Contreras",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "720ed119db864c4ba38c39c5cbc99caf",
+            "entity_name": "17.5 in",
+            "activity_time": "2017-04-18T20:56:06.1652191Z",
+            "comments": "",
+            "project_id": "1-20712ccdef2b46c5863f1201a6754be5",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "SLB-IDS"
+            },
+            "parent": {
+                "id": "1-20712ccdef2b46c5863f1201a6754be5",
+                "entity_type": "project",
+                "name": "Sample Well–SLB-IDS",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-66deb6e48da448138bb3f34b19604712",
+        "owner": {
+            "full_name": "Jovani Contreras",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "20712ccdef2b46c5863f1201a6754be5",
+            "entity_name": "Sample Well–SLB-IDS",
+            "activity_time": "2017-04-18T20:55:24.1331071Z",
+            "comments": "",
+            "project_id": "1-20712ccdef2b46c5863f1201a6754be5",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "SLB-IDS"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-a11aecdb7608402a8c7211f70948152f",
+        "owner": {
+            "full_name": "Kenneth Simpson",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-11T15:09:14.0791058Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-610115a73d7e45b1a2892601bc00e2dc",
+        "owner": {
+            "full_name": "Lejla Begluk",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-11T13:22:06.0725509Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-e020bf1972db485bad7a378c0daed940",
+        "owner": {
+            "full_name": "Pavel Khitrov",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-11T12:42:17.5504065Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-00eafa0466d24617a695e7386d1ef2ab",
+        "owner": {
+            "full_name": "Ynigo Trejo Zamudio",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-10T16:40:05.2934148Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-675253d7b1d44c62b3f743080ff8bb6e",
+        "owner": {
+            "full_name": "Sonny Johnston",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "JoinProject",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-10T02:33:57.5836585Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-fc2904d5c2164ce592dbe89e49ece0c0",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "19fc2c9b13eb4e42b48f08bdf9159c3e",
+            "entity_name": "8.5 BHA",
+            "activity_time": "2017-04-07T15:36:57.4894689Z",
+            "comments": "Updated bit",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-70389a3e983a4a9297958129b252455f",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-e2a85974c3a5422cb39595dd83e027c1",
+                    "entity_type": "section",
+                    "name": "8.5 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-0b39b7363e9a4c5898071b6fbc05b2e5",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "70389a3e983a4a9297958129b252455f_OperationParameterSetVo",
+            "entity_name": "Run - Drilling Parameter",
+            "activity_time": "2017-04-07T15:34:37.0381192Z",
+            "comments": "Update flow rate",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "Drilling Parameter",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-70389a3e983a4a9297958129b252455f",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-e2a85974c3a5422cb39595dd83e027c1",
+                    "entity_type": "section",
+                    "name": "8.5 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-98d3523c97cf43c3a9b22df312673ae6",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "70389a3e983a4a9297958129b252455f_OperationParameterSetVo",
+            "entity_name": "Run - Drilling Parameter",
+            "activity_time": "2017-04-07T15:31:30.1342668Z",
+            "comments": "Defaults",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "Drilling Parameter",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-70389a3e983a4a9297958129b252455f",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-e2a85974c3a5422cb39595dd83e027c1",
+                    "entity_type": "section",
+                    "name": "8.5 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-d9d7832a41664f14bc101b5f2135b746",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "122c568231c949499f03f3ce634eb7ae",
+            "entity_name": "12.25 BHA",
+            "activity_time": "2017-04-07T15:03:04.0175927Z",
+            "comments": "OK",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-c37d428992614193a446ef74d1d1b9d7",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-3ca242f40d494243948924978dc6efb6",
+                    "entity_type": "section",
+                    "name": "12.25 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-5695cbc414d14a14bc5c6f99b4ab1bb9",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "a6a69fa6597641e4909282b05b4b9e5a",
+            "entity_name": "17.5 BHA",
+            "activity_time": "2017-04-07T14:52:56.3818935Z",
+            "comments": "Update",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-325c6339eff349a8808572b165af2d94",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-60b3af527d28470aad6a867840bf1100",
+                    "entity_type": "section",
+                    "name": "17.5 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-8be9274c564547ef9d93ccc3da3d2d0f",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "122c568231c949499f03f3ce634eb7ae",
+            "entity_name": "12.25 BHA",
+            "activity_time": "2017-04-07T13:53:19.7008844Z",
+            "comments": "Updated bit",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-c37d428992614193a446ef74d1d1b9d7",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-3ca242f40d494243948924978dc6efb6",
+                    "entity_type": "section",
+                    "name": "12.25 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-6d3e78fffb39457099c41fe0b829e04e",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "c37d428992614193a446ef74d1d1b9d7_OperationParameterSetVo",
+            "entity_name": "Run - Drilling Parameter",
+            "activity_time": "2017-04-07T13:51:26.1242499Z",
+            "comments": "Default values",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "Drilling Parameter",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-c37d428992614193a446ef74d1d1b9d7",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-3ca242f40d494243948924978dc6efb6",
+                    "entity_type": "section",
+                    "name": "12.25 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-6d18961d00244e9094df09816bc97dc1",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "122c568231c949499f03f3ce634eb7ae",
+            "entity_name": "12.25 BHA",
+            "activity_time": "2017-04-07T13:51:11.5150497Z",
+            "comments": "Straight from template",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-c37d428992614193a446ef74d1d1b9d7",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-3ca242f40d494243948924978dc6efb6",
+                    "entity_type": "section",
+                    "name": "12.25 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-6ce676d0cc6d4e5cb0f399f919f1d3ce",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "a6a69fa6597641e4909282b05b4b9e5a",
+            "entity_name": "17.5 BHA",
+            "activity_time": "2017-04-07T13:49:58.2036011Z",
+            "comments": "Updated Bit",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-325c6339eff349a8808572b165af2d94",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-60b3af527d28470aad6a867840bf1100",
+                    "entity_type": "section",
+                    "name": "17.5 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-05c7a074fe5d4004adf896befd8f5b0a",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "325c6339eff349a8808572b165af2d94_OperationParameterSetVo",
+            "entity_name": "Run - Drilling Parameter",
+            "activity_time": "2017-04-07T13:45:53.0823941Z",
+            "comments": "Shared straight from defaults",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "Drilling Parameter",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-325c6339eff349a8808572b165af2d94",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-60b3af527d28470aad6a867840bf1100",
+                    "entity_type": "section",
+                    "name": "17.5 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-1b80f03e2f3047359788d6c314e4cb06",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "a6a69fa6597641e4909282b05b4b9e5a",
+            "entity_name": "17.5 BHA",
+            "activity_time": "2017-04-07T13:45:30.3798578Z",
+            "comments": "Shared straight from template",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-325c6339eff349a8808572b165af2d94",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-60b3af527d28470aad6a867840bf1100",
+                    "entity_type": "section",
+                    "name": "17.5 in",
+                    "parent": {
+                        "id": "1-3da20c99195a48849d37bda3691ad500",
+                        "entity_type": "project",
+                        "name": "Demo–Schlumberger",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "1-a146142d7a3e43babbc978520d2d62c9",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "e8dcc4d1fecc4d4ea86e9a4299c60c53",
+            "entity_name": "DrillPlan-1",
+            "activity_time": "2017-04-07T13:44:08.6936999Z",
+            "comments": "Shared from \"customer data\"",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-477e596ecc354d15a9b0b438ba4b7dc8",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Service.Data.Share",
+            "entity_id": "70cc41e8dd7d4f35bc202fc25907bc26",
+            "entity_name": "8.5 Fluid",
+            "activity_time": "2017-04-07T13:42:46.8512884Z",
+            "comments": "Initial input",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "drilling fluid",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-e2a85974c3a5422cb39595dd83e027c1",
+                "entity_type": "section",
+                "name": "8.5 in",
+                "parent": {
+                    "id": "1-3da20c99195a48849d37bda3691ad500",
+                    "entity_type": "project",
+                    "name": "Demo–Schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-c9e5005f0e9e49bf91b5dbd093adb1cd",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Service.Data.Share",
+            "entity_id": "2dc124d9a45b409cb1f01d71feb249a1",
+            "entity_name": "12.25 Fluid",
+            "activity_time": "2017-04-07T13:41:12.5246366Z",
+            "comments": "Basic input",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "drilling fluid",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3ca242f40d494243948924978dc6efb6",
+                "entity_type": "section",
+                "name": "12.25 in",
+                "parent": {
+                    "id": "1-3da20c99195a48849d37bda3691ad500",
+                    "entity_type": "project",
+                    "name": "Demo–Schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-5b12245d0ad1409097c8b7e7884f7421",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Service.Data.Share",
+            "entity_id": "c3c9519b9faf46c9b8f5540c3950ea3e",
+            "entity_name": "17.5 Fluid",
+            "activity_time": "2017-04-07T13:39:56.0102254Z",
+            "comments": "Basic input",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "drilling fluid",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-60b3af527d28470aad6a867840bf1100",
+                "entity_type": "section",
+                "name": "17.5 in",
+                "parent": {
+                    "id": "1-3da20c99195a48849d37bda3691ad500",
+                    "entity_type": "project",
+                    "name": "Demo–Schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-4b83b7a3bac84b8388d8a5822a36b7f5",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Service.Data.Share",
+            "entity_id": "f8f53afb312c45ce94adcfa8ebe167c3",
+            "entity_name": "17.5 Mud",
+            "activity_time": "2017-04-07T13:38:12.1525417Z",
+            "comments": "renamed",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "drilling fluid",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-60b3af527d28470aad6a867840bf1100",
+                "entity_type": "section",
+                "name": "17.5 in",
+                "parent": {
+                    "id": "1-3da20c99195a48849d37bda3691ad500",
+                    "entity_type": "project",
+                    "name": "Demo–Schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-e8bbb68c6c4042debe5a649f170ab7e8",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Service.Data.Share",
+            "entity_id": "2aa5d11d138b48b3ad78d250967d8b29",
+            "entity_name": "Untitled Drilling Fluid",
+            "activity_time": "2017-04-07T13:37:33.4345356Z",
+            "comments": "Basic input",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "drilling fluid",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-e2a85974c3a5422cb39595dd83e027c1",
+                "entity_type": "section",
+                "name": "8.5 in",
+                "parent": {
+                    "id": "1-3da20c99195a48849d37bda3691ad500",
+                    "entity_type": "project",
+                    "name": "Demo–Schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-35c92090fcce4a79935cf80ff4d6dc0b",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Service.Data.Share",
+            "entity_id": "a047556f9cc54619940e228d5eb0add9",
+            "entity_name": "12.25 Mud",
+            "activity_time": "2017-04-07T13:36:41.6073034Z",
+            "comments": "Basic input",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "drilling fluid",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3ca242f40d494243948924978dc6efb6",
+                "entity_type": "section",
+                "name": "12.25 in",
+                "parent": {
+                    "id": "1-3da20c99195a48849d37bda3691ad500",
+                    "entity_type": "project",
+                    "name": "Demo–Schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-01ea6d9b4bd944c0ace6e9fdcd7451e8",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Service.Data.Share",
+            "entity_id": "f8f53afb312c45ce94adcfa8ebe167c3",
+            "entity_name": "Untitled Drilling Fluid",
+            "activity_time": "2017-04-07T13:35:43.436538Z",
+            "comments": "Basic input",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "drilling fluid",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-60b3af527d28470aad6a867840bf1100",
+                "entity_type": "section",
+                "name": "17.5 in",
+                "parent": {
+                    "id": "1-3da20c99195a48849d37bda3691ad500",
+                    "entity_type": "project",
+                    "name": "Demo–Schlumberger",
+                    "parent": null
+                }
+            }
+        }
+    },
+    {
+        "id": "1-46c309de88e54cb3a411bbd208472f18",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "e8dcc4d1fecc4d4ea86e9a4299c60c53",
+            "entity_name": "DrillPlan-1",
+            "activity_time": "2017-04-07T13:32:16.2998787Z",
+            "comments": "New ATD constructed",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-96b05c157df1413ca764250924cb8794",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "4c86dd9847c349d5928d5f50bd0326ed",
+            "entity_name": "Targets 1",
+            "activity_time": "2017-04-07T13:29:43.3340499Z",
+            "comments": null,
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "target",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-82929f15ef60449892ea6a7f226dbc4a",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "d0c7714239da429ca48178af1ffee5fb",
+            "entity_name": "Targets 2",
+            "activity_time": "2017-04-07T13:29:41.7715952Z",
+            "comments": null,
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "target",
+            "is_customer_data": true,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-ee1eb4e283a44459939116e0cca5d07c",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "e8dcc4d1fecc4d4ea86e9a4299c60c53",
+            "entity_name": "DrillPlan-1",
+            "activity_time": "2017-04-07T13:29:39.8331917Z",
+            "comments": null,
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-4ab14efafb9545fb9e19aee9f4ff2cd0",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "3ee53752ddd44b209f4300825a8edbe7",
+            "entity_name": "Trajectory (ATD)",
+            "activity_time": "2017-04-07T13:26:40.4937258Z",
+            "comments": "First input\nno G&G context",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "trajectory",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-1f832f48f95b434ab16187071c0d3af8",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "e7603c0600524c11949561721afe1727",
+            "entity_name": "Primary Target",
+            "activity_time": "2017-04-07T13:23:24.6380851Z",
+            "comments": "First target",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "target",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-2a4b115d30c44c64aa0db771a663d400",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "06dda8a2998c4ff0823385de9c59bfa2",
+            "entity_name": "WBG",
+            "activity_time": "2017-04-07T13:20:46.5161455Z",
+            "comments": "Initial input",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "wellbore geometry",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-c4fa789f3f8c40339768cbb346282889",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "79c0aafe167f425f8f4fd063f2cf9bc7",
+            "entity_name": "Fast Rig",
+            "activity_time": "2017-04-07T13:10:38.7513959Z",
+            "comments": "Initial input",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "rig",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-fa566bea60554ebfbaf2abea52ceb99c",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-07T13:10:38.3920165Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Rig Name"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-7f879bda6d4a473fb4446904cf362a9a",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-07T13:09:56.1116322Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Rig Name"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-57f8788f5da8453fb3ec211d60176344",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "65277bf64cc4402f936544c04889b1bf",
+            "entity_name": "Surface Location",
+            "activity_time": "2017-04-07T13:08:48.081919Z",
+            "comments": "Initial input",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "Surface Location",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-8f8c8a13342a4454945db4f50c98297a",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-07T13:08:02.8327841Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [
+                "Coordinate Reference System"
+            ],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    },
+    {
+        "id": "1-8b6965eb403e4332ab767e7d5e0955b6",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "18357e92c56049018a404e51860cc21f",
+            "entity_name": "Risks",
+            "activity_time": "2017-04-07T13:04:23.8995423Z",
+            "comments": "Ok",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "risks",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-9913e2d3452b48379ce6cbfd3032efd5",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "18357e92c56049018a404e51860cc21f",
+            "entity_name": "Risks",
+            "activity_time": "2017-04-07T13:01:54.8563953Z",
+            "comments": "Ok\n",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "risks",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-56d1d10afd2b45ffa256e333af1ecba4",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "18357e92c56049018a404e51860cc21f",
+            "entity_name": "Risks",
+            "activity_time": "2017-04-07T13:01:25.2477813Z",
+            "comments": "Uploaded a few risks",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "risks",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-1e05a169887e4898895233a0d4468c92",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "18357e92c56049018a404e51860cc21f",
+            "entity_name": "Risks",
+            "activity_time": "2017-04-07T12:54:15.3663651Z",
+            "comments": "Created as risk set data",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "risks",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-4609cc477d624ead8b929270f790caa6",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "55dc6e9dc15443229c9c78c64481c434",
+            "entity_name": "Formation Tops",
+            "activity_time": "2017-04-07T12:52:25.5861129Z",
+            "comments": "Ok",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "Formation Tops",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-b32f4889bb144e98a00af66deb8b1418",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "60b3af527d28470aad6a867840bf1100",
+            "entity_name": "17.5 in",
+            "activity_time": "2017-04-07T12:33:54.6461141Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-4f3f325018214402ba1ab8de391e086a",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "e2a85974c3a5422cb39595dd83e027c1",
+            "entity_name": "8.5 in",
+            "activity_time": "2017-04-07T12:27:21.1419624Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-748c888f18aa4c8c9da05d242d7a92bf",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "3ca242f40d494243948924978dc6efb6",
+            "entity_name": "12.25 in",
+            "activity_time": "2017-04-07T12:27:11.2629972Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-e721b03337ce4a7a8bb604f00b15711b",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "e2a85974c3a5422cb39595dd83e027c1",
+            "entity_name": "8.5 in",
+            "activity_time": "2017-04-07T12:26:51.8640381Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-ec9bd9f62c224340badc690e73d496d5",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "3ca242f40d494243948924978dc6efb6",
+            "entity_name": "12.25 in",
+            "activity_time": "2017-04-07T12:26:39.9370643Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-08aa091754614e3e97cc4a853ef62f79",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Update",
+            "entity_id": "60b3af527d28470aad6a867840bf1100",
+            "entity_name": "0 in",
+            "activity_time": "2017-04-07T12:26:31.3082952Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-14ad5f6125694d928b44010276c3d794",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "60b3af527d28470aad6a867840bf1100",
+            "entity_name": "17.5 in",
+            "activity_time": "2017-04-07T12:26:24.9773256Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "section",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": {
+                "id": "1-3da20c99195a48849d37bda3691ad500",
+                "entity_type": "project",
+                "name": "Demo–Schlumberger",
+                "parent": null
+            }
+        }
+    },
+    {
+        "id": "1-1815e08d51344572bc8ca5cab9b36621",
+        "owner": {
+            "full_name": "Kevin Andre Hermansen",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Create",
+            "entity_id": "3da20c99195a48849d37bda3691ad500",
+            "entity_name": "Demo–Schlumberger",
+            "activity_time": "2017-04-07T11:36:01.9988627Z",
+            "comments": "",
+            "project_id": "1-3da20c99195a48849d37bda3691ad500",
+            "activity_entity_type": "project",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Schlumberger"
+            },
+            "parent": null
+        }
+    }
+]
