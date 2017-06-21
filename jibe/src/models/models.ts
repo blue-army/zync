@@ -68,12 +68,14 @@ class ChannelInfo {
 }
 
 class EventInfo {
+    id: string;
     type: string;
     content: object;
 
     public static fromObj(j: any): EventInfo {
         let o = new EventInfo();
 
+        o.id = j['id'];
         o.type = j['type'];
         o.content = j['content'];
 
