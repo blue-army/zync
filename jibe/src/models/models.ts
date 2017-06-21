@@ -271,57 +271,72 @@ class ActivityDetails {
     public getEntityImageUrl(): string {
 
         var iconMap: any = {
-            'riskset': 'risk',
-            'itpreport': 'report',
-            'project': 'project',
+            'activity plan': 'composer',
             'bha&drillstring': 'bha_drilling_string',
-            'trajectory': 'trajectory',
-            'formation tops': 'formation_tops',
-            'wellbore geometry': 'wellbore_geometry',
-            'drilling fluid': 'drilling_fluid',
-            'drilling parameter': 'drilling_parameters',
-            'select bit': 'bit_selection',
             'bit selection': 'bit_selection',
             'bit': 'bit_selection',
-            'rig': 'rig',
-            'surface location': 'surface_location',
-            'target': 'target',
-            'design bha&drillstring': 'bha_drillstring_design',
-            'design trajectory': 'traj_design',
-            'risks': 'risks',
-            'jar placement': 'risks',
-            'place jar': 'place_jar_task',
-            'well': 'well_information',
-            'section': 'well_information',
+            'casing design': 'casing_design',
+            'define cement job': 'cementing',
+            'define drilling fluid': 'drilling_fluid_task',
+            'define formation temperature': 'temperature_task',
             'define fracture pressure': 'fracture_pressure_task',
             'define pore pressure': 'pore_pressure_task',
-            'define formation temperature': 'temperature_task',
-            'define target': 'target_task',
-            'define surface location': 'surface_location_task',
-            'design wellbore geometry': 'wellbore_geometry_task',
             'define rig': 'rig_task',
-            'define drilling fluid': 'drilling_fluid_task',
-            'design mud': 'drilling_fluid_task',
-            'casing design': 'casing_design',
+            'define surface location': 'surface_location_task',
+            'define target': 'target_task',
+            'define wellhead and bop': 'wellhead_bop',
+            'design bha&drillstring': 'bha_drillstring_design',
             'design casing': 'casing_design_task',
-            'fracture pressure': 'fracture_pressure',
-            'pore pressure': 'pore_pressure',
-            'temperature': 'temperature',
-            'iar request': 'iar',
-            'activity plan': 'composer',
+            'design mud': 'drilling_fluid_task',
+            'design trajectory': 'traj_design',
+            'design wellbore geometry': 'wellbore_geometry_task',
+            'drilling fluid': 'drilling_fluid',
+            'drilling parameter': 'drilling_parameters',
             'evaluation': 'evaluation',
+            'formation tops': 'formation_tops',
+            'fracture pressure': 'fracture_pressure',
+            'iar request': 'iar',
+            'itpreport': 'report',
+            'jar placement': 'risks',
+            'place jar': 'place_jar_task',
+            'pore pressure': 'pore_pressure',
             'prepare afe': 'afe',
-            'define cement job': 'cementing',
-            'define wellhead and bop': 'wellhead_bop'
+            'project': 'project',
+            'rig': 'rig',
+            'risks': 'risks',
+            'riskset': 'risk',
+            'section': 'well_information',
+            'select bit': 'bit_selection',
+            'surface location': 'surface_location',
+            'target': 'target',
+            'temperature': 'temperature',
+            'trajectory': 'trajectory',
+            'well': 'well_information',
+            'wellbore geometry': 'wellbore_geometry',
         };
 
         var iconImageName = iconMap[this.activity_entity_type.toLowerCase()];
         if (!iconImageName) {
-             iconImageName = 'unknow';
+            iconImageName = 'unknow';
         }
-        return 'https://wazzap.azurewebsites.net/assets/images/' + iconImageName
+        return 'https://wazzap.azurewebsites.net/assets/images/activities/' + iconImageName + '.png';
     }
 
+    public getEntityUrl(): string {
+
+        let host = "https://drillplan.demo.slb.com";
+
+        // extract information
+        let info = new Map<string, string>();
+        info.set('entity', this.entity_id);
+        let parent = this.parent;
+        while (parent !== null) {
+            info.set(parent.entity_type, parent.id);
+            parent = parent.parent;
+        }
+
+        return host + NavigationService.getUrl(this, info);
+    }
 }
 
 class ParentInfo {
@@ -343,7 +358,6 @@ class ParentInfo {
         return o;
     }
 }
-
 
 class DrillPlanActivityCardInfo {
     id: string;
@@ -371,6 +385,82 @@ class DrillPlanActivityCardInfo {
         o.comments = info.activity.comments;
 
         return o;
+    }
+}
+
+class NavigationService {
+
+    public static getUrl(details: ActivityDetails, info: Map<string, string>): string {
+
+        let url: string;
+        switch (details.activity_entity_type.toLowerCase()) {
+            case 'trajectory':
+                if (details.is_customer_data) {
+                    url = NavigationService.customerDataUrl(info.get('project'), undefined) + '/trajectories/' + info.get('entity') + '/edit');
+                } else {
+                    url = NavigationService.trajUrl(info.get('project')) + '/plans/' + info.get('entity');
+                }
+                break;
+            case 'rig':
+                url = NavigationService.customerDataUrl(info.get('project'), undefined) + '/rig';
+                break;
+            case 'project':
+                url = NavigationService.projectUrl(details.project_id);
+                break;
+            case 'risks':
+                url = NavigationService.risksUrl(info.get('project'));
+                break;
+            case 'wellbore geometry':
+                url = NavigationService.customerDataUrl(info.get('project'), undefined) + '/wbg/' + info.get('entity');
+                break;
+            case 'surface location':
+                url = NavigationService.customerDataUrl(info.get('project'), undefined) + '/surfacelocation/' + info.get('entity');
+                break;
+            case 'target':
+                url = NavigationService.customerDataUrl(info.get('project'), undefined) + '/targets/' + info.get('entity');
+                break;
+            case 'bha&drillstring':
+                url = NavigationService.bhaUrl(info.get('project'), info.get('section')) + '/bhadesign/' + info.get('entity') + '/edit';
+                break;
+            case 'drilling parameter':
+                url = NavigationService.drillingParamUrl(info.get('project'), info.get('section'), info.get('run')) + '/drillingparam/' + info.get('entity') + '/edit';
+                break;
+            case 'drilling fluid':
+                url = NavigationService.customerDataUrl(info.get('project'), info.get('section')) + '/mud/' + info.get('entity');
+                break;
+            default:
+                break;
+        }
+
+        return url;
+    }
+
+    public static customerDataUrl(projectId: string, sectionId: string) {
+        var url = '/CustomerData/#!/projects/' + projectId;
+        if (sectionId) {
+            url += '/sections/' + sectionId;
+        }
+        return url;
+    }
+
+    public static projectUrl(projectId: string) {
+        return '/Projects/#!/projects/' + projectId;
+    }
+
+    public static risksUrl(projectId: string) {
+        return '/Risks/index.html#!/projects/' + projectId;
+    }
+
+    public static trajUrl(projectId: string) {
+        return '/Traj/#!/projects/' + projectId;
+    }
+
+    public static bhaUrl(projectId: string, sectionId: string) {
+        return '/BhaBuilder/index.html#!/projects/' + projectId + '/sections/' + sectionId;
+    }
+
+    public static drillingParamUrl(projectId: string, sectionId: string, runId: string) {
+        return '/BhaBuilder/index.html#!/projects/' + projectId + '/sections/' + sectionId + '/runs/' + runId;
     }
 }
 

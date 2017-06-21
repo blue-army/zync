@@ -34,3 +34,21 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
 * cannot create tabs for a channel via api
 * yeoman generator (https://www.npmjs.com/package/generator-teams)
 * building a bot walkthrough with Bill
+
+## todo
+
+* svc
+  * link drillplan project id properly
+  * save all messages from drillplan
+  * expose api to fetch messages
+  * fix deep link
+  * add authentication
+  * channel management
+  * routing rules
+  * api for user management
+* ui
+  * create project-specific view
+  * display project messages
+  * channel management
+  * routing rule management
+  * user management

@@ -90,7 +90,7 @@ function parse(info: models.EventInfo): models.PropertyChangedEventInfo {
                     details.comments,
                     true));
 
-            card.actions.push(new models.ActionInfo("Launch Application", details.getEntityImageUrl()));
+            card.actions.push(new models.ActionInfo("Launch Application", details.getEntityUrl()));
 
             break;
         case 'wazzap':
