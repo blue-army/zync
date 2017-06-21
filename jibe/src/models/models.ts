@@ -99,53 +99,6 @@ class EntityChangedEventInfo {
     }
 }
 
-
-
-/*    
-{
-    "@type": "MessageCard",
-    "@context": "http://schema.org/extensions",    
-    "title": " ",
-    "summary": " ",
-    "themeColor": "0078D7",
-    "sections": [
-        {
-            "startGroup": true,
-            "activityTitle": "Mud Design Changed",
-            "activitySubtitle": "Density",
-            "activityImage": "http://icons.iconarchive.com/icons/rokey/fantastic-dream/128/driver-mud-icon.png"
-        },
-        {
-            "startGroup": true,
-            "facts": [
-                {
-                    "name": "From",
-                    "value": "1.3"
-                },
-                {
-                    "name": "To",
-                    "value": "0.9"
-                },
-                {
-                    "name": "User",
-                    "value": "adele"
-                }
-            ]
-        }
-    ],
-    "potentialAction": [
-        {
-            "@context": "http://schema.org",
-            "@type": "ViewAction",
-            "name": "Launch Application",
-            "target": [
-                "http://163.185.149.206/#/wpm/programs"
-            ]
-        }
-    ]
-}
-*/
-
 class ActivityInfo {
     id: string;
     owner: PersonInfo;
@@ -396,7 +349,7 @@ class NavigationService {
         switch (details.activity_entity_type.toLowerCase()) {
             case 'trajectory':
                 if (details.is_customer_data) {
-                    url = NavigationService.customerDataUrl(info.get('project'), undefined) + '/trajectories/' + info.get('entity') + '/edit');
+                    url = NavigationService.customerDataUrl(info.get('project'), undefined) + '/trajectories/' + info.get('entity') + '/edit';
                 } else {
                     url = NavigationService.trajUrl(info.get('project')) + '/plans/' + info.get('entity');
                 }
