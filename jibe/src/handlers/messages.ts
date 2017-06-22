@@ -2,6 +2,7 @@
 
 import * as models from "../models/models";
 import * as cosmos from 'documentdb';
+import * as pu from '../utils/prop-utils';
 
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;
@@ -47,7 +48,7 @@ function parse(info: models.EventInfo): models.MessageInfo {
             msgInfo.subtitle1 = models.ActivityDetails.getActivitySubtitle1(ancestorPath);
             msgInfo.subtitle2 = models.ActivityDetails.getActivitySubtitle2(ancestorPath);
             msgInfo.actionType = details.getExpectedAction();
-            msgInfo.userImageUrl = activityInfo.owner.image_url;
+            msgInfo.userImageUrl = pu._str(activityInfo.owner.image_url, "https://wazzap.azurewebsites.net/assets/images/activities/noimage.jpg");
             msgInfo.ownerFullName = activityInfo.owner.full_name;
             msgInfo.activityDate = details.activity_time;
             msgInfo.comments = details.comments;
@@ -62,6 +63,8 @@ function parse(info: models.EventInfo): models.MessageInfo {
 
     return msgInfo;
 }
+
+
 
 function handleError(error: any, res: any) {
     console.log('\nAn error with code \'' + error.code + '\' has occurred:');

@@ -40,7 +40,7 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
 * svc
   * link drillplan project id properly
   * [done] save all events from drillplan
-  * expose api to fetch messages
+  * [done] expose api to fetch messages
   * [done] fix deep links
   * add authentication
   * channel management
@@ -48,7 +48,7 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
   * api for user management
 * ui
   * create project-specific view
-  * display project messages
+  * [done] display project messages
   * channel management
   * routing rule management
   * user management
