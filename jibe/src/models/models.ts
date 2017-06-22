@@ -421,6 +421,19 @@ class NavigationService {
     }
 }
 
+class MessageInfo {
+    entityName: string;
+    subtitle1: string;
+    subtitle2: string;
+    actionType: string;
+    ownerFullName: string;
+    comments: string;
+    typeImageUrl: string;
+    userImageUrl: string;
+    activityDate: string;
+    actionUrl: string;
+}
+
 //////////////////// Begin - Team Card ////////////////////
 
 class PropertyChangedEventInfo {
@@ -549,5 +562,6 @@ export {
     EntityChangedEventInfo,
     DrillPlanActivityCardInfo,
     ActivityInfo,
-    ActivityDetails
+    ActivityDetails,
+    MessageInfo,
 }

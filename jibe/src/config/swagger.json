@@ -198,6 +198,31 @@
                 },
                 "deprecated": false
             }
+        },
+        "/messages": {
+            "get": {
+                "tags": [
+                    "messages"
+                ],
+                "operationId": "message_list",
+                "consumes": [],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MessageInfo"
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
         }
     },
     "definitions": {
@@ -249,6 +274,38 @@
                 },
                 "content": {
                     "type": "object"
+                }
+            }
+        },
+        "MessageInfo": {
+            "type": "object",
+            "properties": {
+                "entityName": {
+                    "type": "string"
+                },
+                "activitySubtitle": {
+                    "type": "string"
+                },
+                "sectionName": {
+                    "type": "string"
+                },
+                "actionType": {
+                    "type": "string"
+                },
+                "ownerFullName": {
+                    "type": "string"
+                },
+                "comments": {
+                    "type": "string"
+                },
+                "typeImageUrl": {
+                    "type": "string"
+                },
+                "userImageUrl": {
+                    "type": "string"
+                },
+                "activityDate": {
+                    "type": "string"
                 }
             }
         }
