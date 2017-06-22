@@ -43,6 +43,7 @@ function parse(info: models.EventInfo): models.MessageInfo {
             let details = activityInfo.activity;
 
             let ancestorPath = details.getAncestorPath();
+            msgInfo.id = info.id;
             msgInfo.typeImageUrl = details.getEntityImageUrl();
             msgInfo.entityName = details.entity_name;
             msgInfo.subtitle1 = models.ActivityDetails.getActivitySubtitle1(ancestorPath);

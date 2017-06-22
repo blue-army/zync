@@ -422,6 +422,7 @@ class NavigationService {
 }
 
 class MessageInfo {
+    id: string;
     entityName: string;
     subtitle1: string;
     subtitle2: string;
