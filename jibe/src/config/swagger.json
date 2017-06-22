@@ -143,46 +143,6 @@
                 "deprecated": false
             }
         },
-        "/projects/{id}/events": {
-            "post": {
-                "tags": [
-                    "projects",
-                    "events"
-                ],
-                "operationId": "project_event_create",
-                "consumes": [],
-                "produces": [
-                    "application/json",
-                    "text/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "description": "Payload",
-                        "name": "Body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/EventInfo"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                },
-                "deprecated": false
-            }
-        },
         "/events": {
             "get": {
                 "tags": [
@@ -278,18 +238,13 @@
         "EventInfo": {
             "type": "object",
             "properties": {
+                "id": {
+                    "type": "string"
+                },
                 "type": {
                     "type": "string"
                 },
-                "content": {
-                    "type": "object"
-                }
-            }
-        },
-        "EventInfo": {
-            "type": "object",
-            "properties": {
-                "type": {
+                "project": {
                     "type": "string"
                 },
                 "content": {

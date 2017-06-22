@@ -69,6 +69,7 @@ class ChannelInfo {
 
 class EventInfo {
     id: string;
+    project: string;
     type: string;
     content: object;
 
@@ -77,6 +78,7 @@ class EventInfo {
 
         o.id = j['id'];
         o.type = j['type'];
+        o.project = j['project'];
         o.content = j['content'];
 
         return o;
