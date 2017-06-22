@@ -283,10 +283,10 @@
                 "entityName": {
                     "type": "string"
                 },
-                "activitySubtitle": {
+                "subtitle1": {
                     "type": "string"
                 },
-                "sectionName": {
+                "subtitle2": {
                     "type": "string"
                 },
                 "actionType": {
@@ -305,6 +305,9 @@
                     "type": "string"
                 },
                 "activityDate": {
+                    "type": "string"
+                },
+                "actionUrl": {
                     "type": "string"
                 }
             }
