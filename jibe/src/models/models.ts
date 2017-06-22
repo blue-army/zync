@@ -349,7 +349,7 @@ class NavigationService {
 
     public static getUrl(details: ActivityDetails, info: Map<string, string>): string {
 
-        let url: string;
+        let url = "";
         switch (details.activity_entity_type.toLowerCase()) {
             case 'trajectory':
                 if (details.is_customer_data) {
@@ -385,6 +385,9 @@ class NavigationService {
             case 'drilling fluid':
                 url = NavigationService.customerDataUrl(info.get('project'), info.get('section')) + '/mud/' + info.get('entity');
                 break;
+            case 'bit': 
+                url = NavigationService.bitUrl(info.get('project'));
+                break;
             default:
                 break;
         }
@@ -410,6 +413,10 @@ class NavigationService {
 
     public static trajUrl(projectId: string) {
         return '/Traj/#!/projects/' + projectId;
+    }
+
+    public static bitUrl(projectId: string) {
+        return '/TaskManager/#!/projects/' + projectId + '/sections';
     }
 
     public static bhaUrl(projectId: string, sectionId: string) {
