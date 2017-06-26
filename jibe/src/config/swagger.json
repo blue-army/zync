@@ -33,7 +33,7 @@
                 "tags": [
                     "projects"
                 ],
-                "operationId": "projects_get",
+                "operationId": "project_get",
                 "consumes": [],
                 "produces": [
                     "application/json",
@@ -52,11 +52,11 @@
                 },
                 "deprecated": false
             },
-            "post": {
+            "put": {
                 "tags": [
                     "projects"
                 ],
-                "operationId": "projects_create",
+                "operationId": "project_upsert",
                 "consumes": [],
                 "produces": [
                     "application/json",
@@ -167,7 +167,7 @@
                 },
                 "deprecated": false
             },
-            "post": {
+            "put": {
                 "tags": [
                     "events"
                 ],

@@ -66,5 +66,5 @@ function handleError(error: any, res: any) {
 
 export {
     list_projects as get,
-    upsert_project as post,
+    upsert_project as put,
 }

@@ -193,5 +193,5 @@ function handleError(error: any, res: any) {
 
 export {
     list_events as get,
-    upsert_event as post,
+    upsert_event as put,
 }
