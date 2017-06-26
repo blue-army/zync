@@ -460,6 +460,20 @@ class MessageInfo {
     actionUrl: string;
 }
 
+class LoginInfo {
+    client_id: string;
+    client_secret: string;
+
+    public static fromObj(j: any): LoginInfo {
+        let o = new LoginInfo();
+
+        o.client_id = j['client_id'];
+        o.client_secret = j['client_secret'];
+
+        return o;
+    }
+}
+
 //////////////////// Begin - Team Card ////////////////////
 
 class TeamsMessageCard {
@@ -590,4 +604,5 @@ export {
     ActivityInfo,
     ActivityDetails,
     MessageInfo,
+    LoginInfo,
 }
