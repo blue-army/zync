@@ -6,9 +6,10 @@ class ProjectInfo {
     source: string;
     geohash: string;
     channels: ChannelInfo[];
+    routes: RouteInfo[];
 
     public toObj(): any {
-        let props = ['id', 'name', 'source', 'geohash', 'channels'];
+        let props = ['id', 'name', 'source', 'geohash', 'channels', 'routes'];
         var me = <any>(this);
 
         let obj = [];
@@ -28,11 +29,6 @@ class ProjectInfo {
 
     public static fromObj(j: any): ProjectInfo {
 
-        // normalize
-        if (!j['channels']) {
-            j['channels'] = [];
-        }
-
         if (!j['id']) {
             throw new Error('missing id');
         }
@@ -45,9 +41,31 @@ class ProjectInfo {
 
         // channels
         o.channels = [];
-        for (let c of j['channels']) {
+        for (let c of _.get(j, 'channels', [])) {
             o.channels.push(ChannelInfo.fromObj(c));
         }
+
+        // routes
+        o.routes = [];
+        for (let r of _.get(j, 'routes', [])) {
+            o.routes.push(RouteInfo.fromObj(r));
+        }
+
+        return o;
+    }
+}
+
+class RouteInfo {
+    path: string;
+    exp: string;
+    channel: string;
+
+    public static fromObj(j: any): RouteInfo {
+        let o = new RouteInfo();
+
+        o.path = j['path'];
+        o.exp = j['exp'];
+        o.channel = j['channel'];
 
         return o;
     }
@@ -444,7 +462,7 @@ class MessageInfo {
 
 //////////////////// Begin - Team Card ////////////////////
 
-class PropertyChangedEventInfo {
+class TeamsMessageCard {
     title: string;                      // " "
     summary: string;                    // " "
     themeColor: string;                 // "0078D7"
@@ -564,7 +582,7 @@ export {
     ProjectInfo,
     ChannelInfo,
     EventInfo,
-    PropertyChangedEventInfo,
+    TeamsMessageCard,
     SectionInfo,
     ActionInfo,
     EntityChangedEventInfo,

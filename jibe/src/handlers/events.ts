@@ -2,7 +2,7 @@
 
 import * as models from "../models/models";
 import * as uuid from "uuid";
-import * as lodash from 'lodash';
+import * as _ from 'lodash';
 import * as cosmos from 'documentdb';
 import * as rp from 'request-promise';
 
@@ -35,12 +35,12 @@ function list_events(_req: any, res: any) {
 
 async function upsert_event(req: any, res: any) {
 
-    var db_key = process.env.db_key;
+    let db_key = process.env.db_key;
 
     let payload = req.body;
 
     // id
-    payload['id'] = lodash.get<Object, string>(payload, 'id', uuid.v4());
+    payload['id'] = _.get<Object, string>(payload, 'id', uuid.v4());
     let info = models.EventInfo.fromObj(payload);
 
     // insert document
@@ -69,21 +69,21 @@ async function upsert_event(req: any, res: any) {
 
 async function routeEvent(event_info: models.EventInfo) {
 
-    // get project
-    let projectId = event_info.project;
-
-    // fetch project information
-    var uri = UriFactory.createDocumentUri('jibe', 'projects', projectId);
-    let doc = await fetch_document(uri);
-    let p = models.ProjectInfo.fromObj(doc);
-
     // setup payload
     let card = parse(event_info);
     let o = card.ToObj();
 
+    // fetch project information
+    var uri = UriFactory.createDocumentUri('jibe', 'projects', event_info.project);
+    let doc = await fetch_document(uri);
+    let proj = models.ProjectInfo.fromObj(doc);
+
+    // determine channel
+    var channel = getCardDestination(proj, event_info);
+
     // get appropriate channel
-    for (let c of p.channels) {
-        if (c.name === 'jibe') {
+    for (let c of proj.channels) {
+        if (c.name === channel) {
             var options = {
                 method: 'POST',
                 uri: c.webhook,
@@ -94,6 +94,29 @@ async function routeEvent(event_info: models.EventInfo) {
             return rp(options);
         }
     }
+}
+
+function getCardDestination(proj: models.ProjectInfo, eventInfo: models.EventInfo): string {
+
+    // default channel
+    let channel = "jibe";
+
+    for (let r of proj.routes) {
+        let rexp = new RegExp(r.exp);
+        let data = _.get(eventInfo.content, r.path, undefined);
+        if (!data) {
+            continue;
+        }
+
+        if (!rexp.test(data)) {
+            continue;
+        }
+
+        channel = r.channel;
+        break;
+    }
+
+    return channel;
 }
 
 async function fetch_document(uri: string): Promise<any> {
@@ -112,10 +135,9 @@ async function fetch_document(uri: string): Promise<any> {
     });
 }
 
-function parse(info: models.EventInfo): models.PropertyChangedEventInfo {
+function parse(info: models.EventInfo): models.TeamsMessageCard {
 
-    let card = new models.PropertyChangedEventInfo();
-    // let content = info.content;
+    let card = new models.TeamsMessageCard();
 
     switch (info.type) {
         case 'slb.drill-plan.activity':
