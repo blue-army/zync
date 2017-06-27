@@ -57,14 +57,14 @@ class ProjectInfo {
 
 class RouteInfo {
     path: string;
-    exp: string;
+    expr: string;
     channel: string;
 
     public static fromObj(j: any): RouteInfo {
         let o = new RouteInfo();
 
         o.path = j['path'];
-        o.exp = j['exp'];
+        o.expr = j['expr'];
         o.channel = j['channel'];
 
         return o;
