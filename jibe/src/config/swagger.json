@@ -12,6 +12,11 @@
                     "info"
                 ],
                 "operationId": "info_get",
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ],
                 "consumes": [],
                 "produces": [
                     "application/json",
@@ -256,6 +261,14 @@
                 },
                 "deprecated": false
             }
+        }
+    },
+    "securityDefinitions": {
+        "api_key": {
+            "x-authorize": "handlers/auth.js",
+            "type": "apiKey",
+            "name": "token",
+            "in": "header"
         }
     },
     "definitions": {
