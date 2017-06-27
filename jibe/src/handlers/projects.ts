@@ -61,7 +61,7 @@ function handleError(error: any, res: any) {
     console.log('\t' + JSON.parse(error.body).message);
 
     res.status(500);
-    res.render('error');
+    res.json(error);
 }
 
 export {
