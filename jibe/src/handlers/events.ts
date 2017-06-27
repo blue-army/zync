@@ -102,7 +102,7 @@ function getCardDestination(proj: models.ProjectInfo, eventInfo: models.EventInf
     let channel = "jibe";
 
     for (let r of proj.routes) {
-        let rexp = new RegExp(r.exp);
+        let rexp = new RegExp(r.expr);
         let data = _.get(eventInfo.content, r.path, undefined);
         if (!data) {
             continue;

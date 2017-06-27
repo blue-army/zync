@@ -44,7 +44,7 @@ function upsert_project(req: any, res: any) {
     // insert document
     let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
     var doc_uri = UriFactory.createDocumentCollectionUri('jibe', 'projects');
-    client.createDocument(doc_uri, project_info, { disableAutomaticIdGeneration: true }, function (err:any, obj:any, _headers:any) {
+    client.upsertDocument(doc_uri, project_info, { disableAutomaticIdGeneration: true }, function (err:any, obj:any, _headers:any) {
         
         if (err) {
             return handleError(err, res);
