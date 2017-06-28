@@ -29,6 +29,10 @@ async function getToken(): Promise<any> {
 
 async function validate(token: string): Promise<any> {
 
+    if (!token || token.length === 0) {
+        return null;
+    }
+
     return new Promise<any>((resolve, reject) => {
 
         aad.verify(token, null, function (err: any, result: any) {
@@ -46,6 +50,10 @@ interface Token {
     accessToken: string;
 }
 
+interface ClientInfo {
+    id: string;
+    name: string;
+}
 
 async function login(resource: string, clientId: string, clientSecret: string): Promise<Token> {
     return new Promise<Token>((resolve, reject) => {
@@ -91,6 +99,7 @@ export {
     jibe_resource,
     getAppInfo,
     Token,
+    ClientInfo,
 }
 
 
