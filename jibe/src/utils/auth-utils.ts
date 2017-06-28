@@ -5,11 +5,12 @@ var aad = require('azure-ad-jwt');
 var authorityHostUrl = 'https://login.windows.net';
 var tenant = '1ea24608-de05-4c47-83e2-8da394396c3c';
 var authorityUrl = authorityHostUrl + '/' + tenant;
-var clientId = 'c482a377-26c4-4a72-9a88-176e33d7c52a';
-var clientSecret = 'E8sKhD679NnuVXj2KF6lRHzQNN/Av7vK+AmlfrLLJC8=';
+var clientId = 'd742d10c-15e6-4662-80e6-5b5fb48c8c29';
+var clientSecret = 'QRGe3HFjDiCldJQ4FVU+A2vHY12p0VjJBkbO5ew6WCs=';
 
 var graph_resource = 'https://graph.microsoft.com';
 var id_resource = '00000002-0000-0000-c000-000000000000';
+var jibe_resource = '22e460a9-9c94-4f71-bfd4-f1fef4dfe381';
 
 
 async function getToken(): Promise<any> {
@@ -73,8 +74,12 @@ async function getAppInfo(jwt: any): Promise<any> {
         json: true
     };
 
-    let val = await rp(options);
-    return val;
+    try {
+        let val = await rp(options);
+        return val;
+    } catch (error) {
+        return null;
+    }
 }
 
 export {
@@ -83,6 +88,7 @@ export {
     validate,
     graph_resource,
     id_resource,
+    jibe_resource,
     getAppInfo,
     Token,
 }
