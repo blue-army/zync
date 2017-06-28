@@ -41,8 +41,13 @@ async function validate(token: string): Promise<any> {
     });
 }
 
-async function login(resource: string, clientId: string, clientSecret: string): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+interface Token {
+    accessToken: string;
+}
+
+
+async function login(resource: string, clientId: string, clientSecret: string): Promise<Token> {
+    return new Promise<Token>((resolve, reject) => {
 
         var context = new adal(authorityUrl);
         context.acquireTokenWithClientCredentials(resource, clientId, clientSecret, function (err: any, tokenResponse: any) {
@@ -79,6 +84,7 @@ export {
     graph_resource,
     id_resource,
     getAppInfo,
+    Token,
 }
 
 

@@ -5,11 +5,12 @@ import * as uuid from "uuid";
 import * as _ from 'lodash';
 import * as cosmos from 'documentdb';
 import * as rp from 'request-promise';
+import * as express from 'express';
 
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;
 
-function list_events(_req: any, res: any) {
+function list_events(_req: express.Request, res: express.Response) {
     var db_key = process.env.db_key;
 
     let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
@@ -33,7 +34,7 @@ function list_events(_req: any, res: any) {
     });
 }
 
-async function upsert_event(req: any, res: any) {
+async function upsert_event(req: express.Request, res: express.Response) {
 
     let db_key = process.env.db_key;
 

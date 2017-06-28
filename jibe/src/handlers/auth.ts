@@ -2,8 +2,9 @@
 
 import * as auth_utils from "../utils/auth-utils";
 import * as _ from 'lodash';
+import * as express from 'express';
 
-module.exports = function validate(req: any, res: any, next: Function){
+module.exports = function validate(req: express.Request, res: express.Response, next: Function){
 
     let token = _.get<string>(req, 'headers.token', undefined);
 
