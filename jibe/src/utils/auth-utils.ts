@@ -1,4 +1,3 @@
-import { Headers } from 'request';
 import * as rp from 'request-promise';
 var adal = require('adal-node').AuthenticationContext;
 var aad = require('azure-ad-jwt');
