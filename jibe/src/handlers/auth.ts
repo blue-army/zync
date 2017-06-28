@@ -4,7 +4,7 @@ import * as auth_utils from "../utils/auth-utils";
 import * as _ from 'lodash';
 import * as express from 'express';
 
-module.exports = function validate(req: express.Request, res: express.Response, next: Function){
+module.exports = async function validate(req: express.Request, res: express.Response, next: Function){
 
     let token = _.get<string>(req, 'headers.token', undefined);
 
@@ -27,7 +27,6 @@ module.exports = function validate(req: express.Request, res: express.Response, 
         }))
         .catch(_err => {
             res.status(401);
-            res.send('unauthorized');
-            return;
+            res.json(req.headers);
         });
 };

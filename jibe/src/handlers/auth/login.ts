@@ -19,7 +19,7 @@ module.exports = {
             return;
         }
 
-        res.json(200, {
+        res.status(200).json({
             token: token.accessToken,
         });
     }
