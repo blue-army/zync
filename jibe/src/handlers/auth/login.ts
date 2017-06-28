@@ -13,7 +13,7 @@ module.exports = {
 
         let token = "";
         try {
-            token = await auth_utils.login(info.client_id, info.client_secret);
+            token = await auth_utils.login(auth_utils.id_resource, info.client_id, info.client_secret);
         } catch (error) {
         }
 
