@@ -13,7 +13,7 @@ module.exports = {
         // login
         let token: auth_utils.Token;
         try {
-            token = await auth_utils.login(auth_utils.id_resource, creds.client_id, creds.client_secret);
+            token = await auth_utils.login(creds.resource_id.length !== 0 ? creds.resource_id : auth_utils.id_resource, creds.client_id, creds.client_secret);
         } catch (error) {
             res.status(401).send('unauthorized');
             return;

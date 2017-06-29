@@ -461,12 +461,14 @@ class MessageInfo {
 }
 
 class LoginInfo {
+    resource_id: string;
     client_id: string;
     client_secret: string;
 
     public static fromObj(j: any): LoginInfo {
         let o = new LoginInfo();
 
+        o.resource_id = _.get(j, 'resource_id', '');
         o.client_id = j['client_id'];
         o.client_secret = j['client_secret'];
 

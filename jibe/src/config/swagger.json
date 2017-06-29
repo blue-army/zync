@@ -381,6 +381,9 @@
         "LoginInfo": {
             "type": "object",
             "properties": {
+                "resource_id": {
+                    "type": "string"
+                },
                 "client_id": {
                     "type": "string"
                 },
