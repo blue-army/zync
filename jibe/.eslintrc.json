@@ -26,8 +26,7 @@
         "no-var": "off",
         "require-jsdoc": "off",
         "space-before-function-paren": [
-            "error",
-            "always"
+            "error"
         ],
         "no-undef": [
             "error"
