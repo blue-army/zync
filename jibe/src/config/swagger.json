@@ -261,6 +261,31 @@
                 },
                 "deprecated": false
             }
+        },
+        "/groups": {
+            "get": {
+                "tags": [
+                    "groups"
+                ],
+                "operationId": "group_list",
+                "consumes": [],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/GroupInfo"
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
         }
     },
     "securityDefinitions": {
@@ -396,6 +421,17 @@
             "type": "object",
             "properties": {
                 "access_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "GroupInfo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 }
             }
