@@ -1,5 +1,3 @@
-'use strict';
-
 import * as models from "../models/models";
 import * as uuid from "uuid";
 import * as _ from 'lodash';
