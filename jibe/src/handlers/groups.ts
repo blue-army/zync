@@ -22,7 +22,12 @@ async function list_groups(req: express.Request, res: express.Response) {
         // invoke
         let val = await rp(options);
 
+        // Filter out extraneous info
+        for (let i in val.value) {
+            val.value[i] = models.GroupInfo.fromObj(val.value[i]);
+        }
         res.send(val);
+
     } catch (error) {
         res.send(error);
     }

@@ -79,7 +79,7 @@ class GroupInfo {
         let o = new GroupInfo();
 
         o.id = j['id'];
-        o.name = j['name'];
+        o.name = j['displayName'];
 
         return o;
     }
