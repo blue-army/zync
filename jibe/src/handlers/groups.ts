@@ -26,7 +26,7 @@ async function list_groups(req: express.Request, res: express.Response) {
         for (let i in val.value) {
             val.value[i] = models.GroupInfo.fromObj(val.value[i]);
         }
-        res.send(val);
+        res.send(val.value);
 
     } catch (error) {
         res.send(error);
