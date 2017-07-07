@@ -8,7 +8,15 @@
             "type": "node",
             "request": "launch",
             "name": "jibe server",
+            "cwd": "${workspaceRoot}/jibe",
+            "runtimeExecutable": "nodemon",
+            "runtimeArgs": [
+                "--debug=5858"
+            ],
             "program": "${workspaceRoot}/jibe/dist/server.js",
+            "port": 5858,
+            "console": "integratedTerminal",
+            "restart": true,
             "env": {
                 "db_key": ""
             }
