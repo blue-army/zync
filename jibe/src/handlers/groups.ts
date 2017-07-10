@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as rp from 'request-promise';
 import * as auth_utils from '../utils/auth-utils';
 
-async function list_groups(req: express.Request, res: express.Response) {
+async function list_groups(_req: express.Request, res: express.Response) {
 
     try {
         // get access token
