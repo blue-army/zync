@@ -1,21 +1,23 @@
 #! /bin/sh
 
+# typescript stucc
 tsc
 
+# copy static stuff
 cp -r ./src/config ./dist/
-
-# npm install bower
-# npm install polymer-cli
 
 # build web
 cd src/web
 
-# node ../../node_modules/polymer-cli/bin/polymer.js build --name .
+# install tools
 ../../node_modules/.bin/bower install
 ../../node_modules/.bin/polymer build --name .
 
-mkdir -p ../../dist/web
-cp -rf ./build/* ../../dist/web
-# node ./node_modules/polymer-cli/bin/polymer.js build --name .
+# clean target folder
+rm -rf ../../dist/web
 
+# move build to target folder
+mv -f ./build ../../dist/web
+
+# pop back out
 cd -
