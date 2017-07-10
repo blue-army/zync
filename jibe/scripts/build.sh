@@ -8,6 +8,9 @@ cp -r ./src/config ./dist/
 
 # build web
 cd src/web
+npm install bower
+npm install polymer-cli
+
 bower install
 polymer build --name .
 
