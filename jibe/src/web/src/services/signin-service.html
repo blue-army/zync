@@ -16,9 +16,8 @@
         body={{signinBody}}
         debounce-duration="300">
     </iron-ajax>
-    <app-localstorage-document key="user-info" data="{{user}}">
-    </app-localstorage-document>
     <paper-icon-button icon="{{_icon(user)}}" on-tap="handleSignin" active="true" toggles raised></paper-icon-button>
+    <app-localstorage-document key="user-info" data="{{user}}"></app-localstorage-document>
 
   </template>
 </dom-module>
@@ -42,6 +41,15 @@
         },
         user: { 
           type: Object
+        }
+      },
+
+      ready: function() {
+        if (this.user === undefined) {
+          this.user = { 
+            token: null,
+            loggedIn: false
+          }
         }
       },
 

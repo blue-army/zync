@@ -1,0 +1,72 @@
+<link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+<link href="../../bower_components/app-storage/app-localstorage/app-localstorage-document.html" rel="import">
+<link href="../../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
+<link href="../misc/my-icons.html" rel="import">
+
+<dom-module id="info-button">
+  <template>
+    <style>
+      :host {
+        --app-primary-color: #4285f4;
+        --app-secondary-color: black;
+        display: block;
+      }
+
+      #juicyEditor {
+        width: 300px;
+        height: 300px;
+      }
+    </style>
+
+    <paper-dialog id="infoModal" auto-fit-on-attach on-iron-overlay-closed="dismissExploreDialog" class="size-position">
+      <h3>Info JSON Data</h3>
+
+      <juicy-ace-editor 
+          id="juicyEditor" 
+          wrapmode="true">{{textInfo}}
+      </juicy-ace-editor>
+
+      <div class="buttons">
+        <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+      </div>
+    </paper-dialog>
+
+    <iron-ajax id="xhrInfo"
+        url="https://jibe.azurewebsites.net/info"
+        handle-as="json"
+        on-response="handleInfoResponse"
+        on-error="handleError"
+        method="GET"
+        content-type="application/json"
+        debounce-duration="300">
+    </iron-ajax>
+    <paper-icon-button id="info-button" class="giant" icon="my-icons:info" on-click="handleInfo"></paper-icon-button>
+
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is: 'info-button',
+
+      properties: {
+        token: {
+          type: String,
+          value: ""
+        },
+      },
+
+      handleInfo: function(e) {
+        if (this.token !== undefined) {
+          this.$.xhrInfo.headers['token'] = this.token;
+        }
+        this.$.xhrInfo.generateRequest();
+        this.$.infoModal.open();
+      },
+
+      handleInfoResponse: function(data) {
+        this.textInfo = JSON.stringify(data.detail.response, null, "  ");
+      },
+
+    });
+</script>
