@@ -212,7 +212,7 @@
           return elem;
         } else {
           this.projMethod = "DELETE";
-          this.projUrl = "https://jibe.azurewebsites.net/projects/" + this.item.id;
+          this.projUrl = "/projects/" + this.item.id;
         }
       }, this);
     },
@@ -231,7 +231,7 @@
         let body = JSON.parse(this.$.juicyEditor.value);
         this.projBody = JSON.stringify(body);
         this.projMethod = "PUT";
-        this.projUrl = "https://jibe.azurewebsites.net/projects";
+        this.projUrl = "/projects";
       }
     },
 
