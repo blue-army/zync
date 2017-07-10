@@ -33,6 +33,8 @@
     "express": "^4.15.2",
     "jsonpath": "^0.2.11",
     "lodash": "^4.17.4",
+    "msal": "^0.1.1",
+    "passport-azure-ad": "^3.0.7",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "swaggerize-express": "^4.0.0",
