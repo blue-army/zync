@@ -1,0 +1,50 @@
+-----------
+TeamsTest:
+
+I've registered the above "TeamsTest" App in the Application Registration Portal from the {schlumb1} Tenant
+
+TeamsTest has this client_secret:
+
+client_secret = 7QtcHjo7AetWTVXhp7k1ac6
+
+Authorization:
+
+To obtain authorization so the TeamsTest App can access Graph API's, GET call below to obtain a "code"
+
+client_id=3a3f6c5d-9a96-4bd6-aa1e-c191eb6f42af
+scope=offline_access%20user.read%20mail.read
+response_type=code
+
+https://login.microsoftonline.com/schlumb1.onmicrosoft.com/oauth2/v2.0/authorize?client_id=3a3f6c5d-9a96-4bd6-aa1e-c191eb6f42af&scope=offline_access%20user.read%20mail.read&response_type=code
+
+The response redirect URL will provide 'code', like below:
+
+http://localhost:8081/?code=OAQABAAIAAABnfiG-mA6NTae7CdWW7QfdHx70A4_19wrPYvIRix9j25TpuXxamwBoKfDrq_2oNCOou6mvwj3qoXw0HJ69sqM1r1GH43404CyinacXDuYGVABV5LnY8c2MpDATq10cJ4jCOVSOa3x8_i7l6kKmB5NkjyeTeUC_VGwmczqG4xpAa3LCSIzV0GpIPtWfLa86Jpg5l8KSyEv4Z0ZzhpPQnnGHSxuM9yKiutL6c2116BBmUMVav3O3NDmf-mtkGywgAlQaAamRmVY_Oqqrdtjqwwra-z5cZbVTpbBPpa0l1ph4MFFo-W2I6oGMmTTjnFUxKSGhsTjqSZt7v2hS3GpVk5YqRjHtW-_1LRc5xutGuMAq9IhTeLvQZwxMJC65lawoSAo3WBbDUIMS7FYtHVDVAdfZR40Jov_kcNnRV-SKDnB8G0STM3AHjY76WmN0nvnwfEl3ngCAW1ycuS4TvTeI-a7ECad9ZE2IUwxSVdRbrtdgIDHlRnuTvSxaj_yHkdckDN7WZ5ttA5tGmt_fj54uByL9sFwNTdLoYBNQwrFr7HCIqMo8eyywIyXijh3Vzd_aZidWTOCKegNZ7T7ibg4ReL0IjrdR36fDx60gQh3xsKYgKiAA&session_state=4b5b97c6-04ae-46a9-bebe-9fbdd3455863
+
+
+Token:
+
+To get a Token to begin calling Graph API, POST call below w/ headers and body params:
+
+Content-Type: application/x-www-form-urlencoded
+
+Headers: 
+
+scope:user.read%20mail.read
+redirect_uri:http://127.0.0.1:8081/
+
+Body:
+
+grant_type:authorization_code
+code:OAQABAAIAAABnfiG-mA6NTae7CdWW7Qfd0FDk4izb96wGoj61DH1XL_8VQ5aMAmzqBKy7gCXr3PdolXdL4JlqCcO3Aagg1R3IIgfRReEwTokuVbh7UCC8yJpb0evfAvumm1ruyCX_3VcwXu5a-Lp8IDuFXkXzY8j-5YaFXDZm3VEIy9vl826ylb4xUqq_2_GqEws25wLPQtcplN1XhthordArKBJb7eqEeY1z57MwdAiY8TyyyTMl6VEMv509BBxTc3cK0BGvEwgvfeVRHP2L79R_j2_ZRRPUhnjcNN0-5CaU5ZZgm4LbMnrXqUvf9i2EgMLhcnRKSv5in-0lEyuBFjvr7JPKa6FfRD904Tedffey22Vz01n3tJWMZnlk-Xk2nA884AxxPlQs_bg4SmWmn5saeziJaKqgDWyCISKkUoaosnv_8ASx0ChUtO_bLzEYzSWDQhqEE8_7RI88vZws5BoGqzlcZjLvWihXisEk-twGq4ZxZnfgkBW6rYgQnEheV3aYgkCRbGLZ8E5JO5H--MLOeYPShIeaOvL3W99PyUwPWR5LJGFx6GbGG_RbwAL9u00ePGcjlnKC1JuC_VNaWwis4V8PV8nm61VLjfWnwFBPs6vFpdNDaSAA
+client_id:3a3f6c5d-9a96-4bd6-aa1e-c191eb6f42af
+client_secret:7QtcHjo7AetWTVXhp7k1ac6
+
+
+https://login.microsoftonline.com/common/oauth2/v2.0/token?scope=user.read%20mail.read&redirect_uri=http://127.0.0.1:8081/
+
+---------------
+
+site deployed at:
+
+https://wazzap.azurewebsite.net

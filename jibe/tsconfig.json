@@ -10,7 +10,7 @@
         "allowJs": true
     },
     "include": [
-        "src/**/*.js",
+        "src/server.js",
         "./src/handlers/**/*.ts"
     ]
 }

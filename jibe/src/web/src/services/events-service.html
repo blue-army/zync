@@ -1,0 +1,68 @@
+<link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+
+<dom-module id="events-service">
+  <template>
+
+    <iron-ajax id="xhrEvents"
+        auto 
+        url={{eventsUrl}}
+        handle-as="json"
+        on-response="handleResponse"
+        on-error="handleError"
+        method={{eventsMethod}}
+        content-type="application/json"
+        body={{eventsBody}}
+        debounce-duration="300">
+    </iron-ajax>
+
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is: 'events-service',
+
+      properties: {
+        eventsArray: {
+          type: Array,
+          value: []
+        },
+        eventsUrl: {
+          type: String,
+          value: "https://jibe.azurewebsites.net/events"
+        },
+        eventsMethod: {
+          type: String,
+          value: "GET"
+        },
+        eventsBody: {
+          type: String,
+          value: ""
+        }
+      },
+
+      handleResponse: function(data) {
+        // GET for list of events
+        if (this.eventsMethod === "GET") {
+          this.eventsArray = data.detail.response;
+        }
+
+        if (this.eventsMethod === "PUT") {
+          // PUT for add new event
+          if (data.detail.response.name !== undefined) {
+            let events = this.eventsArray.slice();
+            events.push(data.detail.response);
+            this.eventsArray = events;
+          } else {
+            // PUT for send event via webhook
+          }
+        }
+
+        this.fire('events-response', data.detail);
+      },
+
+      handleError: function(e) {
+        console.log(e.detail.error.message);
+      }
+    });
+</script>

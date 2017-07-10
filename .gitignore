@@ -63,3 +63,5 @@ typings/
 
 jibe/dist/*
 !jibe/dist/server.js
+
+**/build/**
