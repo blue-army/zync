@@ -308,7 +308,7 @@ class ActivityDetails {
         if (!iconImageName) {
             iconImageName = 'unknow';
         }
-        return 'https://wazzap.azurewebsites.net/assets/images/activities/' + iconImageName + '.png';
+        return '/assets/images/activities/' + iconImageName + '.png';
     }
 
     public getEntityUrl(): string {
