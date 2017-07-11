@@ -4,7 +4,6 @@
   <template>
 
     <iron-ajax id="xhrProjects"
-        auto 
         url={{projectsUrl}}
         handle-as="json"
         on-response="handleResponse"
@@ -38,6 +37,10 @@
         projectsBody: {
           type: String,
           value: ""
+        },
+        auto: {
+          type: String,
+          observer: '_autoChanged',
         }
       },
 
@@ -66,6 +69,10 @@
 
       handleError: function(e) {
         console.log(e.detail.error.message);
+      },
+
+      _autoChanged: function() {
+        this.$.xhrProjects.generateRequest();
       }
     });
 </script>
