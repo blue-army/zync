@@ -65,6 +65,7 @@ function doHttpRequest(req, res) {
 
     var protocol = req.secure ? 'https://' : 'http://';
     console.log(protocol);
+    console.log(req);
 
     var options = {
         method: 'POST',
