@@ -13,9 +13,10 @@
         "allowJs": true
     },
     "include": [
-        "./src/**/*.ts"
+        "./src/**/*.ts",
+        "./src/*.js"
     ],
     "exclude": [
-        "bower_components"
+        "**/bower_components/*"
     ]
 }
