@@ -52,13 +52,13 @@ App.get('*', function (_req, res) {
 function doHttpRequest(req: express.Request, res: express.Response) {
     console.log('signin');
 
-    var url = '/auth/login';
+    var url = '/api/auth/login';
     var data = {
         client_id: 'f05fc322-1470-4336-82ed-45582c58d359',
         client_secret: 'fliTMcHA6VYDR+yohJJNUo1q9ZZQJuCALP5C4Qd8fFU=',
     };
 
-    var protocol = (req.get('x-site-deployment-id') && !req.get('x-arr-ssl')) ? 'http://' : 'https://';
+    var protocol = (!req.get('x-arr-ssl')) ? 'http://' : 'https://';
     console.log(protocol);
 
     var options = {
