@@ -6,7 +6,7 @@
         "description": "Connect your team!"
     },
     "paths": {
-        "/info": {
+        "/api/info": {
             "get": {
                 "tags": [
                     "info"
@@ -33,7 +33,7 @@
                 "deprecated": false
             }
         },
-        "/projects": {
+        "/api/projects": {
             "get": {
                 "tags": [
                     "projects"
@@ -89,7 +89,7 @@
                 "deprecated": false
             }
         },
-        "/projects/{id}": {
+        "/api/projects/{id}": {
             "get": {
                 "tags": [
                     "projects"
@@ -148,7 +148,7 @@
                 "deprecated": false
             }
         },
-        "/events": {
+        "/api/events": {
             "get": {
                 "tags": [
                     "events"
@@ -204,7 +204,7 @@
                 "deprecated": false
             }
         },
-        "/messages": {
+        "/api/messages": {
             "get": {
                 "tags": [
                     "messages"
@@ -229,7 +229,7 @@
                 "deprecated": false
             }
         },
-        "/auth/login": {
+        "/api/auth/login": {
             "post": {
                 "tags": [
                     "auth"
@@ -262,7 +262,7 @@
                 "deprecated": false
             }
         },
-        "/groups": {
+        "/api/groups": {
             "get": {
                 "tags": [
                     "groups"
@@ -290,7 +290,7 @@
     },
     "securityDefinitions": {
         "api_key": {
-            "x-authorize": "handlers/auth.js",
+            "x-authorize": "routes/api/auth.js",
             "type": "apiKey",
             "name": "token",
             "in": "header"

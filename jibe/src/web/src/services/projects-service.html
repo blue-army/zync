@@ -1,0 +1,71 @@
+<link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+
+<dom-module id="projects-service">
+  <template>
+
+    <iron-ajax id="xhrProjects"
+        auto 
+        url={{projectsUrl}}
+        handle-as="json"
+        on-response="handleResponse"
+        on-error="handleError"
+        method={{projectsMethod}}
+        content-type="application/json"
+        body={{projectsBody}}
+        debounce-duration="300">
+    </iron-ajax>
+
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is: 'projects-service',
+
+      properties: {
+        projectsArray: {
+          type: Array,
+          value: []
+        },
+        projectsUrl: {
+          type: String,
+          value: "/api/projects"
+        },
+        projectsMethod: {
+          type: String,
+          value: "GET"
+        },
+        projectsBody: {
+          type: String,
+          value: ""
+        }
+      },
+
+      handleResponse: function(data) {
+        // GET for list of projects
+        if (this.projectsMethod === "GET") {
+          this.projectsArray = data.detail.response;
+        }
+
+        if (this.projectsMethod === "PUT") {
+          // PUT for add new project
+          if (data.detail.response.name !== undefined) {
+            let projects = this.projectsArray.slice();
+            projects.push(data.detail.response);
+            this.projectsArray = projects;
+          } else {
+            // PUT for send event via webhook
+          }
+        }
+        // DELETE a project
+        if (this.projectsMethod === "DELETE") {
+        }
+
+        this.fire('projects-response', data.detail);
+      },
+
+      handleError: function(e) {
+        console.log(e.detail.error.message);
+      }
+    });
+</script>

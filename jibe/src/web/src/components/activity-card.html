@@ -1,0 +1,165 @@
+<link href="../misc/shared-styles.html" rel="import">
+<link href="../../bower_components/moment-element/moment-element.html" rel="import">
+
+<dom-module id="activity-card">
+
+    <template>
+        <style include="shared-styles" type="text/css">
+            :host {
+
+            }
+
+            .activity-card-wrapper {
+                /*float: left;*/
+                margin-top: 10px;
+                margin-right: 20px;
+            }
+
+            .activity-card {
+                margin-top: 5px;
+                width: 240px;
+                border: 5px solid #f5f5f5;
+                color: #333;
+            }
+
+            .card-header {
+                position: relative;
+                background-color: #fff;
+                border: 1px solid #f0f0f0;
+            }
+
+            .card-title-container {
+            }
+
+            .maintitle {
+                font-size: 14px;
+            }
+            .substitle {
+                margin-top: 5px;
+                font-size: 0.8rem;
+                color: #808080;
+
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .card-header .header-img {
+                /*font-size: 40px;*/
+                margin: 5px;
+                min-width: 40px;
+                float: left;
+            }
+
+            .card-header .header-img img {
+                width: 32px;
+            }
+
+            .card-body {
+                display: block;
+                background-color: #f5f5f5;
+                font-size: 14px;
+                padding-top: 5px;
+                min-height: 40px;
+                align-self: center;
+                width: 100%;
+            }
+            .user-img {
+                float: right;
+            }
+            .user-img  img {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+            }
+
+            .action {
+                font-size: 0.8rem;
+                color: #009fc2;
+            }
+            .user-name {
+                color: #808080;
+                font-size: 0.8rem;
+            }
+            .comments {
+                font-style: italic;
+                font-size: 0.8rem;
+                color: #808080;
+                padding-bottom: 5px;
+                min-width: 230px;
+            }
+
+            .card-date {
+                margin-bottom: 10px;
+                margin-top: 5px;
+                font-size: 0.8rem;
+            }
+
+            a.divLink {
+                cursor: auto;
+            }
+            a.divLink span {
+                position: absolute;
+                width: 240px;
+                height: 135px;
+                text-decoration: none;
+                z-index: 10;
+            }
+            .date-card {
+                font-size: 12px;
+                color: #333;
+            }
+        </style>
+
+        <div class="activity-card-wrapper vcard">
+            <div class="activity-card">
+                <a class="divLink" href="{{activity.actionUrl}}" target="_blank">
+                    <span></span>
+                </a>
+                <div class="card-header">
+                    <div class="header-img">
+                        <img src="{{activity.typeImageUrl}}">
+                    </div>
+                    <div class="card-title-container">
+                        <div class="maintitle" tj-tooltip="{{activity.entityName}}">{{activity.entityName}}</div>
+                        <div class="substitle" tj-tooltip="{{activity.subtitle1}}" 
+                             title="{{activity.subtitle1}}">{{activity.subtitle1}}</div>
+                        <div class="substitle" tj-tooltip="{{activity.subtitle2}}">{{activity.subtitle2}}</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="user-img">
+                            <img src="{{activity.userImageUrl}}">
+                        </div>
+                        <div class="action">{{activity.actionType}}</div>
+                        <div class="user-name">{{activity.ownerFullName}}</div>
+
+                        <template is="dom-if" if="{{activity.comments}}">
+                            <span class="comments" tj-tooltip="{{activity.comments}}">{{activity.comments}}</span>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <moment-element class="date-card" datetime="{{activity.activityDate}}" output-format="HH:MM MMM DD YYYY"></moment-element>
+        </div>
+
+    </template>
+
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'activity-card',
+
+        properties: {
+            activity: Object,
+        },
+
+        attached: function () {
+            let a = this.activity;
+        },
+
+    });
+
+</script>

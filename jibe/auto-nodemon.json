@@ -1,0 +1,15 @@
+{
+    "restartable": "rs",
+    "ignore": [
+        ".git",
+        "node_modules/**/node_modules",
+        "**/build/**"
+    ],
+    "legacyWatch": true,
+    "verbose": true,
+    "exec": "./scripts/auto.sh",
+    "watch": [
+        "src"
+    ],
+    "ext": "html ts js"
+}

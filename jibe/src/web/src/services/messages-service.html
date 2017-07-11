@@ -1,0 +1,66 @@
+<link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+
+<dom-module id="messages-service">
+  <template>
+
+    <iron-ajax id="xhrMessages"
+        auto 
+        url={{messagesUrl}}
+        handle-as="json"
+        on-response="handleResponse"
+        method={{messagesMethod}}
+        content-type="application/json"
+        body={{messagesBody}}
+        debounce-duration="300">
+    </iron-ajax>
+
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is: 'messages-service',
+
+      properties: {
+        messagesArray: {
+          type: Array,
+          value: []
+        },
+        messagesUrl: {
+          type: String,
+          value: "/api/messages"
+        },
+        messagesMethod: {
+          type: String,
+          value: "GET"
+        },
+        messagesBody: {
+          type: String,
+          value: ""
+        }
+      },
+
+      handleResponse: function(data) {
+        // GET for list of messages
+        if (this.messagesMethod === "GET") {
+          this.messagesArray = data.detail.response;
+        }
+
+        if (this.messagesMethod === "POST") {
+          // POST for add new project
+          if (data.detail.response.name !== undefined) {
+            let messages = this.messagesArray.slice();
+            messages.push(data.detail.response);
+            this.messagesArray = messages;
+          } else {
+            // POST for send event via webhook
+          }
+        }
+        // DELETE a project
+        if (this.messagesMethod === "DELETE") {
+        }
+
+        this.fire('messages-response', data.detail);
+      }
+    });
+</script>

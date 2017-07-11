@@ -1,0 +1,218 @@
+<link href="../bower_components/polymer/polymer.html" rel="import">
+<link href="../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
+<link href="../bower_components/paper-button/paper-button.html" rel="import">
+<link href="../bower_components/paper-dialog/paper-dialog.html" rel="import">
+<link href="../bower_components/paper-material/paper-material.html" rel="import">
+<link href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html" rel="import">
+<link href="../bower_components/paper-input/paper-input.html" rel="import">
+<link href="../bower_components/paper-listbox/paper-listbox.html" rel="import">
+<link href="../bower_components/paper-item/paper-item.html" rel="import">
+<link href="../bower_components/iron-icons/iron-icons.html" rel="import">
+<link href="../bower_components/iron-ajax/iron-ajax.html" rel="import">
+<link href="../bower_components/iron-flex-layout/iron-flex-layout.html" rel="import">
+<link href="../bower_components/iron-label/iron-label.html" rel="import">
+<link href="../bower_components/paper-fab/paper-fab.html" rel="import">
+<link href="services/projects-service.html" rel="import">
+<link href="services/messages-service.html" rel="import">
+<link href="misc/shared-styles.html" rel="import">
+<link href="components/project-card.html" rel="import">
+<link href="components/activity-card.html" rel="import">
+
+<dom-module id="my-projects">
+  <template>
+    <style include="shared-styles" type="text/css">
+       :host {
+        display: block;
+        padding: 10px;
+      }
+
+      .my-label {
+        @apply --layout-horizontal;
+      }
+
+      paper-fab.blue {
+        margin-left: 20px;
+        margin-top: 7px;
+        --paper-fab-background: #4285f4;
+        --paper-fab-keyboard-focus-background: var(--paper-light-blue-900);
+      }
+
+      paper-dialog.size-position {
+        width: 400px;
+        height: 400px;
+        overflow: auto;
+      }
+
+      .buttons {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }
+
+      ul {
+        height: 800px;
+        width: 310px;
+        list-style-type: none;
+        overflow-y: scroll;
+        padding-left: 5px;
+      }
+
+      .container {
+        float: left;
+        @apply --layout-horizontal;
+      }
+
+      .card2 {
+        max-height: 880px;
+      }
+
+      paper-dropdown-menu {
+        display: block;
+      }
+    </style>
+
+    <iron-ajax id="xhrGetGroups"
+        url="/api/groups"
+        handle-as="json"
+        on-response="handleGroupsResponse"
+        on-error="handleError"
+        method="GET"
+        content-type="application/json"
+        debounce-duration="300">
+    </iron-ajax>
+
+    <paper-dialog id="modal" auto-fit-on-attach on-iron-overlay-closed="dismissDialog" class="size-position">
+      
+      <paper-input id="tName" value="{{nameInput}}" label="Create a New O365 Group" required char-counter maxlength="20"></paper-input>
+
+      <paper-dropdown-menu label="Or Pick an Existing Group">
+        <paper-listbox class="dropdown-content">
+
+          <template is="dom-repeat" items="{{aGroups}}">
+            <paper-item>{{item.name}}</paper-item>
+          </template>
+
+        </paper-listbox>
+      </paper-dropdown-menu>
+
+      <paper-input id="tGeohash" value="{{geohashInput}}" label="GeoHash" required char-counter maxlength="20"></paper-input>
+
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Create</paper-button>
+        <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+      </div>
+    </paper-dialog>
+
+    <projects-service 
+        on-projects-response="handleResponse"
+        projects-method={{iaMethod}} 
+        projects-body={{iaBody}}>
+    </projects-service>
+
+    <messages-service 
+        on-messages-response="handleResponseMessages"
+        messages-method="GET" 
+        messages-body="">
+    </messages-service>
+
+    <paper-material id="projectEntry" elevation="0">
+
+      <div class="my-label">
+        <h2>Create New Project</h2>
+        <paper-fab iron-label-target on-click="openDialog" icon="add" class="blue"></paper-fab>
+      </div>
+
+      <div class="container">
+        <div class="vcard">
+
+          <template is="dom-if" if="{{!aProjects.length}}">
+            <paper-icon-button id="mybutton" icon="my-icons:icon-well-plan" class="giant central"></paper-icon-button>
+            <div class="central">No Projects available. Updates are Real-Time so stay tuned!</div>
+          </template>
+
+          <template is="dom-repeat" items="{{aProjects}}">
+            <project-card item={{item}} item-array={{aProjects}}></project-card>
+          </template>
+
+        </div>
+
+        <div class="vcard card2">
+          <h2>Jibe Activities</h2>
+          <ul>
+            <template is="dom-repeat" items="{{aMessages}}">
+              <li>
+                <activity-card activity="{{item}}"></activity-card>
+              </li>
+            </template>
+          </ul>
+        </div>
+      </div>
+
+    </paper-material>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'my-projects',
+    properties: {
+      aProjects: {
+        type: Array,
+        reflectToAttribute: true,
+        notify: true,
+        value: []
+      },
+      aMessages: {
+        type: Array,
+        reflectToAttribute: true,
+        notify: true,
+        value: []
+      },
+      iaMethod: {
+        type: String,
+        value: "GET"
+      },
+      urlProjects: {
+        type: String,
+        value: undefined
+      },
+      aGroups: {
+        type: Array,
+        reflectToAttribute: true,
+        notify: true,
+        value: []
+      },
+    },
+
+    openDialog: function () {
+      this.$.xhrGetGroups.generateRequest();
+      this.$.modal.open();
+    },
+
+    dismissDialog: function (e) {
+      if (e.detail.confirmed) {
+        let name = this.nameInput;
+        let geohash = this.geohashInput;
+        let project = JSON.stringify({ name: name, geohash: geohash });
+
+        this.iaBody = project;
+        this.iaMethod = "PUT";
+      }
+    },
+
+    handleResponse: function (event) {
+      this.aProjects = this.$$('projects-service').projectsArray;
+    },
+
+    handleResponseMessages: function (event) {
+      this.aMessages = this.$$('messages-service').messagesArray;
+    },
+
+    handleGroupsResponse: function (data) {
+      this.aGroups = data.detail.response;
+    },
+    
+  });
+
+</script>

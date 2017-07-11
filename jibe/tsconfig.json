@@ -3,6 +3,9 @@
         "target": "es6",
         "outDir": "./dist/",
         "module": "commonjs",
+        "types": [
+          "node"
+        ],
         "noImplicitAny": true,
         "noUnusedParameters": true,
         "noUnusedLocals": true,
@@ -10,7 +13,9 @@
         "allowJs": true
     },
     "include": [
-        "src/**/*.js",
-        "./src/handlers/**/*.ts"
+        "./src/**/*.ts"
+    ],
+    "exclude": [
+        "bower_components"
     ]
 }

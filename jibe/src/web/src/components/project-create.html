@@ -1,0 +1,107 @@
+<link href="../../bower_components/polymer/polymer.html" rel="import">
+<link href="../../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
+<link href="../../bower_components/paper-button/paper-button.html" rel="import">
+<link href="../../bower_components/paper-dialog/paper-dialog.html" rel="import">
+<link href="../../bower_components/paper-material/paper-material.html" rel="import">
+<link href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html" rel="import">
+<link href="../../bower_components/paper-input/paper-input.html" rel="import">
+<link href="../../bower_components/paper-listbox/paper-listbox.html" rel="import">
+<link href="../../bower_components/paper-item/paper-item.html" rel="import">
+<link href="../../bower_components/iron-icons/iron-icons.html" rel="import">
+<link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+<link href="../../bower_components/iron-flex-layout/iron-flex-layout.html" rel="import">
+<link href="../../bower_components/iron-label/iron-label.html" rel="import">
+<link href="../../bower_components/paper-fab/paper-fab.html" rel="import">
+<link href="../misc/my-icons.html" rel="import">
+
+<dom-module id="project-create">
+  <template>
+    <style>
+       :host {
+        display: block;
+        padding: 10px;
+      }
+
+      .my-label {
+        @apply --layout-horizontal;
+      }
+
+      paper-fab.blue {
+        margin-left: 20px;
+        margin-top: 7px;
+        --paper-fab-background: #4285f4;
+        --paper-fab-keyboard-focus-background: var(--paper-light-blue-900);
+      }
+
+      paper-dialog.size-position {
+        width: 400px;
+        height: 400px;
+        overflow: auto;
+      }
+
+      .buttons {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }
+
+      paper-dropdown-menu {
+        display: block;
+      }
+    </style>
+
+    <paper-dialog id="modal" auto-fit-on-attach on-iron-overlay-closed="dismissDialog" class="size-position">
+
+      <paper-input id="tName" value="{{nameInput}}" label="Create a New O365 Group" required char-counter maxlength="20"></paper-input>
+
+      <paper-dropdown-menu label="Or Pick an Existing Group">
+        <paper-listbox class="dropdown-content">
+
+          <template is="dom-repeat" items="{{aGroups}}">
+            <paper-item>{{item.name}}</paper-item>
+          </template>
+
+        </paper-listbox>
+      </paper-dropdown-menu>
+
+      <paper-input id="tGeohash" value="{{geohashInput}}" label="GeoHash" required char-counter maxlength="20"></paper-input>
+
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Create</paper-button>
+        <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+      </div>
+    </paper-dialog>
+
+    <div class="my-label">
+      <h2>Create New Project</h2>
+      <paper-fab iron-label-target on-click="openDialog" icon="add" class="blue"></paper-fab>
+    </div>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'project-create',
+
+    properties: {
+      aGroups: {
+        type: Array,
+        reflectToAttribute: true,
+        notify: true,
+        value: []
+      },
+    },
+
+    openDialog: function () {
+      this.$.xhrGetGroups.generateRequest();
+      this.$.modal.open();
+    },
+
+    handleGroupsResponse: function (data) {
+      this.aGroups = data.detail.response;
+    },
+
+  });
+
+</script>

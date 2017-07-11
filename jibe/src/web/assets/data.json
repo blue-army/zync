@@ -1,0 +1,79 @@
+{
+  "companies": [
+    {
+      "name": "schlumb1",
+      "teams": [
+        {
+          "name": "Dev-DrillPlan1",
+          "description": "Dev-DrillPlan1",
+          "privacy": "private",
+          "members": [
+            {
+              "name": "Celso Aguiar",
+              "title": "UX Software Engineer",
+              "location": "STIC - Menlo Park",
+              "role": "Owner"
+            },
+            {
+              "name": "Sacha Brants-Menard",
+              "title": "UX Team Manager",
+              "location": "STIC - Menlo Park",
+              "role": "Owner"
+            },
+            {
+              "name": "Vladimir Zhernakov",
+              "title": "Domain Expert",
+              "location": "STIC - Menlo Park",
+              "role": "Owner"
+            }
+          ],
+          "channels": [
+            {
+              "name": "General",
+              "description": "General Discussion Channel",
+              "people": []
+            },
+            {
+              "name": "Geology",
+              "description": "Geology Discussion Channel",
+              "people": []
+            },
+            {
+              "name": "Planning",
+              "description": "Planning Discussion Channel",
+              "people": []
+            }
+          ],
+          "settings": [ 
+            {
+              "customization": {
+                "pictureUrl": ""
+              },
+              "permissions": {
+                "create-channels": "",
+                "delete-channels": "",
+                "create-tabs": "",
+                "create-connectors": "",
+                "add-bots": ""
+              },
+              "feature": {
+                "team-mentions": "",
+                "channel-mentions": ""
+              },
+              "giphy-stickers-memes": {
+                "giphy": "",
+                "content-rating": "",
+                "stickers-memes": "",
+                "memes-upload": ""
+              }
+            }
+          ],
+          "bots": [
+            "Workbot",
+            "Polly"
+          ]
+        }
+      ]
+    }
+  ]
+}

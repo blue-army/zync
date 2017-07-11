@@ -1,0 +1,108 @@
+<link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+<link href="../../bower_components/app-storage/app-localstorage/app-localstorage-document.html" rel="import">
+<link href="../../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
+<link href="../misc/my-icons.html" rel="import">
+
+<dom-module id="signin-service">
+  <template>
+
+    <iron-ajax id="xhrSignin"
+        url={{signinUrl}}
+        handle-as="json"
+        on-response="handleResponse"
+        on-error="handleError"
+        method={{signinMethod}}
+        content-type="application/json"
+        body={{signinBody}}
+        debounce-duration="300">
+    </iron-ajax>
+    <paper-icon-button icon="{{_icon(user)}}" on-tap="handleSignin" active="true" toggles raised></paper-icon-button>
+    <app-localstorage-document key="user-info" data="{{user}}"></app-localstorage-document>
+
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is: 'signin-service',
+
+      properties: {
+        signinUrl: {
+          type: String,
+          value: ""
+        },
+        signinMethod: {
+          type: String,
+          value: "GET"
+        },
+        signinBody: {
+          type: String,
+          value: ""
+        },
+        user: { 
+          type: Object
+        }
+      },
+
+      ready: function() {
+        if (this.user === undefined) {
+          this.user = { 
+            token: null,
+            loggedIn: false
+          }
+        }
+      },
+
+      handleResponse: function(data) {
+        // GET for signin
+        if (this.signinMethod === "GET"  && data.detail.response !== null) {
+          this.user = { 
+            token: data.detail.response.token,
+            loggedIn: true
+          }
+        }
+
+        this.fire('signin-response', this.user);
+      },
+
+      handleError: function(e) {
+          this.user = { 
+            token: null,
+            loggedIn: false
+          }
+          console.log(e.detail.error.message);
+      },
+
+      handleSignin: function(e) {
+        if (this.user === undefined) {
+          this.user = { 
+            token: null,
+            loggedIn: false
+          }
+        }
+        console.log(this.user.loggedIn);
+
+        if (!this.user.loggedIn) {
+          this.signinUrl = "/signin";
+          this.$.xhrSignin.generateRequest();
+        } else {
+          this.user = { 
+            token: null,
+            loggedIn: false
+          }
+        }
+      },
+      
+      _icon: function (user) {
+        if (user === undefined) {
+          this.user = { 
+            token: null,
+            loggedIn: false
+          }
+        }
+
+        return this.user.loggedIn ? "my-icons:sign-out" : "my-icons:sign-in";
+      }
+
+    });
+</script>
