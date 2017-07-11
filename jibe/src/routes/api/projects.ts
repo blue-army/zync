@@ -1,6 +1,6 @@
 'use strict';
 
-import * as models from "../models/models";
+import * as models from "../../models/models";
 import * as uuid from "uuid";
 import * as lodash from 'lodash';
 import * as cosmos from 'documentdb';

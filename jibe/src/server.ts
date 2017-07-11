@@ -1,38 +1,33 @@
-'use strict';
-
-var fs = require('fs');
-console.log(fs.existsSync);
-
-var Http = require('http');
-var Express = require('express');
-var BodyParser = require('body-parser');
+import * as Http from 'http';
+import * as express from 'express';
+import * as bodyparser from 'body-parser';
+import * as request from 'request';
+import * as morgan from 'morgan';
+import * as path from 'path';
 var Swaggerize = require('swaggerize-express');
 var SwaggerUi = require('swaggerize-ui');
-var request = require('request');
-var morgan = require('morgan');
-var Path = require('path');
 
 var port = process.env.PORT || 8000;
 
 // set process folder to current directory
 process.chdir(__dirname);
 
-var App = Express();
+var App = express();
 var Server = Http.createServer(App);
 
 App.use(morgan('tiny'));
 
-App.use(Express.static(__dirname + '/web'));
-App.use(Express.static(__dirname + '/assets'));
+App.use(express.static(__dirname + '/web'));
+App.use(express.static(__dirname + '/assets'));
 
-App.use(BodyParser.json());
-App.use(BodyParser.urlencoded({
+App.use(bodyparser.json());
+App.use(bodyparser.urlencoded({
     extended: true,
 }));
 
 App.use(Swaggerize({
-    api: Path.resolve('./config/swagger.json'),
-    handlers: Path.resolve('./handlers'),
+    api: path.resolve('./config/swagger.json'),
+    handlers: path.resolve('./routes'),
     docspath: '/swagger',
 }));
 
@@ -42,11 +37,11 @@ App.use('/docs', SwaggerUi({
 
 App.get('/signin', doHttpRequest);
 
-App.get('/service-worker.js', function (req, res) {
+App.get('/service-worker.js', function (_req, res) {
     res.sendFile(__dirname + '/service-worker.js');
 });
 
-App.get('*', function (req, res) {
+App.get('*', function (_req, res) {
     console.log('info');
     res.sendFile('index.html', {
         root: './web',
@@ -54,7 +49,7 @@ App.get('*', function (req, res) {
 });
 
 
-function doHttpRequest(req, res) {
+function doHttpRequest(req: express.Request, res: express.Response) {
     console.log('signin');
 
     var url = '/auth/login';

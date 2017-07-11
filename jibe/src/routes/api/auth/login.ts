@@ -1,7 +1,7 @@
 'use strict';
 
-import * as auth_utils from "../../utils/auth-utils";
-import * as models from "../../models/models";
+import * as auth_utils from "../../../utils/auth-utils";
+import * as models from "../../../models/models";
 import * as express from 'express';
 
 module.exports = {
