@@ -63,10 +63,13 @@ function doHttpRequest(req, res) {
         client_secret: 'fliTMcHA6VYDR+yohJJNUo1q9ZZQJuCALP5C4Qd8fFU=',
     };
 
+    var protocol = req.secure ? 'https://' : 'http://';
+    console.log(protocol);
+
     var options = {
         method: 'POST',
         json: true,
-        url: url,
+        url: protocol + req.headers.host + url,
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
