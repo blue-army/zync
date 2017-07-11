@@ -212,7 +212,7 @@
           return elem;
         } else {
           this.projMethod = "DELETE";
-          this.projUrl = "/projects/" + this.item.id;
+          this.projUrl = "/api/projects/" + this.item.id;
         }
       }, this);
     },
@@ -231,7 +231,7 @@
         let body = JSON.parse(this.$.juicyEditor.value);
         this.projBody = JSON.stringify(body);
         this.projMethod = "PUT";
-        this.projUrl = "/projects";
+        this.projUrl = "/api/projects";
       }
     },
 
