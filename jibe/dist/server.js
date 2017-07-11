@@ -46,10 +46,12 @@ function doHttpRequest(req, res) {
         client_id: 'f05fc322-1470-4336-82ed-45582c58d359',
         client_secret: 'fliTMcHA6VYDR+yohJJNUo1q9ZZQJuCALP5C4Qd8fFU=',
     };
+    var protocol = (req.get('x-site-deployment-id') && !req.get('x-arr-ssl')) ? 'http://' : 'https://';
+    console.log(protocol);
     var options = {
         method: 'POST',
         json: true,
-        url: url,
+        url: protocol + req.headers.host + url,
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
