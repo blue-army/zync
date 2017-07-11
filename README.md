@@ -58,7 +58,7 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
   * routing rule management
   * user management
 * look into connectors as a way to 'configure webhooks'
-* try out the github connector
+* [done] try out the github connector
 
 ## questions
 
