@@ -15,9 +15,11 @@ cd src/web
 
 # clean target folder
 rm -rf ../../dist/web
+mkdir -p ../../dist/web
 
 # move build to target folder
-mv -f ./build ../../dist/web
+cp -rf ./build/* ../../dist/web
+rm -rf ./build
 
 # pop back out
 cd -

@@ -41,7 +41,7 @@ App.get('*', function (req, res) {
 });
 function doHttpRequest(req, res) {
     console.log('signin');
-    var url = 'https://jibe.azurewebsites.net/auth/login';
+    var url = '/auth/login';
     var data = {
         client_id: 'f05fc322-1470-4336-82ed-45582c58d359',
         client_secret: 'fliTMcHA6VYDR+yohJJNUo1q9ZZQJuCALP5C4Qd8fFU=',
