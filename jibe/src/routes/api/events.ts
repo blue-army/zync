@@ -1,4 +1,4 @@
-import * as models from "../models/models";
+import * as models from "../../models/models";
 import * as uuid from "uuid";
 import * as _ from 'lodash';
 import * as cosmos from 'documentdb';

@@ -72,6 +72,38 @@
       }
     </style>
 
+    <iron-ajax id="xhrGetGroups"
+        url="/api/groups"
+        handle-as="json"
+        on-response="handleGroupsResponse"
+        on-error="handleError"
+        method="GET"
+        content-type="application/json"
+        debounce-duration="300">
+    </iron-ajax>
+
+    <paper-dialog id="modal" auto-fit-on-attach on-iron-overlay-closed="dismissDialog" class="size-position">
+      
+      <paper-input id="tName" value="{{nameInput}}" label="Create a New O365 Group" required char-counter maxlength="20"></paper-input>
+
+      <paper-dropdown-menu label="Or Pick an Existing Group">
+        <paper-listbox class="dropdown-content">
+
+          <template is="dom-repeat" items="{{aGroups}}">
+            <paper-item>{{item.name}}</paper-item>
+          </template>
+
+        </paper-listbox>
+      </paper-dropdown-menu>
+
+      <paper-input id="tGeohash" value="{{geohashInput}}" label="GeoHash" required char-counter maxlength="20"></paper-input>
+
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Create</paper-button>
+        <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+      </div>
+    </paper-dialog>
+
     <projects-service 
         auto
         on-projects-response="handleResponse">

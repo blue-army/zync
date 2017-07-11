@@ -1,6 +1,6 @@
 'use strict';
 
-import * as auth_utils from "../utils/auth-utils";
+import * as auth_utils from "../../utils/auth-utils";
 import * as _ from 'lodash';
 import * as express from 'express';
 

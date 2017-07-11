@@ -1,8 +1,8 @@
 'use strict';
 
-import * as models from "../models/models";
+import * as models from "../../models/models";
 import * as cosmos from 'documentdb';
-import * as pu from '../utils/prop-utils';
+import * as pu from '../../utils/prop-utils';
 
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;

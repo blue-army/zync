@@ -1,39 +1,38 @@
-'use strict';
-var fs = require('fs');
-console.log(fs.existsSync);
-var Http = require('http');
-var Express = require('express');
-var BodyParser = require('body-parser');
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Http = require("http");
+const express = require("express");
+const bodyparser = require("body-parser");
+const request = require("request");
+const morgan = require("morgan");
+const path = require("path");
 var Swaggerize = require('swaggerize-express');
 var SwaggerUi = require('swaggerize-ui');
-var request = require('request');
-var morgan = require('morgan');
-var Path = require('path');
 var port = process.env.PORT || 8000;
 // set process folder to current directory
 process.chdir(__dirname);
-var App = Express();
+var App = express();
 var Server = Http.createServer(App);
 App.use(morgan('tiny'));
-App.use(Express.static(__dirname + '/web'));
-App.use(Express.static(__dirname + '/assets'));
-App.use(BodyParser.json());
-App.use(BodyParser.urlencoded({
+App.use(express.static(__dirname + '/web'));
+App.use(express.static(__dirname + '/assets'));
+App.use(bodyparser.json());
+App.use(bodyparser.urlencoded({
     extended: true,
 }));
 App.use(Swaggerize({
-    api: Path.resolve('./config/swagger.json'),
-    handlers: Path.resolve('./handlers'),
+    api: path.resolve('./config/swagger.json'),
+    handlers: path.resolve('./routes'),
     docspath: '/swagger',
 }));
 App.use('/docs', SwaggerUi({
     docs: '/swagger',
 }));
 App.get('/signin', doHttpRequest);
-App.get('/service-worker.js', function (req, res) {
+App.get('/service-worker.js', function (_req, res) {
     res.sendFile(__dirname + '/service-worker.js');
 });
-App.get('*', function (req, res) {
+App.get('*', function (_req, res) {
     console.log('info');
     res.sendFile('index.html', {
         root: './web',
@@ -41,12 +40,12 @@ App.get('*', function (req, res) {
 });
 function doHttpRequest(req, res) {
     console.log('signin');
-    var url = '/auth/login';
+    var url = '/api/auth/login';
     var data = {
         client_id: 'f05fc322-1470-4336-82ed-45582c58d359',
         client_secret: 'fliTMcHA6VYDR+yohJJNUo1q9ZZQJuCALP5C4Qd8fFU=',
     };
-    var protocol = (req.get('x-site-deployment-id') && !req.get('x-arr-ssl')) ? 'http://' : 'https://';
+    var protocol = (!req.get('x-arr-ssl')) ? 'http://' : 'https://';
     console.log(protocol);
     var options = {
         method: 'POST',

@@ -1,7 +1,4 @@
 {
-    // Use IntelliSense to learn about possible Node.js debug attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -10,9 +7,7 @@
             "name": "jibe server",
             "cwd": "${workspaceRoot}/jibe",
             "runtimeExecutable": "nodemon",
-            "runtimeArgs": [
-                "--debug=5858"
-            ],
+            "protocol": "inspector",
             "args": [
                 "--watch", "dist",
                 "--ext=*",
@@ -20,7 +15,6 @@
                 "--delay", "6"
             ],
             "program": "${workspaceRoot}/jibe/dist/server.js",
-            "port": 5858,
             "console": "integratedTerminal",
             "restart": true,
             "env": {
