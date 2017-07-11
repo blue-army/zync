@@ -63,9 +63,8 @@ function doHttpRequest(req, res) {
         client_secret: 'fliTMcHA6VYDR+yohJJNUo1q9ZZQJuCALP5C4Qd8fFU=',
     };
 
-    var protocol = req.secure ? 'https://' : 'http://';
+    var protocol = (req.get('x-site-deployment-id') && !req.get('x-arr-ssl')) ? 'http://' : 'https://';
     console.log(protocol);
-    console.log(req);
 
     var options = {
         method: 'POST',
