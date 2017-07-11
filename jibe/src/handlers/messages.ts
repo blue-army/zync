@@ -49,7 +49,7 @@ function parse(info: models.EventInfo): models.MessageInfo {
             msgInfo.subtitle1 = models.ActivityDetails.getActivitySubtitle1(ancestorPath);
             msgInfo.subtitle2 = models.ActivityDetails.getActivitySubtitle2(ancestorPath);
             msgInfo.actionType = details.getExpectedAction();
-            msgInfo.userImageUrl = pu._str(activityInfo.owner.image_url, "https://wazzap.azurewebsites.net/assets/images/activities/noimage.jpg");
+            msgInfo.userImageUrl = pu._str(activityInfo.owner.image_url, "/assets/images/activities/noimage.jpg");
             msgInfo.ownerFullName = activityInfo.owner.full_name;
             msgInfo.activityDate = details.activity_time;
             msgInfo.comments = details.comments;
