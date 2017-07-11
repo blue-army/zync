@@ -57,3 +57,9 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
   * channel management
   * routing rule management
   * user management
+* look into connectors as a way to 'configure webhooks'
+* try out the github connector
+
+## questions
+
+* where do we want to host this?
