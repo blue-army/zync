@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# typescript stucc
+# typescript stuff
 tsc
 
 # copy static stuff
