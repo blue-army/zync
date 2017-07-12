@@ -6,6 +6,7 @@ const bodyparser = require("body-parser");
 const request = require("request");
 const morgan = require("morgan");
 const path = require("path");
+const connector = require("./connector/connector");
 var Swaggerize = require('swaggerize-express');
 var SwaggerUi = require('swaggerize-ui');
 var port = process.env.PORT || 8000;
@@ -25,6 +26,8 @@ App.use(Swaggerize({
     handlers: path.resolve('./routes'),
     docspath: '/swagger',
 }));
+// connector
+connector.init(App);
 App.use('/docs', SwaggerUi({
     docs: '/swagger',
 }));
