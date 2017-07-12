@@ -22,10 +22,6 @@
       is: 'projects-service',
 
       properties: {
-        projectsArray: {
-          type: Array,
-          value: []
-        },
         projectsUrl: {
           type: String,
           value: "/api/projects"
@@ -47,22 +43,15 @@
       handleResponse: function(data) {
         // GET for list of projects
         if (this.projectsMethod === "GET") {
-          this.projectsArray = data.detail.response;
         }
-
+        // Create project
         if (this.projectsMethod === "PUT") {
-          // PUT for add new project
-          if (data.detail.response.name !== undefined) {
-            this.projectsArray.push(data.detail.response);
-          } else {
-            // PUT for send event via webhook
-          }
         }
         // DELETE a project
         if (this.projectsMethod === "DELETE") {
         }
 
-        this.fire('projects-response', data.detail);
+        this.fire('projects-response', data.detail.response);
       },
 
       handleError: function(e) {

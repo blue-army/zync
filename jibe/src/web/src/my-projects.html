@@ -86,7 +86,6 @@
     <paper-material id="projectEntry" elevation="0">
 
       <project-create 
-        on-create-response="handleCreateResponse"
         a-projects="{{aProjects}}">
       </project-create>
 
@@ -139,12 +138,8 @@
       },
     },
 
-    handleResponse: function (event) {
-      this.aProjects = this.$$('projects-service').projectsArray;
-    },
-
-    handleCreateResponse: function (event) {
-      this.aProjects = this.$$('project-create').aProjects;
+    handleResponse: function (data) {
+      this.aProjects = data.detail;
     },
 
     handleResponseMessages: function (event) {

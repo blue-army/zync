@@ -135,11 +135,8 @@
 
     handleResponse: function (data) {
       let projects = this.aProjects.slice();
-      projects.push(data.detail.response);
+      projects.push(data.detail);
       this.aProjects = projects;
-
-      //this.aProjects = this.$$('projects-service').projectsArray;
-      //this.fire('create-response', event.detail);
     },
 
     handleGroupsResponse: function (data) {
