@@ -133,7 +133,12 @@
     </paper-dialog>
 
     <template is="dom-if" if="{{projMethod}}">
-      <projects-service on-projects-response="handleResponse" projects-method={{projMethod}} projects-body={{projBody}} projects-url={{projUrl}}>
+      <projects-service 
+        auto={{deleteTrigger}}
+        on-projects-response="handleResponse" 
+        projects-method={{projMethod}} 
+        projects-body={{projBody}} 
+        projects-url={{projUrl}}>
       </projects-service>
     </template>
 
@@ -213,6 +218,7 @@
         } else {
           this.projMethod = "DELETE";
           this.projUrl = "/api/projects/" + this.item.id;
+          this.deleteTrigger = "true";
         }
       }, this);
     },

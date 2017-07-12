@@ -32,7 +32,7 @@
         },
         projectsMethod: {
           type: String,
-          value: "GET"
+          value: "GET",
         },
         projectsBody: {
           type: String,
@@ -40,7 +40,7 @@
         },
         auto: {
           type: String,
-          observer: '_autoChanged',
+          observer: "_autoChanged",
         }
       },
 
@@ -53,9 +53,7 @@
         if (this.projectsMethod === "PUT") {
           // PUT for add new project
           if (data.detail.response.name !== undefined) {
-            let projects = this.projectsArray.slice();
-            projects.push(data.detail.response);
-            this.projectsArray = projects;
+            this.projectsArray.push(data.detail.response);
           } else {
             // PUT for send event via webhook
           }
@@ -72,7 +70,9 @@
       },
 
       _autoChanged: function() {
-        this.$.xhrProjects.generateRequest();
+        if (this.auto === "true") {
+          this.$.xhrProjects.generateRequest();
+        }
       }
     });
 </script>

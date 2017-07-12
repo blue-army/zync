@@ -51,7 +51,7 @@
     </style>
 
     <iron-ajax id="xhrGetGroups"
-        url="/groups"
+        url="/api/groups"
         handle-as="json"
         on-response="handleGroupsResponse"
         on-error="handleError"
@@ -83,6 +83,7 @@
     </paper-dialog>
 
     <projects-service 
+        auto={{projectsTrigger}}
         on-projects-response="handleResponse"
         projects-method={{iaMethod}} 
         projects-body={{iaBody}}>
@@ -107,10 +108,6 @@
         notify: true,
         value: []
       },
-      iaMethod: {
-        type: String,
-        value: "GET"
-      },
       aGroups: {
         type: Array,
         reflectToAttribute: true,
@@ -132,11 +129,17 @@
 
         this.iaBody = project;
         this.iaMethod = "PUT";
+        this.projectsTrigger = "true";
       }
     },
 
-    handleResponse: function (event) {
-      this.aProjects = this.$$('projects-service').projectsArray;
+    handleResponse: function (data) {
+      let projects = this.aProjects.slice();
+      projects.push(data.detail.response);
+      this.aProjects = projects;
+
+      //this.aProjects = this.$$('projects-service').projectsArray;
+      //this.fire('create-response', event.detail);
     },
 
     handleGroupsResponse: function (data) {
