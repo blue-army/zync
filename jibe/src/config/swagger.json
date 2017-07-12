@@ -286,6 +286,40 @@
                 },
                 "deprecated": false
             }
+        },
+        "/api/groups/{id}/channels": {
+            "get": {
+                "tags": [
+                    "groups",
+                    "channels"
+                ],
+                "operationId": "group_channels",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "consumes": [],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/GraphChannelInfo"
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
         }
     },
     "securityDefinitions": {
@@ -432,6 +466,20 @@
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "GraphChannelInfo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
                     "type": "string"
                 }
             }

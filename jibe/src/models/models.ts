@@ -85,6 +85,20 @@ class GroupInfo {
     }
 }
 
+class GraphChannelInfo {
+    name: string;
+    id: string;
+    description: string;
+
+    public static fromObj(j: any): GraphChannelInfo {
+        let o = new GraphChannelInfo();
+        o.name = j['displayName'];
+        o.id = j['id'];
+        o.description = j['description'];
+        return o;
+    }
+}
+
 class ChannelInfo {
     name: string;
     webhook: string;
@@ -622,4 +636,5 @@ export {
     MessageInfo,
     LoginInfo,
     GroupInfo,
+    GraphChannelInfo,
 }

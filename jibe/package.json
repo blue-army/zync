@@ -17,6 +17,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
+    "@microsoft/microsoft-graph-client": "^1.0.0",
     "@types/documentdb": "^1.10.1",
     "@types/errorhandler": "^0.0.30",
     "@types/express": "^4.0.36",
