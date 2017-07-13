@@ -64,8 +64,8 @@
 
       <paper-input id="tName" value="{{nameInput}}" label="Create a New O365 Group" required char-counter maxlength="20"></paper-input>
 
-      <paper-dropdown-menu label="Or Pick an Existing Group">
-        <paper-listbox class="dropdown-content">
+      <paper-dropdown-menu id="dropdown" label="Or Pick an Existing Group" horizontal-align="left">
+        <paper-listbox slot="dropdown-content" class="dropdown-content">
 
           <template is="dom-repeat" items="{{aGroups}}">
             <paper-item>{{item.name}}</paper-item>
@@ -123,6 +123,7 @@
 
     dismissDialog: function (e) {
       if (e.detail.confirmed) {
+        let preexistGroup = this.$.dropdown.selectedItemLabel;
         let name = this.nameInput;
         let geohash = this.geohashInput;
         let project = JSON.stringify({ name: name, geohash: geohash });
