@@ -105,7 +105,7 @@ function generateConnectorCard(summary: string, text: string) {
         'summary': summary,
         'sections': [{
             'activityTitle': summary,
-            'activitySubtitle': 'On Project Tango',
+            'activitySubtitle': 'On Project Jibe',
             'activityImage': `${process.env.BASE_URI}/static/img/image${Math.floor(Math.random() * 9) + 1}.png`,
             'text': text,
             'facts': [
