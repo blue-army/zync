@@ -10,7 +10,7 @@ var connectors = {}; //Array of connectors that have been hooked up
 // Simple Connector setup process flow
 //
 // This generated page is used as the Landing page in the Connectors Developer Dashboard registration flow
-function setup(req: express.Request, res: express.Response, next) {
+function setup(_req: express.Request, res: express.Response, _next: express.NextFunction) {
 
     var connectorAppID: string = process.env.CONNECTOR_APP_ID || "bc32fa91-81d0-4314-9914-e718d47e90e8";
     var baseURI: string = process.env.BASE_URI || "https://jibe.azurewebsites.net";
@@ -35,7 +35,7 @@ function setup(req: express.Request, res: express.Response, next) {
 //
 // This illustrative Connector registration code shows how your server would cache inbound requests to attach a channel as a webhook.
 //  As this is not intended to show production-grade support, we've added some basic clean-up code below.
-async function register(req: express.Request, res:) {
+async function register(req: express.Request, res:express.Response) {
 
     // Parse register message from connector, find the group name and webhook url
     var query = req.query;
@@ -76,71 +76,19 @@ async function register(req: express.Request, res:) {
     var message = generateConnectorCard("Welcome", "This is a sample connector card sent to group: <b>" + group_name + "</b> via webhook: <b>" + webhook_url + "</b> using link: <b>" + sendUrl + "</b>");
 
     // Post to connector endpoint
-    // create request
     var options = {
         method: 'POST',
         uri: webhook_url,
         body: message,
         json: true
     };
+    await rp(options);
 
-    // invoke
-    let val = await rp(options);
     res.end();
 }
 
-///////////////////////////////////////////////////////
-//	Simple Connector send test
-//
-// This endpoint allows for sending connector messages. 
-// For registered connectors, you pass in the Group Name that it was registered to.
-// For incoming webhooks, you pass in the webhook URL that was created via the incoming webhook registration.
-function send(req, res) {
-
-    // For registered connectors, we must pass in the group_name
-    var group_name = (typeof req.params.group_name === 'string') ? req.params.group_name : '';
-
-    // For incoming webhooks, we must pass in the webhook
-    var webhook_url = (typeof req.params.webhook_url === 'string') ? req.params.webhook_url : null;
-
-    // If no incoming webhook, lookup the registered connector name
-    webhook_url = (webhook_url === null) ? ((connectors[group_name]) ? connectors[group_name] : null) : webhook_url;
-
-    // If we don't know about the connector and we don't have a webhook url then fail
-    if (!webhook_url) {
-        res.send(`A connector for ${group_name} has not been setup`);
-        res.end();
-    }
-    else {
-        // Generate a sample random connector message
-        var message = generateConnectorCard();
-
-        // Generate HTML response
-        var htmlBody = "<html><body><H3>Sent Connector card to:</H3>"
-        if (group_name !== '') {
-            htmlBody += '<p>group_name: <b>' + group_name + '</b></p>';
-        }
-        htmlBody += '<p>webhook: <b>' + webhook_url + '</b></p>';
-        htmlBody += '</body></html>';
-
-        res.writeHead(200, {
-            'Content-Length': Buffer.byteLength(htmlBody),
-            'Content-Type': 'text/html'
-        });
-        res.write(htmlBody);
-
-        // Post to connector endpoint
-        rest.postJson(webhook_url, message).on('complete', function (data, response) {
-            res.end();
-        });
-    }
-}
-
-///////////////////////////////////////////////////////
-//	Helpers and other methods
-///////////////////////////////////////////////////////
 // Generates rich connector card.
-function generateConnectorCard(summary, text) {
+function generateConnectorCard(summary: string, text: string) {
 
     if (typeof summary !== 'string') {
         summary = 'joe created a new task';
@@ -238,23 +186,17 @@ function generateConnectorCard(summary, text) {
                 ]
             }
         ]
-    }
+    };
+
     return ret;
 }
 
 function init(app: express.Application) {
     app.use('/connector/setup', setup);
     app.use('/api/messages/connector/register', register);
-    app.use('/api/messages/connector/send', send);
     return this;
 }
 
-///////////////////////////////////////////////////////
-//	Exports
-///////////////////////////////////////////////////////
 export {
     init as init,
 };
-
-// connector: https://outlook.office.com/webhook/3360b99a-4cd9-49cb-90b5-2b43c264fee5@68eac915-2f41-4693-a138-14c86824d964/253c752c-39cb-4b71-aa75-dac82383484e/7bf2d46c49b5470ea14a66774e3be783/fbf51db5-f1d3-4640-8ed4-0583adac29ad
-// webhook:   https://outlook.office.com/webhook/3360b99a-4cd9-49cb-90b5-2b43c264fee5@68eac915-2f41-4693-a138-14c86824d964/IncomingWebhook/59c7ad4cc70d43648b37a7ed3058809f/fbf51db5-f1d3-4640-8ed4-0583adac29ad
