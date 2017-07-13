@@ -4,6 +4,7 @@ import * as bodyparser from 'body-parser';
 import * as request from 'request';
 import * as morgan from 'morgan';
 import * as path from 'path';
+import * as connector from './connector/connector';
 var Swaggerize = require('swaggerize-express');
 var SwaggerUi = require('swaggerize-ui');
 
@@ -30,6 +31,9 @@ App.use(Swaggerize({
     handlers: path.resolve('./routes'),
     docspath: '/swagger',
 }));
+
+// connector
+connector.init(App);
 
 App.use('/docs', SwaggerUi({
     docs: '/swagger',

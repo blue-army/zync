@@ -1,0 +1,39 @@
+{
+    "$schema": "https://statics.teams.microsoft.com/sdk/v1.0/manifest/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.0",
+    "id": "bc32fa91-81d0-4314-9914-e718d47e90e8",
+    "version": "1.0",
+    "packageName": "com.Jibe",
+    "developer": {
+        "name": "Developer",
+        "websiteUrl": "https://jibe.azurewebsites.net",
+        "privacyUrl": "https://jibe.azurewebsites.net",
+        "termsOfUseUrl": "https://jibe.azurewebsites.net"
+    },
+    "description": {
+        "full": "Connects Teams to the Jibe server",
+        "short": "Connect your teams!"
+    },
+    "icons": {
+        "outline": "Taiji.png",
+        "color": "Taiji.png"
+    },
+    "connectors": [
+        {
+            "connectorId": "bc32fa91-81d0-4314-9914-e718d47e90e8",
+            "scopes": [
+                "team"
+            ]
+        }
+    ],
+    "name": {
+        "full": "Jibe",
+        "short": "Jibe"
+    },
+    "permissions": [
+        "identity",
+        "messageTeamMembers"
+    ],
+    "accentColor": "#FFFFFF",
+    "needsIdentity": "true"
+}
