@@ -12,14 +12,14 @@ var connectors = {}; //Array of connectors that have been hooked up
 // This generated page is used as the Landing page in the Connectors Developer Dashboard registration flow
 function setup(req: express.Request, res: express.Response, next) {
 
+    var connectorAppID: string = process.env.CONNECTOR_APP_ID || "253c752c-39cb-4b71-aa75-dac82383484e";
+    var baseURI: string = process.env.BASE_URI || "https://jibe.azurewebsites.net";
+
     var htmlBody = "<html><title>Set up connector</title><body>";
     htmlBody += "<H2>Adding your Connector Portal-registered connector</H2>";
     htmlBody += '<p>Click the button to call the "register" endpoint in the sample app, which will register the connector for the selected channel and send a sample "Welcome" connector card.</p>';
-
-    //This generates the Office365 connector button, which we assume is running on our BASE_URI:
-    // htmlBody += '<a href="https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=' + process.env.CONNECTOR_APP_ID + '&callback_url=' + process.env.BASE_URI + '/api/messages/connector/register">';
-    // htmlBody += '<img src="https://o365connectors.blob.core.windows.net/images/ConnectToO365Button.png" alt="Connect to Office 365"></img></a>';
-    htmlBody += '<a href="https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=253c752c-39cb-4b71-aa75-dac82383484e&callback_url=http://localhost:8000/api/messages/connector/register"><img src="https://o365connectors.blob.core.windows.net/images/ConnectToO365Button.png" alt="Connect to Office 365"></img></a>';
+    htmlBody += '<a href="https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=' + connectorAppID + '&callback_url=' + baseURI + '/api/messages/connector/register">';
+    htmlBody += '<img src="https://o365connectors.blob.core.windows.net/images/ConnectToO365Button.png" alt="Connect to Office 365"></img></a>';
     htmlBody += '</body></html>';
 
     res.writeHead(200, {
@@ -35,7 +35,7 @@ function setup(req: express.Request, res: express.Response, next) {
 //
 // This illustrative Connector registration code shows how your server would cache inbound requests to attach a channel as a webhook.
 //  As this is not intended to show production-grade support, we've added some basic clean-up code below.
-async function register(req, res) {
+async function register(req: express.Request, res:) {
 
     // Parse register message from connector, find the group name and webhook url
     var query = req.query;
@@ -53,7 +53,8 @@ async function register(req, res) {
     connectors[group_name] = webhook_url;
 
     // Generate HTML response
-    var sendUrl = "http://localhost:8000/api/messages/connector/send?group_name=" + group_name;
+    var baseURI: string = process.env.BASE_URI || "https://jibe.azurewebsites.net";
+    var sendUrl = baseURI + "/api/messages/connector/send?group_name=" + group_name;
     var htmlBody = "<html><body><H2>Registered Connector added</H2>";
     htmlBody += "<li><b>App Type:</b> " + appType + "</li>";
     htmlBody += "<li><b>Group Name:</b> " + group_name + "</li>";
