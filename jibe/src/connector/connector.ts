@@ -12,7 +12,7 @@ var connectors = {}; //Array of connectors that have been hooked up
 // This generated page is used as the Landing page in the Connectors Developer Dashboard registration flow
 function setup(req: express.Request, res: express.Response, next) {
 
-    var connectorAppID: string = process.env.CONNECTOR_APP_ID || "253c752c-39cb-4b71-aa75-dac82383484e";
+    var connectorAppID: string = process.env.CONNECTOR_APP_ID || "bc32fa91-81d0-4314-9914-e718d47e90e8";
     var baseURI: string = process.env.BASE_URI || "https://jibe.azurewebsites.net";
 
     var htmlBody = "<html><title>Set up connector</title><body>";
