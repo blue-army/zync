@@ -9,6 +9,8 @@ var swaggerui = require('swaggerize-ui');
 
 var port = process.env.PORT || 8000;
 
+process.chdir(__dirname);
+
 var app = express();
 var server = Http.createServer(app);
 
