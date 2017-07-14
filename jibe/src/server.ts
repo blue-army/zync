@@ -28,7 +28,8 @@ console.log("whoa: " + __dirname);
 app.use(swaggerize({
     api: __dirname + '/config/swagger.json',
     docspath: '/swagger',
-    handlers: __dirname + '/routes',
+    basedir: __dirname,
+    handlers: './routes',
 }));
 
 // view engine
