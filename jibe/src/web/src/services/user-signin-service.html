@@ -1,0 +1,201 @@
+<link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+<link href="../../bower_components/app-storage/app-localstorage/app-localstorage-document.html" rel="import">
+<link href="../../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
+<link href="../misc/my-icons.html" rel="import">
+<script src="https://secure.aadcdn.microsoftonline-p.com/lib/0.1.1/js/msal.min.js"></script>
+
+<dom-module id="user-signin-service">
+  <template>
+    <template is="dom-if" if={{userObj}}>
+      <span>Welcome, {{userObj.name}}</span>
+    </template>
+    <paper-button on-tap="handleSignin" active="true" toggles>
+      <span>{{getMessage(userObj)}}</span>
+      <iron-icon icon="{{_icon(userObj)}}"></iron-icon>
+    </paper-button>
+    <paper-button on-tap="getToken">
+      Get Token
+    </paper-button>
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is: 'user-signin-service',
+
+      properties: {
+        user: {
+          type: Object,
+          value: function () {
+            console.log("setting default user value")
+            return {
+              token: null,
+              loggedIn: false,
+              setBy: "default"
+            }
+          },
+        },
+
+        userObj: {
+          type: Object,
+          computed: 'getUserInfo(userAgentApplication)'
+        },
+
+        clientID: {
+          type: String,
+          value: 'bababc50-4dad-45b5-a10f-5b98129ccf1d',
+          readOnly: true
+        },
+        scopes: {
+          type: Array,
+          value: [
+              "user.read", 
+              'https://graph.microsoft.com/Group.ReadWrite.All',
+              'https://graph.microsoft.com/User.ReadWrite.All'
+            ]
+        },
+        authority: {
+          type: String,
+          value: ""
+        },
+        
+        message: {
+          type: String,
+          computed: 'getMessage(userObj)'
+        },
+
+        userAgentApplication: {
+          type: Object,
+          readonly: true,
+          value: function () {
+            if (window.msal) {
+              console.log("previous msal object found!")
+              return window.msal;
+            }
+            console.log("creating new msal object")
+            var clientID = 'bababc50-4dad-45b5-a10f-5b98129ccf1d';
+            var agent = new Msal.UserAgentApplication(
+                    clientID, 
+                    "https://login.microsoftonline.com/common",   // authority
+                    this.loginRedirectCallback);
+            // set redirectUri - otherwise it defaults to window.location.href
+            agent.redirectUri = "http://localhost:8000/code_callback";
+            return agent;
+          },
+        }
+      },
+
+      getUserName: function() {
+        console.log("getUserName called");
+        if (this.user.loggedIn && this.msal) {
+          return this.msal.getUser().name;
+        }
+      },
+
+      getUserInfo: function(userAgentApplication) {
+        console.log("GetuserInfo called!")
+        if (userAgentApplication) {
+          console.log("getUserInfo found user: ", userAgentApplication.getUser())
+          return userAgentApplication.getUser();
+        }
+        return null;
+      },
+
+      handleSignin: function(e) {
+        if (!this.userObj) {
+          this.loginRedirect();
+        } else {
+          this.logout();
+        }
+      },
+
+      loginRedirect: function () {
+        console.log("scopes on redirect: ", this.scopes)
+        var scopes = [
+                "user.read", 
+                'https://graph.microsoft.com/Group.ReadWrite.All',
+                'https://graph.microsoft.com/User.ReadWrite.All'
+              ]
+        this.userAgentApplication.loginRedirect(scopes);
+      },
+
+      // Starts the process of getting a token (either from storage or through redirect)
+      // The user-token-response event is fired when token has been retrieved
+      getToken: function () {
+        if (this.userObj) {
+          this.loginRedirectCallback_full("", this.userObj.userIdentifier, "", "id_token");
+        } else {
+          this.loginRedirect();
+        }
+      },
+
+      // Redirect callback that does not retrieve access token
+      loginRedirectCallback: function(errorDesc, token, error, tokenType) {
+        if (token) {
+          console.log("login successful! Token type: ", tokenType);
+          console.log("Token: ", token);
+          console.log("User: ", this.msal.getUser());
+          this.userAgentApplication = this.msal;
+        }
+      },
+
+      // Redirect callback that retrieves an access token
+      loginRedirectCallback_full: function(errorDesc, token, error, tokenType) {
+        console.log("scopes: ", this.scopes)
+        if (!this.scopes) {
+          this.scopes = [
+              "user.read", 
+              'https://graph.microsoft.com/Group.ReadWrite.All',
+              'https://graph.microsoft.com/User.ReadWrite.All'
+            ]
+        }
+        if (token) {
+          console.log("login successful! Token type: ", tokenType);
+          console.log("Token: ", token);
+
+          if (tokenType === 'id_token') {
+            // user has logged in, but we do not have an access token 
+            this.userAgentApplication.acquireTokenSilent(this.scopes)
+              .then((accessToken) => {
+                // retrieved a valid token -> fire user-token-response event
+                console.log("Access token retrieved from storage: ", accessToken);
+                this.fire('user-token-response', {token: accessToken, scopes: this.scopes});
+              }).catch((error) => {
+                // couldn't retrieve a token from storage -> perform redirect
+                console.log("No token retrieved from storage: ", error);
+                this.userAgentApplication.acquireTokenRedirect(this.scopes);
+              });
+
+          } else if (tokenType === 'access_token') {
+            // Retrieved access token via redirect -> fire user-token-response event
+            console.log("Access token: ", token);
+            this.fire('user-token-response', {token: accessToken, scopes: this.scopes});
+          }
+        } else {
+          console.log("Login error: ", error, errorDesc);
+        }
+      },
+
+      // Log out the current user
+      logout: function() {
+          console.log("logging out")
+          // Removes all sessions, need to call AAD endpoint to do full logout
+          this.userAgentApplication.logout();
+      },
+
+      // get button message
+      getMessage: function(userObj) {
+        console.log("getmessage called - userObj is ", userObj)
+        if (userObj) {
+          return "Log out";
+        }
+        return "Login with Microsoft"
+      },
+
+      // get button icon
+      _icon: function (userObj) {
+        return this.userObj ? "my-icons:sign-out" : "my-icons:sign-in";
+      }
+
+    });
+</script>
