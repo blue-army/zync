@@ -4,12 +4,7 @@ import * as express from 'express';
 import * as rp from 'request-promise';
 
 
-var connectors = {}; //Array of connectors that have been hooked up
-
-///////////////////////////////////////////////////////
-// Simple Connector setup process flow
-//
-// This generated page is used as the Landing page in the Connectors Developer Dashboard registration flow
+// connector setup flow
 function setup(_req: express.Request, res: express.Response, _next: express.NextFunction) {
 
     var connectorAppID: string = process.env.CONNECTOR_APP_ID || "bc32fa91-81d0-4314-9914-e718d47e90e8";
@@ -22,21 +17,19 @@ function setup(_req: express.Request, res: express.Response, _next: express.Next
     htmlBody += '<img src="https://o365connectors.blob.core.windows.net/images/ConnectToO365Button.png" alt="Connect to Office 365"></img></a>';
     htmlBody += '</body></html>';
 
-    // res.writeHead(200, {
-    //     'Content-Length': Buffer.byteLength(htmlBody),
-    //     'Content-Type': 'text/html'
-    // });
-    // res.write(htmlBody);
-    res.sendFile('setup.html', {
-        root: './connector',
+    res.writeHead(200, {
+        'Content-Length': Buffer.byteLength(htmlBody),
+        'Content-Type': 'text/html'
     });
+    res.write(htmlBody);
+    res.end();
+
+    // res.sendFile('setup.html', {
+    //     root: './connector',
+    // });
 }
 
-///////////////////////////////////////////////////////
-//	Simple Connector registration flow
-//
-// This illustrative Connector registration code shows how your server would cache inbound requests to attach a channel as a webhook.
-//  As this is not intended to show production-grade support, we've added some basic clean-up code below.
+//	connector registration flow
 async function register(req: express.Request, res: express.Response) {
 
     // Parse register message from connector, find the group name and webhook url
@@ -45,14 +38,6 @@ async function register(req: express.Request, res: express.Response) {
     var group_name = query.group_name;
     var appType = query.app_type;
     var state = query.state;
-
-    // Simple cleanup so we are only tracking max of 100 registered connections
-    if (connectors.length > 100) {
-        connectors = {};
-    }
-
-    // save the webhook url using groupname as the key
-    connectors[group_name] = webhook_url;
 
     // Generate HTML response
     var baseURI: string = process.env.BASE_URI || "https://jibe.azurewebsites.net";
