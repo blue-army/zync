@@ -3,58 +3,57 @@ import * as express from 'express';
 import * as bodyparser from 'body-parser';
 import * as request from 'request';
 import * as morgan from 'morgan';
-import * as path from 'path';
 import * as connector from './connector/connector';
-var Swaggerize = require('swaggerize-express');
-var SwaggerUi = require('swaggerize-ui');
+var swaggerize = require('swaggerize-express');
+var swaggerui = require('swaggerize-ui');
 
 var port = process.env.PORT || 8000;
 
-// set process folder to current directory
-process.chdir(__dirname);
+var app = express();
+var server = Http.createServer(app);
 
-var App = express();
-var Server = Http.createServer(App);
+app.use(morgan('tiny'));
 
-App.use(morgan('tiny'));
-
-App.use(express.static(__dirname + '/web'));
-App.use(express.static(__dirname + '/assets'));
-
-App.use(bodyparser.json());
-App.use(bodyparser.urlencoded({
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({
     extended: true,
 }));
 
-App.use(Swaggerize({
-    api: path.resolve('./config/swagger.json'),
-    handlers: path.resolve('./routes'),
+// setup swaggerize express for api (as it clears a bunch of props on express)
+app.use(swaggerize({
+    api: __dirname + '/config/swagger.json',
     docspath: '/swagger',
+    handlers: __dirname + '/routes',
 }));
 
-// connector
-connector.init(App);
+// view engine
+app.set('views', __dirname + '/views');
+app.set('view engine', 'pug');
 
-App.use('/docs', SwaggerUi({
+app.use(express.static(__dirname + '/web'));
+app.use(express.static(__dirname + '/assets'));
+
+// connector
+connector.init(app);
+
+app.use('/docs', swaggerui({
     docs: '/swagger',
 }));
 
-App.get('/signin', doHttpRequest);
+app.get('/signin', doHttpRequest);
 
-App.get('/service-worker.js', function (_req, res) {
+app.get('/service-worker.js', function (_req, res) {
     res.sendFile(__dirname + '/service-worker.js');
 });
 
-App.get('*', function (_req, res) {
+app.get('*', function (_req, res) {
     console.log('info');
     res.sendFile('index.html', {
         root: './web',
     });
 });
 
-
 function doHttpRequest(req: express.Request, res: express.Response) {
-    console.log('signin');
 
     var url = '/api/auth/login';
     var data = {
@@ -63,8 +62,6 @@ function doHttpRequest(req: express.Request, res: express.Response) {
     };
 
     var protocol = (!req.get('x-arr-ssl')) ? 'http://' : 'https://';
-    console.log(protocol);
-
     var options = {
         method: 'POST',
         json: true,
@@ -90,7 +87,7 @@ function doHttpRequest(req: express.Request, res: express.Response) {
     });
 }
 
-Server.listen(port, function () {
+server.listen(port, function () {
     /* eslint-disable no-console */
     console.log('Server running on %d', port);
     /* eslint-disable no-console */

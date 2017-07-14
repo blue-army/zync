@@ -5,51 +5,50 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const request = require("request");
 const morgan = require("morgan");
-const path = require("path");
 const connector = require("./connector/connector");
-var Swaggerize = require('swaggerize-express');
-var SwaggerUi = require('swaggerize-ui');
+var swaggerize = require('swaggerize-express');
+var swaggerui = require('swaggerize-ui');
 var port = process.env.PORT || 8000;
-// set process folder to current directory
-process.chdir(__dirname);
-var App = express();
-var Server = Http.createServer(App);
-App.use(morgan('tiny'));
-App.use(express.static(__dirname + '/web'));
-App.use(express.static(__dirname + '/assets'));
-App.use(bodyparser.json());
-App.use(bodyparser.urlencoded({
+var app = express();
+var server = Http.createServer(app);
+app.use(morgan('tiny'));
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({
     extended: true,
 }));
-App.use(Swaggerize({
-    api: path.resolve('./config/swagger.json'),
-    handlers: path.resolve('./routes'),
+// setup swaggerize express for api (as it clears a bunch of props on express)
+app.use(swaggerize({
+    api: __dirname + '/config/swagger.json',
     docspath: '/swagger',
+    handlers: __dirname + '/routes',
 }));
+// view engine
+app.set('views', __dirname + '/views');
+app.set('view engine', 'pug');
+app.use(express.static(__dirname + '/web'));
+app.use(express.static(__dirname + '/assets'));
 // connector
-connector.init(App);
-App.use('/docs', SwaggerUi({
+connector.init(app);
+app.use('/docs', swaggerui({
     docs: '/swagger',
 }));
-App.get('/signin', doHttpRequest);
-App.get('/service-worker.js', function (_req, res) {
+app.get('/signin', doHttpRequest);
+app.get('/service-worker.js', function (_req, res) {
     res.sendFile(__dirname + '/service-worker.js');
 });
-App.get('*', function (_req, res) {
+app.get('*', function (_req, res) {
     console.log('info');
     res.sendFile('index.html', {
         root: './web',
     });
 });
 function doHttpRequest(req, res) {
-    console.log('signin');
     var url = '/api/auth/login';
     var data = {
         client_id: 'f05fc322-1470-4336-82ed-45582c58d359',
         client_secret: 'fliTMcHA6VYDR+yohJJNUo1q9ZZQJuCALP5C4Qd8fFU=',
     };
     var protocol = (!req.get('x-arr-ssl')) ? 'http://' : 'https://';
-    console.log(protocol);
     var options = {
         method: 'POST',
         json: true,
@@ -72,7 +71,7 @@ function doHttpRequest(req, res) {
         res.json(body);
     });
 }
-Server.listen(port, function () {
+server.listen(port, function () {
     /* eslint-disable no-console */
     console.log('Server running on %d', port);
     /* eslint-disable no-console */

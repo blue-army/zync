@@ -17,20 +17,20 @@ function setup(_req: express.Request, res: express.Response, _next: express.Next
     htmlBody += '<img src="https://o365connectors.blob.core.windows.net/images/ConnectToO365Button.png" alt="Connect to Office 365"></img></a>';
     htmlBody += '</body></html>';
 
-    res.writeHead(200, {
-        'Content-Length': Buffer.byteLength(htmlBody),
-        'Content-Type': 'text/html'
-    });
-    res.write(htmlBody);
-    res.end();
-
-    // res.sendFile('setup.html', {
-    //     root: './connector',
+    // res.writeHead(200, {
+    //     'Content-Length': Buffer.byteLength(htmlBody),
+    //     'Content-Type': 'text/html'
     // });
+    // res.write(htmlBody);
+    // res.end();
+
+    res.render('index.pug', { title: 'Hey', message: 'Hello there!' });
 }
 
 //	connector registration flow
 async function register(req: express.Request, res: express.Response) {
+
+    // TODO: ensure that this is a valid callback
 
     // Parse register message from connector, find the group name and webhook url
     var query = req.query;
@@ -69,9 +69,15 @@ async function register(req: express.Request, res: express.Response) {
         body: message,
         json: true
     };
-    await rp(options);
 
-    res.end();
+    try {
+        await rp(options);
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+    return res.end();
 }
 
 // Generates rich connector card.
@@ -178,9 +184,14 @@ function generateConnectorCard(summary: string, text: string) {
     return ret;
 }
 
+function puggy(_req: express.Request, res: express.Response) {
+    res.render('index.pug', { title: 'Hey', message: 'Hello there!' });
+}
+
 function init(app: express.Application) {
-    app.use('/connector/setup', setup);
-    app.use('/api/messages/connector/register', register);
+    app.get('/connector/setup', setup);
+    app.get('/api/messages/connector/register', register);
+    app.get('/puggy', puggy);
     return this;
 }
 
