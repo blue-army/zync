@@ -1,0 +1,23 @@
+<html>
+
+<body>
+    <form>
+        <button onclick="onClick()">Yo</button>
+    </form>
+
+    <script src="https://statics.teams.microsoft.com/sdk/v1.0/js/MicrosoftTeams.js"></script>
+
+    <script type="text/javascript">
+        microsoftTeams.initialize();
+
+        function onClick() {
+            microsoftTeams.getContext(function(context) {
+                console.log(JSON.stringify(context));
+            })
+            // microsoftTeams.settings.setValidityState(true);
+        }
+
+    </script>
+</body>
+
+</html>

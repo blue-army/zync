@@ -5,6 +5,7 @@ tsc
 
 # copy static stuff
 cp -r ./src/config ./dist/
+cp -r ./src/connector/*.html ./dist/connector
 
 # build web
 cd src/web

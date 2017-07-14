@@ -22,12 +22,14 @@ function setup(_req: express.Request, res: express.Response, _next: express.Next
     htmlBody += '<img src="https://o365connectors.blob.core.windows.net/images/ConnectToO365Button.png" alt="Connect to Office 365"></img></a>';
     htmlBody += '</body></html>';
 
-    res.writeHead(200, {
-        'Content-Length': Buffer.byteLength(htmlBody),
-        'Content-Type': 'text/html'
+    // res.writeHead(200, {
+    //     'Content-Length': Buffer.byteLength(htmlBody),
+    //     'Content-Type': 'text/html'
+    // });
+    // res.write(htmlBody);
+    res.sendFile('setup.html', {
+        root: './connector',
     });
-    res.write(htmlBody);
-    res.end();
 }
 
 ///////////////////////////////////////////////////////
@@ -35,7 +37,7 @@ function setup(_req: express.Request, res: express.Response, _next: express.Next
 //
 // This illustrative Connector registration code shows how your server would cache inbound requests to attach a channel as a webhook.
 //  As this is not intended to show production-grade support, we've added some basic clean-up code below.
-async function register(req: express.Request, res:express.Response) {
+async function register(req: express.Request, res: express.Response) {
 
     // Parse register message from connector, find the group name and webhook url
     var query = req.query;
