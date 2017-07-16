@@ -59,7 +59,7 @@
                     "https://login.microsoftonline.com/common",   // authority
                     this.loginRedirectCallback_full);
             // set redirectUri - otherwise it defaults to window.location.href
-            agent.redirectUri = "http://localhost:8000/code_callback";
+            agent.redirectUri = window.location.protocol + "//" + window.location.host + "/code_callback;
             return agent;
           },
         }
