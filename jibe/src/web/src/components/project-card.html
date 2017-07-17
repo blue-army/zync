@@ -150,7 +150,7 @@
     <paper-card id="projCard" class="papercard" heading="" image="./assets/images/Schlumberger.svg" alt="{{item.name}}">
 
       <div class="mymap">
-        <google-map fit-to-markers zoom="10" api-key="AIzaSyCMsBPpFm2-D8Dt5oQUHWYM3VHeYxmyLOs">
+        <google-map id="myMap" map="{{map}}" fit-to-markers zoom="10" api-key="AIzaSyCMsBPpFm2-D8Dt5oQUHWYM3VHeYxmyLOs">
           <google-map-marker latitude="{{latitude}}" longitude="{{longitude}}" draggable></google-map-marker>
         </google-map>
       </div>
@@ -203,9 +203,14 @@
     },
 
     ready: function () {
+      this.geohashToCoord(this.item.geohash);
+      // this.map = this.$.myMap;
+    },
+
+    geohashToCoord: function (geoHash) {
       // Handle geohash
-      if (this.item.geohash) {
-        let geoObject = decodeGeoHash(this.item.geohash);
+      if (geoHash) {
+        let geoObject = decodeGeoHash(geoHash);
         this.latitude = geoObject.latitude[0];
         this.longitude = geoObject.longitude[0];
       }
@@ -235,6 +240,8 @@
       if (e.detail.confirmed) {
         let type = "any";
         let body = JSON.parse(this.$.juicyEditor.value);
+        this.geohashToCoord(body.geohash);
+
         this.projBody = JSON.stringify(body);
         this.projMethod = "PUT";
         this.projUrl = "/api/projects";
