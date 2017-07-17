@@ -1,0 +1,67 @@
+<link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+
+<dom-module id="groups-service">
+  <template>
+
+    <iron-ajax id="xhrGroups"
+        url={{groupsUrl}}
+        handle-as="json"
+        on-response="handleResponse"
+        on-error="handleError"
+        method={{groupsMethod}}
+        content-type="application/json"
+        body={{groupsBody}}
+        debounce-duration="300">
+    </iron-ajax>
+
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is: 'groups-service',
+
+      properties: {
+        groupsUrl: {
+          type: String,
+          value: "/api/groups"
+        },
+        groupsMethod: {
+          type: String,
+          value: "GET",
+        },
+        groupsBody: {
+          type: String,
+          value: ""
+        },
+        auto: {
+          type: String,
+          observer: "_autoChanged",
+        }
+      },
+
+      handleResponse: function(data) {
+        // GET for list of groups
+        if (this.groupsMethod === "GET") {
+        }
+        // Create group
+        if (this.groupsMethod === "PUT") {
+        }
+        // DELETE a group
+        if (this.groupsMethod === "DELETE") {
+        }
+
+        this.fire('groups-response', data.detail.response);
+      },
+
+      handleError: function(e) {
+        console.log(e.detail.error.message);
+      },
+
+      _autoChanged: function() {
+        if (this.auto === "true") {
+          this.$.xhrGroups.generateRequest();
+        }
+      }
+    });
+</script>

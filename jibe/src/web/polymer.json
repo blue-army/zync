@@ -4,6 +4,7 @@
   "fragments": [
     "src/components/project-card.html",
     "src/my-projects.html",
+    "src/my-groups.html",
     "src/my-provisioning.html",
     "src/my-view404.html"
   ],
