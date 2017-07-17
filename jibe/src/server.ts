@@ -4,7 +4,6 @@ import * as bodyparser from 'body-parser';
 import * as request from 'request';
 import * as morgan from 'morgan';
 import * as connector from './connector/connector';
-import * as path from 'path';
 var swaggerize = require('swaggerize-express');
 var swaggerui = require('swaggerize-ui');
 
