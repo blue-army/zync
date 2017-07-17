@@ -51,7 +51,7 @@
     </style>
 
     <iron-ajax id="xhrGetGroups"
-        url="/api/groups"
+        url="{{groupsUrl}}"
         handle-as="json"
         on-response="handleGroupsResponse"
         on-error="handleError"
@@ -62,15 +62,13 @@
 
     <paper-dialog id="modal" auto-fit-on-attach on-iron-overlay-closed="dismissDialog" class="size-position">
 
-      <paper-input id="tName" value="{{nameInput}}" label="Create a New O365 Group" required char-counter maxlength="20"></paper-input>
+      <paper-input id="tName" value="{{nameInput}}" label="Project Name" required char-counter maxlength="20"></paper-input>
 
-      <paper-dropdown-menu id="dropdown" label="Or Pick an Existing Group" horizontal-align="left">
-        <paper-listbox slot="dropdown-content" class="dropdown-content">
-
+      <paper-dropdown-menu id="dropdown" label="Pick a Group" horizontal-align="left">
+        <paper-listbox id="groupList" slot="dropdown-content" class="dropdown-content" on-iron-select="selectedChanged">
           <template is="dom-repeat" items="{{aGroups}}">
             <paper-item>{{item.name}}</paper-item>
           </template>
-
         </paper-listbox>
       </paper-dropdown-menu>
 
@@ -102,6 +100,10 @@
     is: 'project-create',
 
     properties: {      
+      groupsUrl: {
+        type: String,
+        value: "/api/groups"
+      },
       aProjects: {
         type: Array,
         reflectToAttribute: true,
@@ -114,24 +116,42 @@
         notify: true,
         value: []
       },
+      aChannels: {
+        type: Array,
+        reflectToAttribute: true,
+        notify: true,
+        value: []
+      },
+      selectedGroup: Number
     },
 
     openDialog: function () {
+      this.groupsUrl = "/api/groups";
       this.$.xhrGetGroups.generateRequest();
       this.$.modal.open();
     },
 
     dismissDialog: function (e) {
       if (e.detail.confirmed) {
-        let preexistGroup = this.$.dropdown.selectedItemLabel;
         let name = this.nameInput;
         let geohash = this.geohashInput;
-        let project = JSON.stringify({ name: name, geohash: geohash });
+        let groupId = this.aGroups[this.selectedGroup].id;
+        
+        let project = JSON.stringify({ 
+          name: name, 
+          geohash: geohash,
+          group: groupId
+        });
 
         this.iaBody = project;
         this.iaMethod = "PUT";
         this.projectsTrigger = "true";
       }
+    },
+
+    selectedChanged: function(e) {
+      this.selectedGroup = e.target.selected;
+      let item = this.aGroups[this.selectedGroup];
     },
 
     handleResponse: function (data) {
