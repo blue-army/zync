@@ -7,9 +7,10 @@ class ProjectInfo {
     geohash: string;
     channels: ChannelInfo[];
     routes: RouteInfo[];
+    group: string;
 
     public toObj(): any {
-        let props = ['id', 'name', 'source', 'geohash', 'channels', 'routes'];
+        let props = ['id', 'name', 'source', 'geohash', 'channels', 'routes', 'group'];
         var me = <any>(this);
 
         let obj = [];
@@ -50,6 +51,9 @@ class ProjectInfo {
         for (let r of _.get(j, 'routes', [])) {
             o.routes.push(RouteInfo.fromObj(r));
         }
+
+        // group
+        o.group = j['group'];
 
         return o;
     }

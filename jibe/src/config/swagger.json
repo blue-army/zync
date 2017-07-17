@@ -346,6 +346,9 @@
                 "geohash": {
                     "type": "string"
                 },
+                "group": {
+                    "type": "string"
+                },
                 "channels": {
                     "type": "array",
                     "items": {
