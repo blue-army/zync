@@ -6,11 +6,16 @@
 
 <dom-module id="user-signin-service">
   <template>
+    <style type="text/css">
+      #btn-message {
+        padding-right: 6px;
+      }
+    </style>
     <template is="dom-if" if={{userObj}}>
       <span>Welcome, {{userObj.name}}</span>
     </template>
     <paper-button on-tap="handleSignin" active="true" toggles>
-      <span>{{getMessage(userObj)}}</span>
+      <span id="btn-message">{{getMessage(userObj)}}</span>
       <iron-icon icon="{{_icon(userObj)}}"></iron-icon>
     </paper-button>
     <paper-button on-tap="getToken">
