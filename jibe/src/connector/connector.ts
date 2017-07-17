@@ -2,10 +2,11 @@
 // const faker = require('faker');
 import * as express from 'express';
 import * as rp from 'request-promise';
+import * as jibe from '../service/jibe';
 
 
 // connector setup flow
-function setup(_req: express.Request, res: express.Response, _next: express.NextFunction) {
+async function setup(_req: express.Request, res: express.Response, _next: express.NextFunction) {
 
     var connectorAppID: string = process.env.CONNECTOR_APP_ID || "bc32fa91-81d0-4314-9914-e718d47e90e8";
     var baseURI: string = process.env.BASE_URI || "https://jibe.azurewebsites.net";
@@ -24,7 +25,14 @@ function setup(_req: express.Request, res: express.Response, _next: express.Next
     // res.write(htmlBody);
     // res.end();
 
-    res.render('index.pug', { title: 'Hey', message: 'Hello there!' });
+    // fetch projects
+    let projects = await jibe.getProjectList();
+
+    res.render('index.pug', { 
+        title: 'Setup Connector', 
+        registerUrl: 'https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=' + connectorAppID + '&callback_url=' + baseURI + '/api/messages/connector/register',
+        projects: projects,
+    });
 }
 
 //	connector registration flow
