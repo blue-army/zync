@@ -11,5 +11,5 @@
     "watch": [
         "src"
     ],
-    "ext": "html ts js"
+    "ext": "html ts js pug css"
 }
