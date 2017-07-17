@@ -1,5 +1,43 @@
 html
-  head
-    title= title
-  body
-    h1= message
+    head
+        title= title
+        link(rel='stylesheet', href='/assets/stylesheets/connector.css')
+    body
+        div#column-content
+            img#logo(src= '/assets/connector/Taiji.png')
+            span#app
+                | DrillPlan
+        
+        //- div
+        //-     a(class='button' href=registerUrl)
+        //-         img(
+        //-             src= '/assets/images/microsoft.png'
+        //-             width=48
+        //-         )
+
+        p.begin#verbatim
+            | The DrillPlan connector sends notifications about tasks and activities related to your projects in DrillPlan.
+            | If you don't already have an account, create one on the DrillPlan website.
+
+        div
+            p.heading
+                | Project
+            p
+                | Choose the DrillPlan project that you want to use to configure this connector
+
+            select.projects()
+                each item in projects
+                    option(value=item.id) #{item.name}
+
+        div
+            p.heading
+                | Notifications
+            p
+                | Select the notifications to which you would like to subscribe.
+
+        div.begin
+            a(href=registerUrl)
+                input.btn(type="button" value="Connect")
+
+            //- a(href=registerUrl)
+            //-     input.btn(type="button" value="Cancel")

@@ -1,0 +1,72 @@
+#column-content {
+    display: inline-block;
+}
+
+body {
+    margin: 20px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 14px;
+    color: #7D7D7D;
+}
+
+.begin {
+    padding-top: 12px;
+}
+
+#verbatim {
+    white-space: pre;
+}
+
+.heading {
+    color: black;
+    font-weight: bold;
+    margin-top: 25px;
+}
+
+#logo {
+    width: 48;
+    height: 48;
+    vertical-align: middle;
+}
+
+#app {
+    margin-left: 20px;
+    font-size: 27px;
+    vertical-align: middle;
+}
+
+.btn{
+   border: 1px solid #A9AFB7;
+   background-color: white;
+   padding: 4px 12px;
+   border-width: 1px;
+   font-size: 14px;
+   border-radius: 3px;
+    
+    -o-transition: background-color .2s ease-in; 
+	-moz-transition: background-color .2s ease-in;
+	-webkit-transition: background-color .2s ease-in; 
+	transition: background-color .2s ease-in; 
+}
+
+.btn:hover {
+    background-color: #e5e5e5;    
+}
+
+.projects { 
+    display: block; 
+    padding: 5px 70px 5px 13px !important; 
+    max-width: 100%;
+    min-width: 20%;
+    height: auto !important; 
+    border: 1px solid #e3e3e3; 
+    border-radius: 3px; 
+    background: url("https://image.ibb.co/iMeAJv/selectbox_arrow.png") right center no-repeat; 
+    background-color: #fff; 
+    color: #444444; 
+    font-size: 12px; 
+    line-height: 16px !important; 
+    appearance: none; /* this is must */ 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+} /* body select.select_box option */ body select option { padding: 0 4px; }
