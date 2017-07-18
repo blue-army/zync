@@ -119,28 +119,31 @@ async function register(req: express.Request, res: express.Response) {
     var sendUrl = baseURI + "/api/messages/connector/send?group_name=" + group_name;
 
     res.render('connector.pug', {
+        title: 'Connector Registered',
         appType: appType,
         groupName: group_name,
         state: state,
         webhookUrl: webhook_url,
     });
 
-    // Generate a sample connector message as a "welcome"
-    var message = generateConnectorCard("Welcome", "This is a sample connector card sent to group: <b>" + group_name + "</b> via webhook: <b>" + webhook_url + "</b> using link: <b>" + sendUrl + "</b>");
+    if (!process.env.DEBUG) {
+        // Generate a sample connector message as a "welcome"
+        var message = generateConnectorCard("Welcome", "This is a sample connector card sent to group: <b>" + group_name + "</b> via webhook: <b>" + webhook_url + "</b> using link: <b>" + sendUrl + "</b>");
 
-    // Post to connector endpoint
-    var options = {
-        method: 'POST',
-        uri: webhook_url,
-        body: message,
-        json: true
-    };
+        // Post to connector endpoint
+        var options = {
+            method: 'POST',
+            uri: webhook_url,
+            body: message,
+            json: true
+        };
 
-    try {
-        await rp(options);
-    }
-    catch (err) {
-        console.log(err);
+        try {
+            await rp(options);
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 }
 

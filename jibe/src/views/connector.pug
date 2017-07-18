@@ -11,26 +11,26 @@ html
         div
             p.heading
                 | Application Type
-            p
-                input(type="text" value=appType readonly)
+            p.info
+                | #{appType}
 
         div
             p.heading
                 | Group
-            p
-                input(type="text" value=groupName readonly)
+            p.info
+                | #{groupName}
 
         div
             p.heading
                 | State
-            p
-                input(type="text" value=state readonly)
+            p.info
+                | #{state}
 
         div
             p.heading
                 | WebHook
-            p
-                input(type="text" value=webhookUrl readonly)
+            p.info
+                | #{webhookUrl}
 
         div.gap
             a(href="google.com")
