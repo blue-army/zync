@@ -9,8 +9,17 @@ body {
     color: #7D7D7D;
 }
 
+.info {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
 .begin {
     padding-top: 12px;
+}
+
+.gap {
+    padding-top: 25px;
 }
 
 #verbatim {
@@ -21,12 +30,29 @@ body {
     color: black;
     font-weight: bold;
     margin-top: 25px;
+    margin-bottom: 5px;
 }
 
 #logo {
     width: 48;
     height: 48;
     vertical-align: middle;
+}
+
+.container { 
+    border:0px solid #E3E3E3; 
+    width:100%;
+    min-width: 400px;
+    height: 120px; 
+    overflow-x: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+.spacer {
+    margin-right: 5px;
 }
 
 #app {
@@ -64,9 +90,14 @@ body {
     background: url("https://image.ibb.co/iMeAJv/selectbox_arrow.png") right center no-repeat; 
     background-color: #fff; 
     color: #444444; 
-    font-size: 12px; 
+    font-size: 14px; 
     line-height: 16px !important; 
     appearance: none; /* this is must */ 
     -webkit-appearance: none; 
     -moz-appearance: none; 
-} /* body select.select_box option */ body select option { padding: 0 4px; }
+} 
+
+.notif {
+    margin-top: 10px; 
+    margin-right: 70px;
+}

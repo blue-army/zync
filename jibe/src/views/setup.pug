@@ -8,22 +8,15 @@ html
             span#app
                 | DrillPlan
         
-        //- div
-        //-     a(class='button' href=registerUrl)
-        //-         img(
-        //-             src= '/assets/images/microsoft.png'
-        //-             width=48
-        //-         )
-
-        p.begin#verbatim
-            | The DrillPlan connector sends notifications about tasks and activities related to your projects in DrillPlan.
+        p.begin
+            | The DrillPlan connector sends notifications about tasks and activities related to your projects in DrillPlan.<br/>
             | If you don't already have an account, create one on the DrillPlan website.
 
         div
             p.heading
                 | Project
             p
-                | Choose the DrillPlan project that you want to use to configure this connector
+                | Choose the DrillPlan project that you want to use to configure this connector:
 
             select.projects()
                 each item in projects
@@ -33,11 +26,13 @@ html
             p.heading
                 | Notifications
             p
-                | Select the notifications to which you would like to subscribe.
+                | Select the notifications to which you would like to subscribe:
+            div.container
+                each notif in events
+                    label.notif
+                        input.spacer(type="checkbox" name="notification" value=notif.name)
+                        | #{notif.name} <br/>
 
-        div.begin
+        div.gap
             a(href=registerUrl)
                 input.btn(type="button" value="Connect")
-
-            //- a(href=registerUrl)
-            //-     input.btn(type="button" value="Cancel")
