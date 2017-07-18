@@ -96,7 +96,7 @@ async function setup(_req: express.Request, res: express.Response, _next: expres
 
     res.render('setup.pug', {
         title: 'Setup Connector',
-        registerUrl: 'https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=' + connectorAppID + '&callback_url=' + baseURI + '/connector/register',
+        registerUrl: 'https://outlook.office.com/connectors/Connect?app_id=' + connectorAppID + '&callback_url=' + baseURI + '/connector/register',
         projects: projects,
         events: events,
     });

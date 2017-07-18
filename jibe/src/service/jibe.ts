@@ -15,7 +15,9 @@ async function getProjectList(): Promise<[any]> {
         client.readDocuments(collLink).toArray(function (err: any, docs: any) {
 
             if (err) {
+                console.log("error retrieving projects: ", err)
                 reject(new Error("error retrieving projects"));
+                return;
             }
 
             for (let doc of docs) {
