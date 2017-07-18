@@ -63,6 +63,7 @@ class RouteInfo {
     path: string;
     expr: string;
     channel: string;
+    webhook: string;
 
     public static fromObj(j: any): RouteInfo {
         let o = new RouteInfo();
@@ -70,6 +71,7 @@ class RouteInfo {
         o.path = j['path'];
         o.expr = j['expr'];
         o.channel = j['channel'];
+        o.webhook = j['webhook'];
 
         return o;
     }
@@ -643,4 +645,5 @@ export {
     LoginInfo,
     GroupInfo,
     GraphChannelInfo,
+    RouteInfo,
 }

@@ -3,6 +3,7 @@ import * as cosmos from 'documentdb';
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;
 
+
 async function getProjectList(): Promise<[any]> {
 
     return new Promise<[any]>((resolve, reject) => {
@@ -30,6 +31,50 @@ async function getProjectList(): Promise<[any]> {
     });
 }
 
+// Retrieve an individual project, specified by project ID
+async function getProject(project_id: string): Promise<any> {
+
+    return new Promise<any>((resolve, reject) => {
+        var db_key = process.env.db_key;
+        let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
+        var uri = UriFactory.createDocumentUri('jibe', 'projects', project_id);
+        client.readDocument(uri, function (err, doc) {
+            if (err) {
+                reject(err);
+                return;
+            }
+
+            let project = models.ProjectInfo.fromObj(doc);
+            resolve(project);
+        });
+    });
+}
+
+async function upsertProject(project_info: models.ProjectInfo): Promise<any> {
+
+    return new Promise<any>((resolve, reject) => {
+        
+        // insert document
+        var db_key = process.env.db_key;
+        let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
+        var doc_uri = UriFactory.createDocumentCollectionUri('jibe', 'projects');
+        client.upsertDocument(doc_uri, project_info, { disableAutomaticIdGeneration: true }, function (err:any, obj:any, _headers:any) {
+            
+            if (err) {
+                reject(err);
+                return;
+            }
+
+            // convert to message
+            project_info = models.ProjectInfo.fromObj(obj);
+            resolve(project_info);
+        });
+    });
+}
+
+
 export {
+    getProject,
     getProjectList,
+    upsertProject,
 }

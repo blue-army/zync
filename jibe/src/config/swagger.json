@@ -447,6 +447,9 @@
                 },
                 "channel": {
                     "type": "string"
+                }, 
+                "webhook": {
+                    "type": "string"
                 }
             }
         },
