@@ -18,9 +18,6 @@
       <span id="btn-message">{{getMessage(userObj)}}</span>
       <iron-icon icon="{{_icon(userObj)}}"></iron-icon>
     </paper-button>
-    <paper-button on-tap="getToken">
-      Get User Token
-    </paper-button>
   </template>
 </dom-module>
 
@@ -29,9 +26,20 @@
       is: 'user-signin-service',
 
       properties: {
+        loggedIn: {
+          type: Boolean,
+          computed: 'getLoginStatus(userObj)'
+        },
+
         userObj: {
           type: Object,
           computed: 'getUserInfo(userAgentApplication)'
+        },
+
+        authority: {
+          type: String,
+          readOnly: true,
+          value: "https://login.microsoftonline.com/common"
         },
 
         clientID: {
@@ -50,24 +58,22 @@
         },
 
         userAgentApplication: {
-          type: Object,
-          readonly: true,
-          value: function () {
-            if (window.msal) {
-              console.log("previous msal object found!");
-              return window.msal;
-            }
-            console.log("creating new msal object")
-            var clientID = 'bababc50-4dad-45b5-a10f-5b98129ccf1d';
-            var agent = new Msal.UserAgentApplication(
-                    clientID, 
-                    "https://login.microsoftonline.com/common",   // authority
-                    this.loginRedirectCallback_full);
+          type: Object
+        }
+      },
+
+      // create the msal object once all the properties have been set
+      ready: function () {
+        if (window.msal) {
+          this.userAgentApplication = window.msal;
+        }
+        var agent = new Msal.UserAgentApplication(
+                    this.clientID, 
+                    this.authority,
+                    this.loginCallback);
             // set redirectUri - otherwise it defaults to window.location.href
             agent.redirectUri = window.location.protocol + "//" + window.location.host + "/code_callback";
-            return agent;
-          },
-        }
+            this.userAgentApplication = agent;
       },
 
       // Returns the user object from the MSAL instance, if a user is logged in
@@ -78,71 +84,45 @@
         return null;
       },
 
-      // Starts the process of getting a token (either from storage or through redirect)
+      // Starts the process of retrieving an access token (either from storage or through redirect)
       // The user-token-response event is fired when token has been retrieved
       getToken: function () {
         if (this.userObj) {
-          this.loginRedirectCallback_full("", this.userObj.userIdentifier, "", "id_token");
+          // If user is logged in, try retrieving token from storage
+          this.userAgentApplication.acquireTokenSilent(this.scopes)
+            .then((accessToken) => {
+              // retrieved a valid token -> fire user-token-response event
+              console.log("Access token retrieved from storage: ", accessToken);
+              this.fire('user-token-response', {token: accessToken, scopes: this.scopes});
+            }).catch((error) => {
+              // couldn't retrieve a token from storage -> perform redirect
+              console.log("Could not retrieve token from storage. ", error);
+              this.userAgentApplication.acquireTokenRedirect(this.scopes);
+            });
+
         } else {
-          this.loginRedirect();
+          // redirect to MS login page if user is not logged in
+          this.login();   
         }
       },
 
-      // Triggers redirect to the 'log in with Microsoft' page
-      loginRedirect: function () {
-        console.log("scopes on redirect: ", this.scopes)
-        var scopes = [
-                "user.read", 
-                'https://graph.microsoft.com/Group.ReadWrite.All',
-                'https://graph.microsoft.com/User.ReadWrite.All'
-              ]
-        this.userAgentApplication.loginRedirect(scopes);
-      },
-
-      // Redirect callback that does not retrieve access token
-      loginRedirectCallback: function(errorDesc, token, error, tokenType) {
+      // function called after loginRedirect or acquireTokenRedirect
+      // Fires user-token-response event if an access token has been retrieved
+      loginCallback: function (errorDesc, token, error, tokenType) {
         if (token) {
-          console.log("login successful! Token type: ", tokenType);
-          console.log("Token: ", token);
-          console.log("User: ", this.msal.getUser());
-          this.userAgentApplication = this.msal;
-        }
-      },
-
-      // Redirect callback that retrieves an access token
-      loginRedirectCallback_full: function(errorDesc, token, error, tokenType) {
-        if (!this.scopes) {
-          this.scopes = [
-            "user.read", 
-            'https://graph.microsoft.com/Group.ReadWrite.All',
-            'https://graph.microsoft.com/User.ReadWrite.All'
-          ]
-        }
-        console.log("scopes: ", this.scopes)
-        if (token) {
-          console.log("login successful! ", tokenType, ": ", token);
-
-          if (tokenType === 'id_token') {
-            // user has logged in, but we do not have an access token 
-            this.userAgentApplication.acquireTokenSilent(this.scopes)
-              .then((accessToken) => {
-                // retrieved a valid token -> fire user-token-response event
-                console.log("Access token retrieved from storage: ", accessToken);
-                this.fire('user-token-response', {token: accessToken, scopes: this.scopes});
-              }).catch((error) => {
-                // couldn't retrieve a token from storage -> perform redirect
-                console.log("No token retrieved from storage: ", error);
-                this.userAgentApplication.acquireTokenRedirect(this.scopes);
-              });
-
-          } else if (tokenType === 'access_token') {
-            // Retrieved access token via redirect -> fire user-token-response event
-            console.log("Access token: ", token);
+          console.log("Token acquired! ", tokenType, ": ", token);
+          if (tokenType === "access_token") {
             this.fire('user-token-response', {token: accessToken, scopes: this.scopes});
           }
         } else {
           console.log("Login error: ", error, errorDesc);
         }
+      },
+
+      // Triggers redirect to the 'log in with Microsoft' page
+      login: function () {
+        console.log("scopes on redirect: ", this.scopes)
+        this.userAgentApplication.loginRedirect(this.scopes);
       },
 
       // Log out the current user
@@ -151,10 +131,17 @@
           this.userAgentApplication.logout();
       },
 
+      getLoginStatus: function(userObj) {
+        if (userObj) {
+          return true;
+        }
+        return false;
+      },
+
       // specifies the action triggered by the signin button
       handleSignin: function(e) {
         if (!this.userObj) {
-          this.loginRedirect();   // if no user, log in
+          this.login();   // if no user, log in
         } else {
           this.logout();
         }
@@ -163,7 +150,7 @@
       // get button message
       getMessage: function(userObj) {
         if (userObj) {
-          return "Sign out";
+          return "Log out";
         }
         return "Login with Microsoft"
       },
