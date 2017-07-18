@@ -62,4 +62,8 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
 
 ## questions
 
-* where do we want to host this?
+* where do we want to host jibe wrt drill[plan|ops]?
+* integrate better with connector configuration dialog window
+* how do we re-configure a connector?
+* avoid public calls to connector/[setup | register]
+* how do we improve app service warm-up time
