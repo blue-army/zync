@@ -21,8 +21,6 @@ app.use(bodyparser.urlencoded({
     extended: true,
 }));
 
-console.log("whoa: " + __dirname);
-
 // setup swaggerize express for api (as it clears a bunch of props on express)
 app.use(swaggerize({
     api: __dirname + '/config/swagger.json',
