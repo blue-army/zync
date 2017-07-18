@@ -31,3 +31,13 @@ html
                 | WebHook
             p.info
                 | #{webhookUrl}
+
+        div.gap
+            input.btn(type="button" value="Done" onclick='done()')
+
+        script.
+            function done() {
+                console.log('closing time');
+                window.close();
+                return false;
+            }
