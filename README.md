@@ -62,7 +62,7 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
 
 ## events
 
-`POST https://jibe.azurewebsites.net/events`
+`POST https://jibe.azurewebsites.net/api/events`
 ```json
 {
     "type": "slb.drill-plan.activity",
