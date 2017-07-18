@@ -60,6 +60,53 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
 * look into connectors as a way to 'configure webhooks'
 * [done] try out the github connector
 
+## events
+
+`POST https://jibe.azurewebsites.net/events`
+```json
+{
+    "type": "slb.drill-plan.activity",
+    "project": "33839ffe-90f9-4cc4-a906-f7ad2e77bb1f",
+    "content": {
+        "id": "1-dd5bc9dab23e4059b5b363af55eb907c",
+        "owner": {
+            "full_name": "Greg Skoff",
+            "image_url": ""
+        },
+        "activity": {
+            "type": "Share",
+            "entity_id": "0985e6a5809c42599a6d6e7b8e85f548",
+            "entity_name": "Untitled BHA/Drillstring",
+            "activity_time": "2017-05-03T19:36:40.7948026Z",
+            "comments": "snap",
+            "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "activity_entity_type": "BHA&Drillstring",
+            "is_customer_data": false,
+            "changed_property_names": [],
+            "extension_propertys_dic": {
+                "client_name": "Cimerex"
+            },
+            "parent": {
+                "id": "1-61fb6a60485d43b1994c510fb2198f1e",
+                "entity_type": "run",
+                "name": "Run",
+                "parent": {
+                    "id": "1-45328fe7f98c439ba1b217d5b551f0f4",
+                    "entity_type": "section",
+                    "name": "8.75 in",
+                    "parent": {
+                        "id": "1-f85b9dec6de340598689babbbf1a48f0",
+                        "entity_type": "project",
+                        "name": "White City 8 Federal #4H–Cimerex",
+                        "parent": null
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
 ## questions
 
 * where do we want to host jibe wrt drill[plan|ops]?
