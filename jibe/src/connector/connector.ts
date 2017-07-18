@@ -11,20 +11,6 @@ async function setup(_req: express.Request, res: express.Response, _next: expres
     var connectorAppID: string = process.env.CONNECTOR_APP_ID || "bc32fa91-81d0-4314-9914-e718d47e90e8";
     var baseURI: string = process.env.BASE_URI || "https://jibe.azurewebsites.net";
 
-    var htmlBody = "<html><title>Set up connector</title><body>";
-    htmlBody += "<H2>Adding your Connector Portal-registered connector</H2>";
-    htmlBody += '<p>Click the button to call the "register" endpoint in the sample app, which will register the connector for the selected channel and send a sample "Welcome" connector card.</p>';
-    htmlBody += '<a href="https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=' + connectorAppID + '&callback_url=' + baseURI + '/api/messages/connector/register">';
-    htmlBody += '<img src="https://o365connectors.blob.core.windows.net/images/ConnectToO365Button.png" alt="Connect to Office 365"></img></a>';
-    htmlBody += '</body></html>';
-
-    // res.writeHead(200, {
-    //     'Content-Length': Buffer.byteLength(htmlBody),
-    //     'Content-Type': 'text/html'
-    // });
-    // res.write(htmlBody);
-    // res.end();
-
     // fetch projects
     let projects = await jibe.getProjectList();
 
@@ -108,7 +94,7 @@ async function setup(_req: express.Request, res: express.Response, _next: expres
         }
     ];
 
-    res.render('index.pug', {
+    res.render('setup.pug', {
         title: 'Setup Connector',
         registerUrl: 'https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=' + connectorAppID + '&callback_url=' + baseURI + '/api/messages/connector/register',
         projects: projects,
@@ -131,22 +117,13 @@ async function register(req: express.Request, res: express.Response) {
     // Generate HTML response
     var baseURI: string = process.env.BASE_URI || "https://jibe.azurewebsites.net";
     var sendUrl = baseURI + "/api/messages/connector/send?group_name=" + group_name;
-    var htmlBody = "<html><body><H2>Registered Connector added</H2>";
-    htmlBody += "<li><b>App Type:</b> " + appType + "</li>";
-    htmlBody += "<li><b>Group Name:</b> " + group_name + "</li>";
-    htmlBody += "<li><b>State:</b> " + state + "</li>";
-    htmlBody += "<li><b>Web Hook URL stored:</b> " + webhook_url + "</li>";
-    htmlBody += "</body></html>";
 
-    htmlBody += "<br><br>To generate a message to this endpoint, use this link:";
-    htmlBody += "<a href='" + sendUrl + "' target='_blank'>" + sendUrl + "</a>";
-    htmlBody += '</body></html>';
-
-    res.writeHead(200, {
-        'Content-Length': Buffer.byteLength(htmlBody),
-        'Content-Type': 'text/html'
+    res.render('connector.pug', {
+        appType: appType,
+        groupName: group_name,
+        state: state,
+        webhookUrl: webhook_url,
     });
-    res.write(htmlBody);
 
     // Generate a sample connector message as a "welcome"
     var message = generateConnectorCard("Welcome", "This is a sample connector card sent to group: <b>" + group_name + "</b> via webhook: <b>" + webhook_url + "</b> using link: <b>" + sendUrl + "</b>");
@@ -165,8 +142,6 @@ async function register(req: express.Request, res: express.Response) {
     catch (err) {
         console.log(err);
     }
-
-    return res.end();
 }
 
 // Generates rich connector card.
@@ -279,7 +254,7 @@ function puggy(_req: express.Request, res: express.Response) {
 
 function init(app: express.Application) {
     app.get('/connector/setup', setup);
-    app.get('/api/messages/connector/register', register);
+    app.get('/connector/register', register);
     app.get('/puggy', puggy);
     return this;
 }
