@@ -78,12 +78,14 @@ class RouteInfo {
 class GroupInfo {
     id: string;
     name: string;
+    description: string;
 
     public static fromObj(j: any): GroupInfo {
         let o = new GroupInfo();
 
         o.id = j['id'];
         o.name = j['displayName'];
+        o.description = j['description'];
 
         return o;
     }

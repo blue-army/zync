@@ -15,7 +15,7 @@
 <link href="services/groups-service.html" rel="import">
 <link href="misc/shared-styles.html" rel="import">
 <link href="components/group-card.html" rel="import">
-<!-- <link href="components/group-create.html" rel="import">  -->
+ <link href="components/group-create.html" rel="import">  
 
 <dom-module id="my-groups">
   <template>
@@ -77,16 +77,16 @@
 
     <paper-material id="groupEntry" elevation="0">
 
-      <!-- <group-create 
+       <group-create 
         a-groups="{{aGroups}}">
-      </group-create> -->
+      </group-create> 
 
       <div class="container">
         <div class="vcard">
 
           <template is="dom-if" if="{{!aGroups.length}}">
             <paper-icon-button id="mybutton" icon="my-icons:icon-well-plan" class="giant central"></paper-icon-button>
-            <div class="central">No Projects available. Updates are Real-Time so stay tuned!</div>
+            <div class="central">No Groups available. Updates are Real-Time so stay tuned!</div>
           </template>
 
           <template is="dom-repeat" items="{{aGroups}}">

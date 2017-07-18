@@ -3,7 +3,6 @@
 <link href="../../bower_components/paper-button/paper-button.html" rel="import">
 <link href="../../bower_components/paper-dialog/paper-dialog.html" rel="import">
 <link href="../../bower_components/paper-material/paper-material.html" rel="import">
-<link href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html" rel="import">
 <link href="../../bower_components/paper-input/paper-input.html" rel="import">
 <link href="../../bower_components/paper-listbox/paper-listbox.html" rel="import">
 <link href="../../bower_components/paper-item/paper-item.html" rel="import">
@@ -12,9 +11,9 @@
 <link href="../../bower_components/iron-flex-layout/iron-flex-layout.html" rel="import">
 <link href="../../bower_components/iron-label/iron-label.html" rel="import">
 <link href="../../bower_components/paper-fab/paper-fab.html" rel="import">
-<link href="../services/projects-service.html" rel="import">
+<link href="../services/groups-service.html" rel="import">
 
-<dom-module id="project-create">
+<dom-module id="group-create">
   <template>
     <style>
        :host {
@@ -35,7 +34,7 @@
 
       paper-dialog.size-position {
         width: 400px;
-        height: 400px;
+        height: 300px;
         overflow: auto;
       }
 
@@ -44,35 +43,13 @@
         bottom: 10px;
         right: 10px;
       }
-
-      paper-dropdown-menu {
-        display: block;
-      }
     </style>
-
-    <iron-ajax id="xhrGetGroups"
-        url="{{groupsUrl}}"
-        handle-as="json"
-        on-response="handleGroupsResponse"
-        on-error="handleError"
-        method="GET"
-        content-type="application/json"
-        debounce-duration="300">
-    </iron-ajax>
 
     <paper-dialog id="modal" auto-fit-on-attach on-iron-overlay-closed="dismissDialog" class="size-position">
 
-      <paper-input id="tName" value="{{nameInput}}" label="Project Name" required char-counter maxlength="20"></paper-input>
+      <paper-input id="tName" value="{{nameInput}}" label="Group Name" required char-counter maxlength="20"></paper-input>
 
-      <paper-dropdown-menu id="dropdown" label="Pick a Group" horizontal-align="left">
-        <paper-listbox id="groupList" slot="dropdown-content" class="dropdown-content" on-iron-select="selectedChanged">
-          <template is="dom-repeat" items="{{aGroups}}">
-            <paper-item>{{item.name}}</paper-item>
-          </template>
-        </paper-listbox>
-      </paper-dropdown-menu>
-
-      <paper-input id="tGeohash" value="{{geohashInput}}" label="GeoHash" required char-counter maxlength="20"></paper-input>
+      <paper-input id="tDescription" value="{{descriptionInput}}" label="Description" required char-counter maxlength="20"></paper-input>
 
       <div class="buttons">
         <paper-button dialog-confirm autofocus>Create</paper-button>
@@ -80,15 +57,15 @@
       </div>
     </paper-dialog>
 
-    <projects-service 
-        auto={{projectsTrigger}}
-        on-projects-response="handleResponse"
-        projects-method={{iaMethod}} 
-        projects-body={{iaBody}}>
-    </projects-service>
+    <groups-service 
+        auto={{groupsTrigger}}
+        on-groups-response="handleResponse"
+        groups-method={{iaMethod}} 
+        groups-body={{iaBody}}>
+    </groups-service>
 
     <div class="my-label">
-      <h2>Create New Project</h2>
+      <h2>Create New Group</h2>
       <paper-fab iron-label-target on-click="openDialog" icon="add" class="blue"></paper-fab>
     </div>
 
@@ -97,18 +74,12 @@
 
 <script>
   Polymer({
-    is: 'project-create',
+    is: 'group-create',
 
     properties: {      
       groupsUrl: {
         type: String,
         value: "/api/groups"
-      },
-      aProjects: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: []
       },
       aGroups: {
         type: Array,
@@ -116,46 +87,29 @@
         notify: true,
         value: []
       },
-      selectedGroup: Number
     },
 
     openDialog: function () {
-      this.groupsUrl = "/api/groups";
-      this.$.xhrGetGroups.generateRequest();
       this.$.modal.open();
     },
 
     dismissDialog: function (e) {
       if (e.detail.confirmed) {
-        let name = this.nameInput;
-        let geohash = this.geohashInput;
-        let groupId = this.aGroups[this.selectedGroup].id;
-        
-        let project = JSON.stringify({ 
-          name: name, 
-          geohash: geohash,
-          group: groupId
+        let group = JSON.stringify({ 
+          name: this.nameInput, 
+          description: this.descriptionInput
         });
 
-        this.iaBody = project;
+        this.iaBody = group;
         this.iaMethod = "PUT";
-        this.projectsTrigger = "true";
+        this.groupsTrigger = "true";
       }
     },
 
-    selectedChanged: function(e) {
-      this.selectedGroup = e.target.selected;
-      let item = this.aGroups[this.selectedGroup];
-    },
-
     handleResponse: function (data) {
-      let projects = this.aProjects.slice();
-      projects.push(data.detail);
-      this.aProjects = projects;
-    },
-
-    handleGroupsResponse: function (data) {
-      this.aGroups = data.detail.response;
+      let groups = this.aGroups.slice();
+      groups.push(data.detail);
+      this.aGroups = groups;
     },
 
   });

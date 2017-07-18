@@ -41,6 +41,7 @@ async function create_group(_req: express.Request, res: express.Response) {
 
         let payload = _req.body;
         let name = payload['name'];
+        let description = payload['description'];
 
         // create request
         let options = {
@@ -53,7 +54,7 @@ async function create_group(_req: express.Request, res: express.Response) {
             // Group body can hold other properties 
             // (https://developer.microsoft.com/en-us/graph/docs/api-reference/beta/resources/group)
             body: {
-                description: "group.description",
+                description: description,
                 displayName: name,
                 groupTypes: [
                     "Unified"
@@ -67,8 +68,10 @@ async function create_group(_req: express.Request, res: express.Response) {
 
         // invoke
         let val = await rp(options);
+        
+        let group = models.GroupInfo.fromObj(val);
 
-        res.send(val.value);
+        res.send(group);
         
     } catch (error) {
         res.send(error);

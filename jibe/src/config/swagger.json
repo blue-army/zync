@@ -285,6 +285,37 @@
                     }
                 },
                 "deprecated": false
+            },
+            "put": {
+                "tags": [
+                    "groups"
+                ],
+                "operationId": "create_group",
+                "consumes": [],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GroupInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/GroupInfo"
+                        }
+                    }
+                },
+                "deprecated": false
             }
         },
         "/api/groups/{id}/channels": {
@@ -469,6 +500,9 @@
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "description": {
                     "type": "string"
                 }
             }
