@@ -23,7 +23,7 @@ html
             p.heading
                 | Project
             p
-                | Choose the DrillPlan project that you want to use to configure this connector
+                | Choose the DrillPlan project that you want to use to configure this connector:
 
             select.projects()
                 each item in projects
@@ -33,9 +33,14 @@ html
             p.heading
                 | Notifications
             p
-                | Select the notifications to which you would like to subscribe.
+                | Select the notifications to which you would like to subscribe:
+            div.container
+                each notif in events
+                    label.notif
+                        input.spacer(type="checkbox" name="notification" value=notif.name)
+                        | #{notif.name} <br/>
 
-        div.begin
+        div.gap
             a(href=registerUrl)
                 input.btn(type="button" value="Connect")
 

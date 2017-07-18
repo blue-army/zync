@@ -28,10 +28,91 @@ async function setup(_req: express.Request, res: express.Response, _next: expres
     // fetch projects
     let projects = await jibe.getProjectList();
 
-    res.render('index.pug', { 
-        title: 'Setup Connector', 
+    let events = [
+        {
+            "name": "BHA",
+            "rule": {
+                "path": "activity.activity_entity_type",
+                "expr": "^BHA&Drillstring$",
+            }
+        },
+        {
+            "name": "Bit Selection",
+            "rule": {
+                "path": "activity.activity_entity_type",
+                "expr": "^Bit Selection$",
+            }
+        },
+        {
+            "name": "Drilling Fluid",
+            "rule": {
+                "path": "activity.activity_entity_type",
+                "expr": "^drilling fluid$",
+            }
+        },
+        {
+            "name": "Casing Design",
+            "rule": {
+                "path": "activity.activity_entity_type",
+                "expr": "^casign design$",
+            }
+        },
+        {
+            "name": "Cementing",
+            "rule": {
+                "path": "activity.activity_entity_type",
+                "expr": "^cementing$",
+            }
+        },
+        {
+            "name": "Logistics",
+            "rule": {
+                "path": "activity.activity_entity_type",
+                "expr": "^logistics$",
+            }
+        },
+        {
+            "name": "Mud Design",
+            "rule": {
+                "path": "activity.activity_entity_type",
+                "expr": "^mud design$",
+            }
+        },
+        {
+            "name": "Rig",
+            "rule": {
+                "path": "activity.activity_entity_type",
+                "expr": "^rig$",
+            }
+        },
+        {
+            "name": "Trajectory",
+            "rule": {
+                "path": "activity.activity_entity_type",
+                "expr": "^trajectory$",
+            }
+        },
+        {
+            "name": "Target",
+            "rule": {
+                "path": "activity.activity_entity_type",
+                "expr": "^target$",
+            }
+        },
+        {
+            "name": "Risks",
+            "rule": {
+                "path": "activity.activity_entity_type",
+                "expr": "^risks$",
+            }
+        }
+    ];
+
+    res.render('index.pug', {
+        title: 'Setup Connector',
         registerUrl: 'https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=' + connectorAppID + '&callback_url=' + baseURI + '/api/messages/connector/register',
         projects: projects,
+        events: events,
     });
 }
 
