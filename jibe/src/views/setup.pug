@@ -41,12 +41,13 @@ html
                     input.btn(type="submit" value="Connect")
 
         script.
-            var original_url = "#{registerUrl}";
+            var original_url = '!{registerUrl}'
             $( "form" ).on( "submit", function( event ) {
                 event.preventDefault();
                 var state = $( this ).serialize();
-                console.log("State: ", state);
-                window.location = original_url + "&state=" + encodeURIComponent(state);
+                var url = original_url + "&state=" + encodeURIComponent(state);
+                console.log('url: ' + url);
+                window.location = url;
             });
 
 
