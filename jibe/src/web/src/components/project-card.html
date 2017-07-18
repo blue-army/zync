@@ -238,7 +238,6 @@
     },
     dismissExploreDialog: function(e) {
       if (e.detail.confirmed) {
-        let type = "any";
         let body = JSON.parse(this.$.juicyEditor.value);
         this.geohashToCoord(body.geohash);
 

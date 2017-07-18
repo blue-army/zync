@@ -318,6 +318,37 @@
                 "deprecated": false
             }
         },
+        "/api/groups/{id}": {
+            "delete": {
+                "description": "Deletes specified group",
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Deletes the specified group",
+                "operationId": "delete_group",
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
         "/api/groups/{id}/channels": {
             "get": {
                 "tags": [

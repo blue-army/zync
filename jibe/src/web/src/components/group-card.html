@@ -166,7 +166,8 @@
       textInput: String,
     },
 
-    ready: function () {
+    handleResponse: function (data) {
+      console.log("operation id#" + this.item.id + " = " + data.detail.status);
     },
 
     removeItem: function () {
@@ -181,17 +182,8 @@
       }, this);
     },
 
-    handleResponse: function (data) {
-      console.log("operation id#" + this.item.id + " = " + data.detail.status);
-    },
-
-    handleExplore: function () {
-      this.textInput = JSON.stringify(this.item, null, "\t");
-      this.$.exploreModal.open();
-    },
     dismissExploreDialog: function(e) {
       if (e.detail.confirmed) {
-        let type = "any";
         let body = JSON.parse(this.$.juicyEditor.value);
 
         this.projBody = JSON.stringify(body);
@@ -200,9 +192,10 @@
       }
     },
 
-    handleEventsResponse: function(e) {
-      console.log("operation id#" + this.item.id + " = " + e.detail.status);
-    }
+    handleExplore: function () {
+      this.textInput = JSON.stringify(this.item, null, "\t");
+      this.$.exploreModal.open();
+    },
 
   });
 
