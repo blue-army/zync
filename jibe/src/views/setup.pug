@@ -2,6 +2,8 @@ html
     head
         title= title
         link(rel='stylesheet', href='/assets/stylesheets/connector.css')
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+        
     body
         div#column-content
             img#logo(src= '/assets/connector/Taiji.png')
@@ -12,27 +14,39 @@ html
             | The DrillPlan connector sends notifications about tasks and activities related to your projects in DrillPlan.<br/>
             | If you don't already have an account, create one on the DrillPlan website.
 
-        div
-            p.heading
-                | Project
-            p
-                | Choose the DrillPlan project that you want to use to configure this connector:
+        form
+            div
+                p.heading
+                    | Project
+                p
+                    | Choose the DrillPlan project that you want to use to configure this connector:
 
-            select.projects()
-                each item in projects
-                    option(value=item.id) #{item.name}
+                select.projects(name="project")
+                    each item in projects
+                        option(value=item.id) #{item.name}
 
-        div
-            p.heading
-                | Notifications
-            p
-                | Select the notifications to which you would like to subscribe:
-            div.container
-                each notif in events
-                    label.notif
-                        input.spacer(type="checkbox" name="notification" value=notif.name)
-                        | #{notif.name} <br/>
+            div
+                p.heading
+                    | Notifications
+                p
+                    | Select the notifications to which you would like to subscribe:
+                div.container
+                    each notif in events
+                        label.notif
+                            input.spacer(type="checkbox" name="notification" value=notif.name)
+                            | #{notif.name} <br/>
 
-        div.gap
-            a(href=registerUrl)
-                input.btn(type="button" value="Connect")
+            div.gap
+                a#submit-btn
+                    input.btn(type="submit" value="Connect")
+
+        script.
+            var original_url = "#{registerUrl}";
+            $( "form" ).on( "submit", function( event ) {
+                event.preventDefault();
+                var state = $( this ).serialize();
+                console.log("State: ", state);
+                window.location = original_url + "&state=" + encodeURIComponent(state);
+            });
+
+
