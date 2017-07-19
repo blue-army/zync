@@ -80,11 +80,6 @@ async function routeEvent(event_info: models.EventInfo) {
     // get the route that matches the event
     var routes = getCardRoutes(proj, event_info);
 
-    // return rejected promise if no matching route found
-    if (routes.length === 0) {
-        return Promise.reject("No matching webhook found");
-    }
-
     var promises = []
     var options = {
         method: 'POST',
