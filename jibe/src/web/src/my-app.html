@@ -83,9 +83,7 @@
             <user-signin-service id="userSigninService" on-user-token-response="handleTokenResponse"></user-signin-service>
             <signin-service id="signinService" on-signin-response="handleSigninResponse"></signin-service>
 
-            <paper-button on-tap=getUserToken>
-              Get User Token
-            </paper-button>
+            <paper-icon-button class="giant central" icon="my-icons:token" on-tap=getUserToken></paper-icon-button>
 
           </app-toolbar>
         </app-header>
