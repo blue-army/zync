@@ -328,9 +328,11 @@ class ActivityDetails {
 
         var iconImageName = iconMap[this.activity_entity_type.toLowerCase()];
         if (!iconImageName) {
-            iconImageName = 'unknow';
+            iconImageName = 'unknown';
         }
-        return '/assets/images/activities/' + iconImageName + '.png';
+
+        var baseURI: string = process.env.BASE_URI || "https://jibe.azurewebsites.net";
+        return baseURI + '/assets/images/activities/' + iconImageName + '.png';
     }
 
     public getEntityUrl(): string {
