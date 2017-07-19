@@ -114,3 +114,4 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
 * how do we re-configure a connector?
 * avoid public calls to connector/[setup | register]
 * how do we improve app service warm-up time
+* delete group only works from v1.0. Fails when called from beta graph API.
