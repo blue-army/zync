@@ -106,6 +106,30 @@
         }
       },
 
+      // Retrieves an access token (either from storage or through redirect)
+      // Returns a promise that is resolved with the access token and its scopes
+      getTokenPromise: function () {
+        if (this.userObj) {
+          // If user is logged in, try retrieving token from storage
+          return new Promise((resolve, reject) => {
+            this.userAgentApplication.acquireTokenSilent(this.scopes)
+            .then((accessToken) => {
+              // retrieved a valid token -> resolve promise
+              console.log("Access token retrieved from storage: ", accessToken);
+              resolve({token: accessToken, scopes: this.scopes});
+            }).catch((error) => {
+              // couldn't retrieve a token from storage -> perform redirect
+              console.log("Could not retrieve token from storage. ", error);
+              reject(error);
+              this.userAgentApplication.acquireTokenRedirect(this.scopes);
+            });
+          })
+        } else {
+          // redirect to MS login page if user is not logged in
+          this.login();   
+        }
+      },
+
       // function called after loginRedirect or acquireTokenRedirect
       // Fires user-token-response event if an access token has been retrieved
       loginCallback: function (errorDesc, token, error, tokenType) {
