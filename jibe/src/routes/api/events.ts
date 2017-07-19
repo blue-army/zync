@@ -78,10 +78,10 @@ async function routeEvent(event_info: models.EventInfo) {
     let proj = models.ProjectInfo.fromObj(doc);
 
     // get the route that matches the event
-    var route = getCardDestination(proj, event_info);
+    var routes = getCardRoutes(proj, event_info);
 
     // return rejected promise if no matching route found
-    if (!route) {
+    if (routes.length === 0) {
         return Promise.reject("No matching webhook found");
     }
 
@@ -93,18 +93,20 @@ async function routeEvent(event_info: models.EventInfo) {
         json: true
     };
 
-    // if the route has an associated webhook, send a message to it
-    if (route.webhook) {
-        options.uri = route.webhook;
-        promises.push(rp(options));
-    }
+    for (let route of routes) {
+        // if the route has an associated webhook, send a message to it
+        if (route.webhook) {
+            options.uri = route.webhook;
+            promises.push(rp(options));
+        }
 
-    // also look for a matching channel with a webhook
-    if (route.channel) {
-        for (let c of proj.channels) {
-            if (c.name === route.channel) {
-                options.uri = c.webhook;
-                promises.push(rp(options));
+        // also look for a matching channel with a webhook
+        if (route.channel) {
+            for (let c of proj.channels) {
+                if (c.name === route.channel) {
+                    options.uri = c.webhook;
+                    promises.push(rp(options));
+                }
             }
         }
     }
@@ -112,23 +114,13 @@ async function routeEvent(event_info: models.EventInfo) {
     return Promise.all(promises);
 }
 
-function getCardDestination(proj: models.ProjectInfo, eventInfo: models.EventInfo): models.RouteInfo {
-
-    for (let r of proj.routes) {
+// Return all project routes that match the event
+function getCardRoutes(proj: models.ProjectInfo, eventInfo: models.EventInfo): models.RouteInfo[] {
+    return proj.routes.filter(function(r) {
         let rexp = new RegExp(r.expr);
         let data = _.get(eventInfo.content, r.path, undefined);
-        if (!data) {
-            continue;
-        }
-
-        if (!rexp.test(data)) {
-            continue;
-        }
-
-        // Match found; return the associated route
-        // Todo: should we return all the matches?
-        return r;
-    }
+        return (data && rexp.test(data));
+    });
 }
 
 async function fetch_document(uri: string): Promise<any> {
