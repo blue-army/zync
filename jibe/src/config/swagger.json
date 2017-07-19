@@ -381,6 +381,47 @@
                     }
                 },
                 "deprecated": false
+            },
+             "post": {
+                "tags": [
+                    "groups",
+                    "channels"
+                ],
+                "operationId": "create_channel",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Payload",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GraphChannelCreationInfo"
+                        }
+                    }
+                ],
+                "consumes": [
+                    "application/json",
+                    "text/json"
+                ],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/GraphChannelInfo"
+                        }
+                    }
+                },
+                "deprecated": false
             }
         }
     },
@@ -548,6 +589,17 @@
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        },
+        "GraphChannelCreationInfo": {
+            "type": "object",
+            "properties": {
+                "displayName": {
                     "type": "string"
                 },
                 "description": {

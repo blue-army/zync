@@ -58,7 +58,7 @@ function create_channel(req: express.Request, res: express.Response) {
         .post(req.body)
         .then((graph_res: any) => {
             // Filter out extraneous info
-            let new_channel = models.GraphChannelInfo.fromObj(graph_res.body)
+            let new_channel = models.GraphChannelInfo.fromObj(graph_res)
             res.json(new_channel);
         }).catch((err: any) => {
             res.send(err);
