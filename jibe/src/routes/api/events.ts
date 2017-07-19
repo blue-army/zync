@@ -77,28 +77,42 @@ async function routeEvent(event_info: models.EventInfo) {
     let doc = await fetch_document(uri);
     let proj = models.ProjectInfo.fromObj(doc);
 
-    // determine channel
-    var channel = getCardDestination(proj, event_info);
+    // get the route that matches the event
+    var route = getCardDestination(proj, event_info);
 
-    // get appropriate channel
-    for (let c of proj.channels) {
-        if (c.name === channel) {
-            var options = {
-                method: 'POST',
-                uri: c.webhook,
-                body: o,
-                json: true
-            };
+    // return rejected promise if no matching route found
+    if (!route) {
+        return Promise.reject("No matching webhook found");
+    }
 
-            return rp(options);
+    var promises = []
+    var options = {
+        method: 'POST',
+        uri: "",
+        body: o,
+        json: true
+    };
+
+    // if the route has an associated webhook, send a message to it
+    if (route.webhook) {
+        options.uri = route.webhook;
+        promises.push(rp(options));
+    }
+
+    // also look for a matching channel with a webhook
+    if (route.channel) {
+        for (let c of proj.channels) {
+            if (c.name === route.channel) {
+                options.uri = c.webhook;
+                promises.push(rp(options));
+            }
         }
     }
+
+    return Promise.all(promises);
 }
 
-function getCardDestination(proj: models.ProjectInfo, eventInfo: models.EventInfo): string {
-
-    // default channel
-    let channel = "jibe";
+function getCardDestination(proj: models.ProjectInfo, eventInfo: models.EventInfo): models.RouteInfo {
 
     for (let r of proj.routes) {
         let rexp = new RegExp(r.expr);
@@ -111,11 +125,10 @@ function getCardDestination(proj: models.ProjectInfo, eventInfo: models.EventInf
             continue;
         }
 
-        channel = r.channel;
-        break;
+        // Match found; return the associated route
+        // Todo: should we return all the matches?
+        return r;
     }
-
-    return channel;
 }
 
 async function fetch_document(uri: string): Promise<any> {
