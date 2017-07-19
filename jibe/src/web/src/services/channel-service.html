@@ -1,0 +1,89 @@
+<link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+
+
+<dom-module id="channels-service">
+  <template>
+    <iron-ajax id="xhr"
+        url={{url}}
+        handle-as="json"
+        on-response="handleResponse"
+        on-error="handleError"
+        method={{method}}
+        content-type="application/json"
+        body={{body}}
+        headers={{headers}}
+        debounce-duration="300">
+    </iron-ajax>
+
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is: 'channels-service',
+
+      properties: {
+        groupId: {
+          type: String,
+        },
+        url: {
+          type: String,
+          computed: '_url(groupId)'
+        },
+        method: {
+          type: String,
+          value: "GET",
+        },
+        body: {
+          type: String,
+          value: ""
+        },
+        token: {
+          type: String,
+        },
+        headers: {
+          type: Object,
+          computed: '_headers(method, token)'
+        },
+        auto: {
+          type: String,
+          value: false,
+          observer: "_autoChanged",
+        }
+      },
+
+      _url: function(groupId) {
+        return "/api/groups/{groupId}/channels".replace("{groupId}", groupId);
+      },
+
+      _headers: function(token) {
+        if (token) {
+          return {"Authorization": "bearer " + this.token}
+        }
+        return null;
+      },
+
+      handleResponse: function(data) {
+        // GET for list of channels in group
+        if (this.method === "GET") {
+          console.log("Channels: ", data);
+        }
+        // Create a channel (requires delegated permissions)
+        if (this.method === "POST") {
+          console.log("Channel creation response: ", data);
+        }
+
+        this.fire('projects-response', data.detail.response);
+      },
+
+      handleError: function(e) {
+        console.log(e.detail.error.message);
+      },
+
+      _autoChanged: function() {
+        if (this.auto === "true") {
+          this.$.xhrProjects.generateRequest();
+        }
+      }
+    });
+</script>
