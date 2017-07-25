@@ -26,6 +26,15 @@
             ]
         }
     ],
+    "bots": [
+        {
+            "botId": "bababc50-4dad-45b5-a10f-5b98129ccf1d",
+            "scopes": [
+                "team",
+                "personal"
+            ]
+        }
+    ],
     "name": {
         "full": "Jibe",
         "short": "Jibe"
