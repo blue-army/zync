@@ -1,0 +1,172 @@
+<script src="https://secure.aadcdn.microsoftonline-p.com/lib/0.1.1/js/msal.min.js"></script>
+
+<script>
+    UserSigninBehavior = {
+
+      properties: {
+        loggedIn: {
+          type: Boolean,
+          computed: 'getLoginStatus(userObj)'
+        },
+
+        userObj: {
+          type: Object,
+          computed: 'getUserInfo(userAgentApplication)'
+        },
+
+        authority: {
+          type: String,
+          readOnly: true,
+          value: "https://login.microsoftonline.com/common"
+        },
+
+        clientID: {
+          type: String,
+          value: 'bababc50-4dad-45b5-a10f-5b98129ccf1d',
+          readOnly: true
+        },
+
+        scopes: {
+          type: Array,
+          value: [
+              "user.read", 
+              'https://graph.microsoft.com/Group.ReadWrite.All',
+              'https://graph.microsoft.com/User.ReadWrite.All'
+            ]
+        },
+
+        userAgentApplication: {
+          type: Object
+        },
+
+        msalReady: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      // create the msal object once all the properties have been set
+      ready: function () {
+        if (window.msal) {
+          this.userAgentApplication = window.msal;
+          this.msalReady = true;
+          this.fire("msal-ready");
+        } else {
+          this.userAgentApplication = new Msal.UserAgentApplication(
+                        this.clientID, 
+                        this.authority,
+                        this.loginCallback);
+          // set redirectUri - otherwise it defaults to window.location.href
+          this.userAgentApplication.redirectUri = window.location.protocol + "//" + window.location.host + "/code_callback";
+          this.msalReady = true;
+
+          // if the user is already logged in, retrieve their access token from storage (for caching)
+          if (this.userAgentApplication.getUser()) {
+            console.log("initializing token in user-signin-behavior!");
+            this.getTokenPromise().then((token) => {
+              console.log("token initialized!");
+              this.fire("msal-ready");
+            });
+          } else {
+            this.fire("msal-ready");
+          }
+        }
+        
+       },
+
+      // Returns the user object from the MSAL instance, if a user is logged in
+      getUserInfo: function(userAgentApplication) {
+        if (userAgentApplication) {
+          return userAgentApplication.getUser();
+        }
+        return null;
+      },
+
+      // Starts the process of retrieving an access token (either from storage or through redirect)
+      // The user-token-response event is fired when token has been retrieved
+      getToken: function () {
+        if (!this.userAgentApplication)
+        if (this.userAgentApplication.cachedToken) {
+          console.log("returning cached token", this.userAgentApplication.cachedToken);
+          this.fire('user-token-response', {token: this.userAgentApplication.cachedToken, scopes: this.scopes});
+        
+        } else if (this.userObj) {
+          // If user is logged in, try retrieving token from storage
+          this.userAgentApplication.acquireTokenSilent(this.scopes)
+            .then((accessToken) => {
+              // retrieved a valid token -> fire user-token-response event
+              console.log("Access token retrieved from storage: ", accessToken);
+              this.userAgentApplication.cachedToken = accessToken;
+              this.fire('user-token-response', {token: accessToken, scopes: this.scopes});
+            }).catch((error) => {
+              // couldn't retrieve a token from storage -> perform redirect
+              console.log("Could not retrieve token from storage. ", error);
+              this.userAgentApplication.acquireTokenRedirect(this.scopes);
+            });
+
+        } else {
+          // redirect to MS login page if user is not logged in
+          this.login();   
+        }
+      },
+
+      // Retrieves an access token (either from storage or through redirect)
+      // Returns a promise that that will be resolved with the access token
+      getTokenPromise: function () {
+        if (!this.msalReady) {
+          console.log("ERROR: getTokenPromise called before MSAL initialized")
+        }
+        if (this.userAgentApplication.cachedToken) {
+          console.log("returning cached token", this.userAgentApplication.cachedToken)
+          return Promise.resolve(this.userAgentApplication.cachedToken);
+        }
+        if (this.userObj) {
+          return this.userAgentApplication.acquireTokenSilent(this.scopes)
+            .then((token) => {
+              this.userAgentApplication.cachedToken = token;
+              return token;
+            })
+            .catch((error) => {
+              // couldn't retrieve a token from storage -> perform redirect
+              console.log("Could not retrieve token from storage. ", error);
+              this.userAgentApplication.acquireTokenRedirect(this.scopes);
+            })
+        } else {
+          // redirect to MS login page if user is not logged in
+          this.login();   
+        }
+      },
+
+      // function called after loginRedirect or acquireTokenRedirect
+      // Fires user-token-response event if an access token has been retrieved
+      loginCallback: function (errorDesc, token, error, tokenType) {
+        if (token) {
+          console.log("Token acquired via callback! ", tokenType, ": ", token);
+          if (tokenType === "access_token") {
+            this.fire('user-token-response', {token: accessToken, scopes: this.scopes});
+          }
+        } else {
+          console.log("Login error: ", error, errorDesc);
+        }
+      },
+
+      // Triggers redirect to the 'log in with Microsoft' page
+      login: function () {
+        console.log("scopes on redirect: ", this.scopes)
+        this.userAgentApplication.loginRedirect(this.scopes);
+      },
+
+      // Log out the current user
+      logout: function() {
+          // Removes all sessions, need to call AAD endpoint to do full logout
+          this.userAgentApplication.logout();
+      },
+
+      getLoginStatus: function(userObj) {
+        if (userObj) {
+          return true;
+        }
+        return false;
+      },
+    };
+</script>

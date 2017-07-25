@@ -47,7 +47,11 @@ function create_channel(req: express.Request, res: express.Response) {
 
     let graph_client = MicrosoftGraph.Client.init({
         authProvider: (done: any) => {
-            done(null, token); //first parameter takes an error if you can't get an access token
+            if (token) {
+                done(null, token); //first parameter takes an error if you can't get an access token
+            } else {
+                done("Error: User token required", null);
+            }
         }
     });
 

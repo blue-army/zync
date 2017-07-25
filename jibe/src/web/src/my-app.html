@@ -14,7 +14,7 @@
 <link rel="import" href="misc/shared-styles.html">
 <link rel="import" href="my-view404.html">
 <link rel="import" href="services/signin-service.html">
-<link rel="import" href="services/user-signin-service.html">
+<link rel="import" href="services/user-signin-btn.html">
 <link rel="import" href="components/info-button.html">
 
 <dom-module id="my-app">
@@ -80,7 +80,7 @@
             <div main-title>DrillPlan/DrillOps - O365 Integration</div>
 
             <info-button token="{{token}}"></info-button>
-            <user-signin-service id="userSigninService" on-user-token-response="handleTokenResponse"></user-signin-service>
+            <user-signin-btn id="userSigninService" on-user-token-response="handleTokenResponse"></user-signin-btn> 
             <signin-service id="signinService" on-signin-response="handleSigninResponse"></signin-service>
 
             <paper-icon-button class="giant central" icon="my-icons:token" on-tap=getUserToken></paper-icon-button>

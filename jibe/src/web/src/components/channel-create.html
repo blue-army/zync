@@ -1,0 +1,194 @@
+<link href="../../bower_components/polymer/polymer.html" rel="import">
+<link href="../../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
+<link href="../../bower_components/paper-button/paper-button.html" rel="import">
+<link href="../../bower_components/paper-dialog/paper-dialog.html" rel="import">
+<link href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html" rel="import">
+<link href="../../bower_components/paper-material/paper-material.html" rel="import">
+<link href="../../bower_components/paper-input/paper-input.html" rel="import">
+<link href="../../bower_components/paper-listbox/paper-listbox.html" rel="import">
+<link href="../../bower_components/paper-item/paper-item.html" rel="import">
+<link href="../../bower_components/paper-item/paper-item-body.html" rel="import">
+<link href="../../bower_components/iron-icons/iron-icons.html" rel="import">
+<link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+<link href="../../bower_components/iron-flex-layout/iron-flex-layout.html" rel="import">
+<link href="../../bower_components/iron-label/iron-label.html" rel="import">
+<link href="../../bower_components/paper-fab/paper-fab.html" rel="import">
+<link href="../../bower_components/paper-spinner/paper-spinner.html" rel="import">
+<link href="../../bower_components/iron-form/iron-form.html" rel="import">
+<link href="../services/groups-service.html" rel="import">
+
+<dom-module id="channel-create">
+  <template>
+    <style>
+       :host {
+        display: block;
+        padding: 10px;
+        text-align: initial;
+      }
+
+      /* .my-label {
+        @apply --layout-horizontal;
+      } */
+
+      paper-fab.blue {
+        margin-left: 20px;
+        margin-top: 7px;
+        --paper-fab-background: #4285f4;
+        --paper-fab-keyboard-focus-background: var(--paper-light-blue-900);
+      }
+
+       paper-dialog.size-position {
+        width: 500px;
+        /* height: 300px; */
+        /* overflow: auto; */
+      } 
+
+      /* .buttons {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }  */
+
+       #open-dialog-btn {
+        text-align: right;
+      } 
+    </style>
+
+    <paper-dialog id="modal" class="size-position">
+      <h2>[[title]]</h2>
+      <paper-dialog-scrollable>
+        <paper-listbox>
+          <template is="dom-repeat" items="[[channels]]">
+            <paper-item class="channel-item">
+              <paper-item-body two-line>
+                <div>[[item.name]]</div>
+                <div secondary>[[item.description]]</div>
+              </paper-item-body>
+            </paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dialog-scrollable>
+
+      <div>
+        <paper-button on-tap="openInnerDialog">Open nested dialog</paper-button>
+        <paper-button dialog-dismiss autofocus>Close</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="innerDialog">
+      <h2>Create a Channel</h2>
+      <iron-form id="channelForm">
+        <form >
+          <paper-input id="tName" value="{{nameInput}}" label="Channel Name" error-message=[[nameError]] invalid="[[nameInvalid]]" required char-counter maxlength="20"></paper-input>
+          <paper-input id="tDescription" value="{{descriptionInput}}" label="Description" required char-counter maxlength="50"></paper-input> 
+          <!-- <paper-progress indeterminate class="blue" hidden></paper-progress> -->
+        </form>
+      </iron-form>
+      <div class="buttons">
+        <paper-button on-tap="createChannel" autofocus>
+          <paper-spinner id="spinner" hidden></paper-spinner>
+          Create
+        </paper-button>
+        <paper-button dialog-dismiss autofocus>Close</paper-button>
+      </div>
+    </paper-dialog>
+
+    <channel-list 
+        id="channelListService" 
+        channels="{{channels}}" 
+        group-id=[[group.id]] 
+        on-channel-creation-response="handleCreationResponse"
+        load-immediately>
+    </channel-list>
+
+    <!-- <paper-icon-button id="open-dialog-btn" title="Channels" on-tap="openDialog" class="large" icon="my-icons:icon-agenda">
+      Channels
+    </paper-icon-button> -->
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'channel-create',
+
+    properties: {
+      group: {
+        type: Object,
+      },
+
+      title: {
+        type: String,
+        computed: 'getTitle(group)'
+      },
+
+      errorMessage: {
+        type: String
+      },
+
+      nameInvalid: {
+        type: Boolean,
+        computed: 'nameTaken(nameInput)'
+      },
+
+      nameError: {
+        type: String,
+        computed: 'nameError(nameInvalid)'
+      },
+
+      channels: {
+        type: Object,
+        value: () => {return [];}
+      }, 
+    },
+
+    openDialog: function () {
+      this.$.modal.open();
+    },
+
+    openInnerDialog: function () {
+      this.$.innerDialog.open();
+    },
+
+    createChannel: function () {
+      if (!this.$.channelForm.validate()) {
+        return;
+      }
+      console.log("creating channel! ", this.nameInput, this.descriptionInput)
+      this.$.spinner.active = true;
+      this.$.spinner.hidden = false;
+      this.$.channelListService.createChannel(this.nameInput, this.descriptionInput)
+    },
+
+    handleCreationResponse: function (e) {
+      this.$.spinner.active = false;
+      this.$.spinner.hidden = true;
+      this.$.channelForm.reset();
+      this.$.innerDialog.close();
+      console.log("Channel creation response: ", e);
+    },
+
+    getTitle: function (group) {
+      return "CHANNELS FOR " + group.name.toUpperCase();
+    },
+
+    nameTaken: function (name) {
+      for (let channel of this.channels) {
+        if (channel.name === name) {
+          return true;
+        }
+      }
+      return false;
+    },
+
+    nameError: function (nameTaken) {
+      if (nameTaken) {
+        return "That name is already taken";
+      } else {
+        return "";
+      }
+    }
+
+  });
+
+</script>

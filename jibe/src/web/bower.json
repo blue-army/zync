@@ -33,7 +33,11 @@
     "paper-item": "PolymerElements/paper-item#^1.2.2",
     "moment-element": "abdonrd/moment-element#^0.4.4",
     "geohash": "*",
-    "juicy-ace-editor": "^2.0.1"
+    "juicy-ace-editor": "^2.0.1",
+    "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable#^2.1.0",
+    "paper-progress": "PolymerElements/paper-progress#^2.0.1",
+    "iron-form": "PolymerElements/iron-form#^2.0.0",
+    "paper-spinner": "PolymerElements/paper-spinner#^2.0.0"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0"

@@ -1,26 +1,39 @@
 <link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
+<link rel="import" href="user-signin-service.html">
 
 
-<dom-module id="channels-service">
+<dom-module id="channel-list">
   <template>
-    <iron-ajax id="xhr"
-        url={{url}}
+    <user-signin-service id="userSigninService" on-msal-ready="handleMsalReady"></user-signin-service>
+    <iron-ajax id="listChannelsXHR"
+        url=[[url]]
+        method="GET"
+        headers=[[headers]]
         handle-as="json"
-        on-response="handleResponse"
-        on-error="handleError"
-        method={{method}}
-        content-type="application/json"
-        body={{body}}
-        headers={{headers}}
+        on-error="handleError" 
+        last-response={{channels}}
+        last-request={{lastRequest}}
+        last-error={{lastError}}
         debounce-duration="300">
     </iron-ajax>
-
+    <iron-ajax id="createChannelXHR"
+        url=[[url]]
+        method="POST"
+        headers=[[headers]]
+        handle-as="json"
+        content-type="application/json"
+        body=[[creationBody]]
+        on-error="handleError" 
+        on-response="handleCreationResponse"
+        last-request={{lastRequest}}
+        debounce-duration="300">
+    </iron-ajax>
   </template>
 </dom-module>
 
 <script>
     Polymer({
-      is: 'channels-service',
+      is: 'channel-list',
 
       properties: {
         groupId: {
@@ -30,26 +43,53 @@
           type: String,
           computed: '_url(groupId)'
         },
-        method: {
-          type: String,
-          value: "GET",
-        },
-        body: {
-          type: String,
-          value: ""
-        },
         token: {
           type: String,
+          observer: 'listChannels'
         },
         headers: {
           type: Object,
-          computed: '_headers(method, token)'
+          computed: '_headers(token)'
         },
-        auto: {
-          type: String,
-          value: false,
-          observer: "_autoChanged",
+        channels: {
+          type: Object,
+          notify: true,
+          value: () => {return [];}
+        },
+        creationBody: {
+          type: Object
+        },
+        msalReady: {
+          type: Boolean,
+          value: false
+        },
+        isReady: {
+          type: Boolean,
+          value: false
+        },
+        loadImmediately: {
+          type: Boolean,
+          value: false
         }
+      },
+
+      observers: [
+        'loadChannels(loadImmediately, msalReady, isReady, groupId)'
+      ],
+
+      loadChannels: function(loadImmediately, msalReady, isReady, groupId) {
+        // Load channels as soon as element is ready
+        if (loadImmediately && msalReady && isReady && groupId) {
+          this.listChannels();
+        }
+      },
+
+      handleMsalReady: function () {
+        this.msalReady = true;
+      },
+
+      ready: function () {
+        this.isReady = true;
       },
 
       _url: function(groupId) {
@@ -58,32 +98,59 @@
 
       _headers: function(token) {
         if (token) {
-          return {"Authorization": "bearer " + this.token}
+          return {"Token": token}
         }
         return null;
       },
 
-      handleResponse: function(data) {
-        // GET for list of channels in group
-        if (this.method === "GET") {
-          console.log("Channels: ", data);
+      createChannel: function(name, description) {
+        if (!description) {
+          description = "";
         }
-        // Create a channel (requires delegated permissions)
-        if (this.method === "POST") {
-          console.log("Channel creation response: ", data);
-        }
+        this.$.userSigninService.getTokenPromise()
+          .then((token) => {
+            this.token = token;
+            this.creationBody = JSON.stringify({"displayName": name, "description": description});
+            this.$.createChannelXHR.generateRequest();
+          })
+          .catch((err) => {
+            console.log("error creating channel:", err);
+          });
+      },
 
-        this.fire('projects-response', data.detail.response);
+      // fake channel creation function for testing
+      fakeChannelCreation: function (name, description) {
+        setTimeout(function() {
+          let newChannel = {"name": name, "description": description, "id": 0};
+          this.unshift('channels', newChannel);
+          this.fire('channel-creation-response', newChannel)
+        }.bind(this), 1000);
+      },
+
+      listChannels: function () {
+        this.$.userSigninService.getTokenPromise()
+        .then((token) => {
+          this.token = token;
+          console.log("listChannels called, groupid = ", this.groupId, " | headers: ", this.headers, " | existing channels: ", this.channels.length)
+          this.$.listChannelsXHR.generateRequest();
+        })
+        .catch((err) => {
+          console.log("error loading channels for group ", this.groupId, ": ", err)
+        })
+      },
+
+      handleCreationResponse: function(data) {
+        console.log("Creation Response: ", data.detail.response);
+        if (data.detail.response.id) {
+          this.unshift('channels', data.detail.response);
+        }
+        this.fire('channel-creation-response', data.detail.response);
       },
 
       handleError: function(e) {
-        console.log(e.detail.error.message);
+        console.log("Error in list-channels-service: ", e.detail.error.message, 
+                    "Last request: ", this.lastRequest);
       },
 
-      _autoChanged: function() {
-        if (this.auto === "true") {
-          this.$.xhrProjects.generateRequest();
-        }
-      }
     });
 </script>

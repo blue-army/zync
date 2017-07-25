@@ -1,0 +1,54 @@
+<link href="../../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
+<link href="../misc/my-icons.html" rel="import">
+<script src="https://secure.aadcdn.microsoftonline-p.com/lib/0.1.1/js/msal.min.js"></script>
+
+<!-- Import functions for login w/ Microsoft -->
+<link rel="import" href="user-signin-behavior.html">
+
+
+<dom-module id="user-signin-btn">
+  <template>
+    <style type="text/css">
+      #btn-message {
+        padding-right: 6px;
+      }
+    </style>
+    <template is="dom-if" if={{userObj}}>
+      <span>Welcome, {{userObj.name}}</span>
+    </template>
+    <paper-button on-tap="handleSignin" active="true" toggles>
+      <span id="btn-message">{{getMessage(userObj)}}</span>
+      <iron-icon icon="{{_icon(userObj)}}"></iron-icon>
+    </paper-button>
+  </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+      is: 'user-signin-btn',
+      behaviors: [UserSigninBehavior],
+
+      // specifies the action triggered by the signin button
+      handleSignin: function(e) {
+        if (!this.userObj) {
+          this.login();   // if no user, log in
+        } else {
+          this.logout();
+        }
+      },
+
+      // get button message
+      getMessage: function(userObj) {
+        if (userObj) {
+          return "Log out";
+        }
+        return "Login with Microsoft"
+      },
+
+      // get button icon
+      _icon: function (userObj) {
+        return userObj ? "my-icons:ms-signout" : "my-icons:ms-signin";
+      }
+    });
+</script>

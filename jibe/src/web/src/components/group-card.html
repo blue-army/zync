@@ -4,10 +4,14 @@
 <link href="../../bower_components/paper-input/paper-textarea.html" rel="import">
 <link href="../../bower_components/google-map/google-map.html" rel="import">
 <link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
-<link href="../../bower_components/juicy-ace-editor/juicy-ace-editor.html" rel="import">
+<link href="../../bower_components/juicy-ace-editor/juicy-ace-editor.html" rel="import"> 
 <link href="../services/groups-service.html" rel="import">
 <link href="../misc/shared-styles.html" rel="import">
 <link href="../components/activity-card.html" rel="import">
+<link href="../services/channel-service.html" rel="import">
+<link rel="import" href="../services/user-signin-service.html">
+<link rel="import" href="../services/channel-service.html">
+<link rel="import" href="../components/channel-create.html">
 
 <dom-module id="group-card">
 
@@ -38,9 +42,9 @@
         overflow: hidden;
       }
 
-      juicy-ace-editor {
+       juicy-ace-editor {
         height: 450px;
-      }
+      } 
 
       #exploreModalLabel {
         word-wrap: break-word;
@@ -105,12 +109,13 @@
 
     </style>
 
+    <!-- <user-signin-service id="userTokenService"></user-signin-service> -->
     <paper-dialog id="exploreModal" auto-fit-on-attach on-iron-overlay-closed="dismissExploreDialog" class="size-position">
       <h3>Edit Raw Project JSON Data</h3>
 
       <juicy-ace-editor 
-          id="juicyEditor" 
-          wrapmode="true">{{textInput}}
+        id="juicyEditor" 
+        wrapmode="true">{{textInput}}
       </juicy-ace-editor>
 
       <div class="buttons">
@@ -130,14 +135,27 @@
     </template>
 
     <paper-card id="projCard" class="papercard" heading="" image="./assets/images/Office_365_2013.svg" alt="{{item.name}}">
+      
+      <!-- <div class="card-content">
+        [[item.name]]
+        <channel-list id="channelListService" channels="{{channels}}" group-id=[[item.id]] on-channel-creation-response="handleCreationResponse" load-immediately></channel-list>
+        <div id="channelList">
+          <template is="dom-repeat" items="[[channels]]">
+            <paper-item>Channel: [[item.name]]</paper-item>
+          </template>
+        </div>
+      </div> -->
 
       <div class="card-content">
-        {{item.name}}
+        [[item.name]]
       </div>
+
+      <channel-create group={{item}} id="channelDialog"></channel-create>
 
       <div class="card-actions">
         <paper-icon-button title="Explore" on-tap="handleExplore" class="large" icon="my-icons:icon-agenda">Explore</paper-icon-button>
         <paper-icon-button title="Delete" on-tap="removeItem" class="large" icon="my-icons:icon-delete">Delete</paper-icon-button>
+        <paper-icon-button title="Channels" on-tap="exploreChannels" class="large" icon="my-icons:icon-agenda">Create</paper-icon-button>
       </div>
     </paper-card>
   </template>
@@ -164,6 +182,16 @@
       toInput: String,
 
       textInput: String,
+
+      channels: {
+        type: Object,
+        value: () => { return []; },
+        notify: true
+      },
+
+      userToken: {
+        type: String,
+      }
     },
 
     handleResponse: function (data) {
@@ -196,6 +224,18 @@
       this.textInput = JSON.stringify(this.item, null, "\t");
       this.$.exploreModal.open();
     },
+
+    exploreChannels: function () {
+      this.$.channelDialog.openDialog();
+    },
+
+    createChannel: function () {
+      this.$.channelListService.createChannel("channel 112", "this is a channel")
+    },
+
+    handleCreationResponse: function (e) {
+      console.log("Channel creation response: ", e);
+    }
 
   });
 
