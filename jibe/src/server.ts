@@ -4,8 +4,10 @@ import * as bodyparser from 'body-parser';
 import * as request from 'request';
 import * as morgan from 'morgan';
 import * as connector from './connector/connector';
+import * as bot from './bot/bot'
 var swaggerize = require('swaggerize-express');
 var swaggerui = require('swaggerize-ui');
+
 
 var port = process.env.PORT || 8000;
 
@@ -55,6 +57,8 @@ app.get('*', function (_req, res) {
         root: './web',
     });
 });
+
+app.post('/bot/messages', bot.connector.listen());
 
 function doHttpRequest(req: express.Request, res: express.Response) {
 
