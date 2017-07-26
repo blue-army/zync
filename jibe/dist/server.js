@@ -6,6 +6,7 @@ const bodyparser = require("body-parser");
 const request = require("request");
 const morgan = require("morgan");
 const connector = require("./connector/connector");
+const bot = require("./bot/bot");
 var swaggerize = require('swaggerize-express');
 var swaggerui = require('swaggerize-ui');
 var port = process.env.PORT || 8000;
@@ -44,6 +45,7 @@ app.get('*', function (_req, res) {
         root: './web',
     });
 });
+app.post('/bot/messages', bot.connector.listen());
 function doHttpRequest(req, res) {
     var url = '/api/auth/login';
     var data = {
