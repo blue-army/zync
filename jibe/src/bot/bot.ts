@@ -42,11 +42,12 @@ bot.on('conversationUpdate', function (message) {
         
         // TODO: check if this is a group chat before channel extraction
         var channel = message.address.conversation.id;
-        var team = message.sourceEvent.team;
+        var team = message.sourceEvent.team.id;
 
         bot.send(new builder.Message()
             .address(message.address)
             .text("Team: %s | Channel: %s", team, channel));
+
     }
 
     // Display the sourceEvent
@@ -65,11 +66,17 @@ bot.on('conversationUpdate', function (message) {
 
         // If the bot was just added to the channel, send an introduction message
         if (botIndex >= 0) {
+            // TODO: Register channel/address
+
+            // TODO: check if teamID = ID of general channel 
+            // (this means that the bot was added to an existing group and we should use the graph API to extract info on the other channels)
+        
             bot.send(new builder.Message()
                 .address(message.address)
                 .text("Hello everyone! I'm Jibe."));
         }
-        
+
+
         // Otherwise, welcome the new channel members
         else {
             bot.send(new builder.Message()
