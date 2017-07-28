@@ -32,9 +32,9 @@ bot.use({
 // This function extracts the real message text. 
 // Removing the jibe prefix is necessary for using the botbuilder built-in prompts.
 function extractText(session) {
-    if (session.message.address.channelId === "emulator") {
-        session.message.text = "jibe " + session.message.text;
-    }
+    // if (session.message.address.channelId === "emulator") {
+    //     session.message.text = "jibe " + session.message.text;
+    // }
     session.send("Raw input text: %s", session.message.text);
     var re = /Jibe ?(.*)/i;
     var processed = re.exec(session.message.text);
@@ -132,10 +132,11 @@ bot.dialog('selectProject', [
     async function (session, results) {
         var projectName = results.response.entity;
         var projectId = await conversation.getProjectId(projectName);
-        var card = changeSettings.createCard(projectName, projectId);
-        if (card) {
-            session.send(new builder.Message().addAttachment(card));
-        }
+        session.send("projectID: %s", projectId);
+        // var card = changeSettings.createCard(projectName, projectId);
+        // if (card) {
+        //     session.send(new builder.Message().addAttachment(card));
+        // }
         let projectInfo = {id: projectId, name: projectName};
         session.beginDialog('changeSettingsViaList', {"project": projectInfo});
     },
