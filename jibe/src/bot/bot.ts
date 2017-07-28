@@ -22,9 +22,27 @@ var bot = new builder.UniversalBot(connector)
 // Configure middleware for extracting channelId
 bot.use({
     botbuilder: function (session, next) {
-        saveChannelId(session, next);
+        saveChannelId(session);
+        extractText(session);
+        next();
     }
 })
+
+// In msteams, messages to jibe are prefixed with 'jibe'
+// This function extracts the real message text. 
+// Removing the jibe prefix is necessary for using the botbuilder built-in prompts.
+function extractText(session) {
+    if (session.message.address.channelId === "emulator") {
+        session.message.text = "jibe " + session.message.text;
+    }
+    session.send("Raw input text: %s", session.message.text);
+    var re = /Jibe ?(.*)/i;
+    var processed = re.exec(session.message.text);
+    if (processed !== null) {
+        session.message.text = processed[1];
+        session.send("Processed input text: %s", session.message.text);
+    }
+}
 
 // Extract the real channelId from the ID returned by teams
 function extractId(teamsId: string) {
@@ -37,7 +55,7 @@ function extractId(teamsId: string) {
 }
 
 // Middleware for storing each conversation's channelId 
-function saveChannelId(session, next) {
+function saveChannelId(session) {
     // If we don't already have the channelId for this conversation, 
     // extract it and save it in conversationData
     if (!session.conversationData.channelId) {
@@ -55,7 +73,7 @@ function saveChannelId(session, next) {
         session.conversationData.channelId = chId;
         session.send("Saving your channelId: %s", session.conversationData.channelId);
     }
-    next();
+    
 }
 
 
@@ -206,12 +224,9 @@ bot.on('conversationUpdate', function (message) {
         channel = extractId("19:ee6cdd412a40495aabfa2427cbf17897@thread.skype");
         team = extractId("19:ee6cdd412a40495aabfa2427cbf17897@thread.skype");
 
-        // Get group ID from 'general' channel's ID
-        group = extractId(team);
-
         bot.send(new builder.Message()
             .address(message.address)
-            .text("Team: %s | Channel: %s | Group: %s", team, channel, group));
+            .text("Team: %s | Channel: %s", team, channel));
     }
 
     // Extract team and channel info if the message was sent from MS Teams
@@ -225,7 +240,7 @@ bot.on('conversationUpdate', function (message) {
 
         bot.send(new builder.Message()
             .address(message.address)
-            .text("Team: %s | Channel: %s | Group: %s", team, channel, group));
+            .text("Team: %s | Channel: %s", team, channel));
     }
 
     // Display the sourceEvent
