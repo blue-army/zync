@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import * as cosmos from 'documentdb';
 import * as rp from 'request-promise';
 import * as express from 'express';
+import * as bot from "../../bot/bot"
 
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;
@@ -95,12 +96,15 @@ async function routeEvent(event_info: models.EventInfo) {
             promises.push(rp(options));
         }
 
-        // also look for a matching channel with a webhook
-        if (route.channel) {
+        // also look for a matching channel with a webhook or bot address
+        if (route.channel || route.channelId) {
             for (let c of proj.channels) {
-                if (c.name === route.channel) {
+                if (route.channel && c.name === route.channel) {
                     options.uri = c.webhook;
                     promises.push(rp(options));
+                }
+                if (route.channelId && c.id === route.channelId) {
+                    bot.sendCard(JSON.parse(c.botaddress), o);
                 }
             }
         }

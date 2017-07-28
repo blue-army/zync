@@ -64,6 +64,7 @@ class RouteInfo {
     expr: string;
     channel: string;
     webhook: string;
+    channelId: string;
 
     public static fromObj(j: any): RouteInfo {
         let o = new RouteInfo();
@@ -72,6 +73,7 @@ class RouteInfo {
         o.expr = j['expr'];
         o.channel = j['channel'];
         o.webhook = j['webhook'];
+        o.channelId = j['channelId']
 
         return o;
     }
@@ -109,13 +111,17 @@ class GraphChannelInfo {
 
 class ChannelInfo {
     name: string;
+    id: string;
     webhook: string;
+    botaddress: string;
 
     public static fromObj(j: any): ChannelInfo {
         let o = new ChannelInfo();
 
         o.name = j['name'];
+        o.id = j['id'];
         o.webhook = j['webhook'];
+        o.botaddress = j['botaddress']
 
         return o;
     }
