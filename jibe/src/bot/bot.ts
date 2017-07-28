@@ -47,6 +47,7 @@ function saveChannelId(session, next) {
         // extract the channelId from the conversationId in the address
         if (session.message.address.channelId === "msteams") {
             var chId = extractId(session.message.address.conversation.id);
+            session.send("channelId extracted: %s", chId);
         }
         if (session.message.address.channelId === "emulator") {
             var chId = "ee6cdd412a40495aabfa2427cbf17897"
