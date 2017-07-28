@@ -32,14 +32,13 @@ bot.use({
 // This function extracts the real message text. 
 // Removing the jibe prefix is necessary for using the botbuilder built-in prompts.
 function extractText(session) {
-    // if (session.message.address.channelId === "emulator") {
-    //     session.message.text = "jibe " + session.message.text;
-    // }
-    session.send("Raw input text: %s", session.message.text);
-    var re = /Jibe ?(.*)/i;
+    if (session.message.address.channelId === "emulator") {
+        session.message.text = "jibe " + session.message.text;
+    }
+    var re = /Jibe(.*)/i;
     var processed = re.exec(session.message.text);
     if (processed !== null) {
-        session.message.text = processed[1];
+        session.message.text = processed[1].trim();     // remove extra spaces before/after the input
         session.send("Processed input text: %s", session.message.text);
     }
 }
@@ -59,21 +58,17 @@ function saveChannelId(session) {
     // If we don't already have the channelId for this conversation, 
     // extract it and save it in conversationData
     if (!session.conversationData.channelId) {
-        // Print out address
-        session.send("Your address: %s", JSON.stringify(session.message.address));
-
         // extract the channelId from the conversationId in the address
         if (session.message.address.channelId === "msteams") {
             var chId = extractId(session.message.address.conversation.id);
             session.send("channelId extracted: %s", chId);
         }
-        if (session.message.address.channelId === "emulator") {
-            var chId = "ee6cdd412a40495aabfa2427cbf17897"
+        else if (session.message.address.channelId === "emulator") {
+            var chId = "emulator";
         }
         session.conversationData.channelId = chId;
         session.send("Saving your channelId: %s", session.conversationData.channelId);
     }
-    
 }
 
 
@@ -96,6 +91,16 @@ bot.dialog('help', function (session, args, next) {}).triggerAction({
       session.send("I'm a bot that plays tic tac toe!");
       session.send("Please type ‘quit’ or ‘restart’ if you don’t want to keep playing.");
       session.send("To play, click on an open tile or type in its row and column (like A1 or C2).<br/>Some platforms, like Slack, will only allow text input.");
+   }
+});
+
+
+// *** SEND USER ADDRESS ***
+bot.dialog('address', function (session, args, next) {}).triggerAction({
+   matches: /address/i,
+   // (override the default behavior of replacing the stack)
+   onSelectAction: function(session, args, next) {
+      session.send("Your address is: \n" + JSON.stringify(session.message.address, null, "   "));
    }
 });
 
@@ -157,13 +162,15 @@ bot.dialog('selectProject', [
 
 // Prompts user to subscribe to events from a list
 bot.dialog('changeSettingsViaList', [
-    function (session, args) {
+    async function (session, args) {
         session.dialogData.project = args.project;
 
         // Tell the user which subscriptions they already have
-        var subs = session.conversationData.subscriptions[session.dialogData.project.name];
-        if (subs.length > 0) {
-            session.send("This channel is subscribed to the following %s events: %s", session.dialogData.project.name, subs.join(', '));
+        var subs = await conversation.getSubscriptions(session.conversationData.channelId);
+        if (subs[args.project.name].length > 0) {
+            session.send("This channel is subscribed to the following %s events: %s", 
+                         args.project.name,
+                         subs[args.project.name].join(', '));
         } else {
             session.send("This channel is not subscribed to any events yet.");
         }
@@ -180,8 +187,11 @@ bot.dialog('changeSettingsViaList', [
         if (results.response.entity === "None") {
             session.send("No events selected.")
         } else {
-            await conversation.register(session.dialogData.project.id, session.conversationData.channelId, JSON.stringify(session.message.address));
-            await conversation.addNotifications(session.dialogData.project.id, session.conversationData.channelId, [results.response.entity]);
+            await conversation.addNotifications(session.dialogData.project.id, 
+                                                session.conversationData.channelId, 
+                                                JSON.stringify(session.message.address),
+                                                [results.response.entity]);
+            // TODO: error handling if update fails
             session.send("You are now subscribed to %s events", results.response.entity);
         }
         builder.Prompts.confirm(session, "Subscribe to more events?");
@@ -329,8 +339,14 @@ async function settingsCard(session) {
 function sendCard(address, message) {
     bot.send(new builder.Message()
         .address(address)
-        .addAttachment(message)
+        .text("Sending a card to address %s", JSON.stringify(address))
     );
+    if (address.channelId === "msteams") {
+        bot.send(new builder.Message()
+            .address(address)
+            .addAttachment(message)
+        );
+    }
 }
 
 export {

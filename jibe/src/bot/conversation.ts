@@ -81,30 +81,67 @@ var events = [
     }
 ];
 
+// Add a channel to the given ProjectInfo object
+function addChannel(project: models.ProjectInfo, channelId: string, botaddress: string) {
+    // See if there is already a channel for this ID
+    let chindex = project.channels.findIndex((element) => {
+        return element.id === channelId;
+    });
+
+    if (chindex === -1) {
+        // add a new channel object to the project
+        // TODO: retrieve channel name from graph API?
+        project.channels.push(models.ChannelInfo.fromObj({
+            name: "",
+            id: channelId,
+            webhook: "",
+            botaddress: botaddress
+        }));
+
+    } else {
+        // add botaddress to an existing channel object
+        project.channels[chindex].botaddress = botaddress;
+    }
+}
+
+// Add a route to the given project
+function addRoute(project: models.ProjectInfo, channelId: string, notification: string) {
+    // look up event info in the events array
+    let event = events.find((element) => {
+        return element.name === notification;
+    });
+
+    if (!event) {
+        console.log("Unknown event requested:", notification);
+        return;
+    }
+
+    // Check that the channel is not already subscribed to this event
+    var match = project.routes.findIndex((r) => {
+            return r.channelId === channelId && r.expr === event.rule.expr;
+        });
+    if (match >= 0) {
+        console.log("Channel " + channelId + " is already subscribed to " + notification + " events.")
+        return;
+    }
+
+    // Create new route and add to project
+    let route = models.RouteInfo.fromObj({
+        path: event.rule.path,
+        expr: event.rule.expr,
+        channel: "",
+        channelId: channelId,
+        webhook: "",
+    });
+    project.routes.push(route);
+}
 
 // Register a conversation in the given channel, and store the relevant bot address in our db
 async function register(projectId: string, channelId: string, botaddress: string) {
     jibe.getProject(projectId)
         .then((project) => {
-            // See if there is already a channel for this ID
-            let chindex = project.channels.findIndex((element) => {
-                return element.id === channelId;
-            });
-
-            if (chindex === -1) {
-                // add a new channel object to the project
-                // TODO: retrieve channel name from graph API?
-                project.channels.push(models.ChannelInfo.fromObj({
-                    name: "",
-                    id: channelId,
-                    webhook: "",
-                    botaddress: botaddress
-                }));
-
-            } else {
-                // add botaddress to an existing channel object
-                project.channels[chindex].botaddress = botaddress;
-            }
+            // add the channel
+            addChannel(project, channelId, botaddress);
             
             // Update project in db
             jibe.upsertProject(project).then((project_info) => {
@@ -116,48 +153,25 @@ async function register(projectId: string, channelId: string, botaddress: string
         .catch((err) => {
             console.log("Error registering conversation in conversation.ts", err);
         });
-
 }
 
 
 // Add notification types for the given channel
-async function addNotifications(projectId: string, channelId: string, notifications: string[]) {
+async function addNotifications(projectId: string, channelId: string, botaddress: string, notifications: string[]) {
+    let project = await jibe.getProject(projectId);
+    if (!project) {
+        return Promise.reject("Project " + projectId + " not found");
+    }
 
-    jibe.getProject(projectId)
-        .then((project) => {
-            for (let n of notifications) {
-                // look up event info in the events array
-                let event = events.find((element) => {
-                    return element.name === n;
-                });
+    // Add routes
+    for (let n of notifications) {
+        addRoute(project, channelId, n);
+    }
 
-                if (!event) {
-                    console.log("Unknown event requested:", n);
-                    continue;
-                }
+    // Update channel info
+    addChannel(project, channelId, botaddress);
 
-                // Create new route and add to project
-                let route = models.RouteInfo.fromObj({
-                    path: event.rule.path,
-                    expr: event.rule.expr,
-                    channel: "",
-                    channelId: channelId,
-                    webhook: "",
-                });
-                project.routes.push(route);
-            }
-
-            // Update project in db
-            jibe.upsertProject(project).then((project_info) => {
-                console.log("Project upserted!", project_info);
-            }).catch((err) => {
-                console.log("Upsertion error while adding routes: ", err);
-            });
-        })
-        .catch((err) => {
-            console.log("Error adding routes to project in conversation.ts", err);
-        });
-    
+    return jibe.upsertProject(project);
 }
 
 
@@ -169,7 +183,6 @@ async function getSubscriptions(channelId: string) {
     var subscriptions = {};
 
     for (let p of projects) {
-        var subs = [];
         subscriptions[p.name] = p.routes.filter((route) => {
             return route.channelId && route.channelId === channelId;
         }).map((route) => {
