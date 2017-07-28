@@ -28,7 +28,7 @@ bot.use({
 
 // Extract the real channelId from the ID returned by teams
 function extractId(teamsId: string) {
-    var re = /^\d\d:(\S+)@thread\.skype$/;
+    var re = /^\d\d:(\S+)@thread\.skype/;
     var results = re.exec(teamsId);
     if (results && results.length > 0) {
         return results[1];          // return extracted ID
