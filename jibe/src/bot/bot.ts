@@ -71,6 +71,22 @@ function saveChannelId(session) {
     }
 }
 
+function getChannelAddress(session) {
+    // Extract and save the channel address
+    // This preprocessing is only necessary for MS Teams addresses because they reference a thread within the channel
+    if (!session.conversationData.channelAddress) {
+        // perform deep copy of address
+        session.conversationData.channelAddress = JSON.parse(JSON.stringify(session.message.address));
+
+        // remove thread suffix from channelId
+        session.conversationData.channelAddress.conversation.id = session.message.address.conversation.id.split(';')[0];
+        
+        // delete 'id' entry (links to specific thread)
+        delete session.conversationData.channelAddress.id;
+    }
+    return session.conversationData.channelAddress;
+}
+
 
 // *** ROOT DIALOG ***
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
@@ -187,9 +203,10 @@ bot.dialog('changeSettingsViaList', [
         if (results.response.entity === "None") {
             session.send("No events selected.")
         } else {
+            let addr = getChannelAddress(session);
             await conversation.addNotifications(session.dialogData.project.id, 
                                                 session.conversationData.channelId, 
-                                                JSON.stringify(session.message.address),
+                                                JSON.stringify(addr),     // preprocess address to remove messageid
                                                 [results.response.entity]);
             // TODO: error handling if update fails
             session.send("You are now subscribed to %s events", results.response.entity);
