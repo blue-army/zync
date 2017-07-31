@@ -1,4 +1,5 @@
 import * as botbuilder from 'botbuilder';
+import * as teams from 'botbuilder-teams'
 import * as conversation from '../bot/conversation';
 import * as jibe from '../service/jibe';
 // var currentSettings = require('./cards/current_settings');
@@ -281,7 +282,7 @@ bot.on('conversationUpdate', function (message) {
     if (message.membersAdded && message.membersAdded.length > 0) {
 
         // check if the bot is in the list of new channel members
-        var botIndex = message.membersAdded.findIndex(function (element: any) {
+        var botIndex = message.membersAdded.findIndex(function (element: botbuilder.IIdentity) {
             return element.id === message.address.bot.id;
         });
 
@@ -298,14 +299,14 @@ bot.on('conversationUpdate', function (message) {
             bot.send(new botbuilder.Message()
                 .address(message.address)
                 .text('Welcome ' + message.membersAdded
-                    .map((m: any) => {return m.name;})
+                    .map((m: botbuilder.IIdentity) => {return m.name;})
                     .join(', ') + "!"));
         }
     }
 
     if (message.membersRemoved && message.membersRemoved.length > 0) {
         var membersRemoved = message.membersRemoved
-            .map(function (m: any) {
+            .map(function (m: botbuilder.IIdentity) {
                 var isSelf = m.id === message.address.bot.id;
                 return (isSelf ? message.address.bot.name : m.name) || '' + ' (Id: ' + m.id + ')';
             })
@@ -315,18 +316,6 @@ bot.on('conversationUpdate', function (message) {
             .address(message.address)
             .text('The following members ' + membersRemoved + ' were removed or left the conversation :('));
     }
-});
-
-bot.on('event', function (message) {
-    bot.send(new botbuilder.Message()
-        .address(message.address)
-        .text("Event: " + JSON.stringify(message)));
-});
-
-bot.on('contactRelationUpdate', function (message) {
-    bot.send(new botbuilder.Message()
-        .address(message.address)
-        .text("contactRelationUpdate: " + JSON.stringify(message)));
 });
 
 
@@ -353,16 +342,16 @@ async function settingsCard(session: botbuilder.Session) {
 }
 
 // Send a card to the given address
-function sendActionableCard(address: botbuilder.IAddress, message: botbuilder.IMessage) {
+function sendActionableCard(address: botbuilder.IAddress, card: teams.O365ConnectorCard) {
     bot.send(new botbuilder.Message()
         .address(address)
         .text("Sending a card to address %s", JSON.stringify(address))
     );
-    if (address.channelId === "msteams") {
-        bot.send(new botbuilder.Message()
+    if (address.channelId === "msteams" || address.channelId === "emulator") {
+        bot.send(new teams.TeamsMessage()
             .address(address)
             .addAttachment({
-                    content: message, 
+                    content: card,
                     contentType: "application/vnd/microsoft.teams.card.o365connector",
             })
         );
