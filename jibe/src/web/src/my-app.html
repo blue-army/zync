@@ -68,6 +68,7 @@
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="my-projects" href="[[rootPath]]my-projects">Well Projects</a>
           <a name="my-groups" href="[[rootPath]]my-groups">Groups</a>
+          <a name="my-events" href="[[rootPath]]my-events">Events</a>
         </iron-selector>
       </app-drawer>
 
@@ -95,6 +96,7 @@
             role="main">
           <my-projects name="my-projects"></my-projects>
           <my-groups name="my-groups"></my-groups>
+          <my-events name="my-events"></my-events>
           <my-view404 name="my-view404"></my-view404>
         </iron-pages>
       </app-header-layout>
@@ -148,8 +150,6 @@
         this.$.userSigninService.getToken()
         console.log("Calling getToken in my-app.html")
       }
-
-
 
     });
   </script>

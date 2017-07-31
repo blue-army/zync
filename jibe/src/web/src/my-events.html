@@ -1,0 +1,139 @@
+<link href="../bower_components/polymer/polymer.html" rel="import">
+<link href="../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
+<link href="../bower_components/paper-button/paper-button.html" rel="import">
+<link href="../bower_components/paper-dialog/paper-dialog.html" rel="import">
+<link href="../bower_components/paper-material/paper-material.html" rel="import">
+<link href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html" rel="import">
+<link href="../bower_components/paper-input/paper-input.html" rel="import">
+<link href="../bower_components/paper-listbox/paper-listbox.html" rel="import">
+<link href="../bower_components/paper-item/paper-item.html" rel="import">
+<link href="../bower_components/iron-icons/iron-icons.html" rel="import">
+<link href="../bower_components/iron-ajax/iron-ajax.html" rel="import">
+<link href="../bower_components/iron-flex-layout/iron-flex-layout.html" rel="import">
+<link href="../bower_components/iron-label/iron-label.html" rel="import">
+<link href="../bower_components/paper-fab/paper-fab.html" rel="import">
+<link href="services/projects-service.html" rel="import">
+<link href="services/messages-service.html" rel="import">
+<link href="misc/shared-styles.html" rel="import">
+<link href="components/project-card.html" rel="import">
+<link href="components/project-create.html" rel="import">
+<link href="components/activity-card.html" rel="import">
+
+<dom-module id="my-events">
+  <template>
+    <style include="shared-styles" type="text/css">
+       :host {
+        display: block;
+        padding: 10px;
+      }
+
+      .my-label {
+        @apply --layout-horizontal;
+      }
+
+      paper-fab.blue {
+        margin-left: 20px;
+        margin-top: 7px;
+        --paper-fab-background: #4285f4;
+        --paper-fab-keyboard-focus-background: var(--paper-light-blue-900);
+      }
+
+      paper-dialog.size-position {
+        width: 400px;
+        height: 400px;
+        overflow: auto;
+      }
+
+      .buttons {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }
+
+      ul {
+        height: 800px;
+        width: 310px;
+        list-style-type: none;
+        overflow-y: scroll;
+        padding-left: 5px;
+      }
+
+      .container {
+        float: left;
+        @apply --layout-horizontal;
+      }
+
+      .card2 {
+        max-height: 880px;
+      }
+
+      paper-dropdown-menu {
+        display: block;
+      }
+    </style>
+
+    <projects-service 
+        auto=true
+        on-projects-response="handleResponse">
+    </projects-service>
+
+    <messages-service 
+        on-messages-response="handleResponseMessages"
+        messages-method="GET" 
+        messages-body="">
+    </messages-service>
+
+    <paper-material id="projectEntry" elevation="0">
+
+      <h2>Send Project Events</h2>
+
+      <div class="container">
+        <div class="vcard">
+
+          <template is="dom-if" if="{{!aProjects.length}}">
+            <paper-icon-button id="mybutton" icon="my-icons:icon-well-plan" class="giant central"></paper-icon-button>
+            <div class="central">No Projects available. Updates are Real-Time so stay tuned!</div>
+          </template>
+
+          <template is="dom-repeat" items="{{aProjects}}">
+            <project-card item={{item}} item-array={{aProjects}}></project-card>
+          </template>
+
+        </div>
+
+      </div>
+
+    </paper-material>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'my-events',
+    properties: {
+      aProjects: {
+        type: Array,
+        reflectToAttribute: true,
+        notify: true,
+        value: []
+      },
+      aMessages: {
+        type: Array,
+        reflectToAttribute: true,
+        notify: true,
+        value: []
+      },
+    },
+
+    handleResponse: function (data) {
+      this.aProjects = data.detail;
+    },
+
+    handleResponseMessages: function (event) {
+      this.aMessages = this.$$('messages-service').messagesArray;
+    },
+    
+  });
+
+</script>
