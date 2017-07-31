@@ -32,7 +32,7 @@ function list_events(_req: express.Request, res: express.Response) {
         res.json(items);
 
     });
-}
+}  
 
 // Exposed as PUT
 async function upsert_event(req: express.Request, res: express.Response) {
@@ -49,6 +49,15 @@ async function upsert_event(req: express.Request, res: express.Response) {
     // id
     payload['id'] = _.get<Object, string>(payload, 'id', uuid.v4());
     let info = models.EventInfo.fromObj(payload);
+
+    // Check for presence of required properites
+    var required = ['type', 'project', 'content'];
+    for (let prop of required) {
+        if (!info[prop]) {
+            res.status(400).send({Error: "Missing required property '{{prop}}'".replace('{{prop}}', prop)});
+            return;
+        }
+    }
 
     // insert document
     let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
@@ -111,7 +120,7 @@ async function routeEvent(event_info: models.EventInfo) {
                     promises.push(rp(options));
                 }
                 if (route.channelId && c.id === route.channelId) {
-                    bot.sendCard(JSON.parse(c.botaddress), o);
+                    bot.sendActionableCard(JSON.parse(c.botaddress), o);
                 }
             }
         }

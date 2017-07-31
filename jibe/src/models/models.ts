@@ -133,6 +133,8 @@ class EventInfo {
     type: string;
     content: object;
 
+    [key:string]: any;
+
     public static fromObj(j: any): EventInfo {
         let o = new EventInfo();
 
