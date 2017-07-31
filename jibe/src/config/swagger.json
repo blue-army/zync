@@ -434,7 +434,7 @@
         "api_key": {
             "x-authorize": "routes/api/auth.js",
             "type": "apiKey",
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header"
         }
     },
