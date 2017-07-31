@@ -6,7 +6,7 @@ import * as express from 'express';
 
 module.exports = async function validate(req: express.Request, res: express.Response, next: Function) {
 
-    let token = _.get<string>(req, 'headers.token', undefined);
+    let token = _.get<string>(req, 'headers.["x-api-key"]', undefined);
     if (token) {
         try {
             let what = await auth_utils.validate(token);
