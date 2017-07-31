@@ -1,4 +1,4 @@
-var builder = require('botbuilder');
+import * as botbuilder from 'botbuilder';
 import * as conversation from '../bot/conversation';
 import * as jibe from '../service/jibe';
 // var currentSettings = require('./cards/current_settings');
@@ -9,13 +9,13 @@ var events = require('./events/drillplan').events;
 
 // *** SETUP ***
 // Create bot connector
-var connector = new builder.ChatConnector({
+var connector = new botbuilder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID || "",
     appPassword: process.env.MICROSOFT_APP_PASSWORD || "" 
 });
 
 // Create bot
-var bot = new builder.UniversalBot(connector)
+var bot = new botbuilder.UniversalBot(connector)
 
 
 // *** MIDDLEWARE ***
@@ -128,7 +128,7 @@ bot.dialog('settings', [
         var settings = await settingsCard(session);
         // TODO: check settings were retrieved successfully
         session.send(settings);
-        builder.Prompts.confirm(session, "Do you want to update your settings?");
+        botbuilder.Prompts.confirm(session, "Do you want to update your settings?");
     },
     function (session, results) {
         if (results.response) {
@@ -148,7 +148,7 @@ bot.dialog('selectProject', [
     function (session) {
         // Give user a list of project to choose from
         var projects = Object.keys(session.conversationData.subscriptions);
-        builder.Prompts.choice(session, 'Which project should we update?', projects, builder.ListStyle.button);
+        botbuilder.Prompts.choice(session, 'Which project should we update?', projects, builder.ListStyle.button);
     },
     async function (session, results) {
         var projectName = results.response.entity;
@@ -165,7 +165,7 @@ bot.dialog('selectProject', [
         session.send("These are your current settings:");
         var settings = await settingsCard(session);
         session.send(settings);
-        builder.Prompts.confirm(session, "Would you like to update settings for another project?");
+        botbuilder.Prompts.confirm(session, "Would you like to update settings for another project?");
     },
     function (session, results) {
         if (results.response) {
@@ -196,7 +196,7 @@ bot.dialog('changeSettingsViaList', [
             return event.name;
         });
         eventNames.push("None");
-        builder.Prompts.choice(session, "Which event would you like to subscribe to?", eventNames, builder.ListStyle.button);
+        botbuilder.Prompts.choice(session, "Which event would you like to subscribe to?", eventNames, builder.ListStyle.button);
     },
     async function (session, results) {
         // Subscribe the channel to the selected event
@@ -211,7 +211,7 @@ bot.dialog('changeSettingsViaList', [
             // TODO: error handling if update fails
             session.send("You are now subscribed to %s events", results.response.entity);
         }
-        builder.Prompts.confirm(session, "Subscribe to more events?");
+        botbuilder.Prompts.confirm(session, "Subscribe to more events?");
     }, 
     function (session, results) {
         // Restart the dialog if they want to subscribe to more events
@@ -252,7 +252,7 @@ bot.on('conversationUpdate', function (message) {
         channel = extractId("19:ee6cdd412a40495aabfa2427cbf17897@thread.skype");
         team = extractId("19:ee6cdd412a40495aabfa2427cbf17897@thread.skype");
 
-        bot.send(new builder.Message()
+        bot.send(new botbuilder.Message()
             .address(message.address)
             .text("Team: %s | Channel: %s", team, channel));
     }
@@ -266,14 +266,14 @@ bot.on('conversationUpdate', function (message) {
         // This team ID is the ID of the project's 'general' channel
         var team = extractId(message.sourceEvent.team.id);
 
-        bot.send(new builder.Message()
+        bot.send(new botbuilder.Message()
             .address(message.address)
             .text("Team: %s | Channel: %s", team, channel));
     }
 
     // Display the sourceEvent
     if (message.sourceEvent) {
-        bot.send(new builder.Message()
+        bot.send(new botbuilder.Message()
             .address(message.address)
             .text("message.sourceEvent: " + JSON.stringify(message.sourceEvent)));
     }
@@ -288,14 +288,14 @@ bot.on('conversationUpdate', function (message) {
         // If the bot was just added to the channel, send an introduction message
         if (botIndex >= 0) {
             // Send introduction message
-            bot.send(new builder.Message()
+            bot.send(new botbuilder.Message()
                 .address(message.address)
                 .text("Hello everyone! I'm Jibe."));
         }
 
         // Otherwise, welcome the new channel members
         else {
-            bot.send(new builder.Message()
+            bot.send(new botbuilder.Message()
                 .address(message.address)
                 .text('Welcome ' + message.membersAdded
                     .map((m) => {return m.name;})
@@ -311,20 +311,20 @@ bot.on('conversationUpdate', function (message) {
             })
             .join(', ');
 
-        bot.send(new builder.Message()
+        bot.send(new botbuilder.Message()
             .address(message.address)
             .text('The following members ' + membersRemoved + ' were removed or left the conversation :('));
     }
 });
 
 bot.on('event', function (message) {
-    bot.send(new builder.Message()
+    bot.send(new botbuilder.Message()
         .address(message.address)
         .text("Event: " + JSON.stringify(message)));
 });
 
 bot.on('contactRelationUpdate', function (message) {
-    bot.send(new builder.Message()
+    bot.send(new botbuilder.Message()
         .address(message.address)
         .text("contactRelationUpdate: " + JSON.stringify(message)));
 });
@@ -353,20 +353,23 @@ async function settingsCard(session) {
 }
 
 // Send a card to the given address
-function sendCard(address, message) {
-    bot.send(new builder.Message()
+function sendActionableCard(address, message) {
+    bot.send(new botbuilder.Message()
         .address(address)
         .text("Sending a card to address %s", JSON.stringify(address))
     );
     if (address.channelId === "msteams") {
-        bot.send(new builder.Message()
+        bot.send(new botbuilder.Message()
             .address(address)
-            .addAttachment(message)
+            .addAttachment({
+                    content: message, 
+                    contentType: "application/vnd/microsoft.teams.card.o365connector",
+            })
         );
     }
 }
 
 export {
     connector as connector,
-    sendCard as sendCard
+    sendActionableCard as sendActionableCard
 };
