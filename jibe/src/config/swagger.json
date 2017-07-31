@@ -177,6 +177,11 @@
                     "events"
                 ],
                 "operationId": "event_upsert",
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ],
                 "consumes": [],
                 "produces": [
                     "application/json",
