@@ -9,6 +9,7 @@ import * as bot from "../../bot/bot"
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;
 
+// Exposed as GET
 function list_events(_req: express.Request, res: express.Response) {
     var db_key = process.env.db_key;
 
@@ -33,10 +34,16 @@ function list_events(_req: express.Request, res: express.Response) {
     });
 }
 
+// Exposed as PUT
 async function upsert_event(req: express.Request, res: express.Response) {
 
-    let db_key = process.env.db_key;
+    // Check that request has been authenticated
+    if (!res.locals['x-caller']) {
+        res.status(401).send("Unauthorized request");
+        return;
+    }
 
+    let db_key = process.env.db_key;
     let payload = req.body;
 
     // id
