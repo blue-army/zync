@@ -157,6 +157,7 @@ async function register(projectId: string, channelId: string, botaddress: string
 
 
 // Add notification types for the given channel
+// Also updates channel address
 async function addNotifications(projectId: string, channelId: string, botaddress: string, notifications: string[]) {
     let project = await jibe.getProject(projectId);
     if (!project) {

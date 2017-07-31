@@ -31,7 +31,7 @@ bot.use({
 // In msteams, messages to jibe are prefixed with 'jibe'
 // This function extracts the real message text. 
 // Removing the jibe prefix is necessary for using the botbuilder built-in prompts.
-function extractText(session) {
+function extractText(session: botbuilder.Session) {
     if (session.message.address.channelId === "emulator") {
         session.message.text = "jibe " + session.message.text;
     }
@@ -54,7 +54,7 @@ function extractId(teamsId: string) {
 }
 
 // Middleware for storing each conversation's channelId 
-function saveChannelId(session) {
+function saveChannelId(session: botbuilder.Session) {
     // If we don't already have the channelId for this conversation, 
     // extract it and save it in conversationData
     if (!session.conversationData.channelId) {
@@ -71,7 +71,7 @@ function saveChannelId(session) {
     }
 }
 
-function getChannelAddress(session) {
+function getChannelAddress(session: botbuilder.Session) {
     // Extract and save the channel address
     // This preprocessing is only necessary for MS Teams addresses because they reference a thread within the channel
     if (!session.conversationData.channelAddress) {
@@ -100,10 +100,10 @@ bot.dialog('/',
 
 
 // *** HELP DIALOG ***
-bot.dialog('help', function (session, args, next) {}).triggerAction({
+bot.dialog('help', function () {}).triggerAction({
    matches: /^help$/i,
    // (override the default behavior of replacing the stack)
-   onSelectAction: function(session, args, next) {
+   onSelectAction: function(session) {
       session.send("I'm a bot that plays tic tac toe!");
       session.send("Please type ‘quit’ or ‘restart’ if you don’t want to keep playing.");
       session.send("To play, click on an open tile or type in its row and column (like A1 or C2).<br/>Some platforms, like Slack, will only allow text input.");
@@ -112,10 +112,10 @@ bot.dialog('help', function (session, args, next) {}).triggerAction({
 
 
 // *** SEND USER ADDRESS ***
-bot.dialog('address', function (session, args, next) {}).triggerAction({
+bot.dialog('address', function () {}).triggerAction({
    matches: /address/i,
    // (override the default behavior of replacing the stack)
-   onSelectAction: function(session, args, next) {
+   onSelectAction: function(session) {
       session.send("Your address is: \n" + JSON.stringify(session.message.address, null, "   "));
    }
 });
@@ -148,7 +148,7 @@ bot.dialog('selectProject', [
     function (session) {
         // Give user a list of project to choose from
         var projects = Object.keys(session.conversationData.subscriptions);
-        botbuilder.Prompts.choice(session, 'Which project should we update?', projects, builder.ListStyle.button);
+        botbuilder.Prompts.choice(session, 'Which project should we update?', projects, botbuilder.ListStyle.button);
     },
     async function (session, results) {
         var projectName = results.response.entity;
@@ -192,11 +192,11 @@ bot.dialog('changeSettingsViaList', [
         }
 
         // Send the list of events that they can subscribe to
-        var eventNames = events.map((event) => {
+        var eventNames = events.map((event: any) => {
             return event.name;
         });
         eventNames.push("None");
-        botbuilder.Prompts.choice(session, "Which event would you like to subscribe to?", eventNames, builder.ListStyle.button);
+        botbuilder.Prompts.choice(session, "Which event would you like to subscribe to?", eventNames, botbuilder.ListStyle.button);
     },
     async function (session, results) {
         // Subscribe the channel to the selected event
@@ -281,7 +281,7 @@ bot.on('conversationUpdate', function (message) {
     if (message.membersAdded && message.membersAdded.length > 0) {
 
         // check if the bot is in the list of new channel members
-        var botIndex = message.membersAdded.findIndex(function (element) {
+        var botIndex = message.membersAdded.findIndex(function (element: any) {
             return element.id === message.address.bot.id;
         });
 
@@ -298,14 +298,14 @@ bot.on('conversationUpdate', function (message) {
             bot.send(new botbuilder.Message()
                 .address(message.address)
                 .text('Welcome ' + message.membersAdded
-                    .map((m) => {return m.name;})
+                    .map((m: any) => {return m.name;})
                     .join(', ') + "!"));
         }
     }
 
     if (message.membersRemoved && message.membersRemoved.length > 0) {
         var membersRemoved = message.membersRemoved
-            .map(function (m) {
+            .map(function (m: any) {
                 var isSelf = m.id === message.address.bot.id;
                 return (isSelf ? message.address.bot.name : m.name) || '' + ' (Id: ' + m.id + ')';
             })
@@ -331,7 +331,7 @@ bot.on('contactRelationUpdate', function (message) {
 
 
 // *** RENDER CARDS ***
-async function selectEventsCard(address, projectName) {
+async function selectEventsCard(projectName: string) {
     // Get the projectId that corresponds to projectName
     let projects = await jibe.getProjectList();
     let proj = projects.find((p) => {
@@ -345,7 +345,7 @@ async function selectEventsCard(address, projectName) {
 }
 
 // Send the user their subscriptions
-async function settingsCard(session) {
+async function settingsCard(session: botbuilder.Session) {
     let subs = await conversation.getSubscriptions(session.conversationData.channelId);
     session.conversationData.subscriptions = subs;      // store subscription info
     let card = currentSettings.createMessage(subs);
@@ -353,7 +353,7 @@ async function settingsCard(session) {
 }
 
 // Send a card to the given address
-function sendActionableCard(address, message) {
+function sendActionableCard(address: botbuilder.IAddress, message: botbuilder.IMessage) {
     bot.send(new botbuilder.Message()
         .address(address)
         .text("Sending a card to address %s", JSON.stringify(address))
