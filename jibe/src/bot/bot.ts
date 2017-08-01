@@ -342,10 +342,10 @@ function sendActionableCard(address: botbuilder.IAddress, card: any) {
     bot.send(new botbuilder.Message()
         .address(address)
         .text("Sending a card to address %s", JSON.stringify(address))
-        .addAttachment({
-                content: card,
-                contentType: 'application/vnd.microsoft.teams.card.o365connector'
-        })
+        // .addAttachment({
+        //         content: card,
+        //         contentType: 'application/vnd.microsoft.teams.card.o365connector'
+        // })
     );
 
     // Send ActionableCard
