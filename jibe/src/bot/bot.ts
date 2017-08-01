@@ -1,7 +1,6 @@
 import * as botbuilder from 'botbuilder';
 import * as teams from 'botbuilder-teams'
 import * as conversation from '../bot/conversation';
-import * as jibe from '../service/jibe';
 // var currentSettings = require('./cards/current_settings');
 var currentSettings = require('./messages/current_settings');
 var changeSettings = require('./cards/change_settings');
@@ -149,8 +148,9 @@ bot.dialog('selectProject', [
     function (session) {
         // Give user a list of project to choose from
         var projects = Object.keys(session.conversationData.subscriptions);
-        botbuilder.Prompts.choice(session, 'Which project should we update?', projects, botbuilder.ListStyle.button);
+        botbuilder.Prompts.choice(session, 'Which project should we update?', projects);
     },
+    // extract project info and start dialog to change settings
     async function (session, results) {
         var projectName = results.response.entity;
         var projectId = await conversation.getProjectId(projectName);
@@ -162,7 +162,8 @@ bot.dialog('selectProject', [
         let projectInfo = {id: projectId, name: projectName};
         session.beginDialog('changeSettingsViaList', {"project": projectInfo});
     },
-    async function (session, results) {
+    // Display current settings, prompt user to pick another project
+    async function (session) {
         session.send("These are your current settings:");
         var settings = await settingsCard(session);
         session.send(settings);
@@ -192,12 +193,15 @@ bot.dialog('changeSettingsViaList', [
             session.send("This channel is not subscribed to any events yet.");
         }
 
+        let card = changeSettings.createCard(args.project.name, args.project.id)
+        session.send(new botbuilder.Message().addAttachment(card));
+
         // Send the list of events that they can subscribe to
         var eventNames = events.map((event: any) => {
             return event.name;
         });
         eventNames.push("None");
-        botbuilder.Prompts.choice(session, "Which event would you like to subscribe to?", eventNames, botbuilder.ListStyle.button);
+        botbuilder.Prompts.choice(session, "Which event would you like to subscribe to?", eventNames);
     },
     async function (session, results) {
         // Subscribe the channel to the selected event
@@ -247,19 +251,8 @@ bot.dialog('changeSettingsViaCard', [
 // - the bot is added to the conversation
 bot.on('conversationUpdate', function (message) {
 
-    // Emulator testing
-    if (message.address.channelId === "emulator") {
-        // Channel and team are the same because we are registering the 'general' channel
-        channel = extractId("19:ee6cdd412a40495aabfa2427cbf17897@thread.skype");
-        team = extractId("19:ee6cdd412a40495aabfa2427cbf17897@thread.skype");
-
-        bot.send(new botbuilder.Message()
-            .address(message.address)
-            .text("Team: %s | Channel: %s", team, channel));
-    }
-
     // Extract team and channel info if the message was sent from MS Teams
-    else if (message.address.channelId === "msteams") {
+    if (message.address.channelId === "msteams") {
 
         // TODO: check if this is a group chat before channel extraction
         var channel = extractId(message.address.conversation.id);
@@ -320,18 +313,18 @@ bot.on('conversationUpdate', function (message) {
 
 
 // *** RENDER CARDS ***
-async function selectEventsCard(projectName: string) {
-    // Get the projectId that corresponds to projectName
-    let projects = await jibe.getProjectList();
-    let proj = projects.find((p) => {
-        return p.name === projectName;
-    });
+// async function selectEventsCard(projectName: string) {
+//     // Get the projectId that corresponds to projectName
+//     let projects = await jibe.getProjectList();
+//     let proj = projects.find((p) => {
+//         return p.name === projectName;
+//     });
 
-    if (proj) {
-        // TODO: populate card with existing subscriptions
-        return changeSettings.createCard(projectName, proj.id);
-    }
-}
+//     if (proj) {
+//         // TODO: populate card with existing subscriptions
+//         return changeSettings.createCard(projectName, proj.id);
+//     }
+// }
 
 // Send the user their subscriptions
 async function settingsCard(session: botbuilder.Session) {
@@ -343,20 +336,20 @@ async function settingsCard(session: botbuilder.Session) {
 
 // Send a card to the given address
 function sendActionableCard(address: botbuilder.IAddress, card: teams.O365ConnectorCard) {
+    // Send regular message to verify the address
     bot.send(new botbuilder.Message()
         .address(address)
         .text("Sending a card to address %s", JSON.stringify(address))
     );
-    if (address.channelId === "msteams" || address.channelId === "emulator") {
-        bot.send(new teams.TeamsMessage()
-            .address(address)
-            .addAttachment({
-                    content: card,
-                    // contentType: "application/vnd/microsoft.teams.card.o365connector",
-                    contentType: "application/json"
-            })
-        );
-    }
+    // Send ActionableCard
+    bot.send(new teams.TeamsMessage()
+        .address(address)
+        .addAttachment({
+                content: card,
+                // contentType: "application/vnd/microsoft.teams.card.o365connector",
+                contentType: "application/json"
+        })
+    );
 }
 
 export {

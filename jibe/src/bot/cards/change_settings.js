@@ -1,3 +1,4 @@
+import * as models from '../../models/models'
 
 var events = [
     {

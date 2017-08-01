@@ -181,7 +181,7 @@ async function getSubscriptions(channelId: string) {
 
     // fetch projects
     let projects = await jibe.getProjectList();
-    var subscriptions = {};
+    let subscriptions: {[key: string]: string[]} = {};
 
     for (let p of projects) {
         subscriptions[p.name] = p.routes.filter((route) => {
@@ -193,6 +193,7 @@ async function getSubscriptions(channelId: string) {
     return subscriptions;
 }
 
+// Retrieves the projectId of the project with the given name
 async function getProjectId(projectName: string) {
     let projects = await jibe.getProjectList();
     let proj = projects.find((p) => {

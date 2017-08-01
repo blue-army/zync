@@ -6,7 +6,7 @@ var header = [
 
 var line = " - **{{project}}:** {{events}}"
 
-function createMessage (subscriptions) {
+function createMessage (subscriptions: {[key: string]: string[]}) {
     var body = []
     for (let project in subscriptions) {
         var nextLine = line.replace("{{project}}", project);
@@ -23,9 +23,9 @@ function createMessage (subscriptions) {
 }
 
 // testing
-var subs = {
-    "proj1": ["asdf", "wells", "mud"],
-    "proj2": ["a", 'b', 'c']
-}
+// var subs = {
+//     "proj1": ["asdf", "wells", "mud"],
+//     "proj2": ["a", 'b', 'c']
+// }
 
 exports.createMessage = createMessage;
