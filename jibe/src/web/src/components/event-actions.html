@@ -2,14 +2,13 @@
 <link href="../../bower_components/paper-button/paper-button.html" rel="import">
 <link href="../../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
 <link href="../../bower_components/paper-input/paper-textarea.html" rel="import">
-<link href="../../bower_components/google-map/google-map.html" rel="import">
 <link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
 <link href="../../bower_components/juicy-ace-editor/juicy-ace-editor.html" rel="import">
 <link href="../services/projects-service.html" rel="import">
 <link href="../misc/shared-styles.html" rel="import">
 <link href="../components/activity-card.html" rel="import">
 
-<dom-module id="project-card">
+<dom-module id="event-actions">
 
   <style type="text/css">
      :host {
@@ -58,12 +57,6 @@
         text-align: right;
       }
 
-      paper-dialog#shareModal.size-position {
-        width: 500px;
-        height: 500px;
-        overflow: hidden;
-      }
-
       #mycontent {
         text-align: center;
       }
@@ -105,30 +98,46 @@
 
     </style>
 
-    <paper-card id="projCard" class="papercard" heading="" image="./assets/images/Schlumberger.svg" alt="{{item.name}}">
+    <paper-dialog id="exploreModal" auto-fit-on-attach on-iron-overlay-closed="dismissExploreDialog" class="size-position">
+      <h3>Edit Raw Project JSON Data</h3>
 
-      <div class="mymap">
-        <google-map id="myMap" map="{{map}}" fit-to-markers zoom="10" api-key="AIzaSyCMsBPpFm2-D8Dt5oQUHWYM3VHeYxmyLOs">
-          <google-map-marker latitude="{{latitude}}" longitude="{{longitude}}" draggable></google-map-marker>
-        </google-map>
+      <juicy-ace-editor 
+          id="juicyEditor" 
+          wrapmode="true">{{textInput}}
+      </juicy-ace-editor>
+
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Update</paper-button>
+        <paper-button dialog-dismiss autofocus>Cancel</paper-button>
       </div>
+    </paper-dialog>
 
-      <div class="card-content">
-        {{item.name}}
-      </div>
+    <template is="dom-if" if="{{projMethod}}">
+      <projects-service 
+        auto={{deleteTrigger}}
+        on-projects-response="handleResponse" 
+        projects-method={{projMethod}} 
+        projects-body={{projBody}} 
+        projects-url={{projUrl}}>
+      </projects-service>
+    </template>
 
-      <content id="myContent"></content>
+    <template is="dom-if" if="{{eventMethod}}">
+      <events-service on-events-response="handleEventsResponse" events-method={{eventMethod}} events-body={{eventBody}}>
+      </events-service>
+    </template>
 
-    </paper-card>
+    <div class="card-actions">
+      <paper-icon-button title="Explore" on-tap="handleExplore" class="large" icon="my-icons:send-event">Send Event</paper-icon-button>
+    </div>
+
   </template>
 
 </dom-module>
 
-<script src="../../bower_components/geohash/geohash.js"></script>
-
 <script>
   Polymer({
-    is: 'project-card',
+    is: 'event-actions',
 
     properties: {
       item: Object,
@@ -136,29 +145,38 @@
         type: Object,
         notify: true
       },
+      projUrl: String,
+      projMethod: String,
+      projBody: String,
 
-      latitude: {
-        type: Number,
-        value: 37.78
-      },
-      longitude: {
-        type: Number,
-        value: -122.4
+      entityInput: String,
+      propertyInput: String,
+      fromInput: String,
+      toInput: String,
+
+      textInput: String,
+    },
+
+    handleResponse: function (data) {
+      console.log("operation id#" + this.item.id + " = " + data.detail.status);
+    },
+
+    handleExplore: function () {
+      this.textInput = JSON.stringify(this.item, null, "\t");
+      this.$.exploreModal.open();
+    },
+    dismissExploreDialog: function(e) {
+      if (e.detail.confirmed) {
+        let body = JSON.parse(this.$.juicyEditor.value);
+
+        this.projBody = JSON.stringify(body);
+        this.projMethod = "PUT";
+        this.projUrl = "/api/projects";
       }
     },
 
-    ready: function () {
-      this.geohashToCoord(this.item.geohash);
-      // this.map = this.$.myMap;
-    },
-
-    geohashToCoord: function (geoHash) {
-      // Handle geohash
-      if (geoHash) {
-        let geoObject = decodeGeoHash(geoHash);
-        this.latitude = geoObject.latitude[0];
-        this.longitude = geoObject.longitude[0];
-      }
+    handleEventsResponse: function(e) {
+      console.log("operation id#" + this.item.id + " = " + e.detail.status);
     }
 
   });

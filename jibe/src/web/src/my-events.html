@@ -16,6 +16,7 @@
 <link href="services/messages-service.html" rel="import">
 <link href="misc/shared-styles.html" rel="import">
 <link href="components/project-card.html" rel="import">
+<link href="components/event-actions.html" rel="import">
 <link href="components/project-create.html" rel="import">
 <link href="components/activity-card.html" rel="import">
 
@@ -96,7 +97,9 @@
           </template>
 
           <template is="dom-repeat" items="{{aProjects}}">
-            <project-card item={{item}} item-array={{aProjects}}></project-card>
+            <project-card item={{item}} item-array={{aProjects}}>
+              <event-actions item={{item}} item-array={{aProjects}}></event-actions>
+            </project-card>
           </template>
 
         </div>
