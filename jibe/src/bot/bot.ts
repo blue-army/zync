@@ -352,7 +352,8 @@ function sendActionableCard(address: botbuilder.IAddress, card: teams.O365Connec
             .address(address)
             .addAttachment({
                     content: card,
-                    contentType: "application/vnd/microsoft.teams.card.o365connector",
+                    // contentType: "application/vnd/microsoft.teams.card.o365connector",
+                    contentType: "application/json"
             })
         );
     }
