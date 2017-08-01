@@ -112,8 +112,16 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
 * where do we want to host jibe wrt drill[plan|ops]?
 * integrate better with connector configuration dialog window
 * how do we re-configure a connector?
+* how to know Office is redirecting on connector registration (check referrer header)
 * avoid public calls to connector/[setup | register]
 * how do we improve app service warm-up time
 * delete group only works from v1.0. Fails when called from beta graph API.
 * how do the application / delegated permissions work?
-    * directory.readwrite - why is Limited Admin insufficient
+  * directory.readwrite - why is Limited Admin insufficient?
+* how do messages end up in the activity feed
+* do notifications (on mobile app) work?
+* what do the options in 'Enable this integration for ...' in the connector registration ui
+* suggestions for supporting different levels of apps / app environments (wrt authentication)
+* callback when connector is removed (or a way to query connectors)
+* actionable messages on connector cards (can see on the connector registration portal)
+* user information within a channel / connector
