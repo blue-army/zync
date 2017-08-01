@@ -9,7 +9,7 @@ import * as bot from "../../bot/bot"
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;
 
-// Exposed as GET
+// handles GET requests
 function list_events(_req: express.Request, res: express.Response) {
     var db_key = process.env.db_key;
 
@@ -34,7 +34,7 @@ function list_events(_req: express.Request, res: express.Response) {
     });
 }  
 
-// Exposed as PUT
+// handles PUT requests
 async function upsert_event(req: express.Request, res: express.Response) {
 
     // Check that request has been authenticated
