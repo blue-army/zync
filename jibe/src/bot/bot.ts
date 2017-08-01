@@ -193,8 +193,9 @@ bot.dialog('changeSettingsViaList', [
             session.send("This channel is not subscribed to any events yet.");
         }
 
-        let card = changeSettings.createCard(args.project.name, args.project.id)
-        session.send(new botbuilder.Message().addAttachment(card));
+        // Send card (doesn't work with teams)
+        // let card = changeSettings.createCard(args.project.name, args.project.id)
+        // session.send(new botbuilder.Message().addAttachment(card));
 
         // Send the list of events that they can subscribe to
         var eventNames = events.map((event: any) => {

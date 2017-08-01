@@ -1,3 +1,4 @@
+// Create a markdown-formatted list of projects and their notification settings
 
 var header = [
     "##Drillplan Notification Settings",
@@ -21,11 +22,5 @@ function createMessage (subscriptions: {[key: string]: string[]}) {
     // concatenate message into a single string
     return header.concat(body).join('\n');
 }
-
-// testing
-// var subs = {
-//     "proj1": ["asdf", "wells", "mud"],
-//     "proj2": ["a", 'b', 'c']
-// }
 
 exports.createMessage = createMessage;
