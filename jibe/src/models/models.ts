@@ -522,6 +522,22 @@ class LoginInfo {
     }
 }
 
+class AppInfo {
+    name: string;
+    prefix: string;
+    id: string;
+
+    public static fromObj(j: any): AppInfo {
+        let o = new AppInfo;
+
+        o.name = j['name'];
+        o.prefix = j['prefix'];
+        o.id = j['id'];
+
+        return o;
+    }
+}
+
 //////////////////// Begin - Team Card ////////////////////
 
 class TeamsMessageCard {
@@ -638,6 +654,8 @@ class ActionInfo {
     }
 }
 
+
+
 //////////////////// End - Team Card ////////////////////
 
 export {
@@ -656,4 +674,5 @@ export {
     GroupInfo,
     GraphChannelInfo,
     RouteInfo,
+    AppInfo
 }
