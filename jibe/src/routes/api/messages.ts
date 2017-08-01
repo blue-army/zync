@@ -1,8 +1,6 @@
-'use strict';
-
 import * as models from "../../models/models";
 import * as cosmos from 'documentdb';
-import * as pu from '../../utils/prop-utils';
+import * as drillplan from "../../plugins/drillplan"
 
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;
@@ -34,27 +32,10 @@ function list_messages(_req: any, res: any) {
 
 function parse(info: models.EventInfo): models.MessageInfo {
 
-    let msgInfo = new models.MessageInfo();
-    // let content = info.content;
-
+    let msgInfo: models.MessageInfo;
     switch (info.type) {
         case 'slb.drill-plan.activity':
-            let activityInfo = models.ActivityInfo.fromObj(info.content);
-            let details = activityInfo.activity;
-
-            let ancestorPath = details.getAncestorPath();
-            msgInfo.id = info.id;
-            msgInfo.typeImageUrl = details.getEntityImageUrl();
-            msgInfo.entityName = details.entity_name;
-            msgInfo.subtitle1 = models.ActivityDetails.getActivitySubtitle1(ancestorPath);
-            msgInfo.subtitle2 = models.ActivityDetails.getActivitySubtitle2(ancestorPath);
-            msgInfo.actionType = details.getExpectedAction();
-            msgInfo.userImageUrl = pu._str(activityInfo.owner.image_url, "/assets/images/activities/noimage.jpg");
-            msgInfo.ownerFullName = activityInfo.owner.full_name;
-            msgInfo.activityDate = details.activity_time;
-            msgInfo.comments = details.comments;
-            msgInfo.actionUrl = details.getEntityUrl();
-
+            msgInfo = drillplan.createMessageInfo(info);
             break;
         case 'wazzap':
             break;
@@ -64,8 +45,6 @@ function parse(info: models.EventInfo): models.MessageInfo {
 
     return msgInfo;
 }
-
-
 
 function handleError(error: any, res: any) {
     console.log('\nAn error with code \'' + error.code + '\' has occurred:');
