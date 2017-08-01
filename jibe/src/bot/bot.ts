@@ -128,6 +128,7 @@ bot.dialog('settings', [
         var settings = await settingsCard(session);
         // TODO: check settings were retrieved successfully
         session.send(settings);
+        session.send(new botbuilder.Message().addAttachment(createThumbnailCard(session)));
         botbuilder.Prompts.confirm(session, "Do you want to update your settings?");
     },
     function (session, results) {
@@ -194,8 +195,8 @@ bot.dialog('changeSettingsViaList', [
         }
 
         // Send card (doesn't work with teams)
-        // let card = changeSettings.createCard(args.project.name, args.project.id)
-        // session.send(new botbuilder.Message().addAttachment(card));
+        let card = changeSettings.createCard(args.project.name, args.project.id)
+        session.send(new botbuilder.Message().addAttachment(card));
 
         // Send the list of events that they can subscribe to
         var eventNames = events.map((event: any) => {
@@ -336,21 +337,38 @@ async function settingsCard(session: botbuilder.Session) {
 }
 
 // Send a card to the given address
-function sendActionableCard(address: botbuilder.IAddress, card: teams.O365ConnectorCard) {
+function sendActionableCard(address: botbuilder.IAddress, card: any) {
     // Send regular message to verify the address
     bot.send(new botbuilder.Message()
         .address(address)
         .text("Sending a card to address %s", JSON.stringify(address))
-    );
-    // Send ActionableCard
-    bot.send(new teams.TeamsMessage()
-        .address(address)
         .addAttachment({
                 content: card,
-                // contentType: "application/vnd/microsoft.teams.card.o365connector",
-                contentType: "application/json"
+                contentType: 'application/vnd.microsoft.teams.card.o365connector'
         })
     );
+
+    // Send ActionableCard
+    // bot.send(new teams.TeamsMessage()
+    //     .address(address)
+    //     .addAttachment({
+    //             content: card,
+    //             contentType: 'application/vnd.microsoft.teams.card.o365connector'
+    //     })
+    // );
+}
+
+function createThumbnailCard(session) {
+    return new botbuilder.ThumbnailCard(session)
+        .title('BotFramework Thumbnail Card')
+        .subtitle('Your bots — wherever your users are talking')
+        .text('Build and connect intelligent bots to interact with your users naturally wherever they are, from text/sms to Skype, Slack, Office 365 mail and other popular services.')
+        .images([
+            botbuilder.CardImage.create(session, 'https://sec.ch9.ms/ch9/7ff5/e07cfef0-aa3b-40bb-9baa-7c9ef8ff7ff5/buildreactionbotframework_960.jpg')
+        ])
+        .buttons([
+            botbuilder.CardAction.openUrl(session, 'https://docs.microsoft.com/bot-framework', 'Get Started')
+        ]);
 }
 
 export {
