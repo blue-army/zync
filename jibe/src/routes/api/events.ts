@@ -5,6 +5,7 @@ import * as cosmos from 'documentdb';
 import * as rp from 'request-promise';
 import * as express from 'express';
 import * as bot from "../../bot/bot"
+import * as drillplan from "../../plugins/drillplan"
 
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;
@@ -156,34 +157,14 @@ async function fetch_document(uri: string): Promise<any> {
 
 function parse(info: models.EventInfo): models.TeamsMessageCard {
 
-    let card = new models.TeamsMessageCard();
+    let card: models.TeamsMessageCard;
 
     switch (info.type) {
         case 'slb.drill-plan.activity':
-            let activityInfo = models.ActivityInfo.fromObj(info.content);
-            let details = activityInfo.activity;
-
-            let ancestorPath = details.getAncestorPath();
-            card.sections.push(
-                models.SectionInfo.CreateActivityCard(
-                    details.getEntityImageUrl(),
-                    details.entity_name,
-                    models.ActivityDetails.getActivitySubtitle1(ancestorPath),
-                    models.ActivityDetails.getActivitySubtitle2(ancestorPath),
-                    false));
-
-            card.sections.push(
-                models.SectionInfo.CreateActivityCard(
-                    activityInfo.owner.image_url,
-                    details.getExpectedAction(),
-                    activityInfo.owner.full_name,
-                    details.comments,
-                    true));
-
-            card.actions.push(new models.ActionInfo("Launch Application", details.getEntityUrl()));
-
+            card = drillplan.createTeamsMessageCard(info)
             break;
         case 'wazzap':
+            card = new models.TeamsMessageCard();
             let w_content = models.EntityChangedEventInfo.fromObj(info.content);
             card.sections.push(
                 models.SectionInfo.CreateActivityCard(
