@@ -1,37 +1,26 @@
 import * as models from "../../models/models";
+import * as jibe from "../../service/jibe"
 import * as uuid from "uuid";
 import * as _ from 'lodash';
 import * as cosmos from 'documentdb';
 import * as rp from 'request-promise';
 import * as express from 'express';
 import * as bot from "../../bot/bot"
+import * as drillplan from "../../plugins/drillplan"
 
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;
 
 // handles GET requests
 function list_events(_req: express.Request, res: express.Response) {
-    var db_key = process.env.db_key;
-
-    let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
-    var collLink = UriFactory.createDocumentCollectionUri('jibe', 'events');
-
-    var items: any = [];
-    client.readDocuments(collLink).toArray(function (err: any, docs: any) {
-
-        if (err) {
-            return handleError(err, res);
-        }
-
-        console.log(docs.length + ' Documents found');
-        for (let doc of docs) {
-            let p = models.EventInfo.fromObj(doc);
-            items.push(p);
-        }
-
-        res.json(items);
-
-    });
+    // retrieve events from db
+    jibe.getEventList()
+        .then(events => {
+            res.json(events);
+        })
+        .catch((err) => {
+            handleError(err, res);
+        });
 }  
 
 // handles PUT requests
@@ -43,10 +32,9 @@ async function upsert_event(req: express.Request, res: express.Response) {
         return;
     }
 
-    let db_key = process.env.db_key;
     let payload = req.body;
 
-    // id
+    // generate id if not provided
     payload['id'] = _.get<Object, string>(payload, 'id', uuid.v4());
     let info = models.EventInfo.fromObj(payload);
 
@@ -59,35 +47,32 @@ async function upsert_event(req: express.Request, res: express.Response) {
         }
     }
 
-    // insert document
-    let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
-    var doc_uri = UriFactory.createDocumentCollectionUri('jibe', 'events');
-    client.upsertDocument(doc_uri, info, { disableAutomaticIdGeneration: true }, function (err: any, obj: any, _headers: any) {
-
-        if (err) {
-            return handleError(err, res);
-        }
-
-        // process it
-        routeEvent(info)
-            .then(() => {
-                // convert to message
-                info = models.EventInfo.fromObj(obj);
-                res.json(info);
-                return;
-            })
-            .catch(_err => {
-                res.status(404).send('Something broke!');
-                return;
-            });
-    });
+    // add event to db
+    jibe.upsertEvent(info)
+        .then((event) => {
+            info = event;
+            return routeEvent(event);   // send event to subscribers
+        })
+        .catch((err) => {
+            res.status(400).send({Error: "Unable to insert event into database"});
+        })
+        .then(() => {
+            // routing successful - reply with the upserted event
+            res.json(info);
+        })
+        .catch((err) => {
+            res.status(400).send({Error: "Unable to send event for one or more routes"});
+        });
 }
 
 async function routeEvent(event_info: models.EventInfo) {
 
-    // setup payload
+    // set up payload
     let card = parse(event_info);
     let o = card.ToObj();
+
+    // create MessageInfo object (for use by bot)
+    let msgInfo = drillplan.createMessageInfo(event_info);
 
     // fetch project information
     var uri = UriFactory.createDocumentUri('jibe', 'projects', event_info.project);
@@ -120,7 +105,7 @@ async function routeEvent(event_info: models.EventInfo) {
                     promises.push(rp(options));
                 }
                 if (route.channelId && c.id === route.channelId) {
-                    bot.sendActionableCard(JSON.parse(c.botaddress), o);
+                    bot.sendEvent(JSON.parse(c.botaddress), msgInfo);
                 }
             }
         }
@@ -156,34 +141,14 @@ async function fetch_document(uri: string): Promise<any> {
 
 function parse(info: models.EventInfo): models.TeamsMessageCard {
 
-    let card = new models.TeamsMessageCard();
+    let card: models.TeamsMessageCard;
 
     switch (info.type) {
         case 'slb.drill-plan.activity':
-            let activityInfo = models.ActivityInfo.fromObj(info.content);
-            let details = activityInfo.activity;
-
-            let ancestorPath = details.getAncestorPath();
-            card.sections.push(
-                models.SectionInfo.CreateActivityCard(
-                    details.getEntityImageUrl(),
-                    details.entity_name,
-                    models.ActivityDetails.getActivitySubtitle1(ancestorPath),
-                    models.ActivityDetails.getActivitySubtitle2(ancestorPath),
-                    false));
-
-            card.sections.push(
-                models.SectionInfo.CreateActivityCard(
-                    activityInfo.owner.image_url,
-                    details.getExpectedAction(),
-                    activityInfo.owner.full_name,
-                    details.comments,
-                    true));
-
-            card.actions.push(new models.ActionInfo("Launch Application", details.getEntityUrl()));
-
+            card = drillplan.createTeamsMessageCard(info)
             break;
         case 'wazzap':
+            card = new models.TeamsMessageCard();
             let w_content = models.EntityChangedEventInfo.fromObj(info.content);
             card.sections.push(
                 models.SectionInfo.CreateActivityCard(

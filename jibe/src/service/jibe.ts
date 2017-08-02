@@ -135,11 +135,63 @@ function upsertApp(app_info: models.AppInfo): Promise<models.AppInfo>{
 }
 
 
+// *** EVENT STORAGE FUNCTIONS ***
+// Retrieve a list of all events in the db
+function getEventList() {
+
+    return new Promise<[models.EventInfo]>((resolve, reject) => {
+        var collLink = UriFactory.createDocumentCollectionUri('jibe', 'events');
+        var items: any = [];
+        client.readDocuments(collLink).toArray(function (err: any, docs: any) {
+
+            if (err) {
+                reject(err);
+                return;
+            }
+
+            console.log(docs.length + ' Documents found');
+            for (let doc of docs) {
+                let p = models.EventInfo.fromObj(doc);
+                items.push(p);
+            }
+            resolve(items);
+        });
+    });
+}
+
+// Update/insert an event
+function upsertEvent(event: models.EventInfo) {
+
+    return new Promise<models.EventInfo>((resolve, reject) => {
+        // insert document
+        let doc_uri = UriFactory.createDocumentCollectionUri('jibe', 'events');
+        client.upsertDocument(doc_uri, event, { disableAutomaticIdGeneration: true }, function (err:any, obj:any, _headers:any) {
+            
+            if (err) {
+                reject(err);
+                return;
+            }
+
+            // convert to message
+            event = models.EventInfo.fromObj(obj);
+            resolve(event);
+        });
+    });
+}
+
+
 export {
+    // Project functions
     getProject,
     getProjectList,
     upsertProject,
+
+    // App functions
     getApp,
     getAppList,
     upsertApp,
+
+    // Event functions
+    getEventList,
+    upsertEvent
 }
