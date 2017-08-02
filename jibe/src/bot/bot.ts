@@ -6,6 +6,7 @@ import * as models from '../models/models'
 var currentSettings = require('./messages/current_settings');
 var changeSettings = require('./cards/change_settings');
 var events = require('./events/drillplan').events;
+var o365 = require('../bot/o365message');
 
 
 // *** SETUP ***
@@ -353,20 +354,27 @@ function sendEvent(address: botbuilder.IAddress, message: models.MessageInfo) {
 
 bot.dialog('sendEvent', [
     function (session, args) {
-        session.send(new botbuilder.Message()
+        let msg = new botbuilder.Message()
             .text("Sending a card to address %s", JSON.stringify(session.message.address))
-            .addAttachment(createThumbnailCard(args.message))
-            .addAttachment(createThumbnailCard(args.message))
-            .attachmentLayout("list")
+            // .addAttachment(createThumbnailCard(args.message))
+            // .addAttachment(createThumbnailCard(args.message))
+            .attachmentLayout("carousel")       // can be carousel or list
             .textFormat("markdown")
-        );
+
+        let cards = createCards(args.message);
+        cards.forEach((card) => {
+            msg.addAttachment(card);
+        });
+        
+        session.send(msg);
+        sendActionableCard(session.message.address, o365.card);
         session.endDialog();
     }
 ]);
 
 // Send ActionableCard
 function sendActionableCard(address: botbuilder.IAddress, card: any) {
-    bot.send(new teams.TeamsMessage()
+    bot.send(new botbuilder.Message()
         .address(address)
         .addAttachment({
                 content: card,
@@ -386,6 +394,33 @@ function createThumbnailCard(message: models.MessageInfo) {
         .buttons([
             botbuilder.CardAction.openUrl(null, message.actionUrl, 'Launch Applilcation')
         ]);
+}
+
+function createCards(message: models.MessageInfo) {
+    let cards = [
+        new botbuilder.ThumbnailCard()
+            .title(message.entityName)
+            .subtitle(' - ' + message.subtitle1)
+            .text("*" + message.subtitle2 + "*")
+            .images([
+                new botbuilder.CardImage().url(message.typeImageUrl)
+            ])
+            .buttons([
+                botbuilder.CardAction.openUrl(null, message.actionUrl, 'Launch Applilcation')
+            ]),
+        new botbuilder.ThumbnailCard()
+            .title(message.entityName)
+            .subtitle(' - ' + message.subtitle1)
+            .text("*" + message.subtitle2 + "*")
+            .images([
+                new botbuilder.CardImage().url(message.typeImageUrl)
+            ])
+            .buttons([
+                botbuilder.CardAction.openUrl(null, message.actionUrl, 'Launch Applilcation')
+            ])
+    ];
+    return cards;
+
 }
 
 export {
