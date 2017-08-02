@@ -130,7 +130,6 @@ bot.dialog('settings', [
         var settings = await settingsCard(session);
         // TODO: check settings were retrieved successfully
         session.send(settings);
-        session.send(new botbuilder.Message().addAttachment(createThumbnailCard(session)));
         botbuilder.Prompts.confirm(session, "Do you want to update your settings?");
     },
     function (session, results) {
