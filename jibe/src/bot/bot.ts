@@ -83,7 +83,7 @@ function getChannelAddress(session: botbuilder.Session) {
         session.conversationData.channelAddress.conversation.id = session.message.address.conversation.id.split(';')[0];
         
         // delete 'id' entry (links to specific thread)
-        delete session.conversationData.channelAddress.id;
+        // delete session.conversationData.channelAddress.id;
     }
     return session.conversationData.channelAddress;
 }
@@ -345,7 +345,8 @@ function sendEvent(address: botbuilder.IAddress, message: models.MessageInfo) {
         .text("Sending a card!")
         .addAttachment(createThumbnailCard(message))
         .addAttachment(createThumbnailCard(message))
-        .attachmentLayout("list");
+        .attachmentLayout("list")
+        .textFormat("markdown");
     bot.send(botMsg);
 
 }
@@ -364,8 +365,8 @@ function sendActionableCard(address: botbuilder.IAddress, card: any) {
 function createThumbnailCard(message: models.MessageInfo) {
     return new botbuilder.ThumbnailCard()
         .title(message.entityName)
-        .subtitle(message.subtitle1)
-        .text(message.subtitle2)
+        .subtitle(' - ' + message.subtitle1)
+        .text("*" + message.subtitle2 + "*")
         .images([
             new botbuilder.CardImage().url(message.typeImageUrl)
         ])
