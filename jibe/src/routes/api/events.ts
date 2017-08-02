@@ -71,6 +71,9 @@ async function routeEvent(event_info: models.EventInfo) {
     let card = parse(event_info);
     let o = card.ToObj();
 
+    // create MessageInfo object (for use by bot)
+    let msgInfo = drillplan.createMessageInfo(event_info);
+
     // fetch project information
     var uri = UriFactory.createDocumentUri('jibe', 'projects', event_info.project);
     let doc = await fetch_document(uri);
@@ -102,7 +105,7 @@ async function routeEvent(event_info: models.EventInfo) {
                     promises.push(rp(options));
                 }
                 if (route.channelId && c.id === route.channelId) {
-                    bot.sendActionableCard(JSON.parse(c.botaddress), o);
+                    bot.sendEvent(JSON.parse(c.botaddress), msgInfo);
                 }
             }
         }

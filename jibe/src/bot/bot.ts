@@ -1,6 +1,7 @@
 import * as botbuilder from 'botbuilder';
 import * as teams from 'botbuilder-teams'
 import * as conversation from '../bot/conversation';
+import * as models from '../models/models'
 // var currentSettings = require('./cards/current_settings');
 var currentSettings = require('./messages/current_settings');
 var changeSettings = require('./cards/change_settings');
@@ -337,41 +338,43 @@ async function settingsCard(session: botbuilder.Session) {
 }
 
 // Send a card to the given address
-function sendActionableCard(address: botbuilder.IAddress, card: any) {
+function sendEvent(address: botbuilder.IAddress, message: models.MessageInfo) {
     // Send regular message to verify the address
-    bot.send(new botbuilder.Message()
+    let botMsg = new botbuilder.Message()
         .address(address)
-        .text("Sending a card to address %s", JSON.stringify(address))
-        // .addAttachment({
-        //         content: card,
-        //         contentType: 'application/vnd.microsoft.teams.card.o365connector'
-        // })
-    );
+        .text("Sending a card!")
+        .addAttachment(createThumbnailCard(message))
+        .addAttachment(createThumbnailCard(message))
+        .attachmentLayout("list");
+    bot.send(botMsg);
 
-    // Send ActionableCard
-    // bot.send(new teams.TeamsMessage()
-    //     .address(address)
-    //     .addAttachment({
-    //             content: card,
-    //             contentType: 'application/vnd.microsoft.teams.card.o365connector'
-    //     })
-    // );
 }
 
-function createThumbnailCard(session) {
-    return new botbuilder.ThumbnailCard(session)
-        .title('BotFramework Thumbnail Card')
-        .subtitle('Your bots — wherever your users are talking')
-        .text('Build and connect intelligent bots to interact with your users naturally wherever they are, from text/sms to Skype, Slack, Office 365 mail and other popular services.')
+// Send ActionableCard
+function sendActionableCard(address: botbuilder.IAddress, card: any) {
+    bot.send(new teams.TeamsMessage()
+        .address(address)
+        .addAttachment({
+                content: card,
+                contentType: 'application/vnd.microsoft.teams.card.o365connector'
+        })
+    );
+}
+
+function createThumbnailCard(message: models.MessageInfo) {
+    return new botbuilder.ThumbnailCard()
+        .title(message.entityName)
+        .subtitle(message.subtitle1)
+        .text(message.subtitle2)
         .images([
-            botbuilder.CardImage.create(session, 'https://sec.ch9.ms/ch9/7ff5/e07cfef0-aa3b-40bb-9baa-7c9ef8ff7ff5/buildreactionbotframework_960.jpg')
+            new botbuilder.CardImage().url(message.typeImageUrl)
         ])
         .buttons([
-            botbuilder.CardAction.openUrl(session, 'https://docs.microsoft.com/bot-framework', 'Get Started')
+            botbuilder.CardAction.openUrl(null, message.actionUrl, 'Launch Applilcation')
         ]);
 }
 
 export {
     connector as connector,
-    sendActionableCard as sendActionableCard
+    sendEvent as sendEvent
 };
