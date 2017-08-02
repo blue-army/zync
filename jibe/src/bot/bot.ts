@@ -2,7 +2,8 @@ import * as botbuilder from 'botbuilder';
 import * as teams from 'botbuilder-teams'
 import * as conversation from '../bot/conversation';
 import * as models from '../models/models'
-// var currentSettings = require('./cards/current_settings');
+import * as adaptiveCards from 'microsoft-adaptivecards'
+var currentSettingsCard = require('./cards/current_settings');
 var currentSettings = require('./messages/current_settings');
 var changeSettings = require('./cards/change_settings');
 var events = require('./events/drillplan').events;
@@ -120,6 +121,28 @@ bot.dialog('address', function () {}).triggerAction({
    onSelectAction: function(session) {
       session.send("Your address is: \n" + JSON.stringify(session.message.address, null, "   "));
    }
+});
+
+
+// *** SEND AN ADAPTIVECARD ***
+bot.dialog('adaptiveCard', async function (session) {
+    session.send("Sending an adaptiveCard!");
+    let card = await settingsAC(session);
+    sendAdaptiveCard(session.message.address, card);
+    session.endDialog("Card sent!");
+}).triggerAction({
+   matches: /adaptive ?(card)?/i,
+});
+
+
+// *** SEND AN ACTIONABLECARD ***
+bot.dialog('actionableCard', function (session) {
+    session.send("Sending an actionableCard!");
+    let card = o365.card;
+    sendActionableCard(session.message.address, card);
+    session.endDialog("Card sent!");
+}).triggerAction({
+   matches: /actionable ?(card)?/i,
 });
 
 
@@ -337,6 +360,12 @@ async function settingsCard(session: botbuilder.Session) {
     return card;
 }
 
+async function settingsAC(session: botbuilder.Session) {
+    let subs = await conversation.getSubscriptions(session.conversationData.channelId);
+    session.conversationData.subscriptions = subs;
+    return currentSettingsCard.createCard(subs);
+}
+
 // Send a card to the given address
 function sendEvent(address: botbuilder.IAddress, message: models.MessageInfo) {
     // Send regular message to verify the address
@@ -371,13 +400,25 @@ bot.dialog('sendEvent', [
     }
 ]);
 
-// Send ActionableCard
+// Send ActionableCard (O365 Connector Card)
 function sendActionableCard(address: botbuilder.IAddress, card: any) {
     bot.send(new botbuilder.Message()
         .address(address)
         .addAttachment({
                 content: card,
                 contentType: 'application/vnd.microsoft.teams.card.o365connector'
+        })
+    );
+}
+
+// Send AdaptiveCard
+// Not yet supported by teams, but is supported by other channels
+function sendAdaptiveCard(address: botbuilder.IAddress, card: adaptiveCards.AdaptiveCard) {
+    bot.send(new botbuilder.Message()
+        .address(address)
+        .addAttachment({
+                content: card,
+                contentType: "application/vnd.microsoft.card.adaptive"
         })
     );
 }
@@ -424,5 +465,6 @@ function createCards(message: models.MessageInfo) {
 
 export {
     connector as connector,
-    sendEvent as sendEvent
+    sendEvent as sendEvent,
+    sendActionableCard as sendActionableCard
 };

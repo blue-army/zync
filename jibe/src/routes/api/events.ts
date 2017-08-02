@@ -105,7 +105,8 @@ async function routeEvent(event_info: models.EventInfo) {
                     promises.push(rp(options));
                 }
                 if (route.channelId && c.id === route.channelId) {
-                    bot.sendEvent(JSON.parse(c.botaddress), msgInfo);
+                    // bot.sendEvent(JSON.parse(c.botaddress), msgInfo);
+                    bot.sendActionableCard(JSON.parse(c.botaddress), o);
                 }
             }
         }
