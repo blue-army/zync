@@ -342,7 +342,7 @@ function sendEvent(address: botbuilder.IAddress, message: models.MessageInfo) {
     // Send regular message to verify the address
     let botMsg = new botbuilder.Message()
         .address(address)
-        .text("Sending a card!")
+        .text("Sending a card to address %s", JSON.stringify(address))
         .addAttachment(createThumbnailCard(message))
         .addAttachment(createThumbnailCard(message))
         .attachmentLayout("list")
