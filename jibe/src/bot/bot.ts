@@ -340,16 +340,29 @@ async function settingsCard(session: botbuilder.Session) {
 // Send a card to the given address
 function sendEvent(address: botbuilder.IAddress, message: models.MessageInfo) {
     // Send regular message to verify the address
-    let botMsg = new botbuilder.Message()
-        .address(address)
-        .text("Sending a card to address %s", JSON.stringify(address))
-        .addAttachment(createThumbnailCard(message))
-        .addAttachment(createThumbnailCard(message))
-        .attachmentLayout("list")
-        .textFormat("markdown");
-    bot.send(botMsg);
-
+    bot.beginDialog(address, 'sendEvent', {message: message});
+    // let botMsg = new botbuilder.Message()
+    //     .address(address)
+    //     .text("Sending a card to address %s", JSON.stringify(address))
+    //     .addAttachment(createThumbnailCard(message))
+    //     .addAttachment(createThumbnailCard(message))
+    //     .attachmentLayout("list")
+    //     .textFormat("markdown");
+    // bot.send(botMsg);
 }
+
+bot.dialog('sendEvent', [
+    function (session, args) {
+        session.send(new botbuilder.Message()
+            .text("Sending a card to address %s", JSON.stringify(session.message.address))
+            .addAttachment(createThumbnailCard(args.message))
+            .addAttachment(createThumbnailCard(args.message))
+            .attachmentLayout("list")
+            .textFormat("markdown")
+        );
+        session.endDialog();
+    }
+]);
 
 // Send ActionableCard
 function sendActionableCard(address: botbuilder.IAddress, card: any) {
