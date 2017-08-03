@@ -10,6 +10,7 @@
 <link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
 <link href="../../bower_components/paper-fab/paper-fab.html" rel="import">
 <link href="../../bower_components/juicy-ace-editor/juicy-ace-editor.html" rel="import"> 
+<link href="../../bower_components/paper-input/paper-textarea.html" rel="import">
 <link href="../services/projects-service.html" rel="import">
 <link href="../services/events-service.html" rel="import">
 
@@ -44,9 +45,8 @@
         right: 10px;
       }
 
-      #juicyEditor {
-        width: 450px;
-        height: 220px;
+      juicy-ace-editor {
+        min-height: 200px;
       }
       paper-dropdown-menu {
         display: block;
@@ -114,10 +114,8 @@
         </paper-listbox>
       </paper-dropdown-menu>
 
-      <textarea rows="20" cols="50"
-          id="juicyEditor"
-          wrapmode="true">{{textInput}}
-      </textarea>
+      <juicy-ace-editor id="juicyEditor">{{textInput}}
+      </juicy-ace-editor>
  
       <div class="buttons">
         <paper-button dialog-confirm autofocus>Update</paper-button>
@@ -202,7 +200,7 @@
     handleSigninResponse: function(e) {
         let token = e.detail.response.token;
 
-        let header = {};
+        let header = { "x-api-key": token };
         header["x-api-key"] = token;
 
         this.headers = header;
