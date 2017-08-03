@@ -1,7 +1,7 @@
 import * as bot from '../../bot/bot'
 import * as express from 'express';
 
-var address = {  
+var default_address = {  
    "id":"1501719090455",
    "channelId":"msteams",
    "user":{  
@@ -19,9 +19,14 @@ var address = {
    "serviceUrl":"https://smba.trafficmanager.net/amer-client-ss.msg/"
 }
 
-
+// Push this tomorrow!
 function send_card(req: express.Request, res: express.Response) {
-    bot.sendActionableCard(address, req.body);
+    let address = req.body.address;
+    if (!address) {
+        address = default_address;
+    }
+    let card = req.body.card;
+    bot.sendActionableCard(address, card);
     res.status(200).send();
 }
 
