@@ -199,21 +199,19 @@
 
     handleSigninResponse: function(e) {
         let token = e.detail.response.token;
+        this.headers =  { "x-api-key": token };
 
-        let header = { "x-api-key": token };
-        header["x-api-key"] = token;
-
-        this.headers = header;
         this.eventMethod = "PUT";
         // use this.textInput, as user may have modified
-        let body = JSON.parse(this.textInput);
+        let text = this.$.juicyEditor.value;
+        let body = JSON.parse(text);
         this.eventBody = JSON.stringify(body);
 
         this.$.eventsServ.generateRequest();
     },
 
     handleEventsResponse: function(e) {
-      console.log("operation id#" + this.item.id + " = " + e.detail.status);
+      console.log("operation id#" + this.payload.project + " = " + e.detail.status);
     },
 
     selectedProjChanged: function(e) {
