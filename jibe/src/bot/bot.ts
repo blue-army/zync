@@ -205,7 +205,7 @@ bot.dialog('selectProject', [
     async function (session, results) {
         var projectName = results.response.entity;
         var projectId = await conversation.getProjectId(projectName);
-        session.send("projectID: %s", projectId);
+        // session.send("projectID: %s", projectId);
         // var card = changeSettings.createCard(projectName, projectId);
         // if (card) {
         //     session.send(new builder.Message().addAttachment(card));
