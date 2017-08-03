@@ -191,8 +191,8 @@
     dismissDialog: function (e) {
       if (e.detail.confirmed) {
         this.signinBody = JSON.stringify({
-            client_id: this.client_id,
-            client_secret: this.client_secret,
+            client_id: this.clientId,
+            client_secret: this.clientSecret,
         });
 
         this.$.xhrAuthSignin.generateRequest();
