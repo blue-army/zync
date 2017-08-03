@@ -1,5 +1,7 @@
 import * as models from '../../models/models'
+import * as adaptiveCards from 'microsoft-adaptivecards/built/schema'
 
+// TODO: import these events from an outside file
 var events = [
     {
         "name": "BHA",
@@ -80,109 +82,113 @@ var events = [
     }
 ];
 
-var template = {
-    "contentType": "application/vnd.microsoft.card.adaptive",
-    "content": {
-        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-        "type": "AdaptiveCard",
-        "version": "0.5",
-        "body": [
-            {
-                "type": "TextBlock",
-                "text": "Drillplan Notification Settings",
-                "horizontalAlignment": "center",
-                "weight": "bolder",
-                "size": "medium",
-            },
-            {
-                "type": "TextBlock",
-                "text": "Project",
-                "horizontalAlignment": "center",
-                "weight": "bolder",
-                "size": "medium"
-            },
-            {
-                "type": "ColumnSet",
-                "columns": []
-            }
-        ],
-            
-        "actions": [
-            {
-            "type": "Action.Submit",
-            "title": "Update Settings",
-            "data": {
-                "app": "drillplan",
-                "project": "project"
-            }
-            }
-        ]
-    }
-};
+// Sample output
+// {
+//     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+//     "type": "AdaptiveCard",
+//     "version": "0.5",
+//     "body": [
+//         {
+//             "type": "TextBlock",
+//             "text": "Drillplan Notification Settings",
+//             "horizontalAlignment": "center",
+//             "weight": "bolder",
+//             "size": "medium",
+//         },
+//         {
+//             "type": "TextBlock",
+//             "text": "Project",
+//             "horizontalAlignment": "center",
+//             "weight": "bolder",
+//             "size": "medium"
+//         },
+//         {
+//             "type": "ColumnSet",
+//             "columns": []
+//         }
+//     ],
+        
+//     "actions": [
+//         {
+//         "type": "Action.Submit",
+//         "title": "Update Settings",
+//         "data": {
+//             "app": "drillplan",
+//             "project": "project",
+//             "projectId": "id"
+//         }
+//         }
+//     ]
+// }
 
-var choice_section = 2;
 
-function createCard (project) {
-    let ncols = 3;
+// Set number of columns to display
+const ncols = 3;
 
-    // Set subheader
-    template.content.body[1].text = "Project " + project;
-
-    for (let col = 0; col < ncols; col++) {
-        template.content.body[choice_section].columns[col] = {
-            "type": "Column",
-            "items": []
-        };
-    }
-    for (let i = 0; i < events.length; i++) {
-        let col = i % ncols;
-        template.content.body[choice_section].columns[col].items.push({
-              "type": "Input.Toggle",
-              "id": events[i].name,
-              "title": events[i].name,
-              "value": "false",
-              "valueOn": "true",
-              "valueOff": "false"
-            }
-        );
-    }
-    return template;
+// Formatting for title
+var header : adaptiveCards.ITextBlock = {
+    "type": "TextBlock",
+    "text": "Drillplan Notification Settings",
+    "horizontalAlignment": "center",
+    "weight": "bolder",
+    "size": "medium",
 }
 
-function createCard2 (project, projectId) {
-    let ncols = 3;
-    
-    // Set subheader
-    template.content.body[1].text = "Project " + project;
-    template.content.actions[0].data.project = projectId;
+// Formatting for subtitle
+var subheader : adaptiveCards.ITextBlock = {
+    "type": "TextBlock",
+    "text": "Project",
+    "horizontalAlignment": "center",
+    "weight": "bolder",
+    "size": "medium"
+}
 
-    for (let col = 0; col < ncols; col++) {
-        template.content.body[choice_section].columns[col] = {
-            "type": "Column",
-            "items": [
-                {
-                      "type": "Input.ChoiceSet",
-                      "id": "col" + col,
-                      "style": "expanded",
-                      "isMultiSelect": true,
-                      "choices": []
-                }
-            ]
-        }
+// Create card for the specified project
+function createCard (project: string, projectId: string) {
+
+    // Create title, subtitle, and columns
+    let title = new adaptiveCards.TextBlock(header);
+    let subtitle = new adaptiveCards.TextBlock(subheader);
+    subtitle.text = "Project " + project;
+    let options = new adaptiveCards.ColumnSet();
+
+    // Create submit button, specify additional fields to submit
+    let submitBtn = new adaptiveCards.ActionSubmit();
+    submitBtn.title = "Update Settings";
+    submitBtn.type = "Action.Submit";
+    submitBtn.data = {
+        "app": "drillplan",
+        "project": project,
+        "projectId": projectId
     };
 
+    // Create card
+    let card = new adaptiveCards.Card();
+    card.body = [title, subtitle, options];
+    card.actions = [submitBtn];
+
+    // Create columns
+    for (let col = 0; col < ncols; col++) {
+        options.columns.push(new adaptiveCards.Column());
+    }
+
+    // Fill columns with event options
     for (let i = 0; i < events.length; i++) {
         let col = i % ncols;
-        template.content.body[choice_section].columns[col].items[0].choices.push({
-              "title": events[i].name,
-              "value": events[i].name,
-              "isSelected": "false",
-            }
-        );
+        let checkbox = new adaptiveCards.InputToggle({
+            title: events[i].name,
+            value: events[i].name,
+            valueOn: "true",
+            valueOff: "false",
+        })
+        options.columns[col].items.push(checkbox);
     }
-    return template;
+
+    return card;
 }
 
-exports.createCard = createCard2;
 
-// console.log(JSON.stringify(createCard2("proj")));
+exports.createCard = createCard;
+
+// Testing
+// console.log(JSON.stringify(createCard("proj", "id")));

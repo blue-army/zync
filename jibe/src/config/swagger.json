@@ -428,6 +428,33 @@
                 },
                 "deprecated": false
             }
+        },
+        "/api/card": {
+            "put": {
+                "tags": [
+                    "card"
+                ],
+                "operationId": "card",
+                "consumes": ["application/json"],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "body",
+                        "in": "body",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "deprecated": false
+            }
         }
     },
     "securityDefinitions": {

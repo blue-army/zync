@@ -599,8 +599,15 @@ class SectionInfo {
         }
 
         let me = <any>(this);
-        for (let prop of ['startGroup', 'activityTitle', 'activitySubtitle', 'activityImage', 'activityText']) {
+        for (let prop of ['startGroup', 'activityTitle', 'activitySubtitle', 'activityText']) {
             o[prop] = me[prop];
+        }
+
+        // Do not include activityImage property if it is invalid
+        // NOTE: ACTIVITY IMAGE URLS THAT DO NOT BEGIN WITH 'http://' or 'https://' PREVENT CARD FROM DISPLAYING IN TEAMS WHEN SENT BY BOT
+        // THIS INCLUDES EMPTY STRINGS. 
+        if (this.activityImage && this.activityImage.search("^https?:\/\/") === 0) {
+            o.activityImage = me.activityImage;
         }
 
         let facts: any = [];
