@@ -109,7 +109,7 @@ bot.dialog('/',
 
 // *** HELP DIALOG ***
 bot.dialog('help', function () {}).triggerAction({
-   matches: /^help$/i,
+   matches: /help/i,
    // (override the default behavior of replacing the stack)
    onSelectAction: function(session) {
        // Send a markdown-formatted bulleted list of commands
