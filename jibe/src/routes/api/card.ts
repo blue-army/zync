@@ -10,7 +10,7 @@ var address = {
    },
    "conversation":{  
       "isGroup":true,
-      "id":"19:68b83f2c7ffd4b36bbbca0f16a4a097d@thread.skype;messageid=1501719090455"
+      "id":"19:68b83f2c7ffd4b36bbbca0f16a4a097d@thread.skype"
    },
    "bot":{  
       "id":"28:bababc50-4dad-45b5-a10f-5b98129ccf1d",
