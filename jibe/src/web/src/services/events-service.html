@@ -4,13 +4,13 @@
   <template>
 
     <iron-ajax id="xhrEvents"
-        auto 
         url={{eventsUrl}}
         handle-as="json"
         on-response="handleResponse"
+        content-type="application/json"
+        headers={{headers}}
         on-error="handleError"
         method={{eventsMethod}}
-        content-type="application/json"
         body={{eventsBody}}
         debounce-duration="300">
     </iron-ajax>
@@ -38,7 +38,12 @@
         eventsBody: {
           type: String,
           value: ""
-        }
+        },
+        headers: String
+      },
+
+      generateRequest: function() {
+        this.$.xhrEvents.generateRequest();
       },
 
       handleResponse: function(data) {
