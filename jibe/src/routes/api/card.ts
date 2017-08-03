@@ -2,12 +2,8 @@ import * as bot from '../../bot/bot'
 import * as express from 'express';
 
 var default_address = {  
-   "id":"1501719090455",
+   "id":"1501719090455",     // not required - should we save anyway?
    "channelId":"msteams",
-   "user":{  
-      "id":"29:1gXJQ5rTWQs2XzRYk4z3rW3VFFvYrcm7sHdHu8Efk09tCsNyg_NKvB-nLHcSUTmhgqEifdAQt7iyH0EbwFHONYA",
-      "name":"Rebecca Bauer"
-   },
    "conversation":{  
       "isGroup":true,
       "id":"19:68b83f2c7ffd4b36bbbca0f16a4a097d@thread.skype"
