@@ -30,6 +30,7 @@
     "@types/uuid": "^3.0.0",
     "adal-node": "^0.1.22",
     "async": "^2.4.1",
+    "azure": "^2.0.0-preview",
     "azure-ad-jwt": "^0.2.0",
     "body-parser": "^1.15.0",
     "botbuilder": "^3.8.4",

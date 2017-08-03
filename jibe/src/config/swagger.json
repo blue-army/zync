@@ -445,7 +445,40 @@
                         "description": "Payload",
                         "name": "body",
                         "in": "body",
-                        "required": true
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CardInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/api/queue": {
+            "put": {
+                "tags": [
+                    "queue"
+                ],
+                "operationId": "queue",
+                "consumes": ["application/json"],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "description": "Payload",
+                        "name": "body",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/QueueInfo"
+                        }
                     }
                 ],
                 "responses": {
@@ -613,6 +646,12 @@
                     "type": "string"
                 }
             }
+        },
+        "CardInfo": {
+            "type": "object"
+        },
+        "QueueInfo": {
+            "type": "object"
         },
         "GraphChannelInfo": {
             "type": "object",
