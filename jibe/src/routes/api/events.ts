@@ -36,6 +36,9 @@ async function upsert_event(req: express.Request, res: express.Response) {
 
     // generate id if not provided
     payload['id'] = _.get<Object, string>(payload, 'id', uuid.v4());
+    if (payload['id'].length === 0) {
+        payload['id'] = uuid.v4();
+    }
     let info = models.EventInfo.fromObj(payload);
 
     // Check for presence of required properites
@@ -53,15 +56,14 @@ async function upsert_event(req: express.Request, res: express.Response) {
             info = event;
             return routeEvent(event);   // send event to subscribers
         })
-        .catch((err) => {
-            res.status(400).send({Error: "Unable to insert event into database"});
-        })
         .then(() => {
             // routing successful - reply with the upserted event
             res.json(info);
         })
-        .catch((err) => {
-            res.status(400).send({Error: "Unable to send event for one or more routes"});
+        .catch(() => {
+            res.status(400).send({
+                Error: "Error handling the event"
+            });
         });
 }
 

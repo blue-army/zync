@@ -71,7 +71,6 @@ function upsertProject(project_info: models.ProjectInfo): Promise<models.Project
     });
 }
 
-
 // *** APP INFO RETRIEVAL FUNCTIONS ***
 // Retrieve a list of all registered apps
 function getAppList(): Promise<[models.AppInfo]> {
@@ -133,7 +132,6 @@ function upsertApp(app_info: models.AppInfo): Promise<models.AppInfo>{
         });
     });
 }
-
 
 // *** EVENT STORAGE FUNCTIONS ***
 // Retrieve a list of all events in the db
