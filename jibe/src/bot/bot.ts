@@ -38,11 +38,11 @@ function extractText(session: botbuilder.Session) {
     if (session.message.address.channelId === "emulator") {
         session.message.text = "jibe " + session.message.text;
     }
-    var re = /Jibe(.*)/i;
+    var re = /Jibe(.*)/i;       // TODO: allow for text before and after 'jibe'
     var processed = re.exec(session.message.text);
     if (processed !== null) {
         session.message.text = processed[1].trim();     // remove extra spaces before/after the input
-        session.send("Processed input text: %s", session.message.text);
+        // session.send("Processed input text: %s", session.message.text);
     }
 }
 
@@ -62,15 +62,15 @@ function saveChannelId(session: botbuilder.Session) {
     // extract it and save it in conversationData
     if (!session.conversationData.channelId) {
         // extract the channelId from the conversationId in the address
-        if (session.message.address.channelId === "msteams") {
-            var chId = extractId(session.message.address.conversation.id);
-            session.send("channelId extracted: %s", chId);
+        var chId = session.message.address.conversation.id;
+        if (session.message.address.channelId === "msteams" && session.message.address.conversation.isGroup) {
+            chId = extractId(session.message.address.conversation.id);
         }
         else if (session.message.address.channelId === "emulator") {
-            var chId = "emulator";
+            chId = "emulator";
         }
         session.conversationData.channelId = chId;
-        session.send("Saving your channelId: %s", session.conversationData.channelId);
+        // session.send("Saving your channelId: %s", session.conversationData.channelId);
     }
 }
 
@@ -84,6 +84,9 @@ function getChannelAddress(session: botbuilder.Session) {
         // remove thread suffix from channelId
         session.conversationData.channelAddress.conversation.id = session.message.address.conversation.id.split(';')[0];
         
+        // Remove user info (not needed for routing)
+        delete session.conversationData.channelAddress.user;
+
         // delete 'id' entry (links to specific thread)
         // delete session.conversationData.channelAddress.id;
     }
@@ -96,20 +99,30 @@ function getChannelAddress(session: botbuilder.Session) {
 bot.dialog('/', 
     function (session) {
         if (session.message.text) {
-            session.send("Hi there, %s", session.message.address.user.name.split(' ')[0]);
-            session.send("You said: %s", session.message.text);
+            session.send("Hi there, %s!  We didn't recognize the command '%s' - try another command or type 'help' to see what Jibe can do.", 
+                session.message.address.user.name.split(' ')[0],
+                session.message.text
+            );
         }
 });
 
 
 // *** HELP DIALOG ***
 bot.dialog('help', function () {}).triggerAction({
-   matches: /^help$/i,
+   matches: /help/i,
    // (override the default behavior of replacing the stack)
    onSelectAction: function(session) {
-      session.send("I'm a bot that plays tic tac toe!");
-      session.send("Please type ‘quit’ or ‘restart’ if you don’t want to keep playing.");
-      session.send("To play, click on an open tile or type in its row and column (like A1 or C2).<br/>Some platforms, like Slack, will only allow text input.");
+       // Send a markdown-formatted bulleted list of commands
+       let bullets = [
+           "Here are some Jibe commands you can try: ",     // this is the header - will not be bulleted
+           "Type 'settings' to view and edit your event subscriptions",
+           "Type 'channel' to see your channel's ID",
+           "Type 'address' to see your address",
+           "Type 'adaptiveCard' to send a test adaptiveCard",
+           "Type 'actionableCard to send a test actionableCard"
+       ]
+       let msg = bullets.join('\n * ');
+       session.send(msg);
    }
 });
 
@@ -119,7 +132,20 @@ bot.dialog('address', function () {}).triggerAction({
    matches: /address/i,
    // (override the default behavior of replacing the stack)
    onSelectAction: function(session) {
-      session.send("Your address is: \n" + JSON.stringify(session.message.address, null, "   "));
+      let msg = "Your address is: \n" + JSON.stringify(session.message.address, null, "   ");
+      msg.replace('\n', '<br/>');
+      session.send(msg)
+   }
+});
+
+
+// *** SEND CHANNEL ID ***
+bot.dialog('channelId', function () {}).triggerAction({
+   matches: /channel ?(id)?/i,
+   // (override the default behavior of replacing the stack)
+   onSelectAction: function(session) {
+      let msg = "Your channel's ID is: " + session.conversationData.channelId;
+      session.send(msg)
    }
 });
 
@@ -179,7 +205,7 @@ bot.dialog('selectProject', [
     async function (session, results) {
         var projectName = results.response.entity;
         var projectId = await conversation.getProjectId(projectName);
-        session.send("projectID: %s", projectId);
+        // session.send("projectID: %s", projectId);
         // var card = changeSettings.createCard(projectName, projectId);
         // if (card) {
         //     session.send(new builder.Message().addAttachment(card));
@@ -217,10 +243,6 @@ bot.dialog('changeSettingsViaList', [
         } else {
             session.send("This channel is not subscribed to any events yet.");
         }
-
-        // Send card (doesn't work with teams)
-        let card = changeSettings.createCard(args.project.name, args.project.id)
-        session.send(new botbuilder.Message().addAttachment(card));
 
         // Send the list of events that they can subscribe to
         var eventNames = events.map((event: any) => {
@@ -323,18 +345,18 @@ bot.on('conversationUpdate', function (message) {
         }
     }
 
-    if (message.membersRemoved && message.membersRemoved.length > 0) {
-        var membersRemoved = message.membersRemoved
-            .map(function (m: botbuilder.IIdentity) {
-                var isSelf = m.id === message.address.bot.id;
-                return (isSelf ? message.address.bot.name : m.name) || '' + ' (Id: ' + m.id + ')';
-            })
-            .join(', ');
+    // if (message.membersRemoved && message.membersRemoved.length > 0) {
+    //     var membersRemoved = message.membersRemoved
+    //         .map(function (m: botbuilder.IIdentity) {
+    //             var isSelf = m.id === message.address.bot.id;
+    //             return (isSelf ? message.address.bot.name : m.name) || '' + ' (Id: ' + m.id + ')';
+    //         })
+    //         .join(', ');
 
-        bot.send(new botbuilder.Message()
-            .address(message.address)
-            .text('The following members ' + membersRemoved + ' were removed or left the conversation :('));
-    }
+    //     bot.send(new botbuilder.Message()
+    //         .address(message.address)
+    //         .text('The following members ' + membersRemoved + ' were removed or left the conversation :('));
+    // }
 });
 
 
