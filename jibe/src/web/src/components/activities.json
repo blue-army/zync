@@ -1,0 +1,135 @@
+{
+  "bha": {
+    "id": "1-dd5bc9dab23e4059b5b363af55eb907c",
+    "owner": {
+      "full_name": "Greg Skoff",
+      "image_url": ""
+    },
+    "activity": {
+      "type": "Share",
+      "entity_id": "0985e6a5809c42599a6d6e7b8e85f548",
+      "entity_name": "Untitled BHA/Drillstring",
+      "activity_time": "2017-05-03T19:36:40.7948026Z",
+      "comments": "snap",
+      "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+      "activity_entity_type": "BHA&Drillstring",
+      "is_customer_data": false,
+      "changed_property_names": [],
+      "extension_propertys_dic": {
+        "client_name": "Cimerex"
+      },
+      "parent": {
+        "id": "1-61fb6a60485d43b1994c510fb2198f1e",
+        "entity_type": "run",
+        "name": "Run",
+        "parent": {
+          "id": "1-45328fe7f98c439ba1b217d5b551f0f4",
+          "entity_type": "section",
+          "name": "8.75 in",
+          "parent": {
+            "id": "1-f85b9dec6de340598689babbbf1a48f0",
+            "entity_type": "project",
+            "name": "White City 8 Federal #4H–Cimerex",
+            "parent": null
+          }
+        }
+      }
+    }
+  },
+  "param": {
+    "id": "1-05c7a074fe5d4004adf896befd8f5b0a",
+    "owner": {
+      "full_name": "Kevin Andre Hermansen",
+      "image_url": ""
+    },
+    "activity": {
+      "type": "Share",
+      "entity_id": "325c6339eff349a8808572b165af2d94_OperationParameterSetVo",
+      "entity_name": "Run - Drilling Parameter",
+      "activity_time": "2017-04-07T13:45:53.0823941Z",
+      "comments": "Shared straight from defaults",
+      "project_id": "1-3da20c99195a48849d37bda3691ad500",
+      "activity_entity_type": "Drilling Parameter",
+      "is_customer_data": false,
+      "changed_property_names": [],
+      "extension_propertys_dic": {
+        "client_name": "Schlumberger"
+      },
+      "parent": {
+        "id": "1-325c6339eff349a8808572b165af2d94",
+        "entity_type": "run",
+        "name": "Run",
+        "parent": {
+          "id": "1-60b3af527d28470aad6a867840bf1100",
+          "entity_type": "section",
+          "name": "17.5 in",
+          "parent": {
+            "id": "1-3da20c99195a48849d37bda3691ad500",
+            "entity_type": "project",
+            "name": "Demo–Schlumberger",
+            "parent": null
+          }
+        }
+      }
+    }
+  },
+  "traj": {
+    "id": "1-a146142d7a3e43babbc978520d2d62c9",
+    "owner": {
+      "full_name": "Kevin Andre Hermansen",
+      "image_url": ""
+    },
+    "activity": {
+      "type": "Share",
+      "entity_id": "e8dcc4d1fecc4d4ea86e9a4299c60c53",
+      "entity_name": "DrillPlan-1",
+      "activity_time": "2017-04-07T13:44:08.6936999Z",
+      "comments": "Shared from \"customer data\"",
+      "project_id": "1-3da20c99195a48849d37bda3691ad500",
+      "activity_entity_type": "trajectory",
+      "is_customer_data": false,
+      "changed_property_names": [],
+      "extension_propertys_dic": {
+        "client_name": "Schlumberger"
+      },
+      "parent": {
+        "id": "1-3da20c99195a48849d37bda3691ad500",
+        "entity_type": "project",
+        "name": "Demo–Schlumberger",
+        "parent": null
+      }
+    }
+  },
+  "fluid": {
+    "id": "1-477e596ecc354d15a9b0b438ba4b7dc8",
+    "owner": {
+      "full_name": "Kevin Andre Hermansen",
+      "image_url": ""
+    },
+    "activity": {
+      "type": "Service.Data.Share",
+      "entity_id": "70cc41e8dd7d4f35bc202fc25907bc26",
+      "entity_name": "8.5 Fluid",
+      "activity_time": "2017-04-07T13:42:46.8512884Z",
+      "comments": "Initial input",
+      "project_id": "1-3da20c99195a48849d37bda3691ad500",
+      "activity_entity_type": "drilling fluid",
+      "is_customer_data": false,
+      "changed_property_names": [],
+      "extension_propertys_dic": {
+        "client_name": "Schlumberger"
+      },
+      "parent": {
+        "id": "1-e2a85974c3a5422cb39595dd83e027c1",
+        "entity_type": "section",
+        "name": "8.5 in",
+        "parent": {
+          "id": "1-3da20c99195a48849d37bda3691ad500",
+          "entity_type": "project",
+          "name": "Demo–Schlumberger",
+          "parent": null
+        }
+      }
+    }
+  }
+}
