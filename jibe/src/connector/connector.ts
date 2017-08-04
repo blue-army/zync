@@ -3,6 +3,7 @@
 import * as express from 'express';
 import * as models from "../models/models";
 import * as jibe from '../service/jibe';
+import * as bot from '../bot/bot'
 
 var events = [
     {
@@ -169,9 +170,32 @@ async function register(req: express.Request, res: express.Response) {
     });
 }
 
+var default_address = {  
+   "id":"1501719090455",
+   "channelId":"msteams",
+   "conversation":{  
+      "isGroup":true,
+      "id":"19:68b83f2c7ffd4b36bbbca0f16a4a097d@thread.skype"
+   },
+   "bot":{  
+      "id":"28:bababc50-4dad-45b5-a10f-5b98129ccf1d",
+      "name":"Jibe"
+   },
+   "serviceUrl":"https://smba.trafficmanager.net/amer-client-ss.msg/"
+}
+
+function invoke(req: express.Request, res: express.Response) {
+    bot.sendMessage(default_address, "Headers: " + JSON.stringify(req.headers));
+    bot.sendMessage(default_address, "Body: " + JSON.stringify(req.body));
+    bot.sendMessage(default_address, "Querystring: " + JSON.stringify(req.query));
+    bot.sendMessage(default_address, "Params: " + JSON.stringify(req.params));
+    res.status(200).send();
+}
+
 function init(app: express.Application) {
     app.get('/connector/setup', setup);
     app.get('/connector/register', register);
+    app.post('/connector/invoke', invoke);
     return this;
 }
 
