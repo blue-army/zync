@@ -2,29 +2,30 @@ import * as express from 'express';
 var azure = require('azure-sb')
 
 
+let connStr = decodeURIComponent(process.env.SERVICE_BUS_CONNECTION_STRING);
+
 async function receiveMessage(queueName: string): Promise<any> {
 
     return new Promise<any>((resolve, reject) => {
-        var connStr = decodeURIComponent(process.env.BUS_CONN);
         var sbService = azure.createServiceBusService(connStr);
 
         let options = {
             isPeekLock: false,
             timeoutIntervalInS: 1,
-         }
+        }
 
         sbService.receiveQueueMessage(queueName, options, function (err, lockedMessage) {
-                if (err) {
-                    if (err == 'No messages to receive') {
-                        console.log('No messages');
-                        resolve(null);
-                    } else {
-                        reject(err);
-                    }
+            if (err) {
+                if (err == 'No messages to receive') {
+                    console.log('No messages');
+                    resolve(null);
                 } else {
-                    resolve(lockedMessage);
+                    reject(err);
                 }
-            });
+            } else {
+                resolve(lockedMessage);
+            }
+        });
     });
 }
 
@@ -45,7 +46,7 @@ async function receiveMessage(queueName: string): Promise<any> {
 
 function sendMessage(queueName: string, message: string) {
 
-    var connStr = decodeURIComponent(process.env.BUS_CONN);
+
     var sbService = azure.createServiceBusService(connStr);
 
     sbService.sendQueueMessage(queueName, message, function (err: any) {
