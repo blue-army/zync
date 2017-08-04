@@ -15,13 +15,16 @@ var default_address = {
    "serviceUrl":"https://smba.trafficmanager.net/amer-client-ss.msg/"
 }
 
-// Push this tomorrow!
 function send_card(req: express.Request, res: express.Response) {
     let address = req.body.address;
+    let card = req.body.card;
     if (!address) {
         address = default_address;
+        // If no address and no card parameter, try sending the whole request body as a card
+        if (!card) {
+            card = req.body;
+        }
     }
-    let card = req.body.card;
     bot.sendActionableCard(address, card);
     res.status(200).send();
 }
