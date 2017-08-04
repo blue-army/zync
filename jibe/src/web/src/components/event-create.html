@@ -108,7 +108,7 @@
           slot="dropdown-content" class="dropdown-content" 
           selected="{{selectedType}}"
           on-iron-select="selectedTypeChanged">
-          <template is="dom-repeat" items="{{aTypes}}">
+          <template is="dom-repeat" items="{{activitiesArray}}">
             <paper-item>{{item.name}}</paper-item>
           </template>
         </paper-listbox>
@@ -147,25 +147,6 @@
         reflectToAttribute: true,
         notify: true,
         value: []
-      },
-      aTypes: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: [
-          { 
-            name: "bha"
-          },
-          { 
-            name: "param"
-          },
-          { 
-            name: "traj"
-          },
-          { 
-            name: "fluid"
-          },
-        ]
       },
       headers: Object,
       selectedProject: Number,
@@ -223,15 +204,12 @@
 
     selectedTypeChanged: function(e) {
       this.selectedType = e.target.selected;
-      this.payload.content = this.activitiesArray[this.aTypes[this.selectedType].name];
+      this.payload.content = this.activitiesArray[this.selectedType];
       this.textInput = JSON.stringify(this.payload, null, "  ");
     },
 
     handleResponse: function (data) {
-      let projects = this.aProjects.slice();
-      projects.push(data.detail);
-      this.aProjects = projects;
-
+      this.aProjects = data.detail.slice();
       this.selectedProject = 0;
     },
     handleActivitiesResponse: function() {

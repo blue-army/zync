@@ -1,5 +1,6 @@
-{
-  "bha": {
+[
+  {
+    "name": "bha",
     "id": "1-dd5bc9dab23e4059b5b363af55eb907c",
     "owner": {
       "full_name": "Greg Skoff",
@@ -36,7 +37,8 @@
       }
     }
   },
-  "param": {
+  {
+    "name": "param",
     "id": "1-05c7a074fe5d4004adf896befd8f5b0a",
     "owner": {
       "full_name": "Kevin Andre Hermansen",
@@ -73,7 +75,8 @@
       }
     }
   },
-  "traj": {
+  {
+    "name": "traj",
     "id": "1-a146142d7a3e43babbc978520d2d62c9",
     "owner": {
       "full_name": "Kevin Andre Hermansen",
@@ -100,7 +103,8 @@
       }
     }
   },
-  "fluid": {
+  {
+    "name": "fluid",
     "id": "1-477e596ecc354d15a9b0b438ba4b7dc8",
     "owner": {
       "full_name": "Kevin Andre Hermansen",
@@ -131,5 +135,33 @@
         }
       }
     }
+  },
+  {
+    "name": "rig",
+    "id": "1-d38fd7d94c2d45d3949dde345683aa3f",
+    "owner": {
+      "full_name": "johnny bravo",
+      "image_url": ""
+    },
+    "activity": {
+      "type": "Share",
+      "entity_id": "dea711bf944f4c19b2a670aaea5c5664",
+      "entity_name": "Untitled Rig",
+      "activity_time": "2017-05-03T17:41:27.1608694Z",
+      "comments": "whammy",
+      "project_id": "1-f85b9dec6de340598689babbbf1a48f0",
+      "activity_entity_type": "rig",
+      "is_customer_data": false,
+      "changed_property_names": [],
+      "extension_propertys_dic": {
+        "client_name": "Cimerex"
+      },
+      "parent": {
+        "id": "1-f85b9dec6de340598689babbbf1a48f0",
+        "entity_type": "project",
+        "name": "White City 8 Federal #4H–Cimerex",
+        "parent": null
+      }
+    }
   }
-}
+]
