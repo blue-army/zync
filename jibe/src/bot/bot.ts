@@ -293,15 +293,17 @@ bot.dialog('changeSettingsViaList', [
         if (results.response.entity === "None") {
             session.send("No events selected.")
         } else {
-            let addr = getChannelAddress(session);
-            await conversation.addNotifications(session.dialogData.project.id, 
-                                                session.conversationData.channelId, 
-                                                JSON.stringify(addr),     // preprocess address to remove messageid
-                                                [results.response.entity]);
-            // TODO: error handling if update fails
-            session.send("You are now subscribed to %s events", results.response.entity);
+            session.sendTyping();   // send typing while we update db
+            let addr = getChannelAddress(session);      // preprocess address
+            conversation.addNotifications(session.dialogData.project.id, session.conversationData.channelId, JSON.stringify(addr), [results.response.entity])
+                .then(() => {
+                    session.send("You are now subscribed to %s events", results.response.entity);
+                    botbuilder.Prompts.confirm(session, "Subscribe to more events?");
+                })
+                .catch(() => {
+                    session.endDialog("Sorry, we were not able to update your subscriptions. Please try again later.")
+                });
         }
-        botbuilder.Prompts.confirm(session, "Subscribe to more events?");
     }, 
     function (session, results) {
         // Restart the dialog if they want to subscribe to more events
@@ -439,6 +441,13 @@ function sendEvent(address: botbuilder.IAddress, message: models.MessageInfo) {
     // bot.send(botMsg);
 }
 
+function sendMessage(address: botbuilder.IAddress, message: string) {
+    bot.send(new botbuilder.Message()
+        .text(message)
+        .address(address)
+    );
+}
+
 bot.dialog('sendEvent', [
     function (session, args) {
         let msg = new botbuilder.Message()
@@ -526,5 +535,6 @@ export {
     connector as connector,
     bot as bot,
     sendEvent as sendEvent,
-    sendActionableCard as sendActionableCard
+    sendActionableCard as sendActionableCard,
+    sendMessage as sendMessage
 };
