@@ -387,7 +387,7 @@
                 },
                 "deprecated": false
             },
-             "post": {
+            "post": {
                 "tags": [
                     "groups",
                     "channels"
@@ -435,7 +435,9 @@
                     "card"
                 ],
                 "operationId": "card",
-                "consumes": ["application/json"],
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json",
                     "text/json"
@@ -460,12 +462,37 @@
             }
         },
         "/api/queue": {
+            "get": {
+                "tags": [
+                    "queue"
+                ],
+                "operationId": "queue-receive",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/QMessageInfo"
+                        }
+                    }
+                },
+                "deprecated": false
+            },
             "put": {
                 "tags": [
                     "queue"
                 ],
-                "operationId": "queue",
-                "consumes": ["application/json"],
+                "operationId": "queue-send",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json",
                     "text/json"
@@ -553,7 +580,7 @@
                 },
                 "channel": {
                     "type": "string"
-                }, 
+                },
                 "webhook": {
                     "type": "string"
                 }
@@ -651,6 +678,9 @@
             "type": "object"
         },
         "QueueInfo": {
+            "type": "object"
+        },
+        "QMessageInfo": {
             "type": "object"
         },
         "GraphChannelInfo": {

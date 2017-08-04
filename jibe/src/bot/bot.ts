@@ -3,6 +3,7 @@ import * as teams from 'botbuilder-teams'
 import * as conversation from '../bot/conversation';
 import * as models from '../models/models'
 import * as adaptiveCards from 'microsoft-adaptivecards'
+import * as o365Dialog from './dialogs/o365card'
 var currentSettingsCard = require('./cards/current_settings');
 var currentSettings = require('./messages/current_settings');
 var changeSettings = require('./cards/change_settings');
@@ -12,7 +13,7 @@ var o365 = require('../bot/o365message');
 
 // *** SETUP ***
 // Create bot connector
-var connector = new botbuilder.ChatConnector({
+var connector = new teams.TeamsChatConnector({
     appId: process.env.MICROSOFT_APP_ID || "",
     appPassword: process.env.MICROSOFT_APP_PASSWORD || "" 
 });
@@ -107,6 +108,14 @@ bot.dialog('/',
 });
 
 
+// O365 Card Sample Dialog
+bot.dialog('sendO365Card', o365Dialog.dialog)
+    .triggerAction({
+        matches: /O?365(card)?/i,
+    });
+connector.onO365ConnectorCardAction(o365Dialog.cardActionHandler);
+
+
 // *** HELP DIALOG ***
 bot.dialog('help', function () {}).triggerAction({
    matches: /help|commands/i,
@@ -183,6 +192,20 @@ bot.dialog('actionableCard', function (session) {
     session.endDialog("Card sent!");
 }).triggerAction({
    matches: /actionable ?(card)?/i,
+});
+
+
+// *** SEND A CARDACTION ***
+bot.dialog('CardAction', function (session) {
+    session.send("Sending a card action!");
+    const buttons = [botbuilder.CardAction.postBack(session, 'apple', 'apple'),
+                             botbuilder.CardAction.postBack(session, 'orange', 'orange')]
+    const attachment = new botbuilder.HeroCard(session)
+        .title("message").buttons(buttons)
+    session.send(new botbuilder.Message(session).addAttachment(attachment))
+    session.endDialog("Card action sent!");
+}).triggerAction({
+   matches: /(card ?)?action/i,
 });
 
 
@@ -501,6 +524,7 @@ function createCards(message: models.MessageInfo) {
 
 export {
     connector as connector,
+    bot as bot,
     sendEvent as sendEvent,
     sendActionableCard as sendActionableCard
 };
