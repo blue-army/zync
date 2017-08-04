@@ -109,7 +109,7 @@ bot.dialog('/',
 
 // *** HELP DIALOG ***
 bot.dialog('help', function () {}).triggerAction({
-   matches: /help/i,
+   matches: /help|commands/i,
    // (override the default behavior of replacing the stack)
    onSelectAction: function(session) {
        // Send a markdown-formatted bulleted list of commands
@@ -133,7 +133,7 @@ bot.dialog('address', function () {}).triggerAction({
    // (override the default behavior of replacing the stack)
    onSelectAction: function(session) {
       let msg = "Your address is: \n" + JSON.stringify(session.message.address, null, "   ");
-      msg.replace('\n', '<br/>');
+      msg = msg.replace('\n', '<br/>');
       session.send(msg)
    }
 });
@@ -146,6 +146,20 @@ bot.dialog('channelId', function () {}).triggerAction({
    onSelectAction: function(session) {
       let msg = "Your channel's ID is: " + session.conversationData.channelId;
       session.send(msg)
+   }
+});
+
+
+// *** SEND MESSAGE PAYLOAD ***
+bot.dialog('payload', function () {}).triggerAction({
+   matches: /payload|body|request|message/i,
+   // (override the default behavior of replacing the stack)
+   onSelectAction: function(session) {
+      let msg = "Your most recent message: " + JSON.stringify(session.message, null, '   ');
+      session.send(new botbuilder.Message()
+            .text(msg)
+            .textFormat("markdown")
+      )
    }
 });
 
@@ -310,7 +324,7 @@ bot.on('conversationUpdate', function (message) {
 
         bot.send(new botbuilder.Message()
             .address(message.address)
-            .text("Team: %s | Channel: %s", team, channel));
+            .text("Team: %s <br/> Channel: %s", team, channel));
     }
 
     // Display the sourceEvent
