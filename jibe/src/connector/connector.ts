@@ -177,7 +177,7 @@ var default_address = {
       "isGroup":true,
       "id":"19:68b83f2c7ffd4b36bbbca0f16a4a097d@thread.skype"
    },
-   "bot":{  
+   "bot":{
       "id":"28:bababc50-4dad-45b5-a10f-5b98129ccf1d",
       "name":"Jibe"
    },
@@ -185,10 +185,14 @@ var default_address = {
 }
 
 function invoke(req: express.Request, res: express.Response) {
-    bot.sendMessage(default_address, "Headers: " + JSON.stringify(req.headers));
-    bot.sendMessage(default_address, "Body: " + JSON.stringify(req.body));
-    bot.sendMessage(default_address, "Querystring: " + JSON.stringify(req.query));
-    bot.sendMessage(default_address, "Params: " + JSON.stringify(req.params));
+    let messages = [
+        "Headers: " + JSON.stringify(req.headers),
+        "Body: " + JSON.stringify(req.body),
+        "Querystring: " + JSON.stringify(req.query),
+        "Params: " + JSON.stringify(req.params),
+    ]
+
+    bot.sendMessage(default_address, messages.join('\n---\n'));
     res.status(200).send();
 }
 

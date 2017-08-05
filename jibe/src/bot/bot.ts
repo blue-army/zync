@@ -32,6 +32,9 @@ bot.use({
     }
 })
 
+// Add middleware to send typing when we receive a message
+bot.use(botbuilder.Middleware.sendTyping())
+
 // In msteams, messages to jibe are prefixed with 'jibe'
 // This function extracts the real message text. 
 // Removing the jibe prefix is necessary for using the botbuilder built-in prompts.
@@ -96,7 +99,6 @@ function getChannelAddress(session: botbuilder.Session) {
 
 
 // *** ROOT DIALOG ***
-// Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 bot.dialog('/', 
     function (session) {
         if (session.message.text) {
@@ -127,12 +129,27 @@ bot.dialog('help', function () {}).triggerAction({
            "Type 'settings' to view and edit your event subscriptions",
            "Type 'channel' to see your channel's ID",
            "Type 'address' to see your address",
+           "Type 'payload' to see the body of your most recent message",
            "Type 'adaptiveCard' to send a test adaptiveCard",
-           "Type 'actionableCard to send a test actionableCard"
+           "Type 'o365card' to send a test event selection card",
+           "Type 'actionableCard to send a test actionableCard",
+           "Type 'quit' or 'goodbye' to end the conversation"
        ]
        let msg = bullets.join('\n * ');
        session.send(msg);
    }
+});
+
+
+// *** QUIT DIALOG ***
+// This dialog ends the conversation.
+// The user can trigger it at any time by typing 'quit'
+// Issue - confirmation prompt is not sent
+bot.dialog("quit", function(session){
+   session.endConversation('Okay, goodbye!');
+}).triggerAction({
+   matches: /quit|exit|(good)?bye/i,
+   confirmPrompt: "Are you sure you want to quit?"
 });
 
 
@@ -241,12 +258,7 @@ bot.dialog('selectProject', [
     // extract project info and start dialog to change settings
     async function (session, results) {
         var projectName = results.response.entity;
-        var projectId = await conversation.getProjectId(projectName);
-        // session.send("projectID: %s", projectId);
-        // var card = changeSettings.createCard(projectName, projectId);
-        // if (card) {
-        //     session.send(new builder.Message().addAttachment(card));
-        // }
+        var projectId = await conversation.getProjectId(projectName);       // match the project name to its ID
         let projectInfo = {id: projectId, name: projectName};
         session.beginDialog('changeSettingsViaList', {"project": projectInfo});
     },
@@ -292,8 +304,9 @@ bot.dialog('changeSettingsViaList', [
         // Subscribe the channel to the selected event
         if (results.response.entity === "None") {
             session.send("No events selected.")
+            botbuilder.Prompts.confirm(session, "Subscribe to more events?");
         } else {
-            session.sendTyping();   // send typing while we update db
+            // Update the relevant project in the database
             let addr = getChannelAddress(session);      // preprocess address
             conversation.addNotifications(session.dialogData.project.id, session.conversationData.channelId, JSON.stringify(addr), [results.response.entity])
                 .then(() => {
