@@ -4,100 +4,7 @@ import * as express from 'express';
 import * as models from "../models/models";
 import * as jibe from '../service/jibe';
 import * as bot from '../bot/bot'
-
-var events = [
-    {
-        "name": "BHA",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^BHA&Drillstring$",
-        }
-    },
-    {
-        "name": "Bit Selection",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^Bit Selection$",
-        }
-    },
-    {
-        "name": "Drilling Fluid",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^drilling fluid$",
-        }
-    },
-    {
-        "name": "Casing Design",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^casign design$",
-        }
-    },
-    {
-        "name": "Cementing",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^define cement job$",
-        }
-    },
-    {
-        "name": "Logistics",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^logistics$",
-        }
-    },
-    {
-        "name": "Mud Design",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^mud design$",
-        }
-    },
-    {
-        "name": "Rig",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^rig$",
-        }
-    },
-    {
-        "name": "Trajectory",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^trajectory$",
-        }
-    },
-    {
-        "name": "Target",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^target$",
-        }
-    },
-    {
-        "name": "Risks",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^risks$",
-        }
-    },
-    {
-        "name": "Project",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^project$",
-        }
-    },
-    {
-        "name": "Section",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^section$",
-        }
-    }
-];
+import * as drillplan from '../plugins/drillplan'
 
 // connector setup flow
 async function setup(_req: express.Request, res: express.Response, _next: express.NextFunction) {
@@ -112,7 +19,7 @@ async function setup(_req: express.Request, res: express.Response, _next: expres
         title: 'Setup Connector',
         registerUrl: 'https://outlook.office.com/connectors/Connect?app_id=' + connectorAppID + '&callback_url=' + baseURI + '/connector/register',
         projects: projects,
-        events: events,
+        events: drillplan.events,
     });
 }
 
@@ -147,7 +54,7 @@ async function register(req: express.Request, res: express.Response) {
         .then((project) => {
             for (let n of notifs) {
                 // look up event info in the events array
-                let event = events.find((element) => {
+                let event = drillplan.events.find((element) => {
                     return element.name === n;
                 });
 
