@@ -133,7 +133,7 @@ class EventInfo {
     type: string;
     content: object;
 
-    [key:string]: any;
+    [key: string]: any;
 
     public static fromObj(j: any): EventInfo {
         let o = new EventInfo();
@@ -447,9 +447,9 @@ class NavigationService {
                 url = NavigationService.drillingParamUrl(info.get('project'), info.get('section'), info.get('run')) + '/drillingparam/' + info.get('entity') + '/edit';
                 break;
             case 'drilling fluid':
-                url = NavigationService.customerDataUrl(info.get('project'), info.get('section')) + '/mud/' + info.get('entity');
+                url = NavigationService.drillinfFluidUrl(info.get('project'), info.get('section')); // + '/mud/' + info.get('entity');
                 break;
-            case 'bit': 
+            case 'bit':
                 url = NavigationService.bitUrl(info.get('project'));
                 break;
             case 'section':
@@ -496,6 +496,10 @@ class NavigationService {
 
     public static sectionUrl(projectId: string) {
         return '/TaskManager/#!/projects/' + projectId + '/sections';
+    }
+
+    public static drillinfFluidUrl(projectId: string, sectionId: string) {
+        return '/DrillingFluid/index.html#!/projects/' + projectId + '/sections/' + sectionId;
     }
 }
 
