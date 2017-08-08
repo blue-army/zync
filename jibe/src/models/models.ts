@@ -447,7 +447,7 @@ class NavigationService {
                 url = NavigationService.drillingParamUrl(info.get('project'), info.get('section'), info.get('run')) + '/drillingparam/' + info.get('entity') + '/edit';
                 break;
             case 'drilling fluid':
-                url = NavigationService.drillinfFluidUrl(info.get('project'), info.get('section'), info.get('entity')); // + '/mud/' + info.get('entity');
+                url = NavigationService.drillingFluidUrl(info.get('project'), info.get('section'), info.get('entity')); // + '/mud/' + info.get('entity');
                 break;
             case 'bit':
                 url = NavigationService.bitUrl(info.get('project'));
@@ -498,7 +498,7 @@ class NavigationService {
         return '/TaskManager/#!/projects/' + projectId + '/sections';
     }
 
-    public static drillinfFluidUrl(projectId: string, sectionId: string, entityId: string) {
+    public static drillingFluidUrl(projectId: string, sectionId: string, entityId: string) {
         return '/DrillingFluid/index.html#!/projects/' + projectId + '/sections/' + sectionId + '/generic/' + entityId;
     }
 }
