@@ -655,7 +655,7 @@
         "Token": {
             "type": "object",
             "properties": {
-                "access_token": {
+                "token": {
                     "type": "string"
                 }
             }
