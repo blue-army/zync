@@ -3,6 +3,7 @@
 import * as auth_utils from "../../utils/auth-utils";
 import * as _ from 'lodash';
 import * as express from 'express';
+import * as logger from "../../service/logger"
 
 module.exports = async function validate(req: express.Request, res: express.Response, next: Function) {
 
@@ -16,7 +17,7 @@ module.exports = async function validate(req: express.Request, res: express.Resp
                     id: what.appid,
                     name: info.displayName,
                 };
-                console.log(caller_info);
+                logger.Info(caller_info);
                 res.locals['x-caller'] = caller_info;
             }
         } catch (error) {

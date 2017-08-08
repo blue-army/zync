@@ -1,5 +1,6 @@
 import * as express from 'express';
 var azure = require('azure-sb')
+import * as logger from "../../service/logger"
 
 
 let connStr = decodeURIComponent(process.env.SERVICE_BUS_CONNECTION_STRING);
@@ -17,7 +18,7 @@ async function receiveMessage(queueName: string): Promise<any> {
         sbService.receiveQueueMessage(queueName, options, function (err, lockedMessage) {
             if (err) {
                 if (err == 'No messages to receive') {
-                    console.log('No messages');
+                    logger.Info('No messages');
                     resolve(null);
                 } else {
                     reject(err);
@@ -46,14 +47,13 @@ async function receiveMessage(queueName: string): Promise<any> {
 
 function sendMessage(queueName: string, message: string) {
 
-
     var sbService = azure.createServiceBusService(connStr);
 
     sbService.sendQueueMessage(queueName, message, function (err: any) {
         if (err) {
-            console.log('Failed Tx: ', err);
+            logger.Info('Failed Tx: ' + err);
         } else {
-            console.log('Sent ' + message);
+            logger.Info('Sent ' + message);
         }
     });
 }
