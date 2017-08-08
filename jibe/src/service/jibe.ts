@@ -41,6 +41,11 @@ function getProject(project_id: string): Promise<models.ProjectInfo> {
         client.readDocument(uri, function (err, doc) {
 
             if (err) {
+                if (err.code === 404) {
+                    resolve(null);
+                    return;
+                }
+
                 reject(err);
                 return;
             }
@@ -57,8 +62,8 @@ function upsertProject(project_info: models.ProjectInfo): Promise<models.Project
     return new Promise<models.ProjectInfo>((resolve, reject) => {
         // insert document
         var doc_uri = UriFactory.createDocumentCollectionUri('jibe', 'projects');
-        client.upsertDocument(doc_uri, project_info, { disableAutomaticIdGeneration: true }, function (err:any, obj:any, _headers:any) {
-            
+        client.upsertDocument(doc_uri, project_info, { disableAutomaticIdGeneration: true }, function (err: any, obj: any, _headers: any) {
+
             if (err) {
                 reject(err);
                 return;
@@ -114,13 +119,13 @@ function getApp(app_id: string): Promise<models.AppInfo> {
 }
 
 // Update/insert an app
-function upsertApp(app_info: models.AppInfo): Promise<models.AppInfo>{
+function upsertApp(app_info: models.AppInfo): Promise<models.AppInfo> {
 
     return new Promise<models.AppInfo>((resolve, reject) => {
         // insert document
         let doc_uri = UriFactory.createDocumentCollectionUri('jibe', 'apps');
-        client.upsertDocument(doc_uri, app_info, { disableAutomaticIdGeneration: true }, function (err:any, obj:any, _headers:any) {
-            
+        client.upsertDocument(doc_uri, app_info, { disableAutomaticIdGeneration: true }, function (err: any, obj: any, _headers: any) {
+
             if (err) {
                 reject(err);
                 return;
@@ -163,8 +168,8 @@ function upsertEvent(event: models.EventInfo) {
     return new Promise<models.EventInfo>((resolve, reject) => {
         // insert document
         let doc_uri = UriFactory.createDocumentCollectionUri('jibe', 'events');
-        client.upsertDocument(doc_uri, event, { disableAutomaticIdGeneration: true }, function (err:any, obj:any, _headers:any) {
-            
+        client.upsertDocument(doc_uri, event, { disableAutomaticIdGeneration: true }, function (err: any, obj: any, _headers: any) {
+
             if (err) {
                 reject(err);
                 return;
