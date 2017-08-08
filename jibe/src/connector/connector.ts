@@ -89,6 +89,13 @@ var events = [
             "path": "activity.activity_entity_type",
             "expr": "^project$",
         }
+    },
+    {
+        "name": "Section",
+        "rule": {
+            "path": "activity.activity_entity_type",
+            "expr": "^section$",
+        }
     }
 ];
 

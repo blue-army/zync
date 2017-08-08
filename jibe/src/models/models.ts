@@ -452,6 +452,9 @@ class NavigationService {
             case 'bit': 
                 url = NavigationService.bitUrl(info.get('project'));
                 break;
+            case 'section':
+                url = NavigationService.sectionUrl(info.get('project'));
+                break;
             default:
                 break;
         }
@@ -489,6 +492,10 @@ class NavigationService {
 
     public static drillingParamUrl(projectId: string, sectionId: string, runId: string) {
         return '/BhaBuilder/index.html#!/projects/' + projectId + '/sections/' + sectionId + '/runs/' + runId;
+    }
+
+    public static sectionUrl(projectId: string) {
+        return '/TaskManager/#!/projects/' + projectId + '/sections';
     }
 }
 
