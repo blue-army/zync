@@ -74,7 +74,7 @@ async function routeEvent(event_info: models.EventInfo) {
     let o = card.ToObj();
 
     // create MessageInfo object (for use by bot)
-    let msgInfo = drillplan.createMessageInfo(event_info);
+    // let msgInfo = drillplan.createMessageInfo(event_info);
 
     // fetch project information
     var uri = UriFactory.createDocumentUri('jibe', 'projects', event_info.project);
@@ -102,13 +102,17 @@ async function routeEvent(event_info: models.EventInfo) {
         // also look for a matching channel with a webhook or bot address
         if (route.channel || route.channelId) {
             for (let c of proj.channels) {
-                if (route.channel && c.name === route.channel) {
-                    options.uri = c.webhook;
-                    promises.push(rp(options));
-                }
-                if (route.channelId && c.id === route.channelId) {
-                    // bot.sendEvent(JSON.parse(c.botaddress), msgInfo);
-                    bot.sendActionableCard(JSON.parse(c.botaddress), o);
+                // check if the channel's id or name matches the channel info specified in the route
+                if ((route.channel && c.name === route.channel) || (route.channelId && c.id === route.channelId)) {
+                    // If the channel has an associated webhook, send card to it
+                    if (c.webhook) {
+                        options.uri = c.webhook;
+                        promises.push(rp(options));
+                    }
+                    // If the channel has a bot address, send the card to it via the bot
+                    if (c.botaddress) {
+                        bot.sendActionableCard(JSON.parse(c.botaddress), o)
+                    }
                 }
             }
         }
