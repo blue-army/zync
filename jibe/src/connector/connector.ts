@@ -82,6 +82,13 @@ var events = [
             "path": "activity.activity_entity_type",
             "expr": "^risks$",
         }
+    },
+    {
+        "name": "Project",
+        "rule": {
+            "path": "activity.activity_entity_type",
+            "expr": "^project$",
+        }
     }
 ];
 
