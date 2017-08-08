@@ -4,6 +4,8 @@ import * as conversation from '../bot/conversation';
 import * as models from '../models/models'
 import * as adaptiveCards from 'microsoft-adaptivecards'
 import * as o365Dialog from './dialogs/o365card'
+import * as botInfoDialogs from './dialogs/bot_info'
+import * as utils from './bot-utils'
 var currentSettingsCard = require('./cards/current_settings');
 var currentSettings = require('./messages/current_settings');
 var changeSettings = require('./cards/change_settings');
@@ -50,16 +52,6 @@ function extractText(session: botbuilder.Session) {
     }
 }
 
-// Extract the real channelId from the ID returned by teams
-function extractId(teamsId: string) {
-    var re = /^\d\d:(\S+)@thread\.skype/;
-    var results = re.exec(teamsId);
-    if (results && results.length > 0) {
-        return results[1];          // return extracted ID
-    }
-    console.log("Could not extract an ID from ", teamsId);
-}
-
 // Middleware for storing each conversation's channelId 
 function saveChannelId(session: botbuilder.Session) {
     // If we don't already have the channelId for this conversation, 
@@ -68,7 +60,7 @@ function saveChannelId(session: botbuilder.Session) {
         // extract the channelId from the conversationId in the address
         var chId = session.message.address.conversation.id;
         if (session.message.address.channelId === "msteams" && session.message.address.conversation.isGroup) {
-            chId = extractId(session.message.address.conversation.id);
+            chId = utils.extractId(session.message.address.conversation.id);
         }
         else if (session.message.address.channelId === "emulator") {
             chId = "emulator";
@@ -115,6 +107,8 @@ bot.dialog('sendO365Card', o365Dialog.dialog)
     .triggerAction({
         matches: /O?365(card)?/i,
     });
+
+// Handle card responses
 connector.onO365ConnectorCardAction(o365Dialog.cardActionHandler);
 
 
@@ -152,18 +146,12 @@ bot.dialog("quit", function(session){
    confirmPrompt: "Are you sure you want to quit?"
 });
 
-
 // *** SEND USER ADDRESS ***
-bot.dialog('address', function () {}).triggerAction({
+bot.dialog(botInfoDialogs.addressDialog.name, function () {}).triggerAction({
    matches: /address/i,
-   // (override the default behavior of replacing the stack)
-   onSelectAction: function(session) {
-      let msg = "Your address is: \n" + JSON.stringify(session.message.address, null, "   ");
-      msg = msg.replace('\n', '<br/>');
-      session.send(msg)
-   }
+    // (override the default behavior of replacing the stack)
+    onSelectAction: botInfoDialogs.addressDialog.dialog
 });
-
 
 // *** SEND CHANNEL ID ***
 bot.dialog('channelId', function () {}).triggerAction({
@@ -175,18 +163,35 @@ bot.dialog('channelId', function () {}).triggerAction({
    }
 });
 
-
 // *** SEND MESSAGE PAYLOAD ***
-bot.dialog('payload', function () {}).triggerAction({
+bot.dialog(botInfoDialogs.payloadDialog.name, function () {}).triggerAction({
    matches: /payload|body|request|message/i,
    // (override the default behavior of replacing the stack)
-   onSelectAction: function(session) {
-      let msg = "Your most recent message: " + JSON.stringify(session.message, null, '   ');
-      session.send(new botbuilder.Message()
-            .text(msg)
-            .textFormat("markdown")
-      )
-   }
+   onSelectAction: botInfoDialogs.payloadDialog.dialog
+});
+
+// *** SEND CURRENT CHANNEL INFO ***
+bot.dialog(botInfoDialogs.channelInfoDialog.name, botInfoDialogs.channelInfoDialog.dialog)
+.triggerAction({
+   matches: /channel( ?info)?/i,
+});
+
+// *** SEND CURRENT TEAM INFO ***
+bot.dialog(botInfoDialogs.teamInfoDialog.name, botInfoDialogs.teamInfoDialog.dialog)
+.triggerAction({
+   matches: /team( ?info)?/i,
+});
+
+// *** SEND CURRENT USER'S INFO ***
+bot.dialog(botInfoDialogs.userInfoDialog.name, botInfoDialogs.userInfoDialog.dialog)
+.triggerAction({
+   matches: /my ?info|whoami/i,
+});
+
+// *** SEND ALL USERS' INFO ***
+bot.dialog(botInfoDialogs.allUsersDialog.name, botInfoDialogs.allUsersDialog.dialog)
+.triggerAction({
+   matches: /(all )?users/i,
 });
 
 
@@ -355,10 +360,10 @@ bot.on('conversationUpdate', function (message) {
     if (message.address.channelId === "msteams") {
 
         // TODO: check if this is a group chat before channel extraction
-        var channel = extractId(message.address.conversation.id);
+        var channel = utils.extractId(message.address.conversation.id);
 
         // This team ID is the ID of the project's 'general' channel
-        var team = extractId(message.sourceEvent.team.id);
+        var team = utils.extractId(message.sourceEvent.team.id);
 
         bot.send(new botbuilder.Message()
             .address(message.address)

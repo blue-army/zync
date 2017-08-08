@@ -51,7 +51,8 @@
     "swaggerize-ui": "^1.0.1",
     "swagmock": "~0.0.2",
     "typescript": "^2.3.2",
-    "uuid": "^3.0.1"
+    "uuid": "^3.0.1",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "bower": "^1.8.0",
