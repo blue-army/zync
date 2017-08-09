@@ -142,6 +142,7 @@ async function getSubscriptions(channelId: string): Promise<Subscription[]> {
 
 // Retrieves the projectId of the project with the given name
 // Returns an empty string if project not found
+// TODO: Replace with query
 async function getProjectId(projectName: string) {
     let projects = await jibe.getProjectList();
     let proj = projects.find((p) => {

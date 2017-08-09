@@ -5,14 +5,11 @@ import * as jibe from '../../service/jibe';
 import * as conversation from '../conversation'
 import * as drillplan from '../../plugins/drillplan'
 
-// Import drillplan events
-// var drillplan = require('../events/drillplan')
-
 
 // Create a card that allows the user to edit their event subscriptions
 async function changeSettingsCard(session: builder.Session) {
     // Retrieve list of projects from db
-    var projects : models.ProjectInfo[];
+    var projects: models.ProjectInfo[];
     try {
         projects = await jibe.getProjectList();
     } catch (e) {
@@ -34,12 +31,12 @@ async function changeSettingsCard(session: builder.Session) {
     })
 
     let submitBtn = new teams.O365ConnectorCardHttpPOST(session)
-                        .id("")
-                        .name("Update Settings")
-                        .body(JSON.stringify({
-                            project: "{{project.value}}",
-                            events: "{{events.value}}",
-                        }));
+        .id("")
+        .name("Update Settings")
+        .body(JSON.stringify({
+            project: "{{project.value}}",
+            events: "{{events.value}}",
+        }));
 
     // Alternative action that specifies target
     // let submitBtn: teams.IO365ConnectorCardHttpPOST = {
@@ -52,42 +49,42 @@ async function changeSettingsCard(session: builder.Session) {
 
     // Create action section
     let actionCard1 = new teams.O365ConnectorCardActionCard(session)
-                    .id("card-1")
-                    .name("Multiple Choice")
-                    .inputs([
-                        // Create a drop-down menu for project selection
-                        new teams.O365ConnectorCardMultichoiceInput(session)
-                            .id("project")
-                            .title("Select a project")
-                            .isMultiSelect(false)
-                            .isRequired(true)
-                            .style('compact')
-                            .choices(projectChoices),
+        .id("card-1")
+        .name("Multiple Choice")
+        .inputs([
+            // Create a drop-down menu for project selection
+            new teams.O365ConnectorCardMultichoiceInput(session)
+                .id("project")
+                .title("Select a project")
+                .isMultiSelect(false)
+                .isRequired(true)
+                .style('compact')
+                .choices(projectChoices),
 
-                        // Create check-boxes for event selection
-                        new teams.O365ConnectorCardMultichoiceInput(session)
-                            .id("events")
-                            .title("Select events")
-                            .isMultiSelect(true)
-                            .isRequired(true)
-                            .style('expanded')
-                            .choices(eventChoices),
-                    ])
-                    .actions([
-                        submitBtn
-                    ]);
+            // Create check-boxes for event selection
+            new teams.O365ConnectorCardMultichoiceInput(session)
+                .id("events")
+                .title("Select events")
+                .isMultiSelect(true)
+                .isRequired(true)
+                .style('expanded')
+                .choices(eventChoices),
+        ])
+        .actions([
+            submitBtn
+        ]);
 
     // Create full card
     let card = new teams.O365ConnectorCard(session)
-                .summary("Select Events")
-                .themeColor("#E67A9E")
-                .title("Event Selection")
-                .text("Drillplan Events")
-                //.sections([section])
-                .sections([])
-                .potentialAction([
-                    actionCard1
-                ])
+        .summary("Select Events")
+        .themeColor("#E67A9E")
+        .title("Event Selection")
+        .text("Drillplan Events")
+        //.sections([section])
+        .sections([])
+        .potentialAction([
+            actionCard1
+        ])
 
     return card;
 }

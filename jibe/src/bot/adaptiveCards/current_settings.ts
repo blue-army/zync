@@ -1,4 +1,3 @@
-import * as models from '../../models/models'
 import * as adaptiveCards from 'microsoft-adaptivecards/built/schema'
 
 // Sample card output:

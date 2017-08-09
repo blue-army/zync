@@ -2,7 +2,6 @@
 // such as channels, user IDs, addresses, and other message information.
 
 import * as builder from 'botbuilder';
-import * as teams from 'botbuilder-teams';
 import * as utils from '../bot-utils'
 
 

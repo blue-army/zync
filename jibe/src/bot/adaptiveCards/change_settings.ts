@@ -1,86 +1,5 @@
-import * as models from '../../models/models'
 import * as adaptiveCards from 'microsoft-adaptivecards/built/schema'
-
-// TODO: import these events from an outside file
-var events = [
-    {
-        "name": "BHA",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^BHA&Drillstring$",
-        }
-    },
-    {
-        "name": "Bit Selection",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^Bit Selection$",
-        }
-    },
-    {
-        "name": "Drilling Fluid",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^drilling fluid$",
-        }
-    },
-    {
-        "name": "Casing Design",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^casign design$",
-        }
-    },
-    {
-        "name": "Cementing",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^define cement job$",
-        }
-    },
-    {
-        "name": "Logistics",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^logistics$",
-        }
-    },
-    {
-        "name": "Mud Design",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^mud design$",
-        }
-    },
-    {
-        "name": "Rig",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^rig$",
-        }
-    },
-    {
-        "name": "Trajectory",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^trajectory$",
-        }
-    },
-    {
-        "name": "Target",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^target$",
-        }
-    },
-    {
-        "name": "Risks",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^risks$",
-        }
-    }
-];
+import * as drillplan from '../../plugins/drillplan'
 
 // Sample output
 // {
@@ -173,11 +92,11 @@ function createCard (project: string, projectId: string) {
     }
 
     // Fill columns with event options
-    for (let i = 0; i < events.length; i++) {
+    for (let i = 0; i < drillplan.events.length; i++) {
         let col = i % ncols;
         let checkbox = new adaptiveCards.InputToggle({
-            title: events[i].name,
-            value: events[i].name,
+            title: drillplan.events[i].name,
+            value: drillplan.events[i].name,
             valueOn: "true",
             valueOff: "false",
         })
