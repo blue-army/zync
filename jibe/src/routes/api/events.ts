@@ -2,14 +2,10 @@ import * as models from "../../models/models";
 import * as jibe from "../../service/jibe"
 import * as uuid from "uuid";
 import * as _ from 'lodash';
-import * as cosmos from 'documentdb';
 import * as rp from 'request-promise';
 import * as express from 'express';
 import * as bot from "../../bot/bot"
 import * as drillplan from "../../plugins/drillplan"
-
-var docdb = require('documentdb');
-var UriFactory = docdb.UriFactory;
 
 // handles GET requests
 function list_events(_req: express.Request, res: express.Response) {
@@ -127,50 +123,6 @@ function getCardRoutes(proj: models.ProjectInfo, eventInfo: models.EventInfo): m
         let data = _.get(eventInfo.content, r.path, undefined);
         return (data && rexp.test(data));
     });
-}
-
-async function fetch_document(uri: string): Promise<any> {
-
-    var db_key = process.env.db_key;
-    return new Promise((resolve, reject) => {
-        let client = new cosmos.DocumentClient('https://zync.documents.azure.com:443/', { masterKey: db_key });
-        client.readDocument(uri, function (err, doc) {
-
-            if (err) {
-                return reject(err);
-            }
-
-            return resolve(doc);
-        });
-    });
-}
-
-function parse(info: models.EventInfo): models.TeamsMessageCard {
-
-    let card: models.TeamsMessageCard;
-
-    switch (info.type) {
-        case 'slb.drill-plan.activity':
-            card = drillplan.createTeamsMessageCard(info)
-            break;
-        case 'wazzap':
-            card = new models.TeamsMessageCard();
-            let w_content = models.EntityChangedEventInfo.fromObj(info.content);
-            card.sections.push(
-                models.SectionInfo.CreateActivityCard(
-                    w_content.entity,
-                    w_content.property,
-                    "",
-                    "http://icons.iconarchive.com/icons/rokey/fantastic-dream/128/driver-mud-icon.png",
-                    false));
-            card.sections.push(models.SectionInfo.CreateFactCard(true, new Map([["From", w_content.from], ["To", w_content.to]])));
-            card.actions.push(new models.ActionInfo("Launch Application", "http://www.bing.com"));
-            break;
-        default:
-            break;
-    }
-
-    return card;
 }
 
 function handleError(error: any, res: any) {

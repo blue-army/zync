@@ -45,10 +45,6 @@ app.get('*', function (_req, res) {
         root: './web',
     });
 });
-app.use('/bot/messages', function (req, res, next) {
-    console.log('Received request to /bot/messages:', req.method);
-    next();
-});
 app.post('/bot/messages', bot.connector.listen());
 function doHttpRequest(req, res) {
     var url = '/api/auth/login';
