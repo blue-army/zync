@@ -1,4 +1,10 @@
+/*
+ * Creates an adaptivecard displaying all events the given channel is subscribed to
+ */
+
 import * as adaptiveCards from 'microsoft-adaptivecards/built/schema'
+import * as conversation from '../conversation'
+
 
 // Sample card output:
 // {
@@ -37,7 +43,7 @@ var title : adaptiveCards.TextBlock = {
 }
 
 // Input: an object mapping project names to lists of event subscriptions
-function createCard(subscriptions: {[key:string]: string[]}): adaptiveCards.ICard {
+function createCard(subscriptions: conversation.Subscription[]): adaptiveCards.ICard {
 
     // Create card
     let factSet = new adaptiveCards.FactSet();
@@ -46,15 +52,16 @@ function createCard(subscriptions: {[key:string]: string[]}): adaptiveCards.ICar
     card.body = [header, factSet]       // specify card content
 
     // Populate factset with subscription info
-    for (let project in subscriptions) {
-        let f = new adaptiveCards.Fact({
-            title: project,
-            value: subscriptions[project].join(', ')
+    factSet.facts = subscriptions.map((sub) => {
+        return new adaptiveCards.Fact({
+            title: sub.project,
+            value: sub.events.join(', ')
         });
-        factSet.facts.push(f);
-    }
+    })
 
     return card;
 }
 
 exports.createCard = createCard;
+
+// TODO: Test This!

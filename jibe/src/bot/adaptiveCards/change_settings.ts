@@ -1,3 +1,7 @@
+/*
+ * Creates an adaptivecard with checkboxes so that the user can select the events they want to subscribe to.
+ */
+
 import * as adaptiveCards from 'microsoft-adaptivecards/built/schema'
 import * as drillplan from '../../plugins/drillplan'
 
@@ -41,7 +45,7 @@ import * as drillplan from '../../plugins/drillplan'
 // }
 
 
-// Set number of columns to display
+// Set number of columns of checkboxes to display
 const ncols = 3;
 
 // Formatting for title
