@@ -18,7 +18,7 @@
             "console": "integratedTerminal",
             "restart": true,
             "env": {
-                "db_key": "iR5wKpk619PBuIUqu2b5Dec79sXGsHK1P9jdzvmO1m1YBYeS8spFcP9FscoySw7SvOzka1thg14WNMtgCuRitQ==",
+                "db_key": "",
                 "CONNECTOR_APP_ID": "bc32fa91-81d0-4314-9914-e718d47e90e8",
                 "BASE_URI": "http://localhost:8000",
                 "DEBUG": "*",
