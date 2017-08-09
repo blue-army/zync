@@ -92,6 +92,13 @@ var events = [
             "path": "activity.activity_entity_type",
             "expr": "^section$",
         }
+    },
+    {
+        "name": "Surface Location",
+        "rule": {
+            "path": "activity.activity_entity_type",
+            "expr": "^Surface Location$",
+        }
     }
 ];
 
