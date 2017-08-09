@@ -98,12 +98,7 @@ async function addNotifications(projectId: string, channelId: string, botaddress
     return jibe.upsertProject(project);
 }
 
-// Interface for object holding subscription information
-interface ISubscription {
-    project: string;
-    events: string[];
-}
-
+// Object storing subscription information
 class Subscription {
     project: string;        // Jibe project name
     events: string[];       // events that the given channel is subscribed to.
@@ -166,7 +161,5 @@ export {
     register as register,
     getSubscriptions as getSubscriptions,
     getProjectId as getProjectId,
-
-    // Interfaces
-    ISubscription as ISubscription
+    Subscription
 };

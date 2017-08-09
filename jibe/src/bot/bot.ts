@@ -203,7 +203,7 @@ bot.dialog(botInfoDialogs.allUsersDialog.name, botInfoDialogs.allUsersDialog.dia
 // Send an adaptiveCard displaying current settings
 // AdaptiveCards are not currently supported in teams, but supported by other channels
 bot.dialog('adaptiveCard', async function (session) {
-    let subs: conversation.ISubscription[];
+    let subs: conversation.Subscription[];
     try {
         subs = await conversation.getSubscriptions(session.conversationData.channelId);
     } catch (e) {
