@@ -506,6 +506,7 @@ class NavigationService {
 class MessageInfo {
     id: string;
     entityName: string;
+    activityEntityType: string;
     subtitle1: string;
     subtitle2: string;
     actionType: string;
