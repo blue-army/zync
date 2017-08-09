@@ -17,10 +17,6 @@ var currentSettingsCard = require('./adaptiveCards/current_settings');
 var events = require('./events/drillplan').events;
 var o365 = require('../bot/o365message');
 
-export interface IDialog {
-    name: string,
-    dialog: (session: botbuilder.Session) => void,
-}
 
 // *** SETUP ***
 // Create bot connector
@@ -491,13 +487,18 @@ function sendMessage(address: botbuilder.IAddress, message: string) {
 
 // Send ActionableCard (O365 Connector Card)
 function sendActionableCard(address: botbuilder.IAddress, card: any) {
-    bot.send(new botbuilder.Message()
+    let msg = new botbuilder.Message()
         .address(address)
-        .addAttachment({
+    if (card.toAttachment) {
+        msg.addAttachment(card);
+    } else {
+        // Specify content type only if the card does not have a 'toAttachement' function for generating card JSON
+        msg.addAttachment({
             content: card,
             contentType: 'application/vnd.microsoft.teams.card.o365connector'
         })
-    );
+    }
+    bot.send(msg);
 }
 
 // Send AdaptiveCard

@@ -4,6 +4,10 @@ import * as jibeBot from './bot'
 import * as logger from '../service/logger'
 var YAML = require('yamljs');
 
+export interface IDialog {
+    name: string,
+    dialog: (session: builder.Session) => void,
+}
 
 // Extract the real channelId from the ID returned by teams
 function extractId(teamsId: string) {

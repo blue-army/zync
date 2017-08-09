@@ -5,13 +5,8 @@ import * as builder from 'botbuilder';
 import * as utils from '../bot-utils'
 
 
-interface IDialog {
-    name: string,
-    dialog: (session: builder.Session) => void,
-}
-
 // Dialog to display info on the current channel
-var channelInfo: IDialog = {
+var channelInfo: utils.IDialog = {
     name: 'channelInfo',
     dialog: function (session: builder.Session) {
         utils.fetchChannelList(session)
@@ -37,7 +32,7 @@ var channelInfo: IDialog = {
 }
 
 // Dialog to get info on all channels in the team
-var teamInfo: IDialog = {
+var teamInfo: utils.IDialog = {
     name: 'teamInfo',
     dialog: function (session: builder.Session) {
         utils.fetchChannelList(session)
@@ -53,7 +48,7 @@ var teamInfo: IDialog = {
 }
 
 // Send info on the message's sender
-var userInfo: IDialog = {
+var userInfo: utils.IDialog = {
     name: 'userInfo',
     dialog: function (session: builder.Session) {
         utils.fetchChannelMembers(session)
@@ -75,7 +70,7 @@ var userInfo: IDialog = {
 }
 
 // Send information on all users in the channel
-var allUsers: IDialog = {
+var allUsers: utils.IDialog = {
     name: 'allUsers',
     dialog: function (session: builder.Session) {
         utils.fetchChannelMembers(session)
@@ -91,7 +86,7 @@ var allUsers: IDialog = {
 }
 
 // Format and send most recent message's payload
-var payloadDialog: IDialog = {
+var payloadDialog: utils.IDialog = {
     name: 'payload',
     dialog: function (session) {
         let msg = "**Your most recent message:**\n" + utils.JsonToYamlMd(session.message);
@@ -103,7 +98,7 @@ var payloadDialog: IDialog = {
 }
 
 // Send the user their address
-var addressDialog: IDialog = {
+var addressDialog: utils.IDialog = {
     name: 'address',
     dialog: function (session) {
         let msg = "**Your address:**\n" + utils.JsonToBullets(session.message.address);
