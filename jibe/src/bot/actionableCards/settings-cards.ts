@@ -31,7 +31,7 @@ async function changeSettingsCard(session: builder.Session) {
     })
 
     let submitBtn = new teams.O365ConnectorCardHttpPOST(session)
-        .id("")
+        .id("btn")
         .name("Update Settings")
         .body(JSON.stringify({
             project: "{{project.value}}",
