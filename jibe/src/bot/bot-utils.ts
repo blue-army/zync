@@ -1,6 +1,7 @@
 import * as builder from 'botbuilder';
 import * as teams from 'botbuilder-teams';
 import * as jibeBot from './bot'
+import * as logger from '../service/logger'
 var YAML = require('yamljs');
 
 
@@ -14,10 +15,11 @@ function extractId(teamsId: string) {
     console.log("Could not extract an ID from ", teamsId);
 }
 
+// *** FORMATTING ***
 // Transform JSON object into markdown-formatted bullet points
 function JsonToBullets(obj: any) {
     let msg = JSON.stringify(obj, null, 3);     // add indentation
-    msg = msg.replace(/(\s\s\s)+/g, (match) => {return match + '- ';});     // add bullets
+    msg = msg.replace(/(\s\s\s)+/g, (match) => { return match + '- '; });     // add bullets
     msg = msg.replace(/- +},/g, "");            // remove closing braces
     msg = msg.replace(/["{},]/g, "");           // remove additional characters
     return msg;
@@ -35,75 +37,53 @@ function JsonToYamlMd(obj: any) {
     return "```\n" + YAML.stringify(obj, 3) + '```'
 }
 
-
-var defaultUsers: teams.ChannelAccount[] = [
-{
-    "id": "29:1URzNQM1x1PNMr1D7L5_lFe6qF6gEfAbkdG8_BUxOW2mTKryQqEZtBTqDt10-MghkzjYDuUj4KG6nvg5lFAyjOLiGJ4jzhb99WrnI7XKriCs",
-    "objectId": "6b7b3b2a-2c4b-4175-8582-41c9e685c1b5",
-    "givenName": "Rick",
-    "surname": "Stevens",
-    "email": "Rick.Stevens@company.com",
-    "userPrincipalName": "rstevens@company.com"
-}
-]
-
-var defaultChannels: teams.ChannelInfo[] = [
-    {
-        "id": "19:033451497ea84fcc83d17ed7fb08a1b6@thread.skype",
-        "name": null
-    }, {
-        "id": "19:cc25e4aae50746ecbb11473bba24c70a@thread.skype",
-        "name": "Materials"
-    }, {
-        "id": "19:b7b84cba410c406ba671dbbf5e0a3519@thread.skype",
-        "name": "Design"
-    }
-]
-
-
+// *** TEAMS-SPECIFIC INFORMATION RETRIEVAL ***
 // Get info on all channel members
 function fetchChannelMembers(session: builder.Session): Promise<teams.ChannelAccount[]> {
-    if (session.message.address.channelId === 'emulator') {
-        return Promise.resolve(defaultUsers);
-    }
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
+        if (session.message.address.channelId !== 'msteams') {
+            reject("This feature is only available when using Microsoft Teams");
+            return;
+        }
         var conversationId = session.message.address.conversation.id;
         jibeBot.connector.fetchMembers(
             (<builder.IChatConnectorAddress>session.message.address).serviceUrl,
             conversationId,
             (err, result) => {
                 if (err) {
+                    logger.Info("Error retrieving member list for channel " + session.conversationData.channelId + ': ' + err)
                     reject(err);
                 }
                 else {
                     resolve(result);
                 }
             });
-        }
+    }
     );
 }
 
-
 // Get info on all channels in this team
 function fetchChannelList(session: builder.Session): Promise<teams.ChannelInfo[]> {
-    if (session.message.address.channelId === 'emulator') {
-        return Promise.resolve(defaultChannels);
-    }
-    return new Promise(function(resolve, reject) {
-      var teamId = session.message.sourceEvent.team.id;
-      jibeBot.connector.fetchChannelList(
-        (<builder.IChatConnectorAddress>session.message.address).serviceUrl,
-        teamId,
-        (err, result) => {
-          if (err) {
-            reject(err);
+    return new Promise(function (resolve, reject) {
+        if (session.message.address.channelId !== 'msteams') {
+            reject("This feature is only available when using Microsoft Teams");
+            return;
         }
-        else {
-            resolve(result);
-        }
-    }
-    );
-  });
+        var teamId = session.message.sourceEvent.team.id;
+        jibeBot.connector.fetchChannelList(
+            (<builder.IChatConnectorAddress>session.message.address).serviceUrl,
+            teamId,
+            (err, result) => {
+                if (err) {
+                    logger.Info("Error retrieving channel list for team " + session.message.sourceEvent.team.id + ': ' + err)
+                    reject(err);
+                }
+                else {
+                    resolve(result);
+                }
+            }
+        );
+    });
 }
 
 export {

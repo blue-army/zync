@@ -1,85 +1,8 @@
 import * as models from "../models/models";
 import * as jibe from '../service/jibe';
+import * as logger from '../service/logger';
+import * as drillplan from "../plugins/drillplan"
 
-var events = [
-    {
-        "name": "BHA",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^BHA&Drillstring$",
-        }
-    },
-    {
-        "name": "Bit Selection",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^Bit Selection$",
-        }
-    },
-    {
-        "name": "Drilling Fluid",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^drilling fluid$",
-        }
-    },
-    {
-        "name": "Casing Design",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^casign design$",
-        }
-    },
-    {
-        "name": "Cementing",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^define cement job$",
-        }
-    },
-    {
-        "name": "Logistics",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^logistics$",
-        }
-    },
-    {
-        "name": "Mud Design",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^mud design$",
-        }
-    },
-    {
-        "name": "Rig",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^rig$",
-        }
-    },
-    {
-        "name": "Trajectory",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^trajectory$",
-        }
-    },
-    {
-        "name": "Target",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^target$",
-        }
-    },
-    {
-        "name": "Risks",
-        "rule": {
-            "path": "activity.activity_entity_type",
-            "expr": "^risks$",
-        }
-    }
-];
 
 // Add a channel to the given ProjectInfo object
 function addChannel(project: models.ProjectInfo, channelId: string, botaddress: string) {
@@ -107,7 +30,7 @@ function addChannel(project: models.ProjectInfo, channelId: string, botaddress: 
 // Add a route to the given project
 function addRoute(project: models.ProjectInfo, channelId: string, notification: string) {
     // look up event info in the events array
-    let event = events.find((element) => {
+    let event = drillplan.events.find((element) => {
         return element.name === notification;
     });
 
@@ -175,25 +98,55 @@ async function addNotifications(projectId: string, channelId: string, botaddress
     return jibe.upsertProject(project);
 }
 
+// Interface for object holding subscription information
+interface ISubscription {
+    project: string;
+    events: string[];
+}
 
-// get a map of project names to lists of route expressions for routes that the given channel is subscribed to.
-async function getSubscriptions(channelId: string) {
+class Subscription {
+    project: string;        // Jibe project name
+    events: string[];       // events that the given channel is subscribed to.
+}
+
+// Return a drillplan event based on its regex
+function getEventByRegex(expr: string) {
+    return drillplan.events.find((event) => {
+        return event.rule.expr === expr;
+    });
+}
+
+// get subscription info for the given channel
+async function getSubscriptions(channelId: string): Promise<Subscription[]> {
 
     // fetch projects
     let projects = await jibe.getProjectList();
-    let subscriptions: {[key: string]: string[]} = {};
 
-    for (let p of projects) {
-        subscriptions[p.name] = p.routes.filter((route) => {
+    // Generate subscription list for this channel
+    let subscriptions = projects.map((p) => {
+        let sub = new Subscription();
+        sub.project = p.name;
+
+        // retrieve routes to the specified channel
+        sub.events = p.routes.filter((route) => {
             return route.channelId && route.channelId === channelId;
         }).map((route) => {
-            return route.expr;
+            let event = getEventByRegex(route.expr);
+            if (!event) {
+                logger.Info("Unable to find event with regex " + route.expr);
+                return "";
+            }
+            return event.name;
         });
-    }
+        return sub;
+    })
+
     return subscriptions;
 }
 
+
 // Retrieves the projectId of the project with the given name
+// Returns an empty string if project not found
 async function getProjectId(projectName: string) {
     let projects = await jibe.getProjectList();
     let proj = projects.find((p) => {
@@ -202,7 +155,8 @@ async function getProjectId(projectName: string) {
     if (proj) {
         return proj.id;
     } else {
-        console.log("Error: projectId not found.")
+        logger.Info("projectId not found for project " + projectName);
+        return "";
     }
 }
 
@@ -211,5 +165,8 @@ export {
     addNotifications as addNotifications,
     register as register,
     getSubscriptions as getSubscriptions,
-    getProjectId as getProjectId
+    getProjectId as getProjectId,
+
+    // Interfaces
+    ISubscription as ISubscription
 };

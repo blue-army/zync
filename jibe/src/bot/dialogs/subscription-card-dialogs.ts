@@ -1,12 +1,12 @@
 import * as jibeBot from '../bot';
 import * as teams from 'botbuilder-teams';
 import * as builder from 'botbuilder';
-import * as actionableCard from '../actionableCards/selectEvents'
+import * as cards from '../actionableCards/settings-cards'
 
 
 // Dialog for sending an o365card
 async function o365CardDialog(session: builder.Session) { 
-  let card = await actionableCard.createCard(session);
+  let card = await cards.changeSettingsCard(session);
   
   // check card was created successfully (will not be created if project retrieval from db fails)
   if (!card) {
@@ -18,6 +18,7 @@ async function o365CardDialog(session: builder.Session) {
   var msg = new teams.TeamsMessage(session)
                 .summary("A sample O365 actionable card")
                 .attachments([card]);
+  
   console.log(JSON.stringify(card.toAttachment()));
   session.send(msg);
   session.endDialog();

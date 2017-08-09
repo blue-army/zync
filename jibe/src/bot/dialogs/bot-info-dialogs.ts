@@ -6,9 +6,9 @@ import * as teams from 'botbuilder-teams';
 import * as utils from '../bot-utils'
 
 
-interface IDialog { 
-   name: string, 
-   dialog: (session: builder.Session) => void,
+interface IDialog {
+    name: string,
+    dialog: (session: builder.Session) => void,
 }
 
 // Dialog to display info on the current channel
@@ -31,9 +31,10 @@ var channelInfo: IDialog = {
                 session.endDialog(msg);
             })
             .catch((err) => {
-                session.endDialog("There was a problem retrieving the channel info. Please try again later.")
+                session.endDialog("There was a problem retrieving the channel info. Please try again later.");
+                console.log("Error retrieving channels", err);
             })
-        }
+    }
 }
 
 // Dialog to get info on all channels in the team
@@ -47,6 +48,7 @@ var teamInfo: IDialog = {
             })
             .catch((err) => {
                 session.endDialog("There was a problem retrieving the channel info. Please try again later.")
+                console.log("Error retrieving channels", err)
             })
     }
 }
@@ -61,14 +63,14 @@ var userInfo: IDialog = {
                     return u.id === session.message.address.user.id;
                 });
                 if (!user) {
-                        throw "Current user not found in user list";    // go to catch
-                    }
-                    let msg = "Your info: \n" + utils.JsonToBullets(user);
-                    session.endDialog(msg);
-                })
+                    throw "Current user not found in user list";    // go to catch
+                }
+                let msg = "Your info: \n" + utils.JsonToBullets(user);
+                session.endDialog(msg);
+            })
             .catch((err) => {
                 session.endDialog("There was a problem retrieving your user info. Please try again later.");
-                console.log(err);
+                console.log("Error retrieving team members", err);
             });
     }
 }
@@ -79,33 +81,32 @@ var allUsers: IDialog = {
     dialog: function (session: builder.Session) {
         utils.fetchChannelMembers(session)
             .then((users) => {
-                let msg = "Channel Users: \n" + utils.JsonToYamlMd(users);
+                let msg = "Channel Users: \n" + utils.JsonToMarkdown(users);
                 session.endDialog(msg);
-                    // TODO: may have to set textformat to markdown here
-                })
+            })
             .catch((err) => {
                 session.endDialog("There was a problem retrieving the user info. Please try again later.");
-                console.log(err);
+                console.log("Error retrieving team members", err);
             });
-        }
+    }
 }
 
 // Format and send most recent message's payload
 var payloadDialog: IDialog = {
     name: 'payload',
-    dialog: function(session) {
+    dialog: function (session) {
         let msg = "**Your most recent message:**\n" + utils.JsonToYamlMd(session.message);
         session.send(new builder.Message()
-                .text(msg)
-                .textFormat("markdown")
+            .text(msg)
+            .textFormat("markdown")
         );
-   }
+    }
 }
 
 // Send the user their address
 var addressDialog: IDialog = {
     name: 'address',
-    dialog: function(session) {
+    dialog: function (session) {
         let msg = "**Your address:**\n" + utils.JsonToBullets(session.message.address);
         session.send(new builder.Message()
             .text(msg)
