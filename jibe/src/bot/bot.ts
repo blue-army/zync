@@ -1,20 +1,17 @@
 import * as botbuilder from 'botbuilder';
 import * as teams from 'botbuilder-teams'
 import * as conversation from '../bot/conversation';
-import * as models from '../models/models'
 import * as adaptiveCards from 'microsoft-adaptivecards'
 import * as utils from './bot-utils'
 import * as jibe from '../service/jibe'
 import * as settingsCards from './actionableCards/settings-cards'
+import * as drillplan from '../plugins/drillplan'
 
 // Import Dialogs
 import * as o365Dialog from './dialogs/subscription-card-dialogs'
 import * as botInfoDialogs from './dialogs/bot-info-dialogs'
 
 var currentSettingsCard = require('./adaptiveCards/current_settings');
-// var currentSettings = require('./messages/current_settings');
-// var changeSettings = require('./adaptiveCards/change_settings');
-var events = require('./events/drillplan').events;
 var o365 = require('../bot/o365message');
 
 
@@ -357,7 +354,7 @@ bot.dialog('changeSettingsViaList', [
         }
 
         // Send the list of events that they can subscribe to
-        var eventNames = events.map((event: any) => {
+        var eventNames = drillplan.events.map((event: any) => {
             return event.name;
         });
         eventNames.push("None");
