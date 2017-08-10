@@ -1,4 +1,5 @@
 import * as models from "../models/models";
+import * as logger from "../service/logger";
 import * as cosmos from 'documentdb';
 var docdb = require('documentdb');
 var UriFactory = docdb.UriFactory;
@@ -18,7 +19,7 @@ function getProjectList(): Promise<[models.ProjectInfo]> {
         client.readDocuments(collLink).toArray(function (err: any, docs: any) {
 
             if (err) {
-                console.log("error retrieving projects: ", err)
+                logger.Info("Error retrieving project list: " + err);
                 reject(err);
                 return;
             }
@@ -39,13 +40,12 @@ function getProject(project_id: string): Promise<models.ProjectInfo> {
     return new Promise<models.ProjectInfo>((resolve, reject) => {
         var uri = UriFactory.createDocumentUri('jibe', 'projects', project_id);
         client.readDocument(uri, function (err, doc) {
-
             if (err) {
                 if (err.code === 404) {
                     resolve(null);
                     return;
                 }
-
+                logger.Info("Error retrieving project " + project_id + " from db: " + err);
                 reject(err);
                 return;
             }
@@ -63,8 +63,8 @@ function upsertProject(project_info: models.ProjectInfo): Promise<models.Project
         // insert document
         var doc_uri = UriFactory.createDocumentCollectionUri('jibe', 'projects');
         client.upsertDocument(doc_uri, project_info, { disableAutomaticIdGeneration: true }, function (err: any, obj: any, _headers: any) {
-
             if (err) {
+                logger.Info("Error upserting project " + project_info.id + ": " + err);
                 reject(err);
                 return;
             }
@@ -86,6 +86,7 @@ function getAppList(): Promise<[models.AppInfo]> {
         client.readDocuments(collLink).toArray(function (err: any, docs: any) {
 
             if (err) {
+                logger.Info("Error retrieving list of apps: " + err);
                 reject(err);
                 return;
             }
@@ -108,6 +109,7 @@ function getApp(app_id: string): Promise<models.AppInfo> {
         client.readDocument(uri, function (err, doc) {
 
             if (err) {
+                logger.Info("Error retrieving app " + app_id + ": " + err);
                 reject(err);
                 return;
             }
@@ -127,6 +129,7 @@ function upsertApp(app_info: models.AppInfo): Promise<models.AppInfo> {
         client.upsertDocument(doc_uri, app_info, { disableAutomaticIdGeneration: true }, function (err: any, obj: any, _headers: any) {
 
             if (err) {
+                logger.Info("Error upserting app " + app_info.id + ": " + err);
                 reject(err);
                 return;
             }
@@ -148,6 +151,7 @@ function getEventList() {
         client.readDocuments(collLink).toArray(function (err: any, docs: any) {
 
             if (err) {
+                logger.Info("Error retrieving event list: " + err);
                 reject(err);
                 return;
             }
@@ -171,6 +175,7 @@ function upsertEvent(event: models.EventInfo) {
         client.upsertDocument(doc_uri, event, { disableAutomaticIdGeneration: true }, function (err: any, obj: any, _headers: any) {
 
             if (err) {
+                logger.Info("Error upserting event: " + err);
                 reject(err);
                 return;
             }
