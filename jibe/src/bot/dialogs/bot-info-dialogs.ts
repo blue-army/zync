@@ -89,7 +89,7 @@ var allUsers: utils.IDialog = {
 var payloadDialog: utils.IDialog = {
     name: 'payload',
     dialog: function (session) {
-        let msg = "**Your most recent message:**\n" + utils.JsonToYamlMd(session.message);
+        let msg = "Your most recent message:\n" + utils.JsonToMarkdown(session.message);
         session.send(new builder.Message()
             .text(msg)
             .textFormat("markdown")
@@ -101,7 +101,7 @@ var payloadDialog: utils.IDialog = {
 var addressDialog: utils.IDialog = {
     name: 'address',
     dialog: function (session) {
-        let msg = "**Your address:**\n" + utils.JsonToBullets(session.message.address);
+        let msg = "Your address:\n" + utils.JsonToBullets(session.message.address);
         session.send(new builder.Message()
             .text(msg)
             .textFormat('markdown'));

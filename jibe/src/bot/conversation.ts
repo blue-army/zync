@@ -4,6 +4,12 @@ import * as logger from '../service/logger';
 import * as drillplan from "../plugins/drillplan"
 
 
+// Define an object for storing subscription information
+class Subscription {
+    project: string;        // Jibe project name
+    events: string[];       // events that the given channel is subscribed to.
+}
+
 // Add a channel to the given ProjectInfo object
 function addChannel(project: models.ProjectInfo, channelId: string, botaddress: string) {
     // See if there is already a channel for this ID
@@ -28,14 +34,14 @@ function addChannel(project: models.ProjectInfo, channelId: string, botaddress: 
 }
 
 // Add a route to the given project
-function addRoute(project: models.ProjectInfo, channelId: string, notification: string) {
+function addRoute(project: models.ProjectInfo, channelId: string, eventName: string) {
     // look up event info in the events array
     let event = drillplan.events.find((element) => {
-        return element.name === notification;
+        return element.name === eventName;
     });
 
     if (!event) {
-        console.log("Unknown event requested:", notification);
+        logger.Info("Unknown event requested: " + eventName);
         return;
     }
 
@@ -44,7 +50,7 @@ function addRoute(project: models.ProjectInfo, channelId: string, notification: 
             return r.channelId === channelId && r.expr === event.rule.expr;
         });
     if (match >= 0) {
-        console.log("Channel " + channelId + " is already subscribed to " + notification + " events.")
+        console.log("Channel " + channelId + " is already subscribed to " + eventName + " events.")
         return;
     }
 
@@ -59,23 +65,26 @@ function addRoute(project: models.ProjectInfo, channelId: string, notification: 
     project.routes.push(route);
 }
 
-// Register a conversation in the given channel, and store the relevant bot address in our db
-async function register(projectId: string, channelId: string, botaddress: string) {
-    jibe.getProject(projectId)
-        .then((project) => {
-            // add the channel
-            addChannel(project, channelId, botaddress);
-            
-            // Update project in db
-            jibe.upsertProject(project).then((project_info) => {
-                console.log("Project upserted!", project_info);
-            }).catch((err) => {
-                console.log("Upsertion error during conversation registration: ", err);
-            });
-        })
-        .catch((err) => {
-            console.log("Error registering conversation in conversation.ts", err);
+// Remove an event route from the given project
+function removeRoute(project: models.ProjectInfo, channelId: string, eventName: string) {
+    // look up event info in the events array
+    let event = drillplan.events.find((element) => {
+        return element.name === eventName;
+    });
+
+    if (!event) {
+        logger.Info("Unknown event requested: " + eventName);
+        return;
+    }
+
+    // Get route index (addRoute ensures that each event type is only subscribed to once)
+    var index = project.routes.findIndex((r) => {
+            return r.channelId === channelId && r.expr === event.rule.expr;
         });
+    // Remove route if found
+    if (index >= 0) {
+        project.routes.splice(index, 1)         // remove 1 item at the specified index
+    }
 }
 
 
@@ -98,20 +107,45 @@ async function addNotifications(projectId: string, channelId: string, botaddress
     return jibe.upsertProject(project);
 }
 
-// Object storing subscription information
-class Subscription {
-    project: string;        // Jibe project name
-    events: string[];       // events that the given channel is subscribed to.
+
+// Unsubscribe from the provided list of event names
+async function unsubscribe(projectId: string, channelId: string, notifications: string[]) {
+    let project = await jibe.getProject(projectId);
+    if (!project) {
+        return Promise.reject("Project " + projectId + " not found");
+    }
+
+    // Remove specified routes
+    for (let n of notifications) {
+        removeRoute(project, channelId, n);
+    }
+
+    return jibe.upsertProject(project);
 }
 
-// Return a drillplan event based on its regex
+// Retrieve a drillplan event based on its regex
 function getEventByRegex(expr: string) {
     return drillplan.events.find((event) => {
         return event.rule.expr === expr;
     });
 }
 
-// get subscription info for the given channel
+// Retrieve the names of the events that are routed to the specified channel
+function extractChannelSubscriptions(project: models.ProjectInfo, channelId: string): string[] {
+    let subs = project.routes.filter((route) => {
+            return route.channelId && route.channelId === channelId;
+        }).map((route) => {
+            let event = getEventByRegex(route.expr);
+            if (!event) {
+                logger.Info("Unable to find event with regex " + route.expr);
+                return "";
+            }
+            return event.name;
+        });
+    return subs;
+}
+
+// get all subscriptions for the given channel
 async function getSubscriptions(channelId: string): Promise<Subscription[]> {
 
     // fetch projects
@@ -123,26 +157,22 @@ async function getSubscriptions(channelId: string): Promise<Subscription[]> {
         sub.project = p.name;
 
         // retrieve routes to the specified channel
-        sub.events = p.routes.filter((route) => {
-            return route.channelId && route.channelId === channelId;
-        }).map((route) => {
-            let event = getEventByRegex(route.expr);
-            if (!event) {
-                logger.Info("Unable to find event with regex " + route.expr);
-                return "";
-            }
-            return event.name;
-        });
+        sub.events = extractChannelSubscriptions(p, channelId);
         return sub;
     })
 
     return subscriptions;
 }
 
+// Retrieve list of subscriptions for a single project
+async function getProjectSubscriptions(channelId: string, projectId: string): Promise<string[]> {
+    let project = await jibe.getProject(projectId);
+    return extractChannelSubscriptions(project, channelId);
+}
 
 // Retrieves the projectId of the project with the given name
 // Returns an empty string if project not found
-// TODO: Replace with query
+// TODO: Replace with query, this is absurdly inefficient
 async function getProjectId(projectName: string) {
     let projects = await jibe.getProjectList();
     let proj = projects.find((p) => {
@@ -158,9 +188,12 @@ async function getProjectId(projectName: string) {
 
 
 export {
-    addNotifications as addNotifications,
-    register as register,
-    getSubscriptions as getSubscriptions,
-    getProjectId as getProjectId,
+    addNotifications,
+    unsubscribe,
+    getSubscriptions,
+    getProjectSubscriptions,
+    getProjectId,
+
+    // Subscription info class
     Subscription
 };

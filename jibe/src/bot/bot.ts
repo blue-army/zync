@@ -6,6 +6,7 @@ import * as utils from './bot-utils'
 import * as jibe from '../service/jibe'
 import * as settingsCards from './actionableCards/settings-cards'
 import * as drillplan from '../plugins/drillplan'
+import * as subscriptionDialogs from './dialogs/subscription-dialogs'
 
 // Import Dialogs
 import * as o365Dialog from './dialogs/subscription-card-dialogs'
@@ -23,8 +24,10 @@ var connector = new teams.TeamsChatConnector({
 });
 
 // Create bot
-var bot = new botbuilder.UniversalBot(connector)
+var bot = new botbuilder.UniversalBot(connector);
 
+// Register event subscription dialogs
+bot.library(subscriptionDialogs.createLibrary());
 
 // *** MIDDLEWARE ***
 
@@ -63,26 +66,6 @@ function saveChannelId(session: botbuilder.Session) {
     }
 }
 
-function getChannelAddress(session: botbuilder.Session) {
-    // Extract and save the channel address
-    // This preprocessing is only necessary for MS Teams addresses because they reference a thread within the channel
-    if (!session.conversationData.channelAddress) {
-        // perform deep copy of address
-        session.conversationData.channelAddress = JSON.parse(JSON.stringify(session.message.address));
-
-        // remove thread suffix from channelId
-        session.conversationData.channelAddress.conversation.id = session.message.address.conversation.id.split(';')[0];
-
-        // Remove user info (not needed for routing)
-        delete session.conversationData.channelAddress.user;
-
-        // delete 'id' entry (links to specific thread)
-        // delete session.conversationData.channelAddress.id;
-    }
-    return session.conversationData.channelAddress;
-}
-
-
 // *** ROOT DIALOG ***
 bot.dialog('/',
     function (session) {
@@ -98,7 +81,7 @@ bot.dialog('/',
 // O365 Card Sample Dialog
 bot.dialog('sendO365Card', o365Dialog.dialog)
     .triggerAction({
-        matches: /O?365(card)?/i,
+        matches: /event ?(selection)? ?card/i,
     });
 
 // Handle card responses
@@ -122,7 +105,7 @@ bot.dialog('help', function () { }).triggerAction({
             "Type 'whoami' to see your own user info",
             "Type 'all users' to see all users on this team",
             "Type 'adaptiveCard' to send a test adaptiveCard",
-            "Type 'o365card' to send a test event selection card",
+            "Type 'event selection card' to send a test event selection card",
             "Type 'actionableCard to send a test actionableCard",
             "Type 'quit' or 'goodbye' to end the conversation"
         ]
@@ -234,176 +217,6 @@ bot.dialog('CardAction', function (session) {
     session.endDialog("Card action sent!");
 }).triggerAction({
     matches: /(card ?)?action/i,
-});
-
-
-// *** EVENT SUBSCRIPTION DIALOGS ***
-bot.dialog('settings', [
-    async function (session) {
-        // Create card
-        let card: teams.O365ConnectorCard;
-        try {
-            card = await settingsCards.viewSettingsCard(session);
-        } catch (e) {
-            session.endDialog("Sorry, we were unable to retrieve your settings. Please try again later.");
-            return;
-        }
-        var msg = new teams.TeamsMessage(session)
-            .summary("Settings card")
-            .addAttachment(card);
-        session.send(msg);
-        botbuilder.Prompts.confirm(session, "Do you want to update your settings?");
-    },
-    function (session, results) {
-        if (results.response) {
-            // begin project selection process
-            session.beginDialog('selectProject');
-        } else {
-            session.endDialog('Ok, settings have not been changed.');
-        }
-    }
-]).triggerAction({
-    // Trigger this dialog when the user types something related to settings/subscriptions
-    matches: /settings|options|config|configure|subscribe|subscriptions|projects|events|notifications/i
-});
-
-// Prompts user to select a project to edit the settings for
-bot.dialog('selectProject', [
-    function (session) {
-        // Give the user a list of projects to choose from
-        jibe.getProjectList()
-            .then((projects) => {
-                let projectNames = projects.map((p) => p.name);
-                botbuilder.Prompts.choice(session, 'Which project should we update?', projectNames, { listStyle: botbuilder.ListStyle.list });
-            })
-            .catch(() => {
-                session.endDialog("Oops, there was a problem loading the project selection. Please try again later.")
-            })
-    },
-    // extract project info and start dialog to change settings
-    async function (session, results, next) {
-        var projectName = results.response.entity;
-        var projectId: string;
-        try {
-            // match the selected project's name to its ID
-            projectId = await conversation.getProjectId(projectName);
-            if (!projectId) {
-                throw "Project ID not found";       // detect project ID retrieval issues
-            }
-        } catch (e) {
-            session.send("Sorry, we could not find that project. Please try again later.");
-            next();         // continue on to next step of waterfall
-        }
-        // pass project info to new dialog
-        let projectInfo = { id: projectId, name: projectName };
-        session.beginDialog('changeSettingsViaList', { "project": projectInfo });
-    },
-    // Display current settings, prompt user to pick another project
-    async function (session) {
-        // Create card
-        let card: teams.O365ConnectorCard;
-        try {
-            card = await settingsCards.viewSettingsCard(session);
-        } catch (e) {
-            session.endDialog("Sorry, we were unable to retrieve your settings. Please try again later.");
-            return;
-        }
-        var msg = new teams.TeamsMessage(session)
-            .summary("Settings card")
-            .text("These are your current settings:")
-            .addAttachment(card);
-        session.send(msg);
-        botbuilder.Prompts.confirm(session, "Would you like to update settings for another project?");
-    },
-    function (session, results) {
-        if (results.response) {
-            session.replaceDialog('selectProject');
-        } else {
-            session.endDialog('Ok, goodbye!');
-        }
-    }
-])
-
-
-// Prompts user to subscribe to events from a list
-bot.dialog('changeSettingsViaList', [
-    async function (session, args) {
-        session.dialogData.project = args.project;
-
-        // Retrieve subscription info from the db
-        var subs;
-        try {
-            subs = await conversation.getSubscriptions(session.conversationData.channelId);
-        } catch (e) {
-            session.endDialog("Sorry, we were unable to load your subscriptions. Please try again later.");
-            return;
-        }
-
-        // Get subscription information for the single project the user is interested in
-        let projectSubs = subs.find((s) => {
-            return s.project === session.dialogData.project.name;
-        });
-
-        // Tell the user which events they are already subscribed to
-        if (projectSubs.events.length > 0) {
-            session.send("This channel is subscribed to the following %s events: %s",
-                args.project.name,
-                projectSubs.events.join(', '));
-        } else {
-            session.send("This channel is not subscribed to any events yet.");
-        }
-
-        // Send the list of events that they can subscribe to
-        var eventNames = drillplan.events.map((event: any) => {
-            return event.name;
-        });
-        eventNames.push("None");
-        botbuilder.Prompts.choice(session, "Which event would you like to subscribe to?", eventNames);
-    },
-    async function (session, results) {
-        // Subscribe the channel to the selected event
-        if (results.response.entity === "None") {
-            session.send("No events selected.")
-            botbuilder.Prompts.confirm(session, "Subscribe to more events?");
-        } else {
-            // Update the relevant project in the database
-            let addr = getChannelAddress(session);      // preprocess address
-            conversation.addNotifications(session.dialogData.project.id, session.conversationData.channelId, JSON.stringify(addr), [results.response.entity])
-                .then(() => {
-                    let msg = "You are now subscribed to " + results.response.entity + " events. \n";
-                    // TODO: Send a different message if they are already subscribed
-                    botbuilder.Prompts.confirm(session, msg + "Subscribe to more events?");
-                })
-                .catch(() => {
-                    session.endDialog("Sorry, we were not able to update your subscriptions. Please try again later.");
-                });
-        }
-    },
-    function (session, results) {
-        // Restart the dialog if they want to subscribe to more events
-        if (results.response) {
-            session.replaceDialog('changeSettingsViaList', { project: session.dialogData.project });
-        } else {
-            session.endDialog();
-        }
-    }
-]);
-
-bot.dialog('sendSettingsCard', async function (session) {
-    let card;
-    try {
-        card = await settingsCards.viewSettingsCard(session);
-    } catch (e) {
-        session.send("Sorry, we were unable to retrieve your settings. Please try again later.");
-        return;
-    }
-    var msg = new teams.TeamsMessage(session)
-        .summary("A sample O365 actionable card")
-        .addAttachment(card);
-    session.send(msg);
-    session.endDialog();
-}).triggerAction({
-    matches: /settings ?card/i,
 });
 
 

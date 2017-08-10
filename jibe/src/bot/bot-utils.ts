@@ -19,6 +19,25 @@ function extractId(teamsId: string) {
     console.log("Could not extract an ID from ", teamsId);
 }
 
+// Extract and save the channel address
+function getChannelAddress(session: builder.Session) {
+    // This preprocessing is only necessary for MS Teams addresses because they reference a thread within the channel
+    if (!session.conversationData.channelAddress) {
+        // perform deep copy of address
+        session.conversationData.channelAddress = JSON.parse(JSON.stringify(session.message.address));
+
+        // remove thread suffix from channelId
+        session.conversationData.channelAddress.conversation.id = session.message.address.conversation.id.split(';')[0];
+
+        // Remove user info (not needed for routing)
+        delete session.conversationData.channelAddress.user;
+
+        // delete 'id' entry (links to specific thread)
+        // delete session.conversationData.channelAddress.id;
+    }
+    return session.conversationData.channelAddress;
+}
+
 // *** FORMATTING ***
 // Transform JSON object into markdown-formatted bullet points
 function JsonToBullets(obj: any) {
@@ -91,14 +110,15 @@ function fetchChannelList(session: builder.Session): Promise<teams.ChannelInfo[]
 }
 
 export {
-    extractId as extractId,
+    extractId,
+    getChannelAddress,
 
     // Teams-specific info retrieval
-    fetchChannelList as fetchChannelList,
-    fetchChannelMembers as fetchChannelMembers,
+    fetchChannelList,
+    fetchChannelMembers,
 
     // Message Formatting
-    JsonToBullets as JsonToBullets,
-    JsonToMarkdown as JsonToMarkdown,
-    JsonToYamlMd as JsonToYamlMd
+    JsonToBullets,
+    JsonToMarkdown,
+    JsonToYamlMd
 }
