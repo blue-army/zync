@@ -110,8 +110,7 @@ function createO365MessageCard(info: models.EventInfo): teams.O365ConnectorCard 
     let eventInfoSection = new teams.O365ConnectorCardSection()
         .activityImage(messageInfo.typeImageUrl)
         .activityTitle(messageInfo.subtitle1)
-        .activitySubtitle(messageInfo.subtitle2)
-        .activityText(messageInfo.comments);
+        .activitySubtitle(messageInfo.subtitle2);
 
     // Section displaying user's name and image
     let userInfoSection = new teams.O365ConnectorCardSection()
