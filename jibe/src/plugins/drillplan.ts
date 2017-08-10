@@ -111,11 +111,13 @@ function createO365MessageCard(info: models.EventInfo): teams.O365ConnectorCard 
         .activityImage(messageInfo.typeImageUrl)
         .activityTitle(messageInfo.subtitle1)
         .activitySubtitle(messageInfo.subtitle2)
+        .activityText(messageInfo.comments);
 
     // Section displaying user's name and image
     let userInfoSection = new teams.O365ConnectorCardSection()
         .activityTitle("Changed by:")
         .activitySubtitle(messageInfo.ownerFullName)
+        .activityText(messageInfo.comments);
 
     // only add an image url if we have one - using an empty string prevents the card from rendering when sent by the bot
     // Image urls that do not begin with 'http://' or 'https://' will also cause the request to be rejected (Error: 400 Bad Request)
