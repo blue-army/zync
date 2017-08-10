@@ -122,7 +122,7 @@ function createO365MessageCard(info: models.EventInfo): teams.O365ConnectorCard 
     if (messageInfo.userImageUrl && messageInfo.userImageUrl.search("^https?:\/\/") === 0) {
         userInfoSection.activityImage(messageInfo.userImageUrl);
     } else {
-        userInfoSection.activityImage("https://jibe.azurewebsites.net/assets/images/user_symbol_blue.png")
+        userInfoSection.activityImage("https://jibe.azurewebsites.net/assets/images/user_symbol_blue_small.png")
     }
 
     // Create 'launch application' button
