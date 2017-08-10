@@ -291,7 +291,7 @@ class ActivityDetails {
 
         var iconMap: any = {
             'activity plan': 'composer',
-            'bha&drillstring': 'bha_drilling_string',
+            'bha&drillstring': 'bha_drilling_string_1',
             'bit selection': 'bit_selection',
             'bit': 'bit_selection',
             'casing design': 'casing_design',
