@@ -329,7 +329,7 @@ class ActivityDetails {
             'surface location': 'surface_location_1',
             'target': 'target_1',
             'temperature': 'temperature',
-            'trajectory': 'trajectory',
+            'trajectory': 'trajectory_1',
             'well': 'well_information_1',
             'wellbore geometry': 'wellbore_geometry',
         };
