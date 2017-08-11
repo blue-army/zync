@@ -123,6 +123,7 @@ function init(app: express.Application) {
     app.get('/connector/register', register);
     app.post('/connector/invoke', invoke);
     app.post('/api/connector/invoke', invoke);
+    app.post('/api/connector/invoke/settings', invoke);
     return this;
 }
 
