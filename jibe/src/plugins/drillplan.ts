@@ -125,10 +125,15 @@ function createO365MessageCard(info: models.EventInfo): teams.O365ConnectorCard 
         userInfoSection.activityImage("https://jibe.azurewebsites.net/assets/images/user_symbol_blue_small.png")
     }
 
+    // Create settings button
+    let settingsButton = new teams.O365ConnectorCardViewAction()
+        .name("\u2699")
+        .target(messageInfo.actionUrl);
+
     // Create 'launch application' button
-    let button = new teams.O365ConnectorCardViewAction()
+    let launchButton = new teams.O365ConnectorCardViewAction()
         .name("Launch Application")
-        .target(messageInfo.actionUrl)
+        .target(messageInfo.actionUrl);
 
     // Create full card
     let card = new teams.O365ConnectorCard()
@@ -136,7 +141,7 @@ function createO365MessageCard(info: models.EventInfo): teams.O365ConnectorCard 
         .themeColor("0078D7")
         .title(messageInfo.activityEntityType + ': ' + messageInfo.entityName)
         .sections([eventInfoSection, userInfoSection])
-        .potentialAction([button]);
+        .potentialAction([settingsButton, launchButton]);
     return card;
 }
 
