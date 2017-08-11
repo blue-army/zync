@@ -20,20 +20,20 @@ function extractId(teamsId: string) {
 }
 
 // Extract and save the channel address
-function getChannelAddress(session: builder.Session) {
+function getChannelAddress(session: builder.Session): builder.IAddress {
     // This preprocessing is only necessary for MS Teams addresses because they reference a thread within the channel
     if (!session.conversationData.channelAddress) {
         // perform deep copy of address
         session.conversationData.channelAddress = JSON.parse(JSON.stringify(session.message.address));
 
-        // remove thread suffix from channelId
+        // remove thread-specific suffix from channelId
         session.conversationData.channelAddress.conversation.id = session.message.address.conversation.id.split(';')[0];
 
         // Remove user info (not needed for routing)
         delete session.conversationData.channelAddress.user;
 
-        // delete 'id' entry (links to specific thread)
-        // delete session.conversationData.channelAddress.id;
+        // delete 'id' entry (links to specific context)
+        delete session.conversationData.channelAddress.id;
     }
     return session.conversationData.channelAddress;
 }

@@ -3,22 +3,27 @@
 
 import * as builder from 'botbuilder';
 import * as utils from '../bot-utils'
+import * as logger from '../../service/logger'
 
 
+var lib = new builder.Library('subscribe');
+
+// *** SEND CURRENT CHANNEL INFO ***
 // Dialog to display info on the current channel
-var channelInfo: utils.IDialog = {
-    name: 'channelInfo',
-    dialog: function (session: builder.Session) {
+lib.dialog('channelInfo',
+    function (session: builder.Session) {
+        // Check that microsoft teams is being used
+        if (session.message.address.channelId !== 'msteams') {
+            session.endDialog("Sorry, this feature is only available in Microsoft Teams");
+            return;
+        }
         utils.fetchChannelList(session)
             .then((channels) => {
                 let channel = channels.find((channel) => {
                     return channel.id === session.message.sourceEvent.teamsChannelId;
                 });
-                // If using emulator, just display the first channel in the list
-                if (session.message.address.channelId === 'emulator' && channels.length > 0) {
-                    channel = channels[0];
-                }
                 if (!channel) {
+                    // go to catch clause
                     throw "Current channel not found in channel list."
                 }
                 let msg = "Your current channel: \n" + utils.JsonToBullets(channel);
@@ -26,15 +31,23 @@ var channelInfo: utils.IDialog = {
             })
             .catch((err) => {
                 session.endDialog("There was a problem retrieving the channel info. Please try again later.");
-                console.log("Error retrieving channels", err);
+                logger.Info("Error retrieving channels: " + JSON.stringify(err));
             })
     }
-}
+).triggerAction({
+    matches: /channel( ?info)?/i,
+});
 
+
+// *** SEND CURRENT TEAM INFO ***
 // Dialog to get info on all channels in the team
-var teamInfo: utils.IDialog = {
-    name: 'teamInfo',
-    dialog: function (session: builder.Session) {
+lib.dialog('teamInfo',
+    function (session: builder.Session) {
+        // Check that microsoft teams is being used
+        if (session.message.address.channelId !== 'msteams') {
+            session.endDialog("Sorry, this feature is only available in Microsoft Teams");
+            return;
+        }
         utils.fetchChannelList(session)
             .then((channels) => {
                 let msg = "Channels in this team: \n" + utils.JsonToMarkdown(channels);
@@ -42,15 +55,23 @@ var teamInfo: utils.IDialog = {
             })
             .catch((err) => {
                 session.endDialog("There was a problem retrieving the channel info. Please try again later.")
-                console.log("Error retrieving channels", err)
+                logger.Info("Error retrieving channels" + JSON.stringify(err));
             })
     }
-}
+).triggerAction({
+    matches: /team( ?info)?/i,
+});
 
+
+// *** SEND CURRENT USER'S INFO ***
 // Send info on the message's sender
-var userInfo: utils.IDialog = {
-    name: 'userInfo',
-    dialog: function (session: builder.Session) {
+lib.dialog('userInfo',
+    function (session: builder.Session) {
+        // Check that microsoft teams is being used
+        if (session.message.address.channelId !== 'msteams') {
+            session.endDialog("Sorry, this feature is only available in Microsoft Teams");
+            return;
+        }
         utils.fetchChannelMembers(session)
             .then((users) => {
                 let user = users.find((u) => {
@@ -64,15 +85,23 @@ var userInfo: utils.IDialog = {
             })
             .catch((err) => {
                 session.endDialog("There was a problem retrieving your user info. Please try again later.");
-                console.log("Error retrieving team members", err);
+                logger.Info("Error retrieving team members" + JSON.stringify(err));
             });
     }
-}
+).triggerAction({
+    matches: /my ?info|whoami|user ?info/i,
+});
 
+
+// *** SEND ALL USERS' INFO ***
 // Send information on all users in the channel
-var allUsers: utils.IDialog = {
-    name: 'allUsers',
-    dialog: function (session: builder.Session) {
+lib.dialog('allUsers',
+    function (session: builder.Session) {
+        // Check that microsoft teams is being used
+        if (session.message.address.channelId !== 'msteams') {
+            session.endDialog("Sorry, this feature is only available in Microsoft Teams");
+            return;
+        }
         utils.fetchChannelMembers(session)
             .then((users) => {
                 let msg = "Channel Users: \n" + utils.JsonToMarkdown(users);
@@ -80,42 +109,44 @@ var allUsers: utils.IDialog = {
             })
             .catch((err) => {
                 session.endDialog("There was a problem retrieving the user info. Please try again later.");
-                console.log("Error retrieving team members", err);
+                logger.Info("Error retrieving team members" + JSON.stringify(err));
             });
     }
-}
+).triggerAction({
+    matches: /all ?(the )?(users|members)/i,
+});
 
+
+// *** SEND MESSAGE PAYLOAD ***
 // Format and send most recent message's payload
-var payloadDialog: utils.IDialog = {
-    name: 'payload',
-    dialog: function (session) {
-        let msg = "Your most recent message:\n" + utils.JsonToMarkdown(session.message);
-        session.send(new builder.Message()
-            .text(msg)
-            .textFormat("markdown")
-        );
-    }
-}
+lib.dialog('payload', function () { }).triggerAction({
+    matches: /payload|body|request|message/i,
+    // (override the default behavior of replacing the stack)
+    onSelectAction: 
+        function (session) {
+            let msg = "Your most recent message:\n" + utils.JsonToMarkdown(session.message);
+            session.send(new builder.Message()
+                .text(msg)
+                .textFormat("markdown")
+            );
+        }
+});
 
+
+// *** SEND USER ADDRESS ***
 // Send the user their address
-var addressDialog: utils.IDialog = {
-    name: 'address',
-    dialog: function (session) {
-        let msg = "Your address:\n" + utils.JsonToBullets(session.message.address);
-        session.send(new builder.Message()
-            .text(msg)
-            .textFormat('markdown'));
-    }
-}
+lib.dialog('address', () => { }).triggerAction({
+    matches: /address/i,
+    // (override the default behavior of replacing the stack)
+    onSelectAction: 
+        function (session) {
+            let msg = "Your address:\n" + utils.JsonToBullets(session.message.address);
+            session.send(new builder.Message()
+                .text(msg)
+                .textFormat('markdown'));
+        }
+});
 
 export {
-    // Teams-specific dialogs
-    channelInfo as channelInfoDialog,
-    teamInfo as teamInfoDialog,
-    userInfo as userInfoDialog,
-    allUsers as allUsersDialog,
-
-    // General message info dialogs
-    payloadDialog as payloadDialog,
-    addressDialog as addressDialog
+    lib
 }

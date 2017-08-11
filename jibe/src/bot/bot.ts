@@ -29,8 +29,11 @@ var bot = new botbuilder.UniversalBot(connector);
 // Register event subscription dialogs
 bot.library(subscriptionDialogs.createLibrary());
 
-// *** MIDDLEWARE ***
+// Register bot info dialogs
+bot.library(botInfoDialogs.lib);
 
+
+// *** MIDDLEWARE ***
 // Strip out mentions of bot's name in the input text
 // E.g. "<at>jibe<\/at> command" -> "command"
 // Removing this jibe mention is necessary for using the botbuilder built-in prompts.
@@ -78,16 +81,6 @@ bot.dialog('/',
     });
 
 
-// O365 Card Sample Dialog
-bot.dialog('sendO365Card', o365Dialog.dialog)
-    .triggerAction({
-        matches: /event ?(selection)? ?card/i,
-    });
-
-// Handle card responses
-connector.onO365ConnectorCardAction(o365Dialog.cardActionHandler);
-
-
 // *** HELP DIALOG ***
 bot.dialog('help', function () { }).triggerAction({
     matches: /help|commands/i,
@@ -126,53 +119,15 @@ bot.dialog("quit", function (session) {
     confirmPrompt: "Are you sure you want to quit?"
 });
 
-// *** SEND USER ADDRESS ***
-bot.dialog(botInfoDialogs.addressDialog.name, function () { }).triggerAction({
-    matches: /address/i,
-    // (override the default behavior of replacing the stack)
-    onSelectAction: botInfoDialogs.addressDialog.dialog
-});
 
-// *** SEND CHANNEL ID ***
-bot.dialog('channelId', function () { }).triggerAction({
-    matches: /channel ?(id)?/i,
-    // (override the default behavior of replacing the stack)
-    onSelectAction: function (session) {
-        let msg = "Your channel's ID is: " + session.conversationData.channelId;
-        session.send(msg)
-    }
-});
-
-// *** SEND MESSAGE PAYLOAD ***
-bot.dialog(botInfoDialogs.payloadDialog.name, function () { }).triggerAction({
-    matches: /payload|body|request|message/i,
-    // (override the default behavior of replacing the stack)
-    onSelectAction: botInfoDialogs.payloadDialog.dialog
-});
-
-// *** SEND CURRENT CHANNEL INFO ***
-bot.dialog(botInfoDialogs.channelInfoDialog.name, botInfoDialogs.channelInfoDialog.dialog)
+// O365 Card Sample Dialog
+bot.dialog('sendO365Card', o365Dialog.dialog)
     .triggerAction({
-        matches: /channel( ?info)?/i,
+        matches: /event ?(selection)? ?card/i,
     });
 
-// *** SEND CURRENT TEAM INFO ***
-bot.dialog(botInfoDialogs.teamInfoDialog.name, botInfoDialogs.teamInfoDialog.dialog)
-    .triggerAction({
-        matches: /team( ?info)?/i,
-    });
-
-// *** SEND CURRENT USER'S INFO ***
-bot.dialog(botInfoDialogs.userInfoDialog.name, botInfoDialogs.userInfoDialog.dialog)
-    .triggerAction({
-        matches: /my ?info|whoami/i,
-    });
-
-// *** SEND ALL USERS' INFO ***
-bot.dialog(botInfoDialogs.allUsersDialog.name, botInfoDialogs.allUsersDialog.dialog)
-    .triggerAction({
-        matches: /(all (the )?)?(users|members)/i,
-    });
+// Handle card responses
+connector.onO365ConnectorCardAction(o365Dialog.cardActionHandler);
 
 
 // *** SEND AN ADAPTIVECARD ***
@@ -324,8 +279,8 @@ function sendAdaptiveCard(address: botbuilder.IAddress, card: adaptiveCards.Adap
 }
 
 export {
-    connector as connector,
-    bot as bot,
-    sendActionableCard as sendActionableCard,
-    sendMessage as sendMessage
+    connector,
+    bot,
+    sendActionableCard,
+    sendMessage,
 };
