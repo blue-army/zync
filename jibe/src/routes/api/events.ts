@@ -104,7 +104,7 @@ async function routeEvent(event_info: models.EventInfo) {
                         }
                         // If the channel has a bot address, send the card to it via the bot
                         if (c.botaddress) {
-                            bot.sendActionableCard(JSON.parse(c.botaddress), card)
+                            bot.sendActionableCard(c.botaddress, card)
                         }
                     }
                 }

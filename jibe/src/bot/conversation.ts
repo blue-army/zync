@@ -2,6 +2,7 @@ import * as models from "../models/models";
 import * as jibe from '../service/jibe';
 import * as logger from '../service/logger';
 import * as drillplan from "../plugins/drillplan"
+import * as botbuilder from 'botbuilder'
 
 
 // Define an object for storing subscription information
@@ -11,7 +12,7 @@ class Subscription {
 }
 
 // Add a channel to the given ProjectInfo object
-function addChannel(project: models.ProjectInfo, channelId: string, botaddress: string) {
+function addChannel(project: models.ProjectInfo, channelId: string, botaddress: botbuilder.IAddress) {
     // See if there is already a channel for this ID
     let chindex = project.channels.findIndex((element) => {
         return element.id === channelId;
@@ -90,7 +91,7 @@ function removeRoute(project: models.ProjectInfo, channelId: string, eventName: 
 
 // Add notification types for the given channel
 // Also updates channel address
-async function addNotifications(projectId: string, channelId: string, botaddress: string, notifications: string[]) {
+async function addNotifications(projectId: string, channelId: string, botaddress: botbuilder.IAddress, notifications: string[]) {
     let project = await jibe.getProject(projectId);
     if (!project) {
         return Promise.reject("Project " + projectId + " not found");

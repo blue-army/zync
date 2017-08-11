@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as botbuilder from 'botbuilder';
 
 class ProjectInfo {
     id: string;
@@ -113,7 +114,7 @@ class ChannelInfo {
     name: string;
     id: string;
     webhook: string;
-    botaddress: string;
+    botaddress: botbuilder.IAddress;
 
     public static fromObj(j: any): ChannelInfo {
         let o = new ChannelInfo();

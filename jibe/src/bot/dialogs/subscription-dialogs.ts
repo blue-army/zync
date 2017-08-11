@@ -238,8 +238,8 @@ bot.dialog('project/subscribe', [
             session.endDialog("No events selected.");
         } else {
             // Update the relevant project in the database
-            let addr = utils.getChannelAddress(session);      // preprocess address
-            conversation.addNotifications(session.dialogData.project.id, session.conversationData.channelId, JSON.stringify(addr), [results.response.entity])
+            let addr: botbuilder.IAddress = utils.getChannelAddress(session);      // preprocess address
+            conversation.addNotifications(session.dialogData.project.id, session.conversationData.channelId, addr, [results.response.entity])
                 .then(() => {
                     session.endDialog("You are now subscribed to %s events.", results.response.entity);
                 })
