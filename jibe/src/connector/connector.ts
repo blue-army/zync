@@ -3,8 +3,9 @@
 import * as express from 'express';
 import * as models from "../models/models";
 import * as jibe from '../service/jibe';
-import * as bot from '../bot/bot'
-import * as drillplan from '../plugins/drillplan'
+import * as bot from '../bot/bot';
+import * as botUtils from '../bot/bot-utils'
+import * as drillplan from '../plugins/drillplan';
 
 // connector setup flow
 async function setup(_req: express.Request, res: express.Response, _next: express.NextFunction) {
@@ -107,13 +108,13 @@ var default_address = {
 
 function invoke(req: express.Request, res: express.Response) {
     let messages = [
-        "Headers: " + JSON.stringify(req.headers),
-        "Body: " + JSON.stringify(req.body),
-        "Querystring: " + JSON.stringify(req.query),
-        "Params: " + JSON.stringify(req.params),
+        "Headers: " + botUtils.JsonToMarkdown(req.headers),
+        "Body: " + botUtils.JsonToMarkdown(req.body),
+        "Querystring: " + botUtils.JsonToMarkdown(req.query),
+        "Params: " + botUtils.JsonToMarkdown(req.params),
     ]
 
-    bot.sendMessage(default_address, messages.join('\n---\n'));
+    bot.sendMessage(default_address, messages.join('\n\n'));
     res.status(200).send();
 }
 
@@ -121,6 +122,7 @@ function init(app: express.Application) {
     app.get('/connector/setup', setup);
     app.get('/connector/register', register);
     app.post('/connector/invoke', invoke);
+    app.post('/api/connector/invoke', invoke);
     return this;
 }
 
