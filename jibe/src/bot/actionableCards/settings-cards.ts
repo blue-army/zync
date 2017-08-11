@@ -92,13 +92,7 @@ async function changeSettingsCard(session: builder.Session) {
 // Create a card that displays the current channel's event subscriptions
 async function viewSettingsCard(session: builder.Session) {
     // Retrieve list of projects from db
-    var subscriptions;
-    try {
-        subscriptions = await conversation.getSubscriptions(session.conversationData.channelId)
-    } catch (e) {
-        // TODO: Do something here?
-        throw e;
-    }
+    var subscriptions = await conversation.getSubscriptions(session.conversationData.channelId);
 
     // Create 'facts' to display subscription info for each project
     let facts = subscriptions.map((sub) => {
