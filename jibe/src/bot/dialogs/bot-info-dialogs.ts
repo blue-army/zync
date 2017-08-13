@@ -140,7 +140,7 @@ lib.dialog('address', () => { }).triggerAction({
     // (override the default behavior of replacing the stack)
     onSelectAction: 
         function (session) {
-            let msg = "Your address:\n" + utils.JsonToBullets(session.message.address);
+            let msg = "Your address:\n" + utils.JsonToMarkdown(session.message.address);
             session.send(new builder.Message()
                 .text(msg)
                 .textFormat('markdown'));
