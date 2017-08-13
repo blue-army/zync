@@ -25,7 +25,11 @@ function send_card(req: express.Request, res: express.Response) {
             card = req.body;
         }
     }
-    bot.sendActionableCard(address, card);
+    if (card.type === "AdaptiveCard") {
+       bot.sendAdaptiveCard(address, card);
+    } else {
+       bot.sendActionableCard(address, card);
+    }
     res.status(200).send();
 }
 
