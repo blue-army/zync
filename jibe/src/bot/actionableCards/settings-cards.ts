@@ -1,20 +1,12 @@
 import * as teams from 'botbuilder-teams';
 import * as builder from 'botbuilder';
 import * as models from '../../models/models';
-import * as jibe from '../../service/jibe';
 import * as conversation from '../conversation'
 import * as drillplan from '../../plugins/drillplan'
 
 
 // Create a card that allows the user to edit their event subscriptions
-async function changeSettingsCard(session: builder.Session) {
-    // Retrieve list of projects from db
-    var projects: models.ProjectInfo[];
-    try {
-        projects = await jibe.getProjectList();
-    } catch (e) {
-        return;
-    }
+function changeSettingsCard(session: builder.Session, projects: models.ProjectInfo[]) {
 
     // Create list of projects to display
     let projectChoices = projects.map((proj) => {
@@ -90,9 +82,7 @@ async function changeSettingsCard(session: builder.Session) {
 }
 
 // Create a card that displays the current channel's event subscriptions
-async function viewSettingsCard(session: builder.Session) {
-    // Retrieve list of projects from db
-    var subscriptions = await conversation.getSubscriptions(session.conversationData.channelId);
+function viewSettingsCard(session: builder.Session, subscriptions: conversation.Subscription[]) {
 
     // Create 'facts' to display subscription info for each project
     let facts = subscriptions.map((sub) => {

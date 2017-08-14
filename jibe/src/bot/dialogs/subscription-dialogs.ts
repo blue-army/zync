@@ -2,12 +2,13 @@
  * *** EVENT SUBSCRIPTION DIALOGS ***
  */
 
-import * as botbuilder from 'botbuilder';
+import * as botbuilder from 'botbuilder'
 import * as teams from 'botbuilder-teams'
 import * as utils from '../bot-utils'
-import * as conversation from '../../bot/conversation';
+import * as conversation from '../../bot/conversation'
 import * as jibe from '../../service/jibe'
-import * as settingsCards from '../actionableCards/settings-cards'
+import * as settingsActionableCards from '../actionableCards/settings-cards'
+import * as settingsAdaptiveCard from '../adaptiveCards/current_settings'
 import * as drillplan from '../../plugins/drillplan'
 
 
@@ -18,22 +19,41 @@ interface BasicProjectInfo {
     id: string;
 }
 
+// Creates and sends a card displaying channel subscriptions.
+// Card type depends on chat client. 
+function sendSubscriptions(session: botbuilder.Session, subs: conversation.Subscription[]) {
+    var msg = new teams.TeamsMessage(session)
+        .summary("Settings card")
+
+    // If the conversation is on Microsoft Teams, send an ActionableCard
+    if (session.message.address.channelId === 'msteams') {
+        let card = settingsActionableCards.viewSettingsCard(session, subs);
+        msg.addAttachment(card);
+    }
+    // For all other platforms, send an AdaptiveCard
+    else {
+        let card = settingsAdaptiveCard.createCard(subs);
+        msg.addAttachment({
+            content: card,
+            contentType: "application/vnd.microsoft.card.adaptive"
+        });
+    }
+    session.send(msg);
+}
+
 // Root dialog
 // Generates and displays a card with subscription settings
 bot.dialog('/', [
     async function (session) {
-        // Create card
-        let card: teams.O365ConnectorCard;
+        let subs: conversation.Subscription[]
         try {
-            card = await settingsCards.viewSettingsCard(session);
+            subs = await conversation.getSubscriptions(session.conversationData.channelId);
         } catch (e) {
             session.endDialog("Sorry, we were unable to retrieve your settings. Please try again later.");
             return;
         }
-        var msg = new teams.TeamsMessage(session)
-            .summary("Settings card")
-            .addAttachment(card);
-        session.send(msg);
+        // send the user their subscriptions
+        sendSubscriptions(session, subs);
         botbuilder.Prompts.confirm(session, "Do you want to update your settings?");
     },
     function (session, results) {
@@ -84,18 +104,15 @@ bot.dialog('selectProject', [
     // Display current settings, prompt user to pick another project
     async function (session) {
         // Create card
-        let card: teams.O365ConnectorCard;
+        let subs: conversation.Subscription[]
         try {
-            card = await settingsCards.viewSettingsCard(session);
+            subs = await conversation.getSubscriptions(session.conversationData.channelId);
         } catch (e) {
             session.endDialog("Sorry, we were unable to retrieve your settings. Please try again later.");
             return;
         }
-        var msg = new teams.TeamsMessage(session)
-            .summary("Settings card")
-            .text("These are your current settings:")
-            .addAttachment(card);
-        session.send(msg);
+        // send the user their subscriptions
+        sendSubscriptions(session, subs);
         botbuilder.Prompts.confirm(session, "Would you like to update settings for another project?");
     },
     function (session, results) {
@@ -252,22 +269,22 @@ bot.dialog('project/subscribe', [
 
 
 // Display the settings card
-bot.dialog('sendSettingsCard', async function (session) {
-    let card;
-    try {
-        card = await settingsCards.viewSettingsCard(session);
-    } catch (e) {
-        session.send("Sorry, we were unable to retrieve your settings. Please try again later.");
-        return;
-    }
-    var msg = new teams.TeamsMessage(session)
-        .summary("A sample O365 actionable card")
-        .addAttachment(card);
-    session.send(msg);
-    session.endDialog();
-}).triggerAction({
-    matches: /settings ?card/i,
-});
+// bot.dialog('sendSettingsCard', async function (session) {
+//     let card;
+//     try {
+//         card = await settingsCards.viewSettingsCard(session);
+//     } catch (e) {
+//         session.send("Sorry, we were unable to retrieve your settings. Please try again later.");
+//         return;
+//     }
+//     var msg = new teams.TeamsMessage(session)
+//         .summary("A sample O365 actionable card")
+//         .addAttachment(card);
+//     session.send(msg);
+//     session.endDialog();
+// }).triggerAction({
+//     matches: /settings ?card/i,
+// });
 
 
 export function createLibrary() {

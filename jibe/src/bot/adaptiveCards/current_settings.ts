@@ -53,15 +53,18 @@ function createCard(subscriptions: conversation.Subscription[]): adaptiveCards.I
 
     // Populate factset with subscription info
     factSet.facts = subscriptions.map((sub) => {
+        let factValue = sub.events.length > 0 ? sub.events.join(', ') : "No subscribed events";
         return new adaptiveCards.Fact({
             title: sub.project,
-            value: sub.events.join(', ')
+            value: factValue
         });
     })
 
     return card;
 }
 
-exports.createCard = createCard;
+export {
+    createCard,
+}
 
 // TODO: Test This!

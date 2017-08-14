@@ -66,7 +66,8 @@ async function upsert_event(req: express.Request, res: express.Response) {
 async function routeEvent(event_info: models.EventInfo) {
 
     // Create card to send
-    let card = drillplan.createO365MessageCard(event_info);
+    let messageInfo = drillplan.createMessageInfo(event_info);
+    let card = drillplan.createO365MessageCard(messageInfo);
     let cardJson = card.toAttachment().content;
 
     // fetch project information
@@ -104,7 +105,7 @@ async function routeEvent(event_info: models.EventInfo) {
                         }
                         // If the channel has a bot address, send the card to it via the bot
                         if (c.botaddress) {
-                            bot.sendActionableCard(c.botaddress, card)
+                            bot.sendJibeEvent(c.botaddress, messageInfo)
                         }
                     }
                 }

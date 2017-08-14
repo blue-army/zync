@@ -1,0 +1,32 @@
+{"text": "",
+"attachments": [
+        {
+            "fallback": "Required plain-text summary of the attachment.",
+            "color": "#36a64f",
+            "pretext": "",
+            "author_name": "",
+            "author_link": "",
+            "author_icon": "",
+            "title": "BHA&Drillstring: Untitled BHA/Drillstring",
+            "title_link": "https://api.slack.com/",
+            "text": "",
+            "fields": [
+                {
+                    "title": "White City 8 Federal #4H–Cimerex",
+                    "value": "8.75 in/Run",
+                    "short": false
+                },
+                {
+                    "title": "Changed by Greg Skoff",
+                    "value": "\"Changed temperature prediction\"",
+                    "short": false
+                }
+            ],
+
+            "thumb_url": "https://jibe.azurewebsites.net/assets/images/gear.png",
+            "footer": "Jibe",
+            "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+            "ts": 123456789
+        }
+    ]
+}

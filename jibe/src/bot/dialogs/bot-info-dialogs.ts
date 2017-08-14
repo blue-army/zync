@@ -6,7 +6,7 @@ import * as utils from '../bot-utils'
 import * as logger from '../../service/logger'
 
 
-var lib = new builder.Library('subscribe');
+var lib = new builder.Library('bot-info-dialogs');
 
 // *** SEND CURRENT CHANNEL INFO ***
 // Dialog to display info on the current channel

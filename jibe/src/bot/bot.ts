@@ -1,12 +1,14 @@
-import * as botbuilder from 'botbuilder';
+import * as botbuilder from 'botbuilder'
 import * as teams from 'botbuilder-teams'
-import * as conversation from '../bot/conversation';
+import * as conversation from '../bot/conversation'
+import * as models from '../models/models'
 import * as adaptiveCards from 'microsoft-adaptivecards'
 import * as utils from './bot-utils'
 import * as jibe from '../service/jibe'
 import * as settingsCards from './actionableCards/settings-cards'
 import * as drillplan from '../plugins/drillplan'
 import * as subscriptionDialogs from './dialogs/subscription-dialogs'
+import * as slackCards from './slack-messages'
 
 // Import Dialogs
 import * as o365Dialog from './dialogs/subscription-card-dialogs'
@@ -278,9 +280,41 @@ function sendAdaptiveCard(address: botbuilder.IAddress, card: adaptiveCards.Adap
     );
 }
 
+// Send a slack message to the given address
+function sendSlackMessage(address: botbuilder.IAddress, card: any) {
+    bot.send(new botbuilder.Message()
+        .address(address)
+        .sourceEvent({
+            "slack": card
+        })
+    );
+}
+
+// Send a card/message based on the given message info
+// Card type depends on the address' chat client
+function sendJibeEvent(address: botbuilder.IAddress, messageInfo: models.MessageInfo) {
+    // If sending to Microsoft Teams, send an Actionable Card
+    if (address.channelId === 'msteams') {
+        let card = drillplan.createO365MessageCard(messageInfo);
+        sendActionableCard(address, card);
+    }
+    else if (address.channelId === 'slack') {
+        let card = slackCards.jibeEvent(messageInfo);
+        sendSlackMessage(address, card);
+    }
+    else {
+        bot.send(new botbuilder.Message()
+            .address(address)
+            .text("Incoming Jibe Event!")
+        );
+    }
+}
+
 export {
     connector,
     bot,
     sendActionableCard,
+    sendAdaptiveCard,
     sendMessage,
+    sendJibeEvent
 };

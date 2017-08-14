@@ -103,8 +103,7 @@ var events = [
     }
 ];
 
-function createO365MessageCard(info: models.EventInfo): teams.O365ConnectorCard {
-    let messageInfo = createMessageInfo(info);
+function createO365MessageCard(messageInfo: models.MessageInfo): teams.O365ConnectorCard {
 
     // Section displaying event details
     let eventInfoSection = new teams.O365ConnectorCardSection()
