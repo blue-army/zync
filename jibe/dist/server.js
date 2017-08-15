@@ -7,6 +7,7 @@ const request = require("request");
 const morgan = require("morgan");
 const connector = require("./connector/connector");
 const bot = require("./bot/bot");
+const slash = require("./slash/slash");
 var swaggerize = require('swaggerize-express');
 var swaggerui = require('swaggerize-ui');
 var port = process.env.PORT || 8000;
@@ -32,6 +33,10 @@ app.use(express.static(__dirname + '/web'));
 app.use(express.static(__dirname + '/assets'));
 // connector
 connector.init(app);
+// bot
+bot.init(app);
+// slash commands
+slash.init(app);
 app.use('/docs', swaggerui({
     docs: '/swagger',
 }));
@@ -45,7 +50,6 @@ app.get('*', function (_req, res) {
         root: './web',
     });
 });
-app.post('/bot/messages', bot.connector.listen());
 function doHttpRequest(req, res) {
     var url = '/api/auth/login';
     var data = {

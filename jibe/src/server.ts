@@ -5,6 +5,7 @@ import * as request from 'request';
 import * as morgan from 'morgan';
 import * as connector from './connector/connector';
 import * as bot from './bot/bot'
+import * as slash from './slash/slash'
 var swaggerize = require('swaggerize-express');
 var swaggerui = require('swaggerize-ui');
 
@@ -43,6 +44,9 @@ connector.init(app);
 
 // bot
 bot.init(app)
+
+// slash commands
+slash.init(app);
 
 app.use('/docs', swaggerui({
     docs: '/swagger',
