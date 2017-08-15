@@ -58,7 +58,9 @@ app.get('*', function (_req, res) {
     });
 });
 
-app.post('/bot/messages', bot.connector.listen());
+// Bot messaging endpoint
+app.post('/api/bot/messages', bot.connector.listen());
+
 
 function doHttpRequest(req: express.Request, res: express.Response) {
 
