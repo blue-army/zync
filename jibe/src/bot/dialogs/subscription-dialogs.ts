@@ -7,12 +7,11 @@ import * as teams from 'botbuilder-teams'
 import * as utils from '../bot-utils'
 import * as conversation from '../../bot/conversation'
 import * as jibe from '../../service/jibe'
-import * as settingsActionableCards from '../actionableCards/settings-cards'
 import * as settingsAdaptiveCard from '../adaptiveCards/current_settings'
 import * as teamsCards from '../../chat/msteams'
 import * as drillplan from '../../plugins/drillplan'
 
-
+// Create new library
 var bot = new botbuilder.Library('subscribe');
 
 interface BasicProjectInfo {

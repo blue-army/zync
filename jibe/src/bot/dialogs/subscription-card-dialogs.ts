@@ -1,9 +1,9 @@
 import * as jibeBot from '../bot';
 import * as teams from 'botbuilder-teams';
 import * as builder from 'botbuilder';
-import * as cards from '../actionableCards/settings-cards'
-import * as jibe from '../../service/jibe'
-import * as models from '../../models/models'
+import * as cards from '../../chat/msteams';
+import * as jibe from '../../service/jibe';
+import * as models from '../../models/models';
 
 // Dialog for sending an o365card
 async function o365CardDialog(session: builder.Session) {

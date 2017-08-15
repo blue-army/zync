@@ -1,20 +1,21 @@
 import * as botbuilder from 'botbuilder'
 import * as teams from 'botbuilder-teams'
+import * as adaptiveCards from 'microsoft-adaptivecards'
 import * as conversation from '../bot/conversation'
 import * as models from '../models/models'
-import * as adaptiveCards from 'microsoft-adaptivecards'
 import * as utils from './bot-utils'
-import * as slack from '../chat/slack'
 import * as drillplan from '../plugins/drillplan'
-import * as subscriptionDialogs from './dialogs/subscription-dialogs'
-import * as slackCards from './slack-messages'
+
+// Import channel-specific functionality
+import * as slack from '../chat/slack'
+import * as msteams from '../chat/msteams'
 
 // Import Dialogs
 import * as o365Dialog from './dialogs/subscription-card-dialogs'
 import * as botInfoDialogs from './dialogs/bot-info-dialogs'
+import * as subscriptionDialogs from './dialogs/subscription-dialogs'
 
 var currentSettingsCard = require('./adaptiveCards/current_settings');
-var o365 = require('../bot/o365message');
 
 
 // *** SETUP ***
@@ -155,7 +156,7 @@ bot.dialog('adaptiveCard', async function (session) {
 // *** SEND AN ACTIONABLECARD ***
 bot.dialog('actionableCard', function (session) {
     session.send("Sending an actionableCard!");
-    let card = o365.card;
+    let card = msteams.sampleActionableCard;
     sendActionableCard(session.message.address, card);
     session.endDialog("Card sent!");
 }).triggerAction({
@@ -331,7 +332,7 @@ function sendJibeEvent(address: botbuilder.IAddress, messageInfo: models.Message
     }
     // If sending to Slack, send a slack-formatted message
     else if (address.channelId === 'slack') {
-        let card = slackCards.jibeEvent(messageInfo);
+        let card = slack.jibeEvent(messageInfo);
         sendSlackMessage(address, card);
     }
     else {
