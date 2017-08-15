@@ -66,5 +66,3 @@ function createCard(subscriptions: conversation.Subscription[]): adaptiveCards.I
 export {
     createCard,
 }
-
-// TODO: Test This!

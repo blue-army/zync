@@ -27,8 +27,10 @@ function send_card(req: express.Request, res: express.Response) {
     }
     if (card.type === "AdaptiveCard") {
        bot.sendAdaptiveCard(address, card);
-    } else {
+    } else if (card['@type'] === "MessageCard") {
        bot.sendActionableCard(address, card);
+    } else {
+        bot.sendMessage(address, '```\n' + JSON.stringify(card) + '\n```')
     }
     res.status(200).send();
 }

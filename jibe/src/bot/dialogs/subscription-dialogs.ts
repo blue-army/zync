@@ -9,6 +9,7 @@ import * as conversation from '../../bot/conversation'
 import * as jibe from '../../service/jibe'
 import * as settingsActionableCards from '../actionableCards/settings-cards'
 import * as settingsAdaptiveCard from '../adaptiveCards/current_settings'
+import * as teamsCards from '../../chat/msteams'
 import * as drillplan from '../../plugins/drillplan'
 
 
@@ -27,9 +28,10 @@ function sendSubscriptions(session: botbuilder.Session, subs: conversation.Subsc
 
     // If the conversation is on Microsoft Teams, send an ActionableCard
     if (session.message.address.channelId === 'msteams') {
-        let card = settingsActionableCards.viewSettingsCard(session, subs);
+        let card = teamsCards.viewSettingsCard(session, subs);
         msg.addAttachment(card);
     }
+    
     // For all other platforms, send an AdaptiveCard
     else {
         let card = settingsAdaptiveCard.createCard(subs);

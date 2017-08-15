@@ -92,6 +92,7 @@ bot.dialog('help', function () { }).triggerAction({
         let bullets = [
             "Here are some Jibe commands you can try: ",     // this is the header - will not be bulleted
             "Type 'settings' to view and edit your event subscriptions",
+            "Type 'ping me' to have the bot message you directly",
             "Type 'channel' to see your channel's ID",
             "Type 'address' to see your address",
             "Type 'payload' to see the body of your most recent message",
@@ -102,9 +103,9 @@ bot.dialog('help', function () { }).triggerAction({
             "Type 'adaptiveCard' to send a test adaptiveCard",
             "Type 'event selection card' to send a test event selection card",
             "Type 'actionableCard to send a test actionableCard",
-            "Type 'quit' or 'goodbye' to end the conversation"
+            "Type 'quit' or 'goodbye' to end the conversation",
         ]
-        let msg = bullets.join('\n * ');
+        let msg = bullets.join('\n - ');
         session.send(msg);
     }
 });
@@ -128,7 +129,7 @@ bot.dialog('sendO365Card', o365Dialog.dialog)
         matches: /event ?(selection)? ?card/i,
     });
 
-// Handle card responses
+// Handle actionable card responses
 connector.onO365ConnectorCardAction(o365Dialog.cardActionHandler);
 
 
@@ -148,7 +149,7 @@ bot.dialog('adaptiveCard', async function (session) {
     sendAdaptiveCard(session.message.address, card);
     session.endDialog("Card sent!");
 }).triggerAction({
-    matches: /adaptive ?(card)?/i,
+    matches: /adaptive ?card/i,
 });
 
 
@@ -159,7 +160,7 @@ bot.dialog('actionableCard', function (session) {
     sendActionableCard(session.message.address, card);
     session.endDialog("Card sent!");
 }).triggerAction({
-    matches: /actionable ?(card)?/i,
+    matches: /actionable ?card/i,
 });
 
 
@@ -173,8 +174,31 @@ bot.dialog('CardAction', function (session) {
     session.send(new botbuilder.Message(session).addAttachment(attachment))
     session.endDialog("Card action sent!");
 }).triggerAction({
-    matches: /(card ?)?action/i,
+    matches: /card ?action/i,
 });
+
+
+// Open a one-on-one dialog with the requesting user
+bot.dialog('PingMe', function (session) {
+    var address = JSON.parse(JSON.stringify(session.message.address));
+    // In both Teams and Slack, we can initiate a one-on-one conversation by stripping out the existing conversation info
+    delete address.conversation;
+    // In teams, opening a 1-on-1 chat also requires the tenant id
+    if (address.channelId === 'msteams') {
+        address.channelData = {
+            tenant: {
+                id: "68eac915-2f41-4693-a138-14c86824d964"
+            }
+        }
+    }
+    bot.send(new botbuilder.Message()
+        .address(address)
+        .text("Hello, %s. What can I help you with?", address.user.name.split(' ')[0])
+    );
+}).triggerAction({
+    matches: /ping me/i,
+});
+
 
 
 // *** HANDLE CONVERSATION UPDATES ***
@@ -230,18 +254,13 @@ bot.on('conversationUpdate', function (message) {
         }
     }
 
-    // if (message.membersRemoved && message.membersRemoved.length > 0) {
-    //     var membersRemoved = message.membersRemoved
-    //         .map(function (m: botbuilder.IIdentity) {
-    //             var isSelf = m.id === message.address.bot.id;
-    //             return (isSelf ? message.address.bot.name : m.name) || '' + ' (Id: ' + m.id + ')';
-    //         })
-    //         .join(', ');
-
-    //     bot.send(new botbuilder.Message()
-    //         .address(message.address)
-    //         .text('The following members ' + membersRemoved + ' were removed or left the conversation :('));
-    // }
+    // If the bot is being removed, send a goodbye message
+    if (message.membersRemoved && message.membersRemoved.findIndex((m: botbuilder.IIdentity) => {return m.id === message.address.bot.id;}) >= 0) {
+        bot.send(new botbuilder.Message()
+            .address(message.address)
+            .text('Goodbye everyone!')
+        );
+    }
 });
 
 // Send a message to the given address
@@ -269,7 +288,7 @@ function sendActionableCard(address: botbuilder.IAddress, card: any) {
 }
 
 // Send AdaptiveCard
-// Not yet supported by teams, but is supported by other channels
+// Not yet supported by teams, but is supported by other chat clients
 function sendAdaptiveCard(address: botbuilder.IAddress, card: adaptiveCards.AdaptiveCard) {
     bot.send(new botbuilder.Message()
         .address(address)
@@ -298,6 +317,7 @@ function sendJibeEvent(address: botbuilder.IAddress, messageInfo: models.Message
         let card = drillplan.createO365MessageCard(messageInfo);
         sendActionableCard(address, card);
     }
+    // If sending to Slack, send a slack-formatted message
     else if (address.channelId === 'slack') {
         let card = slackCards.jibeEvent(messageInfo);
         sendSlackMessage(address, card);

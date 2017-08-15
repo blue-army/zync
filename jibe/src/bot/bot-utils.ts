@@ -17,6 +17,7 @@ function extractId(teamsId: string) {
         return results[1];          // return extracted ID
     }
     console.log("Could not extract an ID from ", teamsId);
+    return teamsId;
 }
 
 // Extract and save the channel address
