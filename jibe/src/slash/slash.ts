@@ -1,12 +1,15 @@
 import * as express from 'express';
 
-function avatar(_req: express.Request, res: express.Response) {
+function avatar(req: express.Request, res: express.Response) {
+
+    console.log(req.body);
+    
     res.json({
         "response_type": "ephemeral",
         "text": "iroh",
         "attachments": [{
             "fallback": "Iroh",
-            "image_url": "http://files.softicons.com/download/culture-icons/avatar-minis-icons-by-joumana-medlej/png/64x64/General%20Iroh.png",
+            "image_url": "https://jibe.azurewebsites.net/assets/images/activities/" + "bha_drilling_string_1.png",
         }]
     })
 }
