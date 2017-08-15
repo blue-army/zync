@@ -1,6 +1,5 @@
 import * as builder from 'botbuilder';
 import * as teams from 'botbuilder-teams';
-import * as jibeBot from './bot'
 import * as logger from '../service/logger'
 var YAML = require('yamljs');
 
@@ -63,14 +62,14 @@ function JsonToYamlMd(obj: any) {
 
 // *** TEAMS-SPECIFIC INFORMATION RETRIEVAL ***
 // Get info on all channel members
-function fetchChannelMembers(session: builder.Session): Promise<teams.ChannelAccount[]> {
+function fetchChannelMembers(session: builder.Session, connector: teams.TeamsChatConnector): Promise<teams.ChannelAccount[]> {
     return new Promise(function (resolve, reject) {
         if (session.message.address.channelId !== 'msteams') {
             reject("This feature is only available when using Microsoft Teams");
             return;
         }
         var conversationId = session.message.address.conversation.id;
-        jibeBot.connector.fetchMembers(
+        connector.fetchMembers(
             (<builder.IChatConnectorAddress>session.message.address).serviceUrl,
             conversationId,
             (err, result) => {
@@ -87,14 +86,14 @@ function fetchChannelMembers(session: builder.Session): Promise<teams.ChannelAcc
 }
 
 // Get info on all channels in this team
-function fetchChannelList(session: builder.Session): Promise<teams.ChannelInfo[]> {
+function fetchChannelList(session: builder.Session, connector: teams.TeamsChatConnector): Promise<teams.ChannelInfo[]> {
     return new Promise(function (resolve, reject) {
         if (session.message.address.channelId !== 'msteams') {
             reject("This feature is only available when using Microsoft Teams");
             return;
         }
         var teamId = session.message.sourceEvent.team.id;
-        jibeBot.connector.fetchChannelList(
+        connector.fetchChannelList(
             (<builder.IChatConnectorAddress>session.message.address).serviceUrl,
             teamId,
             (err, result) => {

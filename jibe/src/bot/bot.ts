@@ -34,7 +34,7 @@ var bot = new botbuilder.UniversalBot(connector);
 bot.library(subscriptionDialogs.createLibrary());
 
 // Register bot info dialogs
-bot.library(botInfoDialogs.lib);
+bot.library(botInfoDialogs.createLibrary(connector));
 
 
 // *** MIDDLEWARE ***
