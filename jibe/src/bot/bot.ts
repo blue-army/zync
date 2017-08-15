@@ -46,7 +46,16 @@ bot.use(stripBotAtMentions);
 
 // Configure middleware for extracting channelId
 bot.use({
+    // Middleware for incoming messages (user -> bot)
     botbuilder: function (session, next) {
+        // Do not continue processing if this is a group message that does not @mention jibe 
+        // (this is to prevent the bot from responding to unrelated messages in slack)
+        if (session.message.address.conversation.isGroup && !('textWithBotMentions' in session.message)) {
+            console.log("In group and no bot mentions");
+            return;
+        }
+        // Middleware to manage thread creation in Slack
+        manageThreading(session);
         saveChannelId(session);
         next();
     }
@@ -70,6 +79,24 @@ function saveChannelId(session: botbuilder.Session) {
         }
         session.conversationData.channelId = chId;
         // session.send("Saving your channelId: %s", session.conversationData.channelId);
+    }
+}
+
+// Middleware function that creates a new thread when responding to a top-level user comment in a multi-user slack channel
+// This is the only case in which we have to modify the address - once the thread is created, the bot will automatically reply within the thread
+function manageThreading(session: botbuilder.Session) {
+    console.log("Conversation: ", session.message.address.conversation)
+    // Check that we are in a group conversation and the relevant properties are defined. 
+    if (session.message.address.channelId === "slack" && session.message.address.conversation.isGroup && session.message.sourceEvent && session.message.sourceEvent.SlackMessage) {
+        let event = session.message.sourceEvent.SlackMessage.event;
+        if (event) {
+            // Detect top-level comments (slack comments without a thread_ts property)
+            if (!event.thread_ts && event.ts) {
+                // append root-level comment timestamp to conversation ID to start a new thread
+                session.message.address.conversation.id += ':' + event.ts;
+                console.log("reassigned group ID: " + session.message.address.conversation.id);
+            }
+        }
     }
 }
 
