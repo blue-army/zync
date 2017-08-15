@@ -15,8 +15,6 @@ import * as o365Dialog from './dialogs/subscription-card-dialogs'
 import * as botInfoDialogs from './dialogs/bot-info-dialogs'
 import * as subscriptionDialogs from './dialogs/subscription-dialogs'
 
-var currentSettingsCard = require('./adaptiveCards/current_settings');
-
 
 // *** SETUP ***
 // Create bot connector
@@ -145,7 +143,7 @@ bot.dialog('adaptiveCard', async function (session) {
         return;
     }
     session.send("Sending an adaptiveCard!");
-    let card = currentSettingsCard.createCard(subs);
+    let card = slack.viewSettingsCard(subs);
     sendAdaptiveCard(session.message.address, card);
     session.endDialog("Card sent!");
 }).triggerAction({

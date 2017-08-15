@@ -7,8 +7,8 @@ import * as teams from 'botbuilder-teams'
 import * as utils from '../bot-utils'
 import * as conversation from '../../bot/conversation'
 import * as jibe from '../../service/jibe'
-import * as settingsAdaptiveCard from '../adaptiveCards/current_settings'
 import * as teamsCards from '../../chat/msteams'
+import * as slack from '../../chat/slack'
 import * as drillplan from '../../plugins/drillplan'
 
 // Create new library
@@ -33,7 +33,7 @@ function sendSubscriptions(session: botbuilder.Session, subs: conversation.Subsc
     
     // For all other platforms, send an AdaptiveCard
     else {
-        let card = settingsAdaptiveCard.createCard(subs);
+        let card = slack.viewSettingsCard(subs);
         msg.addAttachment({
             content: card,
             contentType: "application/vnd.microsoft.card.adaptive"
