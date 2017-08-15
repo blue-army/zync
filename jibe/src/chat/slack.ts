@@ -30,7 +30,7 @@ function dropdownPrompt(session: botbuilder.Session, message: string, choices: (
         }
     });
     let dropdown = {
-        "text": "Would you like to play a game?",
+        "text": "",
         "response_type": "in_channel",
         "attachments": [
             {
@@ -125,20 +125,17 @@ function jibeEvent(messageInfo: models.MessageInfo) {
 
 // Input: an object mapping project names to lists of event subscriptions
 function viewSettingsCard(subscriptions: conversation.Subscription[]): adaptiveCards.ICard {
-    // Title formatting info
-    var title : adaptiveCards.TextBlock = {
-        "type": "TextBlock",
-        "text": "Drillplan Notification Settings",
-        "horizontalAlignment": "center",
-        "weight": "bolder",
-        "size": "medium",
-    }
+    // Create and format title
+    let title = new adaptiveCards.TextBlock();
+    title.text = "Drillplan Notification Settings";
+    title.horizontalAlignment = "center";
+    title.weight = "bolder";
+    title.size = "medium";
 
     // Create card
     let factSet = new adaptiveCards.FactSet();
-    let header = new adaptiveCards.TextBlock(title)
     let card = new adaptiveCards.Card();
-    card.body = [header, factSet]       // specify card content
+    card.body = [title, factSet]       // specify card content
 
     // Populate factset with subscription info
     factSet.facts = subscriptions.map((sub) => {
