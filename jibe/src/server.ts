@@ -41,6 +41,9 @@ app.use(express.static(__dirname + '/assets'));
 // connector
 connector.init(app);
 
+// bot
+bot.init(app)
+
 app.use('/docs', swaggerui({
     docs: '/swagger',
 }));
@@ -57,10 +60,6 @@ app.get('*', function (_req, res) {
         root: './web',
     });
 });
-
-// Bot messaging endpoint
-app.post('/api/bot/messages', bot.connector.listen());
-
 
 function doHttpRequest(req: express.Request, res: express.Response) {
 

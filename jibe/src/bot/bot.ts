@@ -14,7 +14,7 @@ import * as msteams from '../chat/msteams'
 import * as o365Dialog from './dialogs/subscription-card-dialogs'
 import * as botInfoDialogs from './dialogs/bot-info-dialogs'
 import * as subscriptionDialogs from './dialogs/subscription-dialogs'
-
+import * as express from 'express';
 
 // *** SETUP ***
 // Create bot connector
@@ -22,6 +22,10 @@ var connector = new teams.TeamsChatConnector({
     appId: process.env.MICROSOFT_APP_ID || "",
     appPassword: process.env.MICROSOFT_APP_PASSWORD || ""
 });
+
+function init(app: express.Application) {
+    app.post('/api/bot/messages', connector.listen());
+}
 
 // Create bot
 var bot = new botbuilder.UniversalBot(connector);
@@ -342,6 +346,7 @@ function sendJibeEvent(address: botbuilder.IAddress, messageInfo: models.Message
 }
 
 export {
+    init,
     connector,
     bot,
     sendActionableCard,
