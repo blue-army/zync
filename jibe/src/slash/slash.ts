@@ -2,14 +2,17 @@ import * as express from 'express';
 
 function avatar(req: express.Request, res: express.Response) {
 
-    console.log(req.body);
-    
+    // verify request
+    if (req.body['token'] != 'LFAeYBPsS5rlo2WbYxCnxPyO') {
+        return res.send(404);
+    }
+
     res.json({
         "response_type": "ephemeral",
         "text": "iroh",
         "attachments": [{
             "fallback": "Iroh",
-            "image_url": "https://jibe.azurewebsites.net/assets/images/activities/" + "bha_drilling_string_1.png",
+            "image_url": "https://jibe.azurewebsites.net/assets/images/activities/" + req.body["text"] + ".png",
         }]
     })
 }
