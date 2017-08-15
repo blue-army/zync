@@ -9,9 +9,7 @@ function avatar(req: express.Request, res: express.Response) {
 
     res.json({
         "response_type": "ephemeral",
-        "text": "iroh",
         "attachments": [{
-            "fallback": "Iroh",
             "image_url": "https://jibe.azurewebsites.net/assets/images/activities/" + req.body["text"] + ".png",
         }]
     })
