@@ -6,8 +6,7 @@ function avatar(_req: express.Request, res: express.Response) {
         "text": "iroh",
         "attachments": [{
             "fallback": "Iroh",
-            "image_url": "http://files.softicons.com/download/culture-icons/avatar-minis-icons-by-joumana-medlej/png/48x48/Earthbender%20Bumi.png",
-            "thumb_url": "http://files.softicons.com/download/culture-icons/avatar-minis-icons-by-joumana-medlej/png/48x48/General%20Iroh.png"
+            "image_url": "http://files.softicons.com/download/culture-icons/avatar-minis-icons-by-joumana-medlej/png/64x64/General%20Iroh.png",
         }]
     })
 }
