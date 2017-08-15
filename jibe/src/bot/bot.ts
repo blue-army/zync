@@ -4,8 +4,7 @@ import * as conversation from '../bot/conversation'
 import * as models from '../models/models'
 import * as adaptiveCards from 'microsoft-adaptivecards'
 import * as utils from './bot-utils'
-import * as jibe from '../service/jibe'
-import * as settingsCards from './actionableCards/settings-cards'
+import * as slack from '../chat/slack'
 import * as drillplan from '../plugins/drillplan'
 import * as subscriptionDialogs from './dialogs/subscription-dialogs'
 import * as slackCards from './slack-messages'
@@ -133,7 +132,7 @@ bot.dialog('sendO365Card', o365Dialog.dialog)
 connector.onO365ConnectorCardAction(o365Dialog.cardActionHandler);
 
 
-// *** SEND AN ADAPTIVECARD ***
+// *** SEND A SAMPLE ADAPTIVECARD ***
 // Send an adaptiveCard displaying current settings
 // AdaptiveCards are not currently supported in teams, but supported by other channels
 bot.dialog('adaptiveCard', async function (session) {
@@ -200,6 +199,19 @@ bot.dialog('PingMe', function (session) {
 });
 
 
+// Demonstrates a dropdown menu for Slack
+bot.dialog('Dropdown', [
+    function (session) {
+        let options = ["asdf", "2", "333"];
+        slack.dropdownPrompt(session, "This is a dropdown!", options);
+    },
+    function (session, results) {
+        session.endDialog("You selected: " + results.response.entity);
+    }
+]).triggerAction({
+    matches: /dropdown/i,
+});
+
 
 // *** HANDLE CONVERSATION UPDATES ***
 // Triggered on conversationUpdate event, which is sent when:
@@ -255,7 +267,7 @@ bot.on('conversationUpdate', function (message) {
     }
 
     // If the bot is being removed, send a goodbye message
-    if (message.membersRemoved && message.membersRemoved.findIndex((m: botbuilder.IIdentity) => {return m.id === message.address.bot.id;}) >= 0) {
+    if (message.membersRemoved && message.membersRemoved.findIndex((m: botbuilder.IIdentity) => { return m.id === message.address.bot.id; }) >= 0) {
         bot.send(new botbuilder.Message()
             .address(message.address)
             .text('Goodbye everyone!')

@@ -27,7 +27,7 @@ async function o365CardDialog(session: builder.Session) {
   session.endDialog();
 }
 
-// example for o365 connector actionable card
+// Handles o365 card callbacks
 var o365CardActionHandler = function (event: builder.IEvent, query: teams.IO365ConnectorCardActionQuery, callback: (err: Error, result: any, statusCode: number) => void): void {
   let userName = event.address.user.name;
   let body = JSON.parse(query.body);
