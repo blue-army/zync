@@ -1,6 +1,6 @@
 import * as botbuilder from 'botbuilder'
 import * as teams from 'botbuilder-teams'
-import * as adaptiveCards from 'microsoft-adaptivecards'
+import * as adaptiveCards from 'microsoft-adaptivecards/built/schema'
 import * as conversation from '../bot/conversation'
 import * as models from '../models/models'
 import * as utils from './bot-utils'
@@ -300,7 +300,7 @@ function sendActionableCard(address: botbuilder.IAddress, card: any) {
 
 // Send AdaptiveCard
 // Not yet supported by teams, but is supported by other chat clients
-function sendAdaptiveCard(address: botbuilder.IAddress, card: adaptiveCards.AdaptiveCard) {
+function sendAdaptiveCard(address: botbuilder.IAddress, card: adaptiveCards.ICard) {
     bot.send(new botbuilder.Message()
         .address(address)
         .addAttachment({

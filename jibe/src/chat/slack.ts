@@ -1,7 +1,7 @@
 import * as botbuilder from 'botbuilder';
 import * as models from '../models/models'
 import * as adaptiveCards from 'microsoft-adaptivecards/built/schema'
-import * as conversation from '../conversation'
+import * as conversation from '../bot/conversation'
 
 interface dropdownOption {
     text: string;
