@@ -30,7 +30,7 @@ function sendSubscriptions(session: botbuilder.Session, subs: conversation.Subsc
         let card = teamsCards.viewSettingsCard(session, subs);
         msg.addAttachment(card);
     }
-    
+
     // For all other platforms, send an AdaptiveCard
     else {
         let card = slack.viewSettingsCard(subs);
@@ -78,7 +78,13 @@ bot.dialog('selectProject', [
         jibe.getProjectList()
             .then((projects) => {
                 let projectNames = projects.map((p) => p.name);
-                botbuilder.Prompts.choice(session, 'Which project should we update?', projectNames, { listStyle: botbuilder.ListStyle.list });
+                if (session.message.address.channelId === "slack") {
+                    // If using slack, send a dropdown menu
+                    slack.dropdownPrompt(session, 'Which project should we update?', projectNames);
+                } else {
+                    // Otherwise, display the options as a list
+                    botbuilder.Prompts.choice(session, 'Which project should we update?', projectNames, { listStyle: botbuilder.ListStyle.list });
+                }
             })
             .catch(() => {
                 session.endDialog("Oops, there was a problem loading the project selection. Please try again later.")
@@ -191,11 +197,16 @@ bot.dialog('project/unsubscribe', [
         // Send the list of events that they are currently subscribed to
         conversation.getProjectSubscriptions(session.conversationData.channelId, session.dialogData.project.id)
             .then((eventNames) => {
-                // End dialog if the user is not subscribed to any events from the given project
                 if (eventNames.length > 0) {
                     eventNames.push("None");
-                    botbuilder.Prompts.choice(session, "Which event would you like to unsubscribe from?", eventNames, { listStyle: botbuilder.ListStyle.list });
+                    // Prompt the user to select an event
+                    if (session.message.address.channelId === "slack") {
+                        slack.dropdownPrompt(session, "Which event would you like to unsubscribe from?", eventNames);
+                    } else {
+                        botbuilder.Prompts.choice(session, "Which event would you like to unsubscribe from?", eventNames, { listStyle: botbuilder.ListStyle.list });
+                    }
                 } else {
+                    // End dialog if the user is not subscribed to any events from the given project
                     session.endDialog("You are not subscribed to any events from %s.", session.dialogData.project.name);
                 }
             })
@@ -243,7 +254,11 @@ bot.dialog('project/subscribe', [
                 } else {
                     // Send the list of events that they can subscribe to
                     options.push("None");
-                    botbuilder.Prompts.choice(session, "Which event would you like to subscribe to?", options, { listStyle: botbuilder.ListStyle.list });
+                    if (session.message.address.channelId === "slack") {
+                        slack.dropdownPrompt(session, "Which event would you like to subscribe to?", options);
+                    } else {
+                        botbuilder.Prompts.choice(session, "Which event would you like to subscribe to?", options, { listStyle: botbuilder.ListStyle.list });
+                    }
                 }
             })
             .catch(() => {
@@ -267,25 +282,6 @@ bot.dialog('project/subscribe', [
         }
     }
 ])
-
-
-// Display the settings card
-// bot.dialog('sendSettingsCard', async function (session) {
-//     let card;
-//     try {
-//         card = await settingsCards.viewSettingsCard(session);
-//     } catch (e) {
-//         session.send("Sorry, we were unable to retrieve your settings. Please try again later.");
-//         return;
-//     }
-//     var msg = new teams.TeamsMessage(session)
-//         .summary("A sample O365 actionable card")
-//         .addAttachment(card);
-//     session.send(msg);
-//     session.endDialog();
-// }).triggerAction({
-//     matches: /settings ?card/i,
-// });
 
 
 export function createLibrary() {

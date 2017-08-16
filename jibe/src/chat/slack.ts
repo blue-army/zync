@@ -8,27 +8,29 @@ interface dropdownOption {
     value: string;
 }
 
+function getThreadTS(session: botbuilder.Session) {
+    let cidSegments = session.message.address.conversation.id.split(':');
+    return cidSegments[cidSegments.length - 1];
+}
+
 // Prompt the user to select a choice from a dropdown menu
 // Only works in Slack
-function dropdownPrompt(session: botbuilder.Session, message: string, choices: (string|dropdownOption)[]) {
-    let stringOptions = choices.map((choice) => {
-        if (typeof choice === 'string') {
-            return choice;
-        } else {
-            return choice.value;
+// choices = choices to display in dropdown
+// values (optional) = list of values to return when choices are selected. Must be same length as choices.
+function dropdownPrompt(session: botbuilder.Session, message: string, choices: string[], values?: string[]) {
+
+    // Create dropdown menu options (each option needs both a 'text' field and a 'value' field)
+    let dropdownOptions = choices.map((choice, index) => {
+        let val = choice;
+        if (values) {
+            val = values[index];
+        }
+        return {
+            text: choice,
+            value: val
         }
     })
-    
-    let dropdownOptions = choices.map((choice) => {
-        if (typeof choice === 'string') {
-            return {
-                text: choice,
-                value: choice
-            }
-        } else {
-            return choice;
-        }
-    });
+
     let dropdown = {
         "text": "",
         "response_type": "in_channel",
@@ -46,15 +48,17 @@ function dropdownPrompt(session: botbuilder.Session, message: string, choices: (
                         "type": "select",
                         "options": dropdownOptions
                     }
-                ]
+                ],
+                "thread_ts": getThreadTS(session)
             }
-        ]
+        ],
+        "thread_ts": getThreadTS(session)
     }
     let msg = new botbuilder.Message(session)
         .sourceEvent({
             "slack": dropdown
         });
-    botbuilder.Prompts.choice(session, msg, stringOptions, { listStyle: botbuilder.ListStyle.none });
+    botbuilder.Prompts.choice(session, msg, choices, { listStyle: botbuilder.ListStyle.none });
 }
 
 // Creates a Slack message displaying information about an incoming event
@@ -150,8 +154,53 @@ function viewSettingsCard(subscriptions: conversation.Subscription[]): adaptiveC
 }
 
 
+// Middleware function that creates a new thread when responding to a top-level user comment in a multi-user slack channel
+// This is the only case in which we have to modify the address - once the thread is created, the bot will automatically reply within the thread
+function manageThreadingSession(session: botbuilder.Session) {
+    console.log("Conversation: ", session.message.address.conversation)
+    // Check that we are in a group conversation and the relevant slack-specific properties are defined. 
+    if (session.message.address.channelId === "slack" && session.message.address.conversation.isGroup && session.message.sourceEvent && session.message.sourceEvent.SlackMessage) {
+        let event = session.message.sourceEvent.SlackMessage.event;
+        if (event) {
+            // Detect top-level comments (slack comments without a thread_ts property)
+            if (!event.thread_ts && event.ts) {
+                // append root-level comment timestamp to conversation ID to start a new thread
+                session.message.address.conversation.id += ':' + event.ts;
+                event.thread_ts = event.ts;
+                // Delete message id (allows separate threads to have separate conversation states)
+                if (session.message.address.id) {
+                    delete session.message.address.id;
+                }
+                console.log("reassigned group ID: " + session.message.address.conversation.id);
+            }
+        }
+    }
+}
+
+function manageThreading(event: botbuilder.IEvent) {
+    console.log("Conversation: ", event.address.conversation)
+    // Check that we are in a group conversation and the relevant slack-specific properties are defined. 
+    if (event.address.channelId === "slack" && event.address.conversation.isGroup && event.sourceEvent && event.sourceEvent.SlackMessage) {
+        let slackEvent = event.sourceEvent.SlackMessage.event;
+        if (slackEvent) {
+            // Detect top-level comments (slack comments without a thread_ts property)
+            if (!slackEvent.thread_ts && slackEvent.ts) {
+                // append root-level comment timestamp to conversation ID to start a new thread
+                event.address.conversation.id += ':' + slackEvent.ts;
+                slackEvent.thread_ts = slackEvent.ts;
+                // Delete message id (allows separate threads to have separate conversation states)
+                if (event.address.id) {
+                    delete event.address.id;
+                }
+                console.log("reassigned group ID: " + event.address.conversation.id);
+            }
+        }
+    }
+}
+
 export {
     dropdownPrompt,
     jibeEvent,
-    viewSettingsCard
+    viewSettingsCard,
+    manageThreading
 }
