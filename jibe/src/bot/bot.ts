@@ -3,7 +3,6 @@ import * as teams from 'botbuilder-teams'
 import * as adaptiveCards from 'microsoft-adaptivecards/built/schema'
 import * as conversation from '../bot/conversation'
 import * as models from '../models/models'
-import * as utils from './bot-utils'
 import * as drillplan from '../plugins/drillplan'
 
 // Import channel-specific functionality
@@ -50,7 +49,7 @@ bot.use({
     receive: function (event, next) {
         if (event.type === "message" && event.source === "slack" && event.address.conversation.isGroup && ('entities' in event)) {
             // Check whether the bot was mentioned in the incoming message
-            let mentioned = event.entities.findIndex((entity) => {
+            let mentioned = (<any>event).entities.findIndex((entity: any) => {
                 return (entity.type === "mention" && entity.mentioned.id === event.address.bot.id)
             });
             // Do not continue processing if this is a group message in slack that does not @mention jibe 
@@ -64,41 +63,40 @@ bot.use({
     },
     // Middleware for incoming messages (user -> bot)
     botbuilder: function (session, next) {
-        // Do not continue processing if this is a group message that does not @mention jibe 
-        // (this is to prevent the bot from responding to unrelated messages in slack)
-        if (session.message.address.conversation.isGroup && !('textWithBotMentions' in session.message)) {
-            console.log("In group and no bot mentions");
-            return;
-        }
-        // Middleware to manage thread creation in Slack
-        //slack.manageThreading(session);
         saveChannelId(session);
         next();
     },
-    send: function (event, next) {
-        next();
-    },
+    // Middleware for outgoing messages (bot -> user)
+    // send: function (event, next) {
+    //     next();
+    // },
 
-})
+});
 
 // Add middleware to send typing when we receive a message
-bot.use(botbuilder.Middleware.sendTyping())
+bot.use(botbuilder.Middleware.sendTyping());
 
-// Middleware for storing each conversation's channelId 
+// Middleware for storing each conversation's channelId
+// This channelId is used when storing event subscriptions in the Jibe database
+// It doesn't have to be the same as the chat-client-specific channelId
 function saveChannelId(session: botbuilder.Session) {
-    // If we don't already have the channelId for this conversation, 
-    // extract it and save it in conversationData
+    // If we don't already have the channelId for this conversation, extract it and save it in conversationData
     if (!session.conversationData.channelId) {
-        // extract the channelId from the conversationId in the address
         var chId = session.message.address.conversation.id;
         if (session.message.address.channelId === "msteams" && session.message.address.conversation.isGroup) {
-            chId = utils.extractId(session.message.address.conversation.id);
+            // For teams, use Microsoft channelId
+            chId = msteams.getChannelId(session.message.address);
+        }
+        else if (session.message.address.channelId === "slack") {
+            // For slack, use the slack-specific channelId (without the thread timestamp suffix)
+            chId = slack.getSlackChannelId(session.message.address);
         }
         else if (session.message.address.channelId === "emulator") {
+            // We just use the emulator for testing, so we don't want multiple emulator addresses cluttering things up
             chId = "emulator";
         }
         session.conversationData.channelId = chId;
-        // session.send("Saving your channelId: %s", session.conversationData.channelId);
+        console.log("Saving channelId: " + session.conversationData.channelId);
     }
 }
 
@@ -251,27 +249,6 @@ bot.dialog('Dropdown', [
 // - a user is added to the conversation
 // - the bot is added to the conversation
 bot.on('conversationUpdate', function (message) {
-
-    // Extract team and channel info if the message was sent from MS Teams
-    if (message.address.channelId === "msteams") {
-
-        // TODO: check if this is a group chat before channel extraction
-        var channel = utils.extractId(message.address.conversation.id);
-
-        // This team ID is the ID of the project's 'general' channel
-        var team = utils.extractId(message.sourceEvent.team.id);
-
-        bot.send(new botbuilder.Message()
-            .address(message.address)
-            .text("Team: %s <br/> Channel: %s", team, channel));
-    }
-
-    // Display the sourceEvent
-    if (message.sourceEvent) {
-        bot.send(new botbuilder.Message()
-            .address(message.address)
-            .text("message.sourceEvent: " + JSON.stringify(message.sourceEvent)));
-    }
 
     if (message.membersAdded && message.membersAdded.length > 0) {
 

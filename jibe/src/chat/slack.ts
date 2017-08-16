@@ -8,9 +8,42 @@ interface dropdownOption {
     value: string;
 }
 
-function getThreadTS(session: botbuilder.Session) {
-    let cidSegments = session.message.address.conversation.id.split(':');
-    return cidSegments[cidSegments.length - 1];
+// Regex for extracting segments of the conversation id
+const conversationlIdRegex = /(.{9}:.{9}:.{9}):(\d+\.\d+)/;
+
+// Examines session address to determine whether it referrs to a thread
+function isThread(session: botbuilder.Session): boolean {
+    let matches = session.message.address.conversation.id.match(conversationlIdRegex);
+    if (matches) {
+        return true;
+    }
+    return false;
+}
+
+// Extracts thread timestamp from session address
+// Returns an empty string if no timestamp found
+function getThreadTS(session: botbuilder.Session): string {
+    let matches = session.message.address.conversation.id.match(conversationlIdRegex);
+    if (matches) {
+        // return the timestamp, which is the last segment of the conversation address
+        return matches[2];
+    } else {
+        return "";
+    }
+}
+
+// Returns the slack channel's ID based on the session address
+// If the address referrs to a thread within the channel, this returns the conversationId for the channel itself
+// If the address already referrs to a channel, this returns the existing conversationId
+function getSlackChannelId(address: botbuilder.IAddress): string {
+    let matches = address.conversation.id.match(conversationlIdRegex);
+    if (matches) {
+        // return the channel's ID, group 1 of the regex
+        return matches[1];
+    } else {
+        // If no matches, then the id does not referr to a thread and we should return the full id
+        return address.conversation.id;
+    }
 }
 
 // Prompt the user to select a choice from a dropdown menu
@@ -153,30 +186,8 @@ function viewSettingsCard(subscriptions: conversation.Subscription[]): adaptiveC
     return card;
 }
 
-
 // Middleware function that creates a new thread when responding to a top-level user comment in a multi-user slack channel
 // This is the only case in which we have to modify the address - once the thread is created, the bot will automatically reply within the thread
-function manageThreadingSession(session: botbuilder.Session) {
-    console.log("Conversation: ", session.message.address.conversation)
-    // Check that we are in a group conversation and the relevant slack-specific properties are defined. 
-    if (session.message.address.channelId === "slack" && session.message.address.conversation.isGroup && session.message.sourceEvent && session.message.sourceEvent.SlackMessage) {
-        let event = session.message.sourceEvent.SlackMessage.event;
-        if (event) {
-            // Detect top-level comments (slack comments without a thread_ts property)
-            if (!event.thread_ts && event.ts) {
-                // append root-level comment timestamp to conversation ID to start a new thread
-                session.message.address.conversation.id += ':' + event.ts;
-                event.thread_ts = event.ts;
-                // Delete message id (allows separate threads to have separate conversation states)
-                if (session.message.address.id) {
-                    delete session.message.address.id;
-                }
-                console.log("reassigned group ID: " + session.message.address.conversation.id);
-            }
-        }
-    }
-}
-
 function manageThreading(event: botbuilder.IEvent) {
     console.log("Conversation: ", event.address.conversation)
     // Check that we are in a group conversation and the relevant slack-specific properties are defined. 
@@ -188,7 +199,7 @@ function manageThreading(event: botbuilder.IEvent) {
                 // append root-level comment timestamp to conversation ID to start a new thread
                 event.address.conversation.id += ':' + slackEvent.ts;
                 slackEvent.thread_ts = slackEvent.ts;
-                // Delete message id (allows separate threads to have separate conversation states)
+                // Delete message id (to allow separate threads to have separate conversation states)
                 if (event.address.id) {
                     delete event.address.id;
                 }
@@ -199,8 +210,12 @@ function manageThreading(event: botbuilder.IEvent) {
 }
 
 export {
+    // Cards/messages
     dropdownPrompt,
     jibeEvent,
     viewSettingsCard,
-    manageThreading
+
+    // Slack-specific utilities
+    manageThreading,
+    getSlackChannelId
 }

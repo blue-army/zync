@@ -1,6 +1,8 @@
 import * as builder from 'botbuilder';
 import * as teams from 'botbuilder-teams';
-import * as logger from '../service/logger'
+import * as logger from '../service/logger';
+import * as slack from '../chat/slack';
+import * as msteams from '../chat/msteams';
 var YAML = require('yamljs');
 
 export interface IDialog {
@@ -8,35 +10,36 @@ export interface IDialog {
     dialog: (session: builder.Session) => void,
 }
 
-// Extract the real channelId from the ID returned by teams
-function extractId(teamsId: string) {
-    var re = /^\d\d:(\S+)@thread\.skype/;
-    var results = re.exec(teamsId);
-    if (results && results.length > 0) {
-        return results[1];          // return extracted ID
-    }
-    console.log("Could not extract an ID from ", teamsId);
-    return teamsId;
-}
-
 // Extract and save the channel address
 function getChannelAddress(session: builder.Session): builder.IAddress {
     // This preprocessing is only necessary for MS Teams addresses because they reference a thread within the channel
     if (!session.conversationData.channelAddress) {
         // perform deep copy of address
-        session.conversationData.channelAddress = JSON.parse(JSON.stringify(session.message.address));
+        let address: builder.IAddress = JSON.parse(JSON.stringify(session.message.address));
 
-        // remove thread-specific suffix from channelId
-        session.conversationData.channelAddress.conversation.id = session.message.address.conversation.id.split(';')[0];
+        // If we are using an app that supports threads, extract the channel ID from the thread ID
+        if (session.message.address.channelId === "msteams") {
+            address.conversation.id = msteams.getTeamsChannelId(address);
+        } else if (session.message.address.channelId === "slack") {
+            address.conversation.id = slack.getSlackChannelId(address);
+        }
 
-        // Remove user info (not needed for routing)
-        delete session.conversationData.channelAddress.user;
+        // Remove user info (not needed for routing to group chats)
+        if (address.conversation.isGroup) {
+            delete address.user;
+        }
 
         // delete 'id' entry (links to specific context)
-        delete session.conversationData.channelAddress.id;
+        if ('id' in address) {
+            delete address.id;
+        }
+
+        // Save in conversation data
+        session.conversationData.channelAddress = address;
     }
     return session.conversationData.channelAddress;
 }
+
 
 // *** FORMATTING ***
 // Transform JSON object into markdown-formatted bullet points
@@ -110,7 +113,6 @@ function fetchChannelList(session: builder.Session, connector: teams.TeamsChatCo
 }
 
 export {
-    extractId,
     getChannelAddress,
 
     // Teams-specific info retrieval
@@ -120,5 +122,5 @@ export {
     // Message Formatting
     JsonToBullets,
     JsonToMarkdown,
-    JsonToYamlMd
+    JsonToYamlMd,
 }

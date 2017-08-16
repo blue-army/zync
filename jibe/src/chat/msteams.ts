@@ -1,12 +1,48 @@
 import * as teams from 'botbuilder-teams';
-import * as builder from 'botbuilder';
+import * as botbuilder from 'botbuilder';
 import * as models from '../models/models';
 import * as conversation from '../bot/conversation'
 import * as drillplan from '../plugins/drillplan'
 
 
+// Extract the real channelId from the ID returned by teams
+// This is NOT the MSTeams channelId, this is the underlying channel ID that can be used with the Microsoft Graph API
+function getChannelId(address: botbuilder.IAddress) {
+    let teamsId = address.conversation.id;
+    var re = /^\d\d:(\S+)@thread\.skype/;
+    var results = re.exec(teamsId);
+    if (results && results.length > 0) {
+        return results[1];          // return extracted ID
+    }
+    console.log("Could not extract an ID from ", teamsId);
+    return teamsId;
+}
+
+// Returns the MSTeams channel's ID based on the session address
+// If the address referrs to a thread within the channel, this returns the conversationId for the channel itself
+// If the address already referrs to a channel, this returns the existing conversationId
+function getTeamsChannelId(address: botbuilder.IAddress) {
+    return address.conversation.id.split(';')[0];
+}
+
+function getChannelAddress(session: botbuilder.Session) {
+    // perform deep copy of address
+    let address = JSON.parse(JSON.stringify(session.message.address));
+
+    // remove thread-specific timestamp suffix from channelId, if necessary
+    session.conversationData.channelAddress.conversation.id = session.message.address.conversation.id.split(';')[0];
+
+    // Remove user info (not needed for routing to a group chat)
+    if (address.conversation.isGroup) {
+        delete address.user;
+    }
+    
+    // delete 'id' entry (links to specific context)
+    delete session.conversationData.channelAddress.id;
+}
+
 // Create a card that allows the user to edit their event subscriptions
-function changeSettingsCard(session: builder.Session, projects: models.ProjectInfo[]) {
+function changeSettingsCard(session: botbuilder.Session, projects: models.ProjectInfo[]) {
 
     // Create list of projects to display
     let projectChoices = projects.map((proj) => {
@@ -82,7 +118,7 @@ function changeSettingsCard(session: builder.Session, projects: models.ProjectIn
 }
 
 // Create a card that displays the current channel's event subscriptions
-function viewSettingsCard(session: builder.Session, subscriptions: conversation.Subscription[]) {
+function viewSettingsCard(session: botbuilder.Session, subscriptions: conversation.Subscription[]) {
 
     // Create 'facts' to display subscription info for each project
     let facts = subscriptions.map((sub) => {
@@ -168,7 +204,13 @@ var sampleActionableCard = {
 
 
 export {
+    // Cards
     changeSettingsCard,
     viewSettingsCard,
-    sampleActionableCard
+    sampleActionableCard,
+
+    // Utils
+    getChannelId,
+    getChannelAddress,
+    getTeamsChannelId
 }
