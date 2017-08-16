@@ -145,6 +145,47 @@ function viewSettingsCard(session: botbuilder.Session, subscriptions: conversati
     return card;
 }
 
+function jibeEventCard(messageInfo: models.MessageInfo): teams.O365ConnectorCard {
+
+    // Section displaying event details
+    let eventInfoSection = new teams.O365ConnectorCardSection()
+        .activityImage(messageInfo.typeImageUrl)
+        .activityTitle(messageInfo.subtitle1)
+        .activitySubtitle(messageInfo.subtitle2);
+
+    // Section displaying user's name and image
+    let userInfoSection = new teams.O365ConnectorCardSection()
+        .activityTitle("Changed by " + messageInfo.ownerFullName)
+        .activitySubtitle('*"' + messageInfo.comments + '"*');
+
+    // Detect malformed/empty image urls and replace them with a default image
+    // We check image url formatting because image urls that do not begin with 'http://' or 'https://' (including empty strings) will cause the request to be rejected by ms teams with Error: 400 Bad Request.
+    if (messageInfo.userImageUrl && messageInfo.userImageUrl.search("^https?:\/\/") === 0) {
+        userInfoSection.activityImage(messageInfo.userImageUrl);
+    } else {
+        userInfoSection.activityImage("https://jibe.azurewebsites.net/assets/images/user_symbol_blue_small.png")
+    }
+
+    // Create settings button
+    let settingsButton = new teams.O365ConnectorCardViewAction()
+        .name("\u2699")
+        .target(messageInfo.actionUrl);
+
+    // Create 'launch application' button
+    let launchButton = new teams.O365ConnectorCardViewAction()
+        .name("Launch Application")
+        .target(messageInfo.actionUrl);
+
+    // Create full card
+    let card = new teams.O365ConnectorCard()
+        .summary("Event Notification")
+        .themeColor("0078D7")
+        .title(messageInfo.activityEntityType + ': ' + messageInfo.entityName)
+        .sections([eventInfoSection, userInfoSection])
+        .potentialAction([settingsButton, launchButton]);
+    return card;
+}
+
 // A sample actionable card
 var sampleActionableCard = {
     "@type": "MessageCard",
@@ -208,6 +249,7 @@ export {
     changeSettingsCard,
     viewSettingsCard,
     sampleActionableCard,
+    jibeEventCard,
 
     // Utils
     getChannelId,

@@ -70,7 +70,6 @@ bot.use({
     // send: function (event, next) {
     //     next();
     // },
-
 });
 
 // Add middleware to send typing when we receive a message
@@ -233,7 +232,7 @@ bot.dialog('PingMe', function (session) {
 bot.dialog('Dropdown', [
     function (session) {
         let options = ["asdf", "2", "333"];
-        slack.dropdownPrompt(session, "This is a dropdown!", options);
+        slack.dropdownPrompt(session, "This is a dropdown!", "Pick one ...", options);
     },
     function (session, results) {
         session.endDialog("You selected: " + results.response.entity);
@@ -335,12 +334,12 @@ function sendSlackMessage(address: botbuilder.IAddress, card: any) {
 function sendJibeEvent(address: botbuilder.IAddress, messageInfo: models.MessageInfo) {
     // If sending to Microsoft Teams, send an Actionable Card
     if (address.channelId === 'msteams') {
-        let card = drillplan.createO365MessageCard(messageInfo);
+        let card = msteams.jibeEventCard(messageInfo);
         sendActionableCard(address, card);
     }
     // If sending to Slack, send a slack-formatted message
     else if (address.channelId === 'slack') {
-        let card = slack.jibeEvent(messageInfo);
+        let card = slack.jibeEventCard(messageInfo);
         sendSlackMessage(address, card);
     }
     else {

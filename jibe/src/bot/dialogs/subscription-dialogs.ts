@@ -80,7 +80,7 @@ bot.dialog('selectProject', [
                 let projectNames = projects.map((p) => p.name);
                 if (session.message.address.channelId === "slack") {
                     // If using slack, send a dropdown menu
-                    slack.dropdownPrompt(session, 'Which project should we update?', projectNames);
+                    slack.dropdownPrompt(session, 'Which project should we update?', "Pick a project ...", projectNames);
                 } else {
                     // Otherwise, display the options as a list
                     botbuilder.Prompts.choice(session, 'Which project should we update?', projectNames, { listStyle: botbuilder.ListStyle.list });
@@ -201,7 +201,7 @@ bot.dialog('project/unsubscribe', [
                     eventNames.push("None");
                     // Prompt the user to select an event
                     if (session.message.address.channelId === "slack") {
-                        slack.dropdownPrompt(session, "Which event would you like to unsubscribe from?", eventNames);
+                        slack.dropdownPrompt(session, "Which event would you like to unsubscribe from?", "Select an event ...", eventNames);
                     } else {
                         botbuilder.Prompts.choice(session, "Which event would you like to unsubscribe from?", eventNames, { listStyle: botbuilder.ListStyle.list });
                     }
@@ -255,7 +255,7 @@ bot.dialog('project/subscribe', [
                     // Send the list of events that they can subscribe to
                     options.push("None");
                     if (session.message.address.channelId === "slack") {
-                        slack.dropdownPrompt(session, "Which event would you like to subscribe to?", options);
+                        slack.dropdownPrompt(session, "Which event would you like to subscribe to?", "Select an event ...", options);
                     } else {
                         botbuilder.Prompts.choice(session, "Which event would you like to subscribe to?", options, { listStyle: botbuilder.ListStyle.list });
                     }

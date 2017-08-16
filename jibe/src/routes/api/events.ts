@@ -6,6 +6,7 @@ import * as rp from 'request-promise';
 import * as express from 'express';
 import * as bot from "../../bot/bot"
 import * as drillplan from "../../plugins/drillplan"
+import * as msteams from '../../chat/msteams'
 
 // handles GET requests
 function list_events(_req: express.Request, res: express.Response) {
@@ -67,7 +68,7 @@ async function routeEvent(event_info: models.EventInfo) {
 
     // Create card to send
     let messageInfo = drillplan.createMessageInfo(event_info);
-    let card = drillplan.createO365MessageCard(messageInfo);
+    let card = msteams.jibeEventCard(messageInfo);
     let cardJson = card.toAttachment().content;
 
     // fetch project information
