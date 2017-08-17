@@ -43,7 +43,7 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
     ```
     lt --port 8000 --subdomain "jibe"
     ```
-    The `--port` parameter should match your local server's port number.  Since we provided a custom subdomain, the resulting publically accessible url will be https://jibe.localtunnel.me (if it's available).  
+    The `--port` parameter should match your local server's port number.  Since we provided a custom subdomain, our publically accessible url will be https://jibe.localtunnel.me (if it's available).  
 
 
 
