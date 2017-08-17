@@ -104,11 +104,12 @@ async function jibeCommand(req: express.Request, res: express.Response) {
         case "projects":
             attachment = await listProjects();
             break;
+        case "commands":
         case "help":
             attachment = help();
             break;
         default:
-            slashMessage.text = "We weren't sure what you meant by " + req.body.text + ". Try one of these commands: ";
+            slashMessage.text = "We weren't sure what you meant by '" + req.body.text + "'. Try one of these commands: ";
             attachment = help();
     }
 
