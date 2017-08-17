@@ -47,6 +47,7 @@ class SlackAttachmentField {
     short: boolean = false;
 }
 
+// Create a Slack attachment listing all current projects
 async function listProjects(projects?: models.ProjectInfo[]): Promise<SlackAttachment> {
     let attachment = new SlackAttachment();
     // Retrieve projects from db if they were not passed in
@@ -78,7 +79,8 @@ async function listProjects(projects?: models.ProjectInfo[]): Promise<SlackAttac
     return attachment;
 }
 
-async function describeProject(projectName: string) {
+// Create a Slack attachment describing the given project
+async function describeProject(projectName: string): Promise<SlackAttachment> {
     let attachment = new SlackAttachment();
     let projects: models.ProjectInfo[];
     try {
@@ -97,6 +99,8 @@ async function describeProject(projectName: string) {
     let project = projects.find((p) => {
         return p.name.toLowerCase() === projectName.toLowerCase();
     });
+
+    // If the user requested a project that was not found, display the full list of projects
     if (!project) {
         attachment = await listProjects(projects);
         attachment.pretext = "We did not find a project named '" + projectName + "'. This is the full list of projects: "
@@ -114,11 +118,11 @@ async function describeProject(projectName: string) {
     sourceField.short = true;
 
     let geoField = new SlackAttachmentField();
-    sourceField.title = "GeoHash";
-    sourceField.value = project.geohash;
-    sourceField.short = true;
+    geoField.title = "GeoHash";
+    geoField.value = project.geohash;
+    geoField.short = true;
 
-    // Create attachment
+    // Create project description attachment
     attachment.fallback = projectName;
     attachment.title = "Project " + projectName;
     attachment.title_link = "https://jibe.azurewebsites.net/my-projects";
@@ -127,29 +131,39 @@ async function describeProject(projectName: string) {
     return attachment;
 }
 
-// *** HELP MESSAGES
+// *** HELP MESSAGES ***
+// Default help message
 function help(): SlackAttachment {
     let attachment = new SlackAttachment();
     attachment.title = "Jibe Slash Commands";
-    let commands = [
-        "Projects: List all projects",
-        "Help: Display a list of valid commands"
-    ]
-    attachment.text = " - " + commands.join("\n - ");
+
+    // Summarize project-related commands
+    let projectsCommands = new SlackAttachmentField();
+    projectsCommands.title = "Project Commands";
+    projectsCommands.value = [
+        "Usage: /jibe projects <command>",
+        "command: list | describe | help"
+    ].join('\n');
+    
+    attachment.fields = [projectsCommands]
     return attachment;
 }
 
+// Help message for 'projects' command
 function projectsHelp(): SlackAttachment {
     let attachment = new SlackAttachment();
     attachment.title = "Project Commands";
     let lines = [
         "Usage: /jibe projects <command>",
-        "command: list | describe"
-    ]
+        "command: list | describe",
+        " - list: list all projects",
+        " - describe: describe a specific project"
+    ];
     attachment.text = lines.join("\n");
     return attachment;
 }
 
+// Help message for 'projects describe' command
 function projectDescribeHelp(projects: models.ProjectInfo[]): SlackAttachment {
     let attachment = new SlackAttachment();
     let projectNames = projects.map((p) => {
@@ -164,6 +178,7 @@ function projectDescribeHelp(projects: models.ProjectInfo[]): SlackAttachment {
     return attachment;
 }
 
+// *** ROUTING ***
 // Handle routing for 'projects' command
 async function projectCommand(commands: string[]): Promise<SlackAttachment> {
     let attachment: SlackAttachment;
