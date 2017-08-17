@@ -39,6 +39,13 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
 
 * in vscode create a new integrated terminal and run `nodemon --config auto-nodemon.json` from within the jibe folder. that will monitor the `src` folder for any changes and run a build script (`/scripts/auth.sh`). you can just leave that terminal running continuously.
 * to debug just hit F5 (or whatever your shortcut is to launch) the `jibe server` configuration. this will create another interated terminal running the `/dist/server.js` + attach the debugger. and it will automatically restart if there are any changes to the `dist` folder. one thing to note, that if you stop debugging it will NOT stop that running nodemon process, so you will still have to kill (`ctrl+c`) that explicitly.
+* To develop with [localtunnel](https://localtunnel.github.io/www/), first install Localtunnel with npm (`npm install -g localtunnel`).  Start your local server, then create the tunnel by running 
+    ```
+    lt --port 8000 --subdomain "jibe"
+    ```
+    The `--port` parameter should match your local server's port number.  Since we provided a custom subdomain, the resulting publically accessible url will be https://jibe.localtunnel.me (if it's available).  
+
+
 
 ## todo
 

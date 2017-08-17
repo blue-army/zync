@@ -103,7 +103,7 @@ async function describeProject(projectName: string): Promise<SlackAttachment> {
     // If the user requested a project that was not found, display the full list of projects
     if (!project) {
         attachment = await listProjects(projects);
-        attachment.pretext = "We did not find a project named '" + projectName + "'. This is the full list of projects: "
+        attachment.pretext = "We didn't find a project named '" + projectName + "'. This is the full list of projects: "
         return attachment;
     }
 
@@ -235,7 +235,7 @@ async function jibeCommand(req: express.Request, res: express.Response) {
             attachment = help();
             break;
         default:
-            slashMessage.text = "We weren't sure what you meant by '" + req.body.text + "'. Try one of these commands: ";
+            slashMessage.text = "We weren't sure what you meant by '" + commands[0] + "'. Try one of these commands: ";
             attachment = help();
     }
 
