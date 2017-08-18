@@ -68,6 +68,7 @@ async function register(req: express.Request, res: express.Response) {
                     path: event.rule.path,
                     expr: event.rule.expr,
                     webhook: webhook_url,
+                    channelId: "",
                 });
                 
                 project.routes.push(route);
