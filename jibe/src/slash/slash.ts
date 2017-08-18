@@ -2,6 +2,12 @@ import * as express from 'express';
 import * as jibe from '../service/jibe';
 import * as models from '../models/models';
 
+let avatars: Map<string, string>
+avatars.set('aang', 'Aang-256');
+avatars.set('iroh', 'GeneralIroh-256');
+avatars.set('tylee', 'TyLee-256');
+avatars.set('Toph', 'Toph-256');
+
 function avatar(req: express.Request, res: express.Response) {
 
     // verify request
@@ -9,10 +15,15 @@ function avatar(req: express.Request, res: express.Response) {
         return res.status(401).send("Unauthorized");
     }
 
+    let name = avatars.get(req.body["text"])
+    if (name === undefined) {
+        name = "Unknown-48"
+    }
+
     res.json({
         "response_type": "ephemeral",
         "attachments": [{
-            "image_url": "https://jibe.azurewebsites.net/assets/images/activities/" + req.body["text"] + ".png",
+            "image_url": "https://jibe.azurewebsites.net/assets/images/avatars/" + name + ".png",
         }]
     })
 }
