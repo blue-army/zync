@@ -1,12 +1,16 @@
 import * as express from 'express';
 import * as jibe from '../service/jibe';
 import * as models from '../models/models';
+import * as _ from 'lodash';
 
 let avatars = new Map<string, string>()
-avatars.set('aang', 'Aang-256');
-avatars.set('iroh', 'GeneralIroh-256');
-avatars.set('tylee', 'TyLee-256');
-avatars.set('Toph', 'Toph-256');
+avatars.set('aang', 'Aang-64');
+avatars.set('iroh', 'GeneralIroh-64');
+avatars.set('tylee', 'TyLee-64');
+avatars.set('toph', 'Toph-64');
+avatars.set('meng', 'Meng-64');
+avatars.set('suki', 'Suki-64');
+avatars.set('unknown', 'Unknown-48');
 
 function avatar(req: express.Request, res: express.Response) {
 
@@ -15,7 +19,8 @@ function avatar(req: express.Request, res: express.Response) {
         return res.status(401).send("Unauthorized");
     }
 
-    let name = avatars.get(req.body["text"])
+    let text = _.get<string>(req.body, 'text', 'unknown').toLowerCase();
+    let name = avatars.get(text)
     if (name === undefined) {
         name = "Unknown-48"
     }
