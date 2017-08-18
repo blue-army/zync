@@ -11,11 +11,6 @@ Swagger api [location](./config/swagger.json)
 * my tasks / my reviews on a teams tab
 * bot for Q & A
 
-## questions
-
-* common team for drill-plan (dpln) / drill-ops (dops)
-* what are the cross-app notifications
-
 ## misc
 
 ```bash
@@ -32,7 +27,7 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
 * possible to @mention in a message card - may not be possible in an actionable card
 * what drives the activity feed in Team
 * cannot create tabs for a channel via api
-* yeoman generator (https://www.npmjs.com/package/generator-teams)
+* [yeoman generator](https://www.npmjs.com/package/generator-teams)
 * building a bot walkthrough with Bill
 
 ## developers
@@ -116,6 +111,8 @@ docker run --rm -d -p 80:8080 swaggerapi/swagger-editor
 
 ## questions
 
+* common team for drill-plan (dpln) / drill-ops (dops)
+* what are the cross-app notifications
 * where do we want to host jibe wrt drill[plan|ops]?
 * integrate better with connector configuration dialog window
 * how do we re-configure a connector?
