@@ -147,16 +147,10 @@ async function describeProject(projectName: string): Promise<SlackAttachment> {
 function help(): SlackAttachment {
     let attachment = new SlackAttachment();
     attachment.title = "Jibe Slash Commands";
-
-    // Summarize project-related commands
-    let projectsCommands = new SlackAttachmentField();
-    projectsCommands.title = "Project Commands";
-    projectsCommands.value = [
-        "Usage: /jibe projects <command>",
-        "command: list | describe | help"
+    attachment.text = [
+        "Usage: /jibe <group>",
+        "group: projects"
     ].join('\n');
-    
-    attachment.fields = [projectsCommands]
     return attachment;
 }
 
