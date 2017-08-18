@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as jibe from '../service/jibe';
 import * as models from '../models/models';
 
-let avatars: Map<string, string>
+let avatars = new Map<string, string>()
 avatars.set('aang', 'Aang-256');
 avatars.set('iroh', 'GeneralIroh-256');
 avatars.set('tylee', 'TyLee-256');
