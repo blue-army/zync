@@ -25,22 +25,6 @@ function getTeamsChannelId(address: botbuilder.IAddress) {
     return address.conversation.id.split(';')[0];
 }
 
-function getChannelAddress(session: botbuilder.Session) {
-    // perform deep copy of address
-    let address = JSON.parse(JSON.stringify(session.message.address));
-
-    // remove thread-specific timestamp suffix from channelId, if necessary
-    session.conversationData.channelAddress.conversation.id = session.message.address.conversation.id.split(';')[0];
-
-    // Remove user info (not needed for routing to a group chat)
-    if (address.conversation.isGroup) {
-        delete address.user;
-    }
-    
-    // delete 'id' entry (links to specific context)
-    delete session.conversationData.channelAddress.id;
-}
-
 // Create a card that allows the user to edit their event subscriptions
 function changeSettingsCard(session: botbuilder.Session, projects: models.ProjectInfo[]) {
 
@@ -253,6 +237,5 @@ export {
 
     // Utils
     getChannelId,
-    getChannelAddress,
     getTeamsChannelId
 }
