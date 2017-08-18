@@ -51,7 +51,7 @@ function addRoute(project: models.ProjectInfo, channelId: string, eventName: str
             return r.channelId === channelId && r.expr === event.rule.expr;
         });
     if (match >= 0) {
-        console.log("Channel " + channelId + " is already subscribed to " + eventName + " events.")
+        logger.Info("Channel " + channelId + " is already subscribed to " + eventName + " events.")
         return;
     }
 
@@ -59,7 +59,6 @@ function addRoute(project: models.ProjectInfo, channelId: string, eventName: str
     let route = models.RouteInfo.fromObj({
         path: event.rule.path,
         expr: event.rule.expr,
-        channel: "",
         channelId: channelId,
         webhook: "",
     });

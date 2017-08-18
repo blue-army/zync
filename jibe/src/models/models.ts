@@ -63,7 +63,6 @@ class ProjectInfo {
 class RouteInfo {
     path: string;
     expr: string;
-    channel: string;
     webhook: string;
     channelId: string;
 
@@ -72,9 +71,8 @@ class RouteInfo {
 
         o.path = j['path'];
         o.expr = j['expr'];
-        o.channel = j['channel'];
         o.webhook = j['webhook'];
-        o.channelId = j['channelId']
+        o.channelId = j['channelId'];
 
         return o;
     }

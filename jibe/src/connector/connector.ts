@@ -67,7 +67,6 @@ async function register(req: express.Request, res: express.Response) {
                 let route = models.RouteInfo.fromObj({
                     path: event.rule.path,
                     expr: event.rule.expr,
-                    channel: "",
                     webhook: webhook_url,
                 });
                 

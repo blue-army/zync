@@ -72,7 +72,8 @@ async function routeEvent(event_info: models.EventInfo) {
     let cardJson = card.toAttachment().content;
 
     // fetch project information
-    let doc = await jibe.getProject(event_info.project)
+    let doc: models.ProjectInfo = await jibe.getProject(event_info.project);
+
     if (doc !== null) {
         let proj = models.ProjectInfo.fromObj(doc);
 
@@ -94,11 +95,10 @@ async function routeEvent(event_info: models.EventInfo) {
                 promises.push(rp(options));
             }
 
-            // also look for a matching channel with a webhook or bot address
-            if (route.channel || route.channelId) {
+            if (route.channelId) {
                 for (let c of proj.channels) {
-                    // check if the channel's id or name matches the channel info specified in the route
-                    if ((route.channel && c.name === route.channel) || (route.channelId && c.id === route.channelId)) {
+                    // check if the channel's id matches the channel info specified in the route
+                    if (c.id === route.channelId) {
                         // If the channel has an associated webhook, send card to it
                         if (c.webhook) {
                             options.uri = c.webhook;
@@ -106,12 +106,13 @@ async function routeEvent(event_info: models.EventInfo) {
                         }
                         // If the channel has a bot address, send the card to it via the bot
                         if (c.botaddress) {
-                            bot.sendJibeEvent(c.botaddress, messageInfo)
+                            bot.sendJibeEvent(c.botaddress, messageInfo);
                         }
                     }
                 }
             }
         }
+
         return Promise.all(promises);
     }
 
