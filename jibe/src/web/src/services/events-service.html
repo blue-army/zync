@@ -19,10 +19,11 @@
 </dom-module>
 
 <script>
-    Polymer({
-      is: 'events-service',
+  class EventsService extends Polymer.Element {
+    static get is() { return 'events-service'; }
 
-      properties: {
+    static get properties() {
+      return {
         eventsArray: {
           type: Array,
           value: []
@@ -40,34 +41,37 @@
           value: ""
         },
         headers: String
-      },
-
-      generateRequest: function() {
-        this.$.xhrEvents.generateRequest();
-      },
-
-      handleResponse: function(data) {
-        // GET for list of events
-        if (this.eventsMethod === "GET") {
-          this.eventsArray = data.detail.response;
-        }
-
-        if (this.eventsMethod === "PUT") {
-          // PUT for add new event
-          if (data.detail.response.name !== undefined) {
-            let events = this.eventsArray.slice();
-            events.push(data.detail.response);
-            this.eventsArray = events;
-          } else {
-            // PUT for send event via webhook
-          }
-        }
-
-        this.fire('events-response', data.detail);
-      },
-
-      handleError: function(e) {
-        console.log(e.detail.error.message);
       }
-    });
+    }
+
+    generateRequest() {
+      this.$.xhrEvents.generateRequest();
+    }
+
+    handleResponse(data) {
+      // GET for list of events
+      if (this.eventsMethod === "GET") {
+        this.eventsArray = data.detail.response;
+      }
+
+      if (this.eventsMethod === "PUT") {
+        // PUT for add new event
+        if (data.detail.response.name !== undefined) {
+          let events = this.eventsArray.slice();
+          events.push(data.detail.response);
+          this.eventsArray = events;
+        } else {
+          // PUT for send event via webhook
+        }
+      }
+
+      this.fire('events-response', data.detail);
+    }
+
+    handleError(e) {
+      console.log(e.detail.error.message);
+    }
+  }
+
+  customElements.define(EventsService.is, EventsService);
 </script>

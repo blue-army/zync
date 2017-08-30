@@ -1,9 +1,18 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
 <!-- Import functions for login w/ Microsoft -->
 <link rel="import" href="user-signin-behavior.html">
 
 <script>
-    Polymer({
-      is: 'user-signin-service',
-      behaviors: [UserSigninBehavior],
-	});
+  class UserSigninService extends Polymer.Element {
+    static get is() { return 'user-signin-service'; }
+
+    static get behaviors() {
+      return [
+        UserSigninBehavior
+      ]
+    }
+  }
+
+  customElements.define(UserSigninService.is, UserSigninService);
+
 </script>

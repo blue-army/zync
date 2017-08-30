@@ -23,10 +23,11 @@
 </dom-module>
 
 <script>
-    Polymer({
-      is: 'signin-service',
+  class SigninService extends Polymer.Element {
+    static get is() { return 'signin-service'; }
 
-      properties: {
+    static get properties() {
+      return {
         signinUrl: {
           type: String,
           value: ""
@@ -39,70 +40,74 @@
           type: String,
           value: ""
         },
-        user: { 
+        user: {
           type: Object
         }
-      },
+      }
+    }
 
-      ready: function() {
-        if (this.user === undefined) {
-          this.user = { 
-            token: null,
-            loggedIn: false
-          }
+    ready() {
+      if (this.user === undefined) {
+        this.user = {
+          token: null,
+          loggedIn: false
         }
-      },
+      }
+    }
 
-      handleResponse: function(data) {
-        // GET for signin
-        if (this.signinMethod === "GET"  && data.detail.response !== null) {
-          this.user = { 
-            token: data.detail.response.token,
-            loggedIn: true
-          }
+    handleResponse(data) {
+      // GET for signin
+      if (this.signinMethod === "GET" && data.detail.response !== null) {
+        this.user = {
+          token: data.detail.response.token,
+          loggedIn: true
         }
-
-        this.fire('signin-response', this.user);
-      },
-
-      handleError: function(e) {
-          this.user = { 
-            token: null,
-            loggedIn: false
-          }
-          console.log(e.detail.error.message);
-      },
-
-      handleSignin: function(e) {
-        if (this.user === undefined) {
-          this.user = { 
-            token: null,
-            loggedIn: false
-          }
-        }
-        console.log(this.user.loggedIn);
-
-        if (!this.user.loggedIn) {
-          this.signinUrl = "/signin";
-          this.$.xhrSignin.generateRequest();
-        } else {
-          this.user = { 
-            token: null,
-            loggedIn: false
-          }
-        }
-      },
-      
-      _icon: function (user) {
-        if (user === undefined) {
-          this.user = { 
-            token: null,
-            loggedIn: false
-          }
-        }
-
-        return this.user.loggedIn ? "my-icons:sign-out" : "my-icons:sign-in";
       }
 
-    });
+      this.fire('signin-response', this.user);
+    }
+
+    handleError(e) {
+      this.user = {
+        token: null,
+        loggedIn: false
+      }
+      console.log(e.detail.error.message);
+    }
+
+    handleSignin(e) {
+      if (this.user === undefined) {
+        this.user = {
+          token: null,
+          loggedIn: false
+        }
+      }
+      console.log(this.user.loggedIn);
+
+      if (!this.user.loggedIn) {
+        this.signinUrl = "/signin";
+        this.$.xhrSignin.generateRequest();
+      } else {
+        this.user = {
+          token: null,
+          loggedIn: false
+        }
+      }
+    }
+
+    _icon(user) {
+      if (user === undefined) {
+        this.user = {
+          token: null,
+          loggedIn: false
+        }
+      }
+
+      return this.user.loggedIn ? "my-icons:sign-out" : "my-icons:sign-in";
+    }
+
+  }
+
+  customElements.define(SigninService.is, SigninService);
+
 </script>

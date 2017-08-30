@@ -25,30 +25,38 @@
 
 
 <script>
-    Polymer({
-      is: 'user-signin-btn',
-      behaviors: [UserSigninBehavior],
+  class UserSigninBtn extends Polymer.Element {
+    static get is() { return 'user-signin-btn'; }
 
-      // specifies the action triggered by the signin button
-      handleSignin: function(e) {
-        if (!this.userObj) {
-          this.login();   // if no user, log in
-        } else {
-          this.logout();
-        }
-      },
+    static get behaviors() {
+      return [
+        UserSigninBehavior
+      ]
+    }
 
-      // get button message
-      getMessage: function(userObj) {
-        if (userObj) {
-          return "Log out";
-        }
-        return "Login with Microsoft"
-      },
-
-      // get button icon
-      _icon: function (userObj) {
-        return userObj ? "my-icons:ms-signout" : "my-icons:ms-signin";
+    // specifies the action triggered by the signin button
+    handleSignin(e) {
+      if (!this.userObj) {
+        this.login();   // if no user, log in
+      } else {
+        this.logout();
       }
-    });
+    }
+
+    // get button message
+    getMessage(userObj) {
+      if (userObj) {
+        return "Log out";
+      }
+      return "Login with Microsoft"
+    }
+
+    // get button icon
+    _icon(userObj) {
+      return userObj ? "my-icons:ms-signout" : "my-icons:ms-signin";
+    }
+  }
+
+  customElements.define(UserSigninBtn.is, UserSigninBtn);
+
 </script>
