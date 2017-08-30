@@ -133,10 +133,12 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'event-create',
+    class EventCreate extends Polymer.Element {
+      static get is() { return 'event-create'; }
 
-    properties: {
+      static get properties() {
+        return {
+
       activitiesArray: "String",
       groupsUrl: {
         type: String,
@@ -160,14 +162,15 @@
           content: {}
         }
       }
-    },
+    }
+  }
 
-    openDialog: function () {
+    openDialog() {
       this.projectsTrigger = "true";
       this.$.modal.open();
-    },
+    }
 
-    dismissDialog: function (e) {
+    dismissDialog(e) {
       if (e.detail.confirmed) {
         this.signinBody = JSON.stringify({
             client_id: this.clientId,
@@ -176,9 +179,9 @@
 
         this.$.xhrAuthSignin.generateRequest();
       }
-    },
+    }
 
-    handleSigninResponse: function(e) {
+    handleSigninResponse(e) {
         let token = e.detail.response.token;
         this.headers =  { "x-api-key": token };
 
@@ -189,32 +192,33 @@
         this.eventBody = JSON.stringify(body);
 
         this.$.eventsServ.generateRequest();
-    },
+    }
 
-    handleEventsResponse: function(e) {
+    handleEventsResponse(e) {
       console.log("operation id#" + this.payload.project + " = " + e.detail.status);
-    },
+    }
 
-    selectedProjChanged: function(e) {
+    selectedProjChanged(e) {
       this.selectedProject = e.target.selected;
       let item = this.aProjects[this.selectedProject];
       this.payload.project = item.id;
       this.textInput = JSON.stringify(this.payload, null, "  ");
-    },
+    }
 
-    selectedTypeChanged: function(e) {
+    selectedTypeChanged(e) {
       this.selectedType = e.target.selected;
       this.payload.content = this.activitiesArray[this.selectedType];
       this.textInput = JSON.stringify(this.payload, null, "  ");
-    },
+    }
 
-    handleResponse: function (data) {
+    handleResponse (data) {
       this.aProjects = data.detail.slice();
       this.selectedProject = 0;
-    },
-    handleActivitiesResponse: function() {
+    }
+    handleActivitiesResponse() {
       this.selectedType = 0;
     }
-  });
+  }
 
+  customElements.define(EventCreate.is, EventCreate);
 </script>

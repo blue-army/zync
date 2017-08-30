@@ -73,10 +73,11 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'group-create',
+    class GroupCreate extends Polymer.Element {
+      static get is() { return 'group-create'; }
 
-    properties: {      
+      static get properties() {
+        return { 
       groupsUrl: {
         type: String,
         value: "/api/groups"
@@ -87,13 +88,14 @@
         notify: true,
         value: []
       },
-    },
+    }
+  }
 
-    openDialog: function () {
+    openDialog () {
       this.$.modal.open();
-    },
+    }
 
-    dismissDialog: function (e) {
+    dismissDialog (e) {
       if (e.detail.confirmed) {
         let group = JSON.stringify({ 
           name: this.nameInput, 
@@ -104,14 +106,15 @@
         this.iaMethod = "PUT";
         this.groupsTrigger = "true";
       }
-    },
+    }
 
-    handleResponse: function (data) {
+    handleResponse (data) {
       let groups = this.aGroups.slice();
       groups.push(data.detail);
       this.aGroups = groups;
-    },
+    }
 
-  });
+  }
 
+  customElements.define(GroupCreate.is, GroupCreate);
 </script>

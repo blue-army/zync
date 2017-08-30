@@ -109,48 +109,50 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'channel-create',
+  class ChannelCreate extends Polymer.Element {
+    static get is() { return 'channel-create'; }
 
-    properties: {
-      group: {
-        type: Object,
-      },
+    static get properties() {
+      return {
+        group: {
+          type: Object,
+        },
 
-      title: {
-        type: String,
-        computed: 'getTitle(group)'
-      },
+        title: {
+          type: String,
+          computed: 'getTitle(group)'
+        },
 
-      errorMessage: {
-        type: String
-      },
+        errorMessage: {
+          type: String
+        },
 
-      nameInvalid: {
-        type: Boolean,
-        computed: 'nameTaken(nameInput)'
-      },
+        nameInvalid: {
+          type: Boolean,
+          computed: 'nameTaken(nameInput)'
+        },
 
-      nameError: {
-        type: String,
-        computed: 'nameError(nameInvalid)'
-      },
+        nameError: {
+          type: String,
+          computed: 'nameError(nameInvalid)'
+        },
 
-      channels: {
-        type: Object,
-        value: () => {return [];}
-      }, 
-    },
+        channels: {
+          type: Object,
+          value: () => { return []; }
+        },
+      }
+    }
 
-    openDialog: function () {
+    openDialog() {
       this.$.modal.open();
-    },
+    }
 
-    openInnerDialog: function () {
+    openInnerDialog() {
       this.$.innerDialog.open();
-    },
+    }
 
-    createChannel: function () {
+    createChannel() {
       if (!this.$.channelForm.validate()) {
         return;
       }
@@ -158,30 +160,30 @@
       this.$.spinner.active = true;
       this.$.spinner.hidden = false;
       this.$.channelListService.createChannel(this.nameInput, this.descriptionInput)
-    },
+    }
 
-    handleCreationResponse: function (e) {
+    handleCreationResponse(e) {
       this.$.spinner.active = false;
       this.$.spinner.hidden = true;
       this.$.channelForm.reset();
       this.$.innerDialog.close();
       console.log("Channel creation response: ", e);
-    },
+    }
 
-    getTitle: function (group) {
+    getTitle(group) {
       return "CHANNELS FOR " + group.name.toUpperCase();
-    },
+    }
 
-    nameTaken: function (name) {
+    nameTaken(name) {
       for (let channel of this.channels) {
         if (channel.name === name) {
           return true;
         }
       }
       return false;
-    },
+    }
 
-    nameError: function (nameTaken) {
+    nameError(nameTaken) {
       if (nameTaken) {
         return "That name is already taken";
       } else {
@@ -189,6 +191,8 @@
       }
     }
 
-  });
+  }
+
+  customElements.define(ChannelCreate.is, ChannelCreate);
 
 </script>

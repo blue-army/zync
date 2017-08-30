@@ -149,17 +149,21 @@
 </dom-module>
 
 <script>
-    Polymer({
-        is: 'activity-card',
+    class ActivityCard extends Polymer.Element {
 
-        properties: {
-            activity: Object,
-        },
+        static get is() { return 'activity-card'; }
 
-        attached: function () {
+        static get properties() {
+            return {
+                activity: Object,
+            }
+        }
+
+        attached() {
             let a = this.activity;
-        },
+        }
 
-    });
+    }
 
+    customElements.define(ActivityCard.is, ActivityCard);
 </script>

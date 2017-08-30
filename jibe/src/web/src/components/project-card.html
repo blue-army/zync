@@ -121,32 +121,34 @@
 <script src="../../bower_components/geohash/geohash.js"></script>
 
 <script>
-  Polymer({
-    is: 'project-card',
+  class ProjectCard extends Polymer.Element {
+    static get is() { return 'project-card'; }
 
-    properties: {
-      item: Object,
-      itemArray: {
-        type: Object,
-        notify: true
-      },
+    static get properties() {
+      return {
+        item: Object,
+        itemArray: {
+          type: Object,
+          notify: true
+        },
 
-      latitude: {
-        type: Number,
-        value: 37.78
-      },
-      longitude: {
-        type: Number,
-        value: -122.4
+        latitude: {
+          type: Number,
+          value: 37.78
+        },
+        longitude: {
+          type: Number,
+          value: -122.4
+        }
       }
-    },
+    }
 
-    ready: function () {
+    ready() {
       this.geohashToCoord(this.item.geohash);
       // this.map = this.$.myMap;
-    },
+    }
 
-    geohashToCoord: function (geoHash) {
+    geohashToCoord(geoHash) {
       // Handle geohash
       if (geoHash) {
         let geoObject = decodeGeoHash(geoHash);
@@ -155,6 +157,7 @@
       }
     }
 
-  });
+  }
 
+  customElements.define(ProjectCard.is, ProjectCard);
 </script>

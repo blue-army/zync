@@ -96,43 +96,46 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'project-create',
+  class ProjectCreate extends Polymer.Element {
+    static get is() { return 'project-create'; }
 
-    properties: {      
-      groupsUrl: {
-        type: String,
-        value: "/api/groups"
-      },
-      aProjects: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: []
-      },
-      aGroups: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: []
-      },
-      selectedGroup: Number
-    },
+    static get properties() {
+      return {
 
-    openDialog: function () {
+        groupsUrl: {
+          type: String,
+          value: "/api/groups"
+        },
+        aProjects: {
+          type: Array,
+          reflectToAttribute: true,
+          notify: true,
+          value: []
+        },
+        aGroups: {
+          type: Array,
+          reflectToAttribute: true,
+          notify: true,
+          value: []
+        },
+        selectedGroup: Number
+      }
+    }
+
+    openDialog() {
       this.groupsUrl = "/api/groups";
       this.$.xhrGetGroups.generateRequest();
       this.$.modal.open();
-    },
+    }
 
-    dismissDialog: function (e) {
+    dismissDialog(e) {
       if (e.detail.confirmed) {
         let name = this.nameInput;
         let geohash = this.geohashInput;
         let groupId = this.aGroups[this.selectedGroup].id;
-        
-        let project = JSON.stringify({ 
-          name: name, 
+
+        let project = JSON.stringify({
+          name: name,
           geohash: geohash,
           group: groupId
         });
@@ -141,23 +144,24 @@
         this.iaMethod = "PUT";
         this.projectsTrigger = "true";
       }
-    },
+    }
 
-    selectedChanged: function(e) {
+    selectedChanged(e) {
       this.selectedGroup = e.target.selected;
       let item = this.aGroups[this.selectedGroup];
-    },
+    }
 
-    handleResponse: function (data) {
+    handleResponse(data) {
       let projects = this.aProjects.slice();
       projects.push(data.detail);
       this.aProjects = projects;
-    },
+    }
 
-    handleGroupsResponse: function (data) {
+    handleGroupsResponse(data) {
       this.aGroups = data.detail.response;
-    },
+    }
 
-  });
+  }
 
+  customElements.define(ProjectCreate.is, ProjectCreate);
 </script>
