@@ -103,21 +103,27 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'my-groups',
-    properties: {
-      aGroups: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: []
-      },
-    },
+  class MyGroups extends Polymer.Element {
 
-    handleResponse: function (data) {
+    static get is() { return 'my-groups'; }
+
+    static get properties() {
+      return {
+        aGroups: {
+          type: Array,
+          reflectToAttribute: true,
+          notify: true,
+          value: []
+        }
+      }
+    }
+
+    handleResponse(data) {
       this.aGroups = data.detail;
-    },
-    
-  });
+    }
+
+  }
+
+  customElements.define(MyGroups.is, MyGroups);
 
 </script>

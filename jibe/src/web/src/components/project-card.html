@@ -11,12 +11,6 @@
 
 <dom-module id="project-card">
 
-  <style type="text/css">
-     :host {
-      display: inline-block;
-    }
-  </style>
-
   <template>
     <style type="text/css">
        :host {
@@ -117,7 +111,7 @@
         {{item.name}}
       </div>
 
-      <content id="myContent"></content>
+      <slot id="myContent"></slot>
 
     </paper-card>
   </template>
