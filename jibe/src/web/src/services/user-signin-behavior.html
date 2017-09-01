@@ -50,7 +50,7 @@
         if (window.msal) {
           this.userAgentApplication = window.msal;
           this.msalReady = true;
-          this.fire("msal-ready");
+          this.dispatchEvent(new CustomEvent("msal-ready"));
         } else {
           this.userAgentApplication = new Msal.UserAgentApplication(
                         this.clientID, 
@@ -65,10 +65,10 @@
             console.log("initializing token in user-signin-behavior!");
             this.getTokenPromise().then((token) => {
               console.log("token initialized!");
-              this.fire("msal-ready");
+              this.dispatchEvent(new CustomEvent("msal-ready"));
             });
           } else {
-            this.fire("msal-ready");
+            this.dispatchEvent(new CustomEvent("msal-ready"));
           }
         }
         
@@ -88,7 +88,7 @@
         if (!this.userAgentApplication)
         if (this.userAgentApplication.cachedToken) {
           console.log("returning cached token", this.userAgentApplication.cachedToken);
-          this.fire('user-token-response', {token: this.userAgentApplication.cachedToken, scopes: this.scopes});
+          this.dispatchEvent(new CustomEvent('user-token-response', {token: this.userAgentApplication.cachedToken, scopes: this.scopes}));
         
         } else if (this.userObj) {
           // If user is logged in, try retrieving token from storage
@@ -97,7 +97,7 @@
               // retrieved a valid token -> fire user-token-response event
               console.log("Access token retrieved from storage: ", accessToken);
               this.userAgentApplication.cachedToken = accessToken;
-              this.fire('user-token-response', {token: accessToken, scopes: this.scopes});
+              this.dispatchEvent(new CustomEvent('user-token-response', {token: accessToken, scopes: this.scopes}));
             }).catch((error) => {
               // couldn't retrieve a token from storage -> perform redirect
               console.log("Could not retrieve token from storage. ", error);
@@ -143,7 +143,7 @@
         if (token) {
           console.log("Token acquired via callback! ", tokenType, ": ", token);
           if (tokenType === "access_token") {
-            this.fire('user-token-response', {token: accessToken, scopes: this.scopes});
+            this.dispatchEvent(new CustomEvent('user-token-response', {token: accessToken, scopes: this.scopes}));
           }
         } else {
           console.log("Login error: ", error, errorDesc);

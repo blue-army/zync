@@ -47,6 +47,7 @@
     }
 
     ready() {
+      super.ready();
       if (this.user === undefined) {
         this.user = {
           token: null,
@@ -64,7 +65,7 @@
         }
       }
 
-      this.fire('signin-response', this.user);
+      this.dispatchEvent(new CustomEvent('signin-response', this.user));
     }
 
     handleError(e) {

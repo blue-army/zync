@@ -13,7 +13,7 @@
 <link rel="import" href="misc/my-icons.html">
 <link rel="import" href="misc/shared-styles.html">
 <link rel="import" href="my-view404.html">
-<link rel="import" href="services/signin-service.html">
+<!-- <link rel="import" href="services/signin-service.html"> -->
 <link rel="import" href="services/user-signin-btn.html">
 <link rel="import" href="components/info-button.html">
 
@@ -63,7 +63,7 @@
 
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
-      <app-drawer id="drawer">
+      <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="my-projects" href="[[rootPath]]my-projects">Well Projects</a>
@@ -75,7 +75,7 @@
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
 
-        <app-header condenses reveals effects="waterfall">
+        <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div main-title>DrillPlan/DrillOps - O365 Integration</div>

@@ -94,6 +94,7 @@
     }
 
     ready() {
+      super.ready();
       this.isReady = true;
     }
 
@@ -128,7 +129,7 @@
       setTimeout(function () {
         let newChannel = { "name": name, "description": description, "id": 0 };
         this.unshift('channels', newChannel);
-        this.fire('channel-creation-response', newChannel)
+        this.dispatchEvent(new CustomEvent('channel-creation-response', newChannel));
       }.bind(this), 1000);
     }
 
@@ -149,7 +150,7 @@
       if (data.detail.response.id) {
         this.unshift('channels', data.detail.response);
       }
-      this.fire('channel-creation-response', data.detail.response);
+      this.dispatchEvent(new CustomEvent('channel-creation-response', data.detail.response));
     }
 
     handleError(e) {

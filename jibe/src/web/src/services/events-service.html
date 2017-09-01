@@ -65,7 +65,7 @@
         }
       }
 
-      this.fire('events-response', data.detail);
+      this.dispatchEvent(new CustomEvent('events-response', data.detail));
     }
 
     handleError(e) {

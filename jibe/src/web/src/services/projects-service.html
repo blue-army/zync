@@ -54,7 +54,8 @@
       if (this.projectsMethod === "DELETE") {
       }
 
-      this.fire('projects-response', data.detail.response);
+      this.dispatchEvent(new CustomEvent('projects-response', { detail: data.detail.response }));
+
     }
 
     handleError(e) {
