@@ -3,14 +3,9 @@
 <link rel="import" href="user-signin-behavior.html">
 
 <script>
-  class UserSigninService extends Polymer.Element {
+  class UserSigninService extends Polymer.mixinBehaviors([UserSigninBehavior], Polymer.Element) {
     static get is() { return 'user-signin-service'; }
 
-    static get behaviors() {
-      return [
-        UserSigninBehavior
-      ]
-    }
   }
 
   customElements.define(UserSigninService.is, UserSigninService);

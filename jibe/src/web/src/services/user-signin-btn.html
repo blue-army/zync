@@ -25,14 +25,9 @@
 
 
 <script>
-  class UserSigninBtn extends Polymer.Element {
+  class UserSigninBtn extends Polymer.mixinBehaviors([UserSigninBehavior], Polymer.Element) {
     static get is() { return 'user-signin-btn'; }
 
-    static get behaviors() {
-      return [
-        UserSigninBehavior
-      ]
-    }
 
     // specifies the action triggered by the signin button
     handleSignin(e) {
