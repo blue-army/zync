@@ -10,7 +10,7 @@ import * as drillplan from '../plugins/drillplan';
 // connector setup flow
 async function setup(_req: express.Request, res: express.Response, _next: express.NextFunction) {
 
-    var connectorAppID: string = process.env.CONNECTOR_APP_ID || "bc32fa91-81d0-4314-9914-e718d47e90e8";
+    var connectorAppID: string = process.env.CONNECTOR_APP_ID || "56444edc-a5c9-4991-9e3c-5cf928c29867"; // "bc32fa91-81d0-4314-9914-e718d47e90e8";
     var baseURI: string = process.env.BASE_URI || "https://jibe.azurewebsites.net";
 
     // fetch projects
