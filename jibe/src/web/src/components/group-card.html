@@ -15,19 +15,13 @@
 
 <dom-module id="group-card">
 
-  <style type="text/css">
-     :host {
-      display: inline-block;
-    }
-  </style>
-
   <template>
     <style type="text/css">
        :host {
         --paper-card-header-image: {
           width: 280px;
           height: auto;
-          display: block;
+          display: inline-block;
           padding: 18px;
         }
       }
@@ -108,7 +102,7 @@
       }
     </style>
 
-    <!-- <user-signin-service id="userTokenService"></user-signin-service> -->
+    <user-signin-service id="userTokenService"></user-signin-service>
     <paper-dialog id="exploreModal" auto-fit-on-attach on-iron-overlay-closed="dismissExploreDialog" class="size-position">
       <h3>Edit Raw Project JSON Data</h3>
 
