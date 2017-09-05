@@ -261,7 +261,7 @@ bot.on('conversationUpdate', function (message) {
             // Send introduction message
             bot.send(new botbuilder.Message()
                 .address(message.address)
-                .text("Hello everyone! I'm Jibe."));
+                .text("Hello everyone!"));
         }
 
         // Otherwise, welcome the new channel members
