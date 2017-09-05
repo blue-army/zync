@@ -137,7 +137,7 @@
       this.$.userSigninService.getTokenPromise()
         .then((token) => {
           this.token = token;
-          console.log("listChannels called, groupid = ", this.groupId, " | headers: ", this.headers, " | existing channels: ", this.channels.length)
+          // console.log("listChannels called, groupid = ", this.groupId, " | headers: ", this.headers, " | existing channels: ", this.channels.length)
           this.$.listChannelsXHR.generateRequest();
         })
         .catch((err) => {

@@ -87,7 +87,7 @@
       getToken: function () {
         if (!this.userAgentApplication)
         if (this.userAgentApplication.cachedToken) {
-          console.log("returning cached token", this.userAgentApplication.cachedToken);
+          // console.log("returning cached token", this.userAgentApplication.cachedToken);
           this.dispatchEvent(new CustomEvent('user-token-response', {token: this.userAgentApplication.cachedToken, scopes: this.scopes}));
         
         } else if (this.userObj) {
@@ -117,7 +117,7 @@
           console.log("ERROR: getTokenPromise called before MSAL initialized")
         }
         if (this.userAgentApplication.cachedToken) {
-          console.log("returning cached token", this.userAgentApplication.cachedToken)
+          // console.log("returning cached token", this.userAgentApplication.cachedToken)
           return Promise.resolve(this.userAgentApplication.cachedToken);
         }
         if (this.userObj) {
@@ -141,7 +141,7 @@
       // Fires user-token-response event if an access token has been retrieved
       loginCallback: function (errorDesc, token, error, tokenType) {
         if (token) {
-          console.log("Token acquired via callback! ", tokenType, ": ", token);
+          // console.log("Token acquired via callback! ", tokenType, ": ", token);
           if (tokenType === "access_token") {
             this.dispatchEvent(new CustomEvent('user-token-response', {token: accessToken, scopes: this.scopes}));
           }
