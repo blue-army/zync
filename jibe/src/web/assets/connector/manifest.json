@@ -11,7 +11,7 @@
         "termsOfUseUrl": "https://jibe.azurewebsites.net"
     },
     "description": {
-        "full": "Connects Teams to the Jibe server",
+        "full": "Connects Teams to drillplan",
         "short": "Connect your teams!"
     },
     "icons": {
@@ -36,8 +36,8 @@
         }
     ],
     "name": {
-        "full": "Jibe",
-        "short": "Jibe"
+        "full": "drillplan",
+        "short": "drillplan"
     },
     "permissions": [
         "identity",
