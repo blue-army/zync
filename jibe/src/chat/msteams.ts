@@ -151,9 +151,9 @@ function jibeEventCard(messageInfo: models.MessageInfo): teams.O365ConnectorCard
     }
 
     // Create settings button
-    let settingsButton = new teams.O365ConnectorCardViewAction()
-        .name("\u2699")
-        .target(messageInfo.actionUrl);
+    // let settingsButton = new teams.O365ConnectorCardViewAction()
+    //     .name("\u2699")
+    //     .target(messageInfo.actionUrl);
 
     // Create 'launch application' button
     let launchButton = new teams.O365ConnectorCardViewAction()
@@ -166,7 +166,7 @@ function jibeEventCard(messageInfo: models.MessageInfo): teams.O365ConnectorCard
         .themeColor("0078D7")
         .title(messageInfo.activityEntityType + ': ' + messageInfo.entityName)
         .sections([eventInfoSection, userInfoSection])
-        .potentialAction([settingsButton, launchButton]);
+        .potentialAction([launchButton]);
     return card;
 }
 
