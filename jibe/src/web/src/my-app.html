@@ -84,8 +84,6 @@
             <user-signin-btn id="userSigninService" on-user-token-response="handleTokenResponse"></user-signin-btn> 
             <signin-service id="signinService" on-signin-response="handleSigninResponse"></signin-service>
 
-            <paper-icon-button class="giant central" icon="my-icons:token" on-tap=getUserToken></paper-icon-button>
-
           </app-toolbar>
         </app-header>
 
@@ -157,11 +155,6 @@
       handleTokenResponse(e) {
         this.user_token = e.detail;
         console.log("handleTokenResponse invoked, user access token = ", this.user_token)
-      }
-
-      getUserToken(e) {
-        this.$.userSigninService.getToken()
-        console.log("Calling getToken in my-app.html")
       }
 
     }
