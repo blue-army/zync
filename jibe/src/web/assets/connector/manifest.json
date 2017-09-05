@@ -15,8 +15,8 @@
         "short": "Connect your teams!"
     },
     "icons": {
-        "outline": "Taiji.png",
-        "color": "Taiji.png"
+        "outline": "DP.png",
+        "color": "DP.png"
     },
     "connectors": [
         {
