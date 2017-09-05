@@ -54,7 +54,7 @@
       if (this.groupsMethod === "DELETE") {
       }
 
-      this.dispatchEvent(new CustomEvent('groups-response', data.detail.response));
+      this.dispatchEvent(new CustomEvent('groups-response', { detail: data.detail.response }));
     }
 
     handleError(e) {

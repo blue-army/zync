@@ -102,8 +102,8 @@
     <paper-card id="projCard" class="papercard" heading="" image="./assets/images/Schlumberger.svg" alt="{{item.name}}">
 
       <div class="mymap">
-        <google-map id="myMap" map="{{map}}" fit-to-markers zoom="10" api-key="AIzaSyCMsBPpFm2-D8Dt5oQUHWYM3VHeYxmyLOs">
-          <google-map-marker latitude="{{latitude}}" longitude="{{longitude}}" draggable></google-map-marker>
+        <google-map id="myMap" fit-to-marker zoom="10" api-key="AIzaSyCMsBPpFm2-D8Dt5oQUHWYM3VHeYxmyLOs">
+          <google-map-marker slot="markers" latitude="{{latitude}}" longitude="{{longitude}}" draggable="true"></google-map-marker>
         </google-map>
       </div>
 
