@@ -12,11 +12,11 @@
     },
     "description": {
         "full": "Connects Teams to DrillPlan",
-        "short": "Connect your teams!"
+        "short": "DrillPlan"
     },
     "icons": {
-        "outline": "DP.png",
-        "color": "DP.png"
+        "outline": "DrillPlan.png",
+        "color": "DrillPlan.png"
     },
     "connectors": [
         {
