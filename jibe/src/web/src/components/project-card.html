@@ -102,8 +102,8 @@
     <paper-card id="projCard" class="papercard" heading="" image="./assets/images/Schlumberger.svg" alt="{{item.name}}">
 
       <div class="mymap">
-        <google-map id="myMap" fit-to-marker zoom="10" api-key="AIzaSyCMsBPpFm2-D8Dt5oQUHWYM3VHeYxmyLOs">
-          <google-map-marker slot="markers" latitude="{{latitude}}" longitude="{{longitude}}" draggable="true"></google-map-marker>
+        <google-map fit-to-marker api-key="AIzaSyD3E1D9b-Z7ekrT3tbhl_dy8DCXuIuDDRc">
+          <google-map-marker latitude="{{latitude}}" longitude="{{longitude}}" draggable="true"></google-map-marker>
         </google-map>
       </div>
 
@@ -145,8 +145,8 @@
 
     ready() {
       super.ready();
-      this.geohashToCoord(this.item.geohash);
-      // this.map = this.$.myMap;
+      // google-map-marker is broken still, does not move to the position. need wait for them to fix.
+      //this.geohashToCoord(this.item.geohash);
     }
 
     geohashToCoord(geoHash) {
