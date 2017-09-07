@@ -59,11 +59,18 @@
     </style>
 
     <iron-ajax
-        auto
-        url="./activities.json"
-        handle-as="json"
-        on-response="handleActivitiesResponse"
-        last-response="{{activitiesArray}}">
+      auto
+      url="assets/activities.json"
+      handle-as="json"
+      on-response="handleActivitiesResponse"
+      last-response="{{activitiesArray}}">
+    </iron-ajax>
+
+    <iron-ajax
+      auto
+      url="./activities.json"
+      handle-as="json"
+      last-response="{{ajaxResponse}}">
     </iron-ajax>
 
     <projects-service 
@@ -139,31 +146,34 @@
       static get properties() {
         return {
 
-      activitiesArray: "String",
-      groupsUrl: {
-        type: String,
-        value: "/api/groups"
-      },
-      aProjects: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: []
-      },
-      headers: Object,
-      selectedProject: Number,
-      selectedType: Number,
-      eventBody: String,
-      payload: {
-        value: {
-          type: "slb.drill-plan.activity",
-          id: "",
-          project: "",
-          content: {}
+          activitiesArray: "String",
+          groupsUrl: {
+            type: String,
+            value: "/api/groups"
+          },
+          aProjects: {
+            type: Array,
+            reflectToAttribute: true,
+            notify: true,
+            value: function() { return []; }
+          },
+          payload: {
+            type: Object,
+            value: () => {
+              return {
+                type: "slb.drill-plan.activity",
+                id: "",
+                project: "",
+                content: {}
+              }
+            }
+          },
+          headers: Object,
+          selectedProject: Number,
+          selectedType: Number,
+          eventBody: String
         }
       }
-    }
-  }
 
     openDialog() {
       this.projectsTrigger = "true";
@@ -215,8 +225,9 @@
       this.aProjects = data.detail.slice();
       this.selectedProject = 0;
     }
-    handleActivitiesResponse() {
+    handleActivitiesResponse(data) {
       this.selectedType = 0;
+      this.activitiesArray = data.detail.response;
     }
   }
 
