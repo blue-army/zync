@@ -85,7 +85,8 @@ async function routeEvent(event_info: models.EventInfo) {
             method: 'POST',
             uri: "",
             body: cardJson,
-            json: true
+            json: true,
+            simple: false,
         };
 
         for (let route of routes) {
