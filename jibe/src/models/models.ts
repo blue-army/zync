@@ -346,7 +346,7 @@ class ActivityDetails {
             'temperature': 'temperature',
             'trajectory': 'trajectory_1',
             'well': 'well_information_1',
-            'wellbore geometry': 'wellbore_geometry',
+            'wellbore geometry': 'wellbore_geometry_1',
         };
 
         var iconImageName = iconMap[this.activity_entity_type.toLowerCase()];
