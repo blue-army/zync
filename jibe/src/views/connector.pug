@@ -4,33 +4,33 @@ html
         link(rel='stylesheet', href='/assets/stylesheets/connector.css')
     body
         div#column-content
-            img#logo(src= '/assets/connector/Taiji.png')
+            img#logo(src= '/assets/connector/DP.png')
             span#app
                 | DrillPlan
         
         div
             p.heading
-                | Application Type
-            p.info
-                | #{appType}
+                | Connector Setup Complete!
+            //- p.info
+            //-     | #{appType}
 
-        div
-            p.heading
-                | Group
-            p.info
-                | #{groupName}
+        //- div
+        //-     p.heading
+        //-         | Group
+        //-     p.info
+        //-         | #{groupName}
 
-        div
-            p.heading
-                | State
-            p.info
-                | #{state}
+        //- div
+        //-     p.heading
+        //-         | State
+        //-     p.info
+        //-         | #{state}
 
-        div
-            p.heading
-                | WebHook
-            p.info
-                | #{webhookUrl}
+        //- div
+        //-     p.heading
+        //-         | WebHook
+        //-     p.info
+        //-         | #{webhookUrl}
 
         div.gap
             input.btn(type="button" value="Done" onclick='done()')
