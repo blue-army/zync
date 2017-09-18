@@ -10,7 +10,7 @@ var default_address = {
    },
    "bot":{  
       "id":"28:bababc50-4dad-45b5-a10f-5b98129ccf1d",
-      "name":"Jibe"
+      "name":"DrillPlan"
    },
    "serviceUrl":"https://smba.trafficmanager.net/amer-client-ss.msg/"
 }
