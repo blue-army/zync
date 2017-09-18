@@ -3,7 +3,7 @@ import * as teams from 'botbuilder-teams'
 import * as adaptiveCards from 'microsoft-adaptivecards/built/schema'
 import * as conversation from '../bot/conversation'
 import * as models from '../models/models'
-import * as drillplan from '../plugins/drillplan'
+// import * as drillplan from '../plugins/drillplan'
 
 // Import channel-specific functionality
 import * as slack from '../chat/slack'
@@ -261,7 +261,7 @@ bot.on('conversationUpdate', function (message) {
             // Send introduction message
             bot.send(new botbuilder.Message()
                 .address(message.address)
-                .text("Hello everyone! I'm Jibe."));
+                .text("Hello everyone!"));
         }
 
         // Otherwise, welcome the new channel members

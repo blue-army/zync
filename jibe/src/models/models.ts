@@ -1,6 +1,22 @@
 import * as _ from 'lodash';
 import * as botbuilder from 'botbuilder';
 
+function sanitize(text: string): string {
+
+    let o = text;
+
+    // strip out trailing V0
+    let endy = 'VO';
+    if (o.endsWith(endy)) {
+        o = o.slice(0, -endy.length);
+    }
+
+    // to lower
+    o = o.toLowerCase();
+
+    return o;
+}
+
 class ProjectInfo {
     id: string;
     name: string;
@@ -217,7 +233,7 @@ class ActivityDetails {
         o.activity_time = _.get<Object, string>(obj, 'activity_time', '');
         o.comments = _.get<Object, string>(obj, 'comments', '');
         o.project_id = _.get<Object, string>(obj, 'project_id', '');
-        o.activity_entity_type = _.get<Object, string>(obj, 'activity_entity_type', '');
+        o.activity_entity_type = sanitize(_.get<Object, string>(obj, 'activity_entity_type', ''));
         o.is_customer_data = _.get<Object, boolean>(obj, 'id', false);
         o.parent = ParentInfo.fromObj(_.get<Object, Object>(obj, 'parent', null));
         return o;
@@ -330,7 +346,7 @@ class ActivityDetails {
             'temperature': 'temperature',
             'trajectory': 'trajectory_1',
             'well': 'well_information_1',
-            'wellbore geometry': 'wellbore_geometry',
+            'wellbore geometry': 'wellbore_geometry_1',
         };
 
         var iconImageName = iconMap[this.activity_entity_type.toLowerCase()];
@@ -372,7 +388,7 @@ class ParentInfo {
 
         let o = new ParentInfo();
         o.id = _.get<Object, string>(obj, 'id', '');
-        o.entity_type = _.get<Object, string>(obj, 'entity_type', '');
+        o.entity_type = sanitize(_.get<Object, string>(obj, 'entity_type', ''));
         o.name = _.get<Object, string>(obj, 'name', '');
         o.parent = ParentInfo.fromObj(_.get<Object, Object>(obj, 'parent', {}));
         return o;
@@ -454,6 +470,9 @@ class NavigationService {
             case 'section':
                 url = NavigationService.sectionUrl(info.get('project'));
                 break;
+            case 'define cement job':
+                url = NavigationService.cementingUrl(info.get('project'), info.get('section'), info.get('entity'));
+                break;
             default:
                 break;
         }
@@ -499,6 +518,10 @@ class NavigationService {
 
     public static drillingFluidUrl(projectId: string, sectionId: string, entityId: string) {
         return '/DrillingFluid/index.html#!/projects/' + projectId + '/sections/' + sectionId + '/generic/' + entityId;
+    }
+
+    public static cementingUrl(projectId: string, sectionId: string, entityId: string) {
+        return '/Cementing/#!/projects/' + projectId + '/sections/' + sectionId + '/editor/' + entityId + '/edit';
     }
 }
 

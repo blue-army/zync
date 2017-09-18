@@ -99,6 +99,13 @@ var events = [
             "path": "activity.activity_entity_type",
             "expr": "^Surface Location$",
         }
+    },
+    {
+        "name": "Wellbore Geometry",
+        "rule": {
+            "path": "activity.activity_entity_type",
+            "expr": "^wellbore geometry$",
+        }
     }
 ];
 
