@@ -150,7 +150,7 @@
       if (data.detail.response.id) {
         this.unshift('channels', data.detail.response);
       }
-      this.dispatchEvent(new CustomEvent('channel-creation-response', data.detail.response));
+      this.dispatchEvent(new CustomEvent('channel-creation-response', { detail: data.detail.response }));
     }
 
     handleError(e) {
