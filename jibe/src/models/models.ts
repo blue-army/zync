@@ -470,6 +470,9 @@ class NavigationService {
             case 'section':
                 url = NavigationService.sectionUrl(info.get('project'));
                 break;
+            case 'define cement job':
+                url = NavigationService.cementingUrl(info.get('project'), info.get('section'), info.get('entity'));
+                break;
             default:
                 break;
         }
@@ -515,6 +518,10 @@ class NavigationService {
 
     public static drillingFluidUrl(projectId: string, sectionId: string, entityId: string) {
         return '/DrillingFluid/index.html#!/projects/' + projectId + '/sections/' + sectionId + '/generic/' + entityId;
+    }
+
+    public static cementingUrl(projectId: string, sectionId: string, entityId: string) {
+        return '/Cementing/#!/projects/' + projectId + '/sections/' + sectionId + '/editor/' + entityId + '/edit';
     }
 }
 
