@@ -32,10 +32,11 @@
 </dom-module>
 
 <script>
-    Polymer({
-      is: 'channel-list',
+  class ChannelList extends Polymer.Element {
+    static get is() { return 'channel-list'; }
 
-      properties: {
+    static get properties() {
+      return {
         groupId: {
           type: String,
         },
@@ -54,7 +55,7 @@
         channels: {
           type: Object,
           notify: true,
-          value: () => {return [];}
+          value: () => { return []; }
         },
         creationBody: {
           type: Object
@@ -71,86 +72,93 @@
           type: Boolean,
           value: false
         }
-      },
+      }
+    }
 
-      observers: [
+    static get observers() {
+      return [
+        /* observer array just like 1.x */
         'loadChannels(loadImmediately, msalReady, isReady, groupId)'
-      ],
+      ]
+    }
 
-      loadChannels: function(loadImmediately, msalReady, isReady, groupId) {
-        // Load channels as soon as element is ready
-        if (loadImmediately && msalReady && isReady && groupId) {
-          this.listChannels();
-        }
-      },
+    loadChannels(loadImmediately, msalReady, isReady, groupId) {
+      // Load channels as soon as element is ready
+      if (loadImmediately && msalReady && isReady && groupId) {
+        this.listChannels();
+      }
+    }
 
-      handleMsalReady: function () {
-        this.msalReady = true;
-      },
+    handleMsalReady() {
+      this.msalReady = true;
+    }
 
-      ready: function () {
-        this.isReady = true;
-      },
+    ready() {
+      super.ready();
+      this.isReady = true;
+    }
 
-      _url: function(groupId) {
-        return "/api/groups/{groupId}/channels".replace("{groupId}", groupId);
-      },
+    _url(groupId) {
+      return "/api/groups/{groupId}/channels".replace("{groupId}", groupId);
+    }
 
-      _headers: function(token) {
-        if (token) {
-          return {"Token": token}
-        }
-        return null;
-      },
+    _headers(token) {
+      if (token) {
+        return { "Token": token }
+      }
+      return null;
+    }
 
-      createChannel: function(name, description) {
-        if (!description) {
-          description = "";
-        }
-        this.$.userSigninService.getTokenPromise()
-          .then((token) => {
-            this.token = token;
-            this.creationBody = JSON.stringify({"displayName": name, "description": description});
-            this.$.createChannelXHR.generateRequest();
-          })
-          .catch((err) => {
-            console.log("error creating channel:", err);
-          });
-      },
-
-      // fake channel creation function for testing
-      fakeChannelCreation: function (name, description) {
-        setTimeout(function() {
-          let newChannel = {"name": name, "description": description, "id": 0};
-          this.unshift('channels', newChannel);
-          this.fire('channel-creation-response', newChannel)
-        }.bind(this), 1000);
-      },
-
-      listChannels: function () {
-        this.$.userSigninService.getTokenPromise()
+    createChannel(name, description) {
+      if (!description) {
+        description = "";
+      }
+      this.$.userSigninService.getTokenPromise()
         .then((token) => {
           this.token = token;
-          console.log("listChannels called, groupid = ", this.groupId, " | headers: ", this.headers, " | existing channels: ", this.channels.length)
+          this.creationBody = JSON.stringify({ "displayName": name, "description": description });
+          this.$.createChannelXHR.generateRequest();
+        })
+        .catch((err) => {
+          console.log("error creating channel:", err);
+        });
+    }
+
+    // fake channel creation function for testing
+    fakeChannelCreation(name, description) {
+      setTimeout(function () {
+        let newChannel = { "name": name, "description": description, "id": 0 };
+        this.unshift('channels', newChannel);
+        this.dispatchEvent(new CustomEvent('channel-creation-response', newChannel));
+      }.bind(this), 1000);
+    }
+
+    listChannels() {
+      this.$.userSigninService.getTokenPromise()
+        .then((token) => {
+          this.token = token;
+          // console.log("listChannels called, groupid = ", this.groupId, " | headers: ", this.headers, " | existing channels: ", this.channels.length)
           this.$.listChannelsXHR.generateRequest();
         })
         .catch((err) => {
           console.log("error loading channels for group ", this.groupId, ": ", err)
         })
-      },
+    }
 
-      handleCreationResponse: function(data) {
-        console.log("Creation Response: ", data.detail.response);
-        if (data.detail.response.id) {
-          this.unshift('channels', data.detail.response);
-        }
-        this.fire('channel-creation-response', data.detail.response);
-      },
+    handleCreationResponse(data) {
+      console.log("Creation Response: ", data.detail.response);
+      if (data.detail.response.id) {
+        this.unshift('channels', data.detail.response);
+      }
+      this.dispatchEvent(new CustomEvent('channel-creation-response', { detail: data.detail.response }));
+    }
 
-      handleError: function(e) {
-        console.log("Error in list-channels-service: ", e.detail.error.message, 
-                    "Last request: ", this.lastRequest);
-      },
+    handleError(e) {
+      console.log("Error in list-channels-service: ", e.detail.error.message,
+        "Last request: ", this.lastRequest);
+    }
 
-    });
+  }
+
+  customElements.define(ChannelList.is, ChannelList);
 </script>

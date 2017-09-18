@@ -15,7 +15,7 @@
 <link href="services/groups-service.html" rel="import">
 <link href="misc/shared-styles.html" rel="import">
 <link href="components/group-card.html" rel="import">
- <link href="components/group-create.html" rel="import">  
+<link href="components/group-create.html" rel="import">  
 
 <dom-module id="my-groups">
   <template>
@@ -75,7 +75,7 @@
         on-groups-response="handleResponse">
     </groups-service>
 
-    <paper-material id="groupEntry" elevation="0">
+    <paper-material id="groupEntry">
 
        <group-create 
         a-groups="{{aGroups}}">
@@ -103,21 +103,27 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'my-groups',
-    properties: {
-      aGroups: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: []
-      },
-    },
+  class MyGroups extends Polymer.Element {
 
-    handleResponse: function (data) {
+    static get is() { return 'my-groups'; }
+
+    static get properties() {
+      return {
+        aGroups: {
+          type: Array,
+          reflectToAttribute: true,
+          notify: true,
+          value: []
+        }
+      }
+    }
+
+    handleResponse(data) {
       this.aGroups = data.detail;
-    },
-    
-  });
+    }
+
+  }
+
+  customElements.define(MyGroups.is, MyGroups);
 
 </script>

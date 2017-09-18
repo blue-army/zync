@@ -73,21 +73,15 @@
       }
     </style>
 
-    <projects-service 
-        auto=true
-        on-projects-response="handleResponse">
+    <projects-service auto=true on-projects-response="handleResponse">
     </projects-service>
 
-    <messages-service 
-        on-messages-response="handleResponseMessages"
-        messages-method="GET" 
-        messages-body="">
+    <messages-service on-messages-response="handleResponseMessages" messages-method="GET" messages-body="">
     </messages-service>
 
-    <paper-material id="projectEntry" elevation="0">
+    <paper-material id="projectEntry">
 
-      <project-create 
-        a-projects="{{aProjects}}">
+      <project-create a-projects="{{aProjects}}">
       </project-create>
 
       <div class="container">
@@ -124,31 +118,37 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'my-projects',
-    properties: {
-      aProjects: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: []
-      },
-      aMessages: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: []
-      },
-    },
+  class MyProjects extends Polymer.Element {
 
-    handleResponse: function (data) {
+    static get is() { return 'my-projects'; }
+
+    static get properties() {
+      return {
+        aProjects: {
+          type: Array,
+          reflectToAttribute: true,
+          notify: true,
+          value: []
+        },
+        aMessages: {
+          type: Array,
+          reflectToAttribute: true,
+          notify: true,
+          value: []
+        }
+      }
+    }
+
+    handleResponse(data) {
       this.aProjects = data.detail;
-    },
+    }
 
-    handleResponseMessages: function (event) {
-      this.aMessages = this.$$('messages-service').messagesArray;
-    },
-    
-  });
+    handleResponseMessages(event) {
+      this.aMessages = this.shadowRoot.querySelector('messages-service').messagesArray;
+    }
+
+  }
+
+  customElements.define(MyProjects.is, MyProjects);
 
 </script>

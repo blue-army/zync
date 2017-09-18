@@ -69,7 +69,7 @@
         messages-body="">
     </messages-service>
 
-    <paper-material id="projectEntry" elevation="0">
+    <paper-material id="projectEntry">
 
       <event-create 
         a-projects="{{aProjects}}">
@@ -81,31 +81,35 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'my-events',
-    properties: {
-      aProjects: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: []
-      },
-      aMessages: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: []
-      },
-    },
+  class MyEvents extends Polymer.Element {
 
-    handleResponse: function (data) {
+    static get is() { return 'my-events'; }
+
+    static get properties() {
+      return {
+        aProjects: {
+          type: Array,
+          reflectToAttribute: true,
+          notify: true,
+          value: []
+        },
+        aMessages: {
+          type: Array,
+          reflectToAttribute: true,
+          notify: true,
+          value: []
+        }
+      }
+    }
+
+    handleResponse(data) {
       this.aProjects = data.detail;
-    },
+    }
 
-    handleResponseMessages: function (event) {
-      this.aMessages = this.$$('messages-service').messagesArray;
-    },
-    
-  });
+    handleResponseMessages(event) {
+      this.aMessages = this.shadowRoot.querySelector('messages-service').messagesArray;
+    }
+  }
 
+  customElements.define(MyEvents.is, MyEvents);
 </script>

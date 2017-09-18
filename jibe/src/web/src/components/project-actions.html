@@ -10,25 +10,9 @@
 
 <dom-module id="project-actions">
 
-  <style type="text/css">
-     :host {
-      display: inline-block;
-    }
-  </style>
-
   <template>
     <style type="text/css">
        :host {
-        --paper-card-header-image: {
-          width: 280px;
-          height: auto;
-          display: block;
-          padding: 18px;
-        }
-      }
-
-      .papercard {
-        margin: 10px 10px 10px 10px;
       }
 
       paper-dialog#exploreModal.size-position {
@@ -157,10 +141,11 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'project-actions',
+    class ProjectActions extends Polymer.Element {
+      static get is() { return 'project-actions'; }
 
-    properties: {
+      static get properties() {
+        return {
       item: Object,
       itemArray: {
         type: Object,
@@ -176,9 +161,10 @@
       toInput: String,
 
       textInput: String,
-    },
+    }
+  }
 
-    removeItem: function () {
+    removeItem () {
       this.itemArray = this.itemArray.filter(function (elem) {
         if (elem.id !== this.item.id) {
           return elem;
@@ -188,17 +174,18 @@
           this.deleteTrigger = "true";
         }
       }, this);
-    },
+    }
 
-    handleResponse: function (data) {
+    handleResponse (data) {
       console.log("operation id#" + this.item.id + " = " + data.detail.status);
-    },
+    }
 
-    handleExplore: function () {
+    handleExplore () {
       this.textInput = JSON.stringify(this.item, null, "\t");
       this.$.exploreModal.open();
-    },
-    dismissExploreDialog: function(e) {
+    }
+
+    dismissExploreDialog(e) {
       if (e.detail.confirmed) {
         let body = JSON.parse(this.$.juicyEditor.value);
         // this.geohashToCoord(body.geohash);
@@ -208,12 +195,13 @@
         this.projUrl = "/api/projects";
         this.deleteTrigger = "true";
       }
-    },
+    }
 
-    handleShare: function () {
+    handleShare () {
       this.$.shareModal.open();
-    },
-    dismissShareDialog: function (e) {
+    }
+
+    dismissShareDialog (e) {
       if (e.detail.confirmed) {
         this.eventMethod = "PUT";
         this.eventBody = JSON.stringify({
@@ -228,11 +216,13 @@
           }
         });
       }
-    },
-    handleEventsResponse: function(e) {
+    }
+
+    handleEventsResponse(e) {
       console.log("operation id#" + this.item.id + " = " + e.detail.status);
     }
 
-  });
+  }
 
+  customElements.define(ProjectActions.is, ProjectActions);
 </script>

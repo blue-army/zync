@@ -9,7 +9,7 @@
 <link href="../../bower_components/iron-label/iron-label.html" rel="import">
 <link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
 <link href="../../bower_components/paper-fab/paper-fab.html" rel="import">
-<link href="../../bower_components/juicy-ace-editor/juicy-ace-editor.html" rel="import"> 
+<link href="../../bower_components/juicy-ace-editor/juicy-ace-editor.html" rel="import">
 <link href="../../bower_components/paper-input/paper-textarea.html" rel="import">
 <link href="../services/projects-service.html" rel="import">
 <link href="../services/events-service.html" rel="import">
@@ -48,40 +48,33 @@
       juicy-ace-editor {
         min-height: 200px;
       }
+
       paper-dropdown-menu {
         display: block;
         margin-top: 5px;
       }
+
       paper-input {
         margin-top: 1px;
         height: 40px;
       }
     </style>
 
-    <iron-ajax
-        auto
-        url="./activities.json"
-        handle-as="json"
-        on-response="handleActivitiesResponse"
-        last-response="{{activitiesArray}}">
+    <iron-ajax auto url="assets/activities.json" handle-as="json" on-response="handleActivitiesResponse" last-response="{{activitiesArray}}">
     </iron-ajax>
 
-    <projects-service 
-        auto={{projectsTrigger}}
-        on-projects-response="handleResponse">
+    <iron-ajax auto url="./activities.json" handle-as="json" last-response="{{ajaxResponse}}">
+    </iron-ajax>
+
+    <projects-service auto={{projectsTrigger}} on-projects-response="handleResponse">
     </projects-service>
-    
-    <iron-ajax id="xhrAuthSignin"
-        url="/api/auth/login"
-        handle-as="json"
-        method="POST"
-        content-type="application/json"
-        body={{signinBody}}
-        debounce-duration="300"
-        on-response="handleSigninResponse">
+
+    <iron-ajax id="xhrAuthSignin" url="/api/auth/login" handle-as="json" method="POST" content-type="application/json" body={{signinBody}}
+      debounce-duration="300" on-response="handleSigninResponse">
     </iron-ajax>
 
-    <events-service id="eventsServ" on-events-response="handleEventsResponse" events-method={{eventMethod}} headers={{headers}} events-body={{eventBody}}>
+    <events-service id="eventsServ" on-events-response="handleEventsResponse" events-method={{eventMethod}} headers={{headers}}
+      events-body={{eventBody}}>
     </events-service>
 
     <paper-dialog id="modal" auto-fit-on-attach on-iron-overlay-closed="dismissDialog" class="size-position">
@@ -93,10 +86,7 @@
       </br>
 
       <paper-dropdown-menu id="dropdown" label="Pick a Project" horizontal-align="left">
-        <paper-listbox id="projectList" slot="dropdown-content" 
-          selected="{{selectedProject}}"
-          class="dropdown-content" 
-          on-iron-select="selectedProjChanged">
+        <paper-listbox id="projectList" slot="dropdown-content" selected="{{selectedProject}}" class="dropdown-content" on-iron-select="selectedProjChanged">
           <template is="dom-repeat" items="{{aProjects}}">
             <paper-item>{{item.name}}</paper-item>
           </template>
@@ -104,10 +94,7 @@
       </paper-dropdown-menu>
 
       <paper-dropdown-menu id="dropdown" label="Pick an Activity Type" horizontal-align="left">
-        <paper-listbox id="typesList" 
-          slot="dropdown-content" class="dropdown-content" 
-          selected="{{selectedType}}"
-          on-iron-select="selectedTypeChanged">
+        <paper-listbox id="typesList" slot="dropdown-content" class="dropdown-content" selected="{{selectedType}}" on-iron-select="selectedTypeChanged">
           <template is="dom-repeat" items="{{activitiesArray}}">
             <paper-item>{{item.name}}</paper-item>
           </template>
@@ -116,7 +103,7 @@
 
       <juicy-ace-editor id="juicyEditor">{{textInput}}
       </juicy-ace-editor>
- 
+
       <div class="buttons">
         <paper-button dialog-confirm autofocus>Send</paper-button>
         <paper-button dialog-dismiss autofocus>Cancel</paper-button>
@@ -133,88 +120,97 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'event-create',
+  class EventCreate extends Polymer.Element {
+    static get is() { return 'event-create'; }
 
-    properties: {
-      activitiesArray: "String",
-      groupsUrl: {
-        type: String,
-        value: "/api/groups"
-      },
-      aProjects: {
-        type: Array,
-        reflectToAttribute: true,
-        notify: true,
-        value: []
-      },
-      headers: Object,
-      selectedProject: Number,
-      selectedType: Number,
-      eventBody: String,
-      payload: {
-        value: {
-          type: "slb.drill-plan.activity",
-          id: "",
-          project: "",
-          content: {}
-        }
+    static get properties() {
+      return {
+
+        activitiesArray: Array,
+        groupsUrl: {
+          type: String,
+          value: "/api/groups"
+        },
+        aProjects: {
+          type: Array,
+          reflectToAttribute: true,
+          notify: true,
+          value: function () { return []; }
+        },
+        payload: {
+          type: Object,
+          value: () => {
+            return {
+              type: "slb.drill-plan.activity",
+              id: "",
+              project: "",
+              content: {}
+            }
+          }
+        },
+        headers: Object,
+        selectedProject: Number,
+        selectedType: Number,
+        eventBody: String
       }
-    },
+    }
 
-    openDialog: function () {
+    openDialog() {
       this.projectsTrigger = "true";
       this.$.modal.open();
-    },
+    }
 
-    dismissDialog: function (e) {
+    dismissDialog(e) {
       if (e.detail.confirmed) {
         this.signinBody = JSON.stringify({
-            client_id: this.clientId,
-            client_secret: this.clientSecret,
+          client_id: this.clientId,
+          client_secret: this.clientSecret,
         });
 
         this.$.xhrAuthSignin.generateRequest();
       }
-    },
+    }
 
-    handleSigninResponse: function(e) {
-        let token = e.detail.response.token;
-        this.headers =  { "x-api-key": token };
+    handleSigninResponse(e) {
+      let token = e.detail.response.token;
+      this.headers = { "x-api-key": token };
 
-        this.eventMethod = "PUT";
-        // use this.textInput, as user may have modified
-        let text = this.$.juicyEditor.value;
-        let body = JSON.parse(text);
-        this.eventBody = JSON.stringify(body);
+      this.eventMethod = "PUT";
+      // use this.textInput, as user may have modified
+      let text = this.$.juicyEditor.value;
+      let body = JSON.parse(text);
+      this.eventBody = JSON.stringify(body);
 
-        this.$.eventsServ.generateRequest();
-    },
+      this.$.eventsServ.generateRequest();
+    }
 
-    handleEventsResponse: function(e) {
-      console.log("operation id#" + this.payload.project + " = " + e.detail.status);
-    },
+    handleEventsResponse(e) {
+      console.log("operation id#" + this.payload.project + " = " + e.detail);
+    }
 
-    selectedProjChanged: function(e) {
+    selectedProjChanged(e) {
       this.selectedProject = e.target.selected;
       let item = this.aProjects[this.selectedProject];
       this.payload.project = item.id;
       this.textInput = JSON.stringify(this.payload, null, "  ");
-    },
+    }
 
-    selectedTypeChanged: function(e) {
+    selectedTypeChanged(e) {
       this.selectedType = e.target.selected;
       this.payload.content = this.activitiesArray[this.selectedType];
       this.textInput = JSON.stringify(this.payload, null, "  ");
-    },
+    }
 
-    handleResponse: function (data) {
+    handleResponse(data) {
       this.aProjects = data.detail.slice();
       this.selectedProject = 0;
-    },
-    handleActivitiesResponse: function() {
-      this.selectedType = 0;
     }
-  });
+    handleActivitiesResponse(data) {
+      this.selectedType = 0;
+      this.activitiesArray = data.detail.response;
+    }
+  }
+
+  customElements.define(EventCreate.is, EventCreate);
 
 </script>

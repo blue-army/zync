@@ -18,10 +18,11 @@
 </dom-module>
 
 <script>
-    Polymer({
-      is: 'messages-service',
+  class MessagesService extends Polymer.Element {
+    static get is() { return 'messages-service'; }
 
-      properties: {
+    static get properties() {
+      return {
         messagesArray: {
           type: Array,
           value: []
@@ -38,29 +39,33 @@
           type: String,
           value: ""
         }
-      },
-
-      handleResponse: function(data) {
-        // GET for list of messages
-        if (this.messagesMethod === "GET") {
-          this.messagesArray = data.detail.response;
-        }
-
-        if (this.messagesMethod === "POST") {
-          // POST for add new project
-          if (data.detail.response.name !== undefined) {
-            let messages = this.messagesArray.slice();
-            messages.push(data.detail.response);
-            this.messagesArray = messages;
-          } else {
-            // POST for send event via webhook
-          }
-        }
-        // DELETE a project
-        if (this.messagesMethod === "DELETE") {
-        }
-
-        this.fire('messages-response', data.detail);
       }
-    });
+    }
+
+    handleResponse(data) {
+      // GET for list of messages
+      if (this.messagesMethod === "GET") {
+        this.messagesArray = data.detail.response;
+      }
+
+      if (this.messagesMethod === "POST") {
+        // POST for add new project
+        if (data.detail.response.name !== undefined) {
+          let messages = this.messagesArray.slice();
+          messages.push(data.detail.response);
+          this.messagesArray = messages;
+        } else {
+          // POST for send event via webhook
+        }
+      }
+      // DELETE a project
+      if (this.messagesMethod === "DELETE") {
+      }
+
+      this.dispatchEvent(new CustomEvent('messages-response', data.detail));
+    }
+  }
+
+  customElements.define(MessagesService.is, MessagesService);
+
 </script>

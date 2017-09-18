@@ -18,10 +18,12 @@
 </dom-module>
 
 <script>
-    Polymer({
-      is: 'projects-service',
+  class ProjectsService extends Polymer.Element {
+    static get is() { return 'projects-service'; }
 
-      properties: {
+    static get properties() {
+      return {
+
         projectsUrl: {
           type: String,
           value: "/api/projects"
@@ -38,30 +40,35 @@
           type: String,
           observer: "_autoChanged",
         }
-      },
-
-      handleResponse: function(data) {
-        // GET for list of projects
-        if (this.projectsMethod === "GET") {
-        }
-        // Create project
-        if (this.projectsMethod === "PUT") {
-        }
-        // DELETE a project
-        if (this.projectsMethod === "DELETE") {
-        }
-
-        this.fire('projects-response', data.detail.response);
-      },
-
-      handleError: function(e) {
-        console.log(e.detail.error.message);
-      },
-
-      _autoChanged: function() {
-        if (this.auto === "true") {
-          this.$.xhrProjects.generateRequest();
-        }
       }
-    });
+    }
+
+    handleResponse(data) {
+      // GET for list of projects
+      if (this.projectsMethod === "GET") {
+      }
+      // Create project
+      if (this.projectsMethod === "PUT") {
+      }
+      // DELETE a project
+      if (this.projectsMethod === "DELETE") {
+      }
+
+      this.dispatchEvent(new CustomEvent('projects-response', { detail: data.detail.response }));
+
+    }
+
+    handleError(e) {
+      console.log(e.detail.error.message);
+    }
+
+    _autoChanged() {
+      if (this.auto === "true") {
+        this.$.xhrProjects.generateRequest();
+      }
+    }
+  }
+
+  customElements.define(ProjectsService.is, ProjectsService);
+
 </script>

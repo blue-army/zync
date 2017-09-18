@@ -11,19 +11,13 @@
 
 <dom-module id="project-card">
 
-  <style type="text/css">
-     :host {
-      display: inline-block;
-    }
-  </style>
-
   <template>
     <style type="text/css">
        :host {
         --paper-card-header-image: {
           width: 280px;
           height: auto;
-          display: block;
+          display: inline-block;
           padding: 18px;
         }
       }
@@ -108,8 +102,8 @@
     <paper-card id="projCard" class="papercard" heading="" image="./assets/images/Schlumberger.svg" alt="{{item.name}}">
 
       <div class="mymap">
-        <google-map id="myMap" map="{{map}}" fit-to-markers zoom="10" api-key="AIzaSyCMsBPpFm2-D8Dt5oQUHWYM3VHeYxmyLOs">
-          <google-map-marker latitude="{{latitude}}" longitude="{{longitude}}" draggable></google-map-marker>
+        <google-map fit-to-marker api-key="AIzaSyD3E1D9b-Z7ekrT3tbhl_dy8DCXuIuDDRc">
+          <google-map-marker latitude="{{latitude}}" longitude="{{longitude}}" draggable="true"></google-map-marker>
         </google-map>
       </div>
 
@@ -117,7 +111,7 @@
         {{item.name}}
       </div>
 
-      <content id="myContent"></content>
+      <slot id="myContent"></slot>
 
     </paper-card>
   </template>
@@ -127,32 +121,35 @@
 <script src="../../bower_components/geohash/geohash.js"></script>
 
 <script>
-  Polymer({
-    is: 'project-card',
+  class ProjectCard extends Polymer.Element {
+    static get is() { return 'project-card'; }
 
-    properties: {
-      item: Object,
-      itemArray: {
-        type: Object,
-        notify: true
-      },
+    static get properties() {
+      return {
+        item: Object,
+        itemArray: {
+          type: Object,
+          notify: true
+        },
 
-      latitude: {
-        type: Number,
-        value: 37.78
-      },
-      longitude: {
-        type: Number,
-        value: -122.4
+        latitude: {
+          type: Number,
+          value: 37.78
+        },
+        longitude: {
+          type: Number,
+          value: -122.4
+        }
       }
-    },
+    }
 
-    ready: function () {
-      this.geohashToCoord(this.item.geohash);
-      // this.map = this.$.myMap;
-    },
+    ready() {
+      super.ready();
+      // google-map-marker is broken still, does not move to the position. need wait for them to fix.
+      //this.geohashToCoord(this.item.geohash);
+    }
 
-    geohashToCoord: function (geoHash) {
+    geohashToCoord(geoHash) {
       // Handle geohash
       if (geoHash) {
         let geoObject = decodeGeoHash(geoHash);
@@ -161,6 +158,7 @@
       }
     }
 
-  });
+  }
 
+  customElements.define(ProjectCard.is, ProjectCard);
 </script>

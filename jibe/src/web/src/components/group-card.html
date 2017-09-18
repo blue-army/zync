@@ -4,7 +4,7 @@
 <link href="../../bower_components/paper-input/paper-textarea.html" rel="import">
 <link href="../../bower_components/google-map/google-map.html" rel="import">
 <link href="../../bower_components/iron-ajax/iron-ajax.html" rel="import">
-<link href="../../bower_components/juicy-ace-editor/juicy-ace-editor.html" rel="import"> 
+<link href="../../bower_components/juicy-ace-editor/juicy-ace-editor.html" rel="import">
 <link href="../services/groups-service.html" rel="import">
 <link href="../misc/shared-styles.html" rel="import">
 <link href="../components/activity-card.html" rel="import">
@@ -15,19 +15,13 @@
 
 <dom-module id="group-card">
 
-  <style type="text/css">
-     :host {
-      display: inline-block;
-    }
-  </style>
-
   <template>
     <style type="text/css">
        :host {
         --paper-card-header-image: {
           width: 280px;
           height: auto;
-          display: block;
+          display: inline-block;
           padding: 18px;
         }
       }
@@ -42,9 +36,9 @@
         overflow: hidden;
       }
 
-       juicy-ace-editor {
+      juicy-ace-editor {
         height: 450px;
-      } 
+      }
 
       #exploreModalLabel {
         word-wrap: break-word;
@@ -106,16 +100,12 @@
         height: 200px;
         width: 317px;
       }
-
     </style>
 
-    <!-- <user-signin-service id="userTokenService"></user-signin-service> -->
     <paper-dialog id="exploreModal" auto-fit-on-attach on-iron-overlay-closed="dismissExploreDialog" class="size-position">
       <h3>Edit Raw Project JSON Data</h3>
 
-      <juicy-ace-editor 
-        id="juicyEditor" 
-        wrapmode="true">{{textInput}}
+      <juicy-ace-editor id="juicyEditor" wrapmode="true">{{textInput}}
       </juicy-ace-editor>
 
       <div class="buttons">
@@ -125,26 +115,13 @@
     </paper-dialog>
 
     <template is="dom-if" if="{{projMethod}}">
-      <groups-service 
-        auto={{deleteTrigger}}
-        on-groups-response="handleResponse" 
-        groups-method={{projMethod}} 
-        groups-body={{projBody}} 
+      <groups-service auto={{deleteTrigger}} on-groups-response="handleResponse" groups-method={{projMethod}} groups-body={{projBody}}
         groups-url={{projUrl}}>
       </groups-service>
     </template>
 
     <paper-card id="projCard" class="papercard" heading="" image="./assets/images/Office_365_2013.svg" alt="{{item.name}}">
-      
-      <!-- <div class="card-content">
-        [[item.name]]
-        <channel-list id="channelListService" channels="{{channels}}" group-id=[[item.id]] on-channel-creation-response="handleCreationResponse" load-immediately></channel-list>
-        <div id="channelList">
-          <template is="dom-repeat" items="[[channels]]">
-            <paper-item>Channel: [[item.name]]</paper-item>
-          </template>
-        </div>
-      </div> -->
+
 
       <div class="card-content">
         [[item.name]]
@@ -163,42 +140,44 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'group-card',
+  class GroupCard extends Polymer.Element {
+    static get is() { return 'group-card'; }
 
-    properties: {
-      item: Object,
-      itemArray: {
-        type: Object,
-        notify: true
-      },
-      projUrl: String,
-      projMethod: String,
-      projBody: String,
+    static get properties() {
+      return {
+        item: Object,
+        itemArray: {
+          type: Object,
+          notify: true
+        },
+        projUrl: String,
+        projMethod: String,
+        projBody: String,
 
-      entityInput: String,
-      propertyInput: String,
-      fromInput: String,
-      toInput: String,
+        entityInput: String,
+        propertyInput: String,
+        fromInput: String,
+        toInput: String,
 
-      textInput: String,
+        textInput: String,
 
-      channels: {
-        type: Object,
-        value: () => { return []; },
-        notify: true
-      },
+        channels: {
+          type: Object,
+          value: () => { return []; },
+          notify: true
+        },
 
-      userToken: {
-        type: String,
+        userToken: {
+          type: String,
+        }
       }
-    },
+    }
 
-    handleResponse: function (data) {
+    handleResponse(data) {
       console.log("operation id#" + this.item.id + " = " + data.detail.status);
-    },
+    }
 
-    removeItem: function () {
+    removeItem() {
       this.itemArray = this.itemArray.filter(function (elem) {
         if (elem.id !== this.item.id) {
           return elem;
@@ -208,9 +187,9 @@
           this.deleteTrigger = "true";
         }
       }, this);
-    },
+    }
 
-    dismissExploreDialog: function(e) {
+    dismissExploreDialog(e) {
       if (e.detail.confirmed) {
         let body = JSON.parse(this.$.juicyEditor.value);
 
@@ -218,25 +197,27 @@
         this.projMethod = "PUT";
         this.projUrl = "/api/groups";
       }
-    },
+    }
 
-    handleExplore: function () {
+    handleExplore() {
       this.textInput = JSON.stringify(this.item, null, "\t");
       this.$.exploreModal.open();
-    },
+    }
 
-    exploreChannels: function () {
+    exploreChannels() {
       this.$.channelDialog.openDialog();
-    },
+    }
 
-    createChannel: function () {
+    createChannel() {
       this.$.channelListService.createChannel("channel 112", "this is a channel")
-    },
+    }
 
-    handleCreationResponse: function (e) {
+    handleCreationResponse(e) {
       console.log("Channel creation response: ", e);
     }
 
-  });
+  }
+
+  customElements.define(GroupCard.is, GroupCard);
 
 </script>
