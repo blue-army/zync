@@ -219,7 +219,7 @@ async function projectCommand(commands: string[]): Promise<SlackAttachment> {
 async function jibeCommand(req: express.Request, res: express.Response) {
     console.log(req.body);
     // verify request
-    if (req.body['token'] != 'nUpWah4iy7Wjoi4UwelRDlat') {
+    if (req.body['token'] != 'KO5mSW6QzMVZNwonfZc2EcmX') {
         return res.status(401).send("Unauthorized");
     }
 
